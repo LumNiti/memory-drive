@@ -1,0 +1,2109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+<title>Memory Drive</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@600;800;900&family=Cormorant+Garamond:ital@1&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg1:#0b0e1c; --bg2:#161020; --bg3:#1a1208;
+  --amber:#E8A13A; --amber2:#FFD166;
+  --season:#E8A13A;
+  --card-back:#232538;
+}
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
+html,body{height:100%;overflow:hidden}
+body{
+  font-family:'Nunito',sans-serif;
+  background:
+    radial-gradient(ellipse 85% 55% at 18% 12%, rgba(125,85,225,.22), transparent 60%),
+    radial-gradient(ellipse 70% 50% at 88% 85%, rgba(230,120,80,.13), transparent 60%),
+    radial-gradient(ellipse 60% 45% at 72% 28%, rgba(60,140,220,.13), transparent 60%),
+    linear-gradient(165deg,#0e1230 0%,#1b1642 38%,#2a1a45 68%,#211230 100%);
+  background-attachment:fixed;
+  color:#fff; position:fixed; inset:0;
+}
+svg{display:block}
+.ic{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;flex-shrink:0}
+
+/* ============ SFONDI I RI ============ */
+.glow{position:absolute;border-radius:50%;filter:blur(70px);pointer-events:none;z-index:0}
+.glow1{width:360px;height:360px;background:rgba(150,100,255,.14);top:-80px;left:-90px;animation:drift1 10s ease-in-out infinite alternate}
+.glow2{width:320px;height:320px;background:rgba(70,150,235,.10);top:45%;right:-110px;animation:drift2 13s ease-in-out infinite alternate}
+.glow3{width:280px;height:280px;background:rgba(255,100,60,.08);bottom:-60px;left:20%;animation:drift1 11s ease-in-out infinite alternate-reverse}
+@keyframes drift1{to{transform:translate(110px,70px)}}
+@keyframes drift2{to{transform:translate(-90px,-80px)}}
+
+/* Yje që pulsojnë */
+.tw{position:absolute;width:3px;height:3px;border-radius:50%;background:#fff;opacity:.15;animation:twinkle ease-in-out infinite alternate;pointer-events:none;z-index:0}
+@keyframes twinkle{from{opacity:.05;transform:scale(.7)}to{opacity:.45;transform:scale(1.2)}}
+
+/* Rruga e animuar në fund */
+
+.float-emoji{position:absolute;font-size:26px;opacity:.08;pointer-events:none;z-index:0;animation:floaty 5s ease-in-out infinite alternate}
+@keyframes floaty{to{transform:translateY(-22px)}}
+
+/* ============ EKRANET ============ */
+.screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .5s ease;z-index:1}
+.screen.active{opacity:1;pointer-events:auto}
+
+/* ---- Splash ---- */
+.logo-flag{font-size:88px;animation:pop .9s cubic-bezier(.2,1.4,.4,1) both, wobble 1.8s ease-in-out .9s infinite alternate;filter:drop-shadow(0 0 30px rgba(232,161,58,.5))}
+@keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
+@keyframes wobble{from{transform:rotate(-4deg)}to{transform:rotate(4deg)}}
+.title{
+  font-weight:900;font-size:34px;letter-spacing:6px;margin-top:14px;
+  background:linear-gradient(90deg,var(--amber2),var(--amber));
+  -webkit-background-clip:text;background-clip:text;color:transparent;
+  animation:fadeUp 1s .3s both;
+}
+.subtitle{margin-top:10px;font-size:13px;letter-spacing:3px;color:rgba(255,255,255,.85);text-shadow:0 1px 8px rgba(0,0,0,.5);animation:fadeUp 1s .6s both}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+
+/* ---- Intro / Tutorial ---- */
+.tut-slide{display:none;flex-direction:column;align-items:center;gap:12px;max-width:340px;text-align:center}
+.tut-slide.active{display:flex;animation:fadeUp .5s ease both}
+.tut-visual{height:160px;display:flex;align-items:center;justify-content:center}
+.tut-title{font-size:23px;font-weight:900;letter-spacing:1px;color:var(--amber2);text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.tut-desc{font-size:15px;font-weight:700;line-height:1.65;color:rgba(255,255,255,.9);text-shadow:0 1px 6px rgba(0,0,0,.5)}
+.tut-dots{display:flex;gap:9px;margin:20px 0 8px}
+.dot{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.25);transition:all .25s}
+.dot.on{background:var(--amber);transform:scale(1.25)}
+/* Demo: karta që përputhen */
+.demo-pair{display:flex;gap:18px}
+.demo-card{width:76px;height:96px;perspective:500px}
+.dc-in{position:relative;width:100%;height:100%;transform-style:preserve-3d;animation:demoFlip 3.4s ease-in-out infinite}
+.demo-card.d2 .dc-in{animation-delay:.4s}
+.dc-b,.dc-f{position:absolute;inset:0;border-radius:12px;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 5px 14px rgba(0,0,0,.35)}
+.dc-b{background:var(--card-back);border:2px solid rgba(232,161,58,.5);color:rgba(232,161,58,.45)}
+.dc-b svg{width:34px;height:34px}
+.dc-f{background:linear-gradient(180deg,#fff,#e2e2e2);border:2.5px solid var(--amber);font-size:36px;transform:rotateY(180deg)}
+@keyframes demoFlip{0%,12%{transform:rotateY(0)}30%,78%{transform:rotateY(180deg)}94%,100%{transform:rotateY(0)}}
+/* Demo: karburanti */
+.demo-fuel{display:flex;flex-direction:column;align-items:center;gap:14px}
+.fuel-pill{display:flex;align-items:center;gap:10px;background:rgba(14,12,30,.6);padding:13px 22px;border-radius:26px;font-weight:900;font-size:24px;color:#fff}
+.fuel-pill .ic{width:24px;height:24px;color:var(--amber)}
+.fuel-bar{width:190px;height:11px;border-radius:6px;background:rgba(255,255,255,.15);overflow:hidden}
+.fuel-fill{height:100%;border-radius:6px;background:linear-gradient(90deg,#ff6b5e,var(--amber2));animation:fuelDrain 3.6s ease-in-out infinite}
+@keyframes fuelDrain{0%,8%{width:100%}70%,88%{width:12%}100%{width:100%}}
+/* Demo: basti "A je i sigurt?" */
+.demo-sure{background:#1c1e2e;border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:18px 16px;width:258px;box-shadow:0 14px 40px rgba(0,0,0,.5);text-align:center}
+.ds-q{font-weight:900;font-size:16px}
+.ds-stakes{font-weight:900;font-size:13px;color:var(--amber2);margin:10px 0 14px;line-height:1.5}
+.ds-btns{display:flex;gap:8px}
+.ds-yes,.ds-no{flex:1;padding:10px 4px;border-radius:12px;font-weight:900;font-size:12px;letter-spacing:1px}
+.ds-yes{background:linear-gradient(180deg,var(--amber2),var(--amber));color:#1a1410;animation:dsPulse 1.6s ease-in-out infinite}
+.ds-no{background:rgba(255,255,255,.08);color:var(--amber2);border:1.5px solid rgba(232,161,58,.5)}
+@keyframes dsPulse{50%{transform:scale(1.06);box-shadow:0 0 16px rgba(232,161,58,.45)}}
+/* Demo: yjet dhe sezonet */
+.demo-starwrap{display:flex;flex-direction:column;align-items:center;gap:14px}
+.demo-stars{display:flex;gap:12px}
+.demo-stars .ic{width:42px;height:42px;color:var(--amber2);fill:currentColor;stroke:none;animation:starLoop 2.2s cubic-bezier(.2,1.6,.4,1) infinite}
+.demo-stars .ic:nth-child(2){animation-delay:.18s}
+.demo-stars .ic:nth-child(3){animation-delay:.36s}
+@keyframes starLoop{0%{transform:scale(0) rotate(-90deg);opacity:0}22%{transform:scale(1) rotate(0);opacity:1}80%{transform:scale(1);opacity:1}100%{transform:scale(1);opacity:1}}
+.demo-seasons{font-size:27px;letter-spacing:8px}
+.intro-text{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:21px;line-height:1.8;text-align:center;color:#fff;text-shadow:0 1px 10px rgba(0,0,0,.55);max-width:340px;min-height:260px;white-space:pre-line}
+.hint{font-size:12px;color:rgba(255,255,255,.65);margin-top:24px;text-shadow:0 1px 6px rgba(0,0,0,.5)}
+
+/* ---- Butonat ---- */
+.btn{display:flex;align-items:center;justify-content:center;gap:10px;width:250px;padding:15px;border:none;border-radius:16px;font-family:'Nunito',sans-serif;font-weight:900;font-size:16px;letter-spacing:1.5px;cursor:pointer;transition:transform .15s ease}
+.btn:active{transform:scale(.95)}
+.btn-primary{background:linear-gradient(180deg,var(--amber2),var(--amber));color:#1a1410;box-shadow:0 8px 24px rgba(232,161,58,.35)}
+.btn-ghost{background:rgba(14,12,30,.55);color:var(--amber2);border:1.5px solid rgba(232,161,58,.5)}
+.btn-danger{background:#c0392b;color:#fff}
+.menu-btns{display:flex;flex-direction:column;gap:14px;margin-top:32px}
+.total-stars{display:flex;align-items:center;gap:6px;margin-top:14px;font-size:14px;font-weight:800;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5);background:rgba(14,12,30,.5);padding:7px 14px;border-radius:20px}
+.total-stars .ic{width:16px;height:16px}
+
+/* ---- Panelet ---- */
+.panel{width:100%;max-width:370px;background:rgba(16,14,34,.85);backdrop-filter:blur(8px);border:1px solid rgba(255,255,255,.09);border-radius:20px;padding:22px;max-height:80vh;overflow-y:auto}
+.panel h2{font-size:19px;letter-spacing:2px;margin-bottom:16px;text-align:center;color:var(--amber2);display:flex;align-items:center;justify-content:center;gap:8px}
+.set-row{display:flex;justify-content:space-between;align-items:center;padding:12px 4px;border-bottom:1px solid rgba(255,255,255,.06);font-weight:700;font-size:15px}
+.set-label{display:flex;align-items:center;gap:12px}
+.set-label .ic{color:var(--amber)}
+.toggle{position:relative;width:50px;height:28px;border-radius:14px;background:rgba(255,255,255,.15);transition:background .25s;cursor:pointer;flex-shrink:0}
+.toggle::after{content:'';position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;transition:left .25s}
+.toggle.on{background:var(--amber)}
+.toggle.on::after{left:25px}
+.section-title{font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.4);margin:16px 0 4px;font-weight:800}
+.lang-group{display:flex;gap:8px;margin-top:10px}
+.lang-btn{flex:1;padding:12px 4px;border-radius:12px;border:1.5px solid rgba(232,161,58,.35);background:transparent;color:rgba(255,255,255,.6);font-family:'Nunito';font-weight:800;font-size:12px;cursor:pointer;transition:all .2s;display:flex;flex-direction:column;align-items:center;gap:4px}
+.lang-btn .flag{font-size:22px}
+.lang-btn.sel{background:var(--amber);color:#1a1410;border-color:var(--amber)}
+.pro-benefits{display:flex;flex-direction:column;gap:8px;margin:14px 0 18px;text-align:left}
+.pro-b{display:flex;align-items:center;gap:10px;background:rgba(232,161,58,.08);border:1px solid rgba(232,161,58,.3);border-radius:12px;padding:10px 12px;font-weight:800;font-size:13px}
+.pro-b .pe{font-size:18px;flex-shrink:0}
+#usernameInput,#regName{width:100%;background:rgba(14,12,30,.6);border:1.5px solid rgba(232,161,58,.5);border-radius:12px;color:#fff;padding:11px 14px;font-family:'Nunito';font-weight:800;font-size:15px;outline:none}
+.avatar-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;width:100%}
+.av{aspect-ratio:1;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;background:rgba(255,255,255,.06);border:2px solid transparent;cursor:pointer;position:relative;transition:transform .15s}
+.av:active{transform:scale(.9)}
+.av.sel{border-color:var(--amber);background:rgba(232,161,58,.18)}
+.av.lockedAv{opacity:.4}
+.av .crown{position:absolute;top:-7px;right:-5px;font-size:11px}
+
+/* ---- Sezonet ---- */
+#seasonsScreen,#levelsScreen{justify-content:flex-start;padding-top:max(20px, env(safe-area-inset-top))}
+.page-head{display:flex;align-items:center;justify-content:space-between;width:100%;max-width:390px;margin-bottom:16px}
+.page-title{font-size:19px;font-weight:900;letter-spacing:3px;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5)}
+.season-list{display:flex;flex-direction:column;gap:13px;width:100%;max-width:390px;overflow-y:auto;padding-bottom:24px}
+.season-card{
+  position:relative;border-radius:20px;padding:18px 20px;cursor:pointer;overflow:hidden;
+  background:rgba(14,12,30,.55);border:1.5px solid var(--sc,rgba(255,255,255,.15));
+  display:flex;align-items:center;gap:16px;transition:transform .15s;
+}
+.season-card:active{transform:scale(.97)}
+.season-card.locked{opacity:.4;cursor:default}
+.season-glow{position:absolute;right:-30px;top:-30px;width:120px;height:120px;border-radius:50%;background:var(--sc);opacity:.16;filter:blur(30px)}
+.season-emoji{font-size:38px;filter:drop-shadow(0 0 10px var(--sc))}
+.season-info{flex:1}
+.season-name{font-size:17px;font-weight:900;letter-spacing:1px}
+.season-sub{font-size:12px;font-weight:700;color:rgba(255,255,255,.5);margin-top:3px}
+.season-prog{display:flex;align-items:center;gap:5px;font-size:13px;font-weight:900;color:var(--sc)}
+.season-prog .ic{width:14px;height:14px}
+.season-lock .ic{width:24px;height:24px;color:rgba(255,255,255,.5)}
+
+/* ---- Rrjeti i niveleve ---- */
+.level-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:11px;width:100%;max-width:390px;overflow-y:auto;padding-bottom:24px}
+.level-cell{aspect-ratio:1;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;background:rgba(14,12,30,.5);border:1.5px solid var(--sc,rgba(232,161,58,.4));cursor:pointer;transition:transform .15s}
+.level-cell:active{transform:scale(.93)}
+.level-cell.locked{opacity:.32;border-color:rgba(255,255,255,.15);cursor:default}
+.level-cell.done{background:color-mix(in srgb, var(--sc) 14%, transparent)}
+.level-num{font-size:20px;font-weight:900;color:#fff}
+.level-stars{display:flex;gap:1px}
+.level-stars .ic{width:11px;height:11px}
+.star-on{color:var(--amber2);fill:currentColor;stroke:none}
+.star-off{color:rgba(255,255,255,.18);fill:currentColor;stroke:none}
+.lock-ic{color:rgba(255,255,255,.5);width:20px;height:20px}
+
+/* ---- Loja ---- */
+#gameScreen{justify-content:flex-start;padding-top:max(16px, env(safe-area-inset-top))}
+.hud{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:420px;margin-bottom:6px}
+.hud-btn{width:42px;height:42px;border-radius:50%;border:none;background:rgba(14,12,30,.55);color:var(--amber2);cursor:pointer;transition:transform .15s;display:flex;align-items:center;justify-content:center}
+.hud-btn:active{transform:scale(.9)}
+.stats{display:flex;gap:7px}
+.stat{display:flex;align-items:center;gap:6px;background:rgba(14,12,30,.55);padding:8px 10px;border-radius:20px;font-size:13px;font-weight:800;font-variant-numeric:tabular-nums}
+.stat .ic{width:13px;height:13px;color:var(--season)}
+.stat.danger{background:rgba(220,60,50,.25);animation:dangerPulse .8s ease infinite alternate}
+.stat.danger .ic,.stat.danger span{color:#ff8a7a}
+@keyframes dangerPulse{to{background:rgba(220,60,50,.45)}}
+.level-badge{width:100%;max-width:420px;display:flex;justify-content:space-between;align-items:center;margin-bottom:10px;gap:10px}
+.profile-chip{display:flex;align-items:center;gap:8px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:4px 13px 4px 4px;font-weight:900;font-size:13px;color:#fff}
+.pav{width:30px;height:30px;border-radius:50%;background:rgba(232,161,58,.18);border:1.5px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
+.level-chip{background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:8px 14px;font-weight:900;font-size:12px;letter-spacing:2px;color:var(--season);white-space:nowrap}
+#board{display:grid;gap:9px;width:100%;max-width:420px;flex:1;align-content:start;margin:0 auto}
+.card{position:relative;aspect-ratio:0.8;perspective:600px;cursor:pointer}
+.card-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.3,1.2,.4,1)}
+.card.flipped .card-inner{transform:rotateY(180deg)}
+.card-face{position:absolute;inset:0;border-radius:13px;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+.card-back-face{background:var(--card-back);border:2px solid color-mix(in srgb, var(--season) 55%, transparent);color:color-mix(in srgb, var(--season) 55%, transparent)}
+.card-front{background:linear-gradient(180deg,#fff,#e2e2e2);border:2.5px solid var(--season);font-size:32px;transform:rotateY(180deg)}
+.card.matched{animation:matchPulse .5s ease both}
+.card.matched .card-inner{opacity:.4}
+@keyframes matchPulse{30%{transform:scale(1.12)}100%{transform:scale(1)}}
+.card.shake{animation:shake .4s ease}
+@keyframes shake{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-4px)}}
+
+/* ---- Overlay fitore/humbje ---- */
+.overlay{position:absolute;inset:0;background:rgba(5,6,12,.85);z-index:10;display:none;flex-direction:column;align-items:center;justify-content:center;gap:13px;padding:24px}
+.overlay.show{display:flex;animation:fadeIn .4s ease}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+.big-emoji{font-size:70px;animation:pop .7s cubic-bezier(.2,1.5,.4,1) both}
+.ov-title{font-size:32px;font-weight:900;letter-spacing:4px}
+.ov-title.win{background:linear-gradient(90deg,var(--amber2),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent}
+.ov-title.lose{color:#ff6b5e}
+.win-stars{display:flex;gap:10px;margin:4px 0;flex-wrap:wrap;justify-content:center}
+.win-stars .ic{width:38px;height:38px}
+.win-stars .star-on{animation:starPop .5s cubic-bezier(.2,1.6,.4,1) both}
+.win-stars .star-on:nth-child(2){animation-delay:.2s}
+.win-stars .star-on:nth-child(3){animation-delay:.4s}
+@keyframes starPop{from{transform:scale(0) rotate(-90deg)}to{transform:scale(1) rotate(0)}}
+.ov-stats{font-size:16px;font-weight:700;color:rgba(255,255,255,.85);text-align:center;line-height:1.7}
+.confetti-piece{position:absolute;top:-50px;font-size:24px;animation:fall linear both;pointer-events:none}
+@keyframes fall{to{transform:translateY(110vh) rotate(360deg)}}
+.overlay .btn{width:250px;padding:13px}
+.lose-shake{animation:loseShake .5s ease}
+@keyframes loseShake{20%{transform:translateX(-8px)}40%{transform:translateX(8px)}60%{transform:translateX(-6px)}80%{transform:translateX(6px)}}
+
+/* ---- Toast, thesare, grimca ---- */
+.toast{position:fixed;top:13%;left:50%;transform:translateX(-50%) scale(.8);background:rgba(16,14,34,.94);border:1.5px solid var(--amber);color:#fff;font-weight:900;padding:12px 22px;border-radius:18px;z-index:40;opacity:0;pointer-events:none;transition:all .3s;letter-spacing:.5px;font-size:15px;text-align:center}
+.toast.show{opacity:1;transform:translateX(-50%) scale(1)}
+.pt{position:fixed;width:7px;height:7px;border-radius:50%;pointer-events:none;z-index:50;animation:ptFly .55s ease-out both}
+@keyframes ptFly{to{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
+.card-front.gold{background:linear-gradient(160deg,#fff6d8,#ffd97a);border-color:#ffb800;box-shadow:0 0 16px rgba(255,190,50,.55)}
+.card-front.bomb{background:linear-gradient(160deg,#ffe2dc,#ff9d8f);border-color:#ff5c5c;box-shadow:0 0 14px rgba(255,90,80,.45)}
+.card-front.shuf{background:linear-gradient(160deg,#efe2ff,#c9a8ff);border-color:#9B6BFF;box-shadow:0 0 14px rgba(155,107,255,.5)}
+.card-front.peek{background:linear-gradient(160deg,#dcf6ff,#9fe3ff);border-color:#3AC6E8;box-shadow:0 0 14px rgba(58,198,232,.5)}
+.card.spinX{animation:spinX .6s ease}
+.card.wiggle{animation:wig .45s ease}
+@keyframes wig{25%{transform:rotate(-6deg) scale(1.05)}75%{transform:rotate(6deg) scale(1.05)}}
+@keyframes spinX{to{transform:rotate(360deg)}}
+/* ---- Dyqani ---- */
+#storeScreen{justify-content:flex-start;padding-top:max(20px, env(safe-area-inset-top))}
+.coin-pill{display:flex;align-items:center;gap:5px;background:rgba(14,12,30,.6);padding:8px 13px;border-radius:18px;font-weight:900;font-size:13px;white-space:nowrap}
+.menu-eco{display:flex;gap:10px;margin-top:10px}
+.store-list{display:flex;flex-direction:column;gap:9px;width:100%;max-width:390px;overflow-y:auto;padding-bottom:24px}
+.store-sec{font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.5);font-weight:800;margin:10px 2px 0}
+.store-row{display:flex;align-items:center;gap:12px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px 14px}
+.store-em{font-size:27px;width:42px;text-align:center;flex-shrink:0}
+.store-info{flex:1;min-width:0}
+.store-name{font-weight:900;font-size:14px}
+.store-sub{font-size:11px;color:rgba(255,255,255,.5);font-weight:700}
+.btn-mini{border:none;border-radius:12px;padding:10px 13px;font-family:'Nunito';font-weight:900;font-size:12px;cursor:pointer;background:linear-gradient(180deg,var(--amber2),var(--amber));color:#1a1410;white-space:nowrap;transition:transform .15s}
+.btn-mini:active{transform:scale(.93)}
+.btn-mini.ghost{background:rgba(255,255,255,.1);color:var(--amber2);border:1px solid rgba(232,161,58,.5)}
+.btn-mini.inuse{background:rgba(126,217,87,.18);color:#7ED957;border:1px solid rgba(126,217,87,.5)}
+.btn-mini.ap{background:#000;color:#fff;border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;gap:5px}
+.store-note{font-size:10px;color:rgba(255,255,255,.4);text-align:center;font-weight:700;margin-top:6px}
+/* ---- Format e kartave (skins) ---- */
+body[data-skin="sharp"] .card-face,body[data-skin="sharp"] .dc-b,body[data-skin="sharp"] .dc-f{border-radius:3px}
+body[data-skin="pill"] .card-face,body[data-skin="pill"] .dc-b,body[data-skin="pill"] .dc-f{border-radius:28px}
+body[data-skin="gold"] .card-back-face{background:linear-gradient(160deg,#3a2a08,#6b4a12);border-color:#ffd166;color:#ffd166}
+body[data-skin="neonc"] .card-back-face{background:#08131f;border-color:#2de2ff;color:#2de2ff;box-shadow:0 0 14px rgba(45,226,255,.4)}
+/* ---- Sfondet e blera ---- */
+body[data-bg="sunset"]{background:radial-gradient(ellipse 130% 50% at 50% 62%, rgba(255,180,90,.25), transparent 55%),linear-gradient(180deg,#141b4d 0%,#3a2d7d 26%,#8b3f9e 48%,#d95c63 66%,#f2934e 82%,#ffc46b 100%)}
+body[data-bg="forest"]{background:radial-gradient(ellipse 85% 55% at 20% 12%, rgba(90,200,120,.16), transparent 60%),linear-gradient(165deg,#0a1f14 0%,#12321f 40%,#1a3d24 70%,#0e2415 100%)}
+body[data-bg="ocean"]{background:radial-gradient(ellipse 85% 55% at 80% 15%, rgba(60,180,230,.18), transparent 60%),linear-gradient(165deg,#06182e 0%,#0b2b4a 40%,#0e3a5c 70%,#082238 100%)}
+body[data-bg="neonw"]{background:radial-gradient(ellipse 80% 50% at 25% 15%, rgba(255,60,180,.20), transparent 60%),radial-gradient(ellipse 70% 50% at 85% 80%, rgba(60,220,255,.16), transparent 60%),linear-gradient(165deg,#160822 0%,#2a0e3d 40%,#3d1050 70%,#1c0830 100%)}
+/* ---- Dueli ---- */
+.opp-bar{display:none;align-items:center;justify-content:space-between;width:100%;max-width:420px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:9px 14px;font-weight:800;font-size:13px;margin-bottom:8px;gap:10px}
+#countOverlay{position:absolute;inset:0;background:rgba(5,6,12,.88);z-index:26;display:none;align-items:center;justify-content:center}
+#countOverlay.show{display:flex}
+.count-num{font-size:96px;font-weight:900;color:var(--amber2);text-shadow:0 0 44px rgba(232,161,58,.6)}
+.duel-table{border-collapse:collapse;background:rgba(14,12,30,.65);border-radius:14px;overflow:hidden;font-size:14px;font-weight:700;min-width:270px}
+.duel-table th,.duel-table td{padding:9px 16px;border-bottom:1px solid rgba(255,255,255,.08);text-align:center}
+.duel-table th{color:var(--amber2);font-size:12px;letter-spacing:1px}
+.duel-table td:first-child{color:rgba(255,255,255,.6);text-align:left;font-size:12px}
+#duelCodeInput{text-align:center;font-size:26px;font-weight:900;letter-spacing:10px;background:rgba(14,12,30,.6);border:1.5px solid rgba(232,161,58,.5);border-radius:14px;color:#fff;padding:12px;width:200px;font-family:'Nunito';outline:none}
+#duelScreen{justify-content:flex-start;padding-top:max(20px, env(safe-area-inset-top))}
+/* ---- Help / Reklama ---- */
+#helpScreen{justify-content:flex-start;padding-top:max(16px, env(safe-area-inset-top))}
+.help-wrap{width:100%;max-width:400px;overflow-y:auto;padding:6px 2px 30px;text-align:center}
+.help-sec{padding:26px 6px;border-bottom:1px solid rgba(255,255,255,.07)}
+.help-sec:last-child{border-bottom:none}
+.help-h{font-weight:900;font-size:24px;letter-spacing:1.5px;line-height:1.25;margin-bottom:10px}
+.help-h .grad{background:linear-gradient(90deg,var(--amber2),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent}
+.help-copy{font-size:14px;font-weight:700;line-height:1.6;color:rgba(255,255,255,.8)}
+.help-red{color:#FF6B5E}
+.split{display:flex;gap:10px;margin-top:18px}
+.out{flex:1;border-radius:16px;padding:16px 10px;font-weight:900;font-size:13px}
+.out .big{font-size:28px;display:block;margin-bottom:4px}
+.out small{display:block;font-size:10px;font-weight:800;opacity:.85;margin-top:3px;letter-spacing:1px}
+.out.win{background:rgba(126,217,87,.12);border:1.5px solid rgba(126,217,87,.5);color:#9CEE7A}
+.out.lose{background:rgba(255,92,92,.12);border:1.5px solid rgba(255,92,92,.5);color:#FF8A7E}
+.dc-f.goldf{background:linear-gradient(160deg,#fff6d8,#ffd97a);border-color:#ffb800;box-shadow:0 0 16px rgba(255,190,50,.55)}
+.dc-f.bombf{background:linear-gradient(160deg,#ffe2dc,#ff9d8f);border-color:#FF5C5C;box-shadow:0 0 14px rgba(255,90,80,.5)}
+.sea-strip{display:flex;gap:6px;justify-content:center;flex-wrap:wrap;margin-top:16px}
+.sea{width:66px;border-radius:14px;padding:10px 4px;font-weight:900;font-size:9px;letter-spacing:1px;background:rgba(14,12,30,.55);border:1.5px solid var(--sc)}
+.sea span{display:block;font-size:21px;margin-bottom:4px;filter:drop-shadow(0 0 7px var(--sc))}
+.help-table{border-collapse:collapse;background:rgba(14,12,30,.65);border-radius:14px;overflow:hidden;font-size:13px;font-weight:800;margin:16px auto 0;min-width:250px}
+.help-table th,.help-table td{padding:8px 12px;border-bottom:1px solid rgba(255,255,255,.08);text-align:center}
+.help-table th{color:var(--amber2);font-size:11px;letter-spacing:1px}
+.help-table td:first-child{color:rgba(255,255,255,.55);font-size:11px;text-align:left}
+/* ---- Tutoriali interaktiv ---- */
+.coach{position:fixed;left:50%;bottom:16px;transform:translateX(-50%) translateY(150%);width:calc(100% - 32px);max-width:380px;background:#1c1e2e;border:1.5px solid var(--amber);border-radius:18px;padding:15px 16px;z-index:24;box-shadow:0 16px 44px rgba(0,0,0,.55);transition:transform .35s ease;display:flex;flex-direction:column;gap:11px;text-align:center}
+.coach.show{transform:translateX(-50%) translateY(0)}
+.coach-text{font-weight:800;font-size:14px;line-height:1.55}
+.coach-cards{display:none;gap:9px;justify-content:center}
+.coach-cards.show{display:flex}
+.mini-card{width:56px;height:72px;border-radius:11px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;font-size:21px;border:2px solid;box-shadow:0 5px 12px rgba(0,0,0,.4)}
+.mini-card small{font-size:8.5px;font-weight:900;letter-spacing:.5px;color:#2a2010}
+.mini-gold{background:linear-gradient(160deg,#fff6d8,#ffd97a);border-color:#ffb800;box-shadow:0 0 12px rgba(255,190,50,.5)}
+.mini-bomb{background:linear-gradient(160deg,#ffe2dc,#ff9d8f);border-color:#ff5c5c;box-shadow:0 0 10px rgba(255,90,80,.45)}
+.mini-shuf{background:linear-gradient(160deg,#efe2ff,#c9a8ff);border-color:#9B6BFF;box-shadow:0 0 10px rgba(155,107,255,.45)}
+.mini-peek{background:linear-gradient(160deg,#dcf6ff,#9fe3ff);border-color:#3AC6E8;box-shadow:0 0 10px rgba(58,198,232,.45)}
+.coach-cards.show .mini-card{animation:pop .45s cubic-bezier(.2,1.5,.4,1) both}
+.coach-cards.show .mini-card:nth-child(2){animation-delay:.12s}
+.coach-cards.show .mini-card:nth-child(3){animation-delay:.24s}
+.coach-cards.show .mini-card:nth-child(4){animation-delay:.36s}
+#coachBtn{align-self:center;padding:11px 28px;border:none;border-radius:13px;font-family:'Nunito';font-weight:900;font-size:13px;letter-spacing:1px;background:linear-gradient(180deg,var(--amber2),var(--amber));color:#1a1410;cursor:pointer}
+.hl{box-shadow:0 0 0 3px var(--amber2),0 0 22px rgba(255,209,102,.7)!important;z-index:23;position:relative}
+/* ---- Dialogu ---- */
+#quitDialog,#surePopup,#tutAsk,#premiumSheet{position:absolute;inset:0;background:rgba(0,0,0,.7);z-index:20;display:none;align-items:center;justify-content:center;padding:32px}
+#quitDialog.show,#surePopup.show,#tutAsk.show,#premiumSheet.show{display:flex}
+.dialog-box{background:#1c1e2e;border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:26px;text-align:center;max-width:300px}
+.dialog-box h3{margin-bottom:8px}
+.dialog-box p{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:20px}
+.dialog-btns{display:flex;gap:10px}
+.dialog-btns .btn{width:auto;flex:1;padding:12px;font-size:13px}
+</style>
+</head>
+<body>
+
+<div class="glow glow1"></div>
+<div class="glow glow2"></div>
+<div id="stars"></div>
+<span class="float-emoji" style="top:13%;left:8%">🚗</span>
+<span class="float-emoji" style="top:22%;right:10%;animation-delay:1s">🏎️</span>
+<span class="float-emoji" style="top:45%;left:15%;animation-delay:2s">🛞</span>
+
+<svg style="display:none">
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-gear" viewBox="0 0 24 24"><circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 1 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 1 1-4 0v-.09a1.65 1.65 0 0 0-1-1.51 1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 1 1-2.83-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 1 1 0-4h.09a1.65 1.65 0 0 0 1.51-1 1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 1 1 2.83-2.83l.06.06a1.65 1.65 0 0 0 1.82.33h0a1.65 1.65 0 0 0 1-1.51V3a2 2 0 1 1 4 0v.09a1.65 1.65 0 0 0 1 1.51h0a1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 1 1 2.83 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82v0a1.65 1.65 0 0 0 1.51 1H21a2 2 0 1 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/></symbol>
+  <symbol id="i-back" viewBox="0 0 24 24"><path d="M15 18l-6-6 6-6"/></symbol>
+  <symbol id="i-refresh" viewBox="0 0 24 24"><path d="M23 4v6h-6"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></symbol>
+  <symbol id="i-home" viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/></symbol>
+  <symbol id="i-lock" viewBox="0 0 24 24"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></symbol>
+  <symbol id="i-star" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01z" fill="currentColor" stroke="none"/></symbol>
+  <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+  <symbol id="i-fuel" viewBox="0 0 24 24"><path d="M3 22V6a2 2 0 0 1 2-2h6a2 2 0 0 1 2 2v16"/><path d="M3 22h10"/><path d="M13 10h2a2 2 0 0 1 2 2v5a1.5 1.5 0 0 0 3 0V9l-3-3"/><path d="M5 9h6"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6L9 17l-5-5"/></symbol>
+  <symbol id="i-music" viewBox="0 0 24 24"><path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/></symbol>
+  <symbol id="i-speaker" viewBox="0 0 24 24"><path d="M11 5L6 9H2v6h4l5 4z" fill="currentColor" stroke="none"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></symbol>
+  <symbol id="i-vibrate" viewBox="0 0 24 24"><rect x="8" y="3" width="8" height="18" rx="2"/><path d="M4 8v8M20 8v8M1 10v4M23 10v4"/></symbol>
+  <symbol id="i-next" viewBox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"/></symbol>
+  <symbol id="i-grid" viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></symbol>
+  <symbol id="i-cart" viewBox="0 0 24 24"><circle cx="9" cy="21" r="1.6"/><circle cx="19" cy="21" r="1.6"/><path d="M1 1h4l2.6 13.4a2 2 0 0 0 2 1.6h9.7a2 2 0 0 0 2-1.6L23 6H6"/></symbol>
+  <symbol id="i-wheel" viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.5"/><path d="M12 3v6.5M12 14.5V21M3.5 9.5l6 2M20.5 9.5l-6 2"/></symbol>
+</svg>
+
+<!-- REGJISTRIMI -->
+<div class="screen" id="registerScreen">
+  <div class="panel" style="max-width:340px">
+    <h2>👤 <span data-i18n="regTitle"></span></h2>
+    <div class="store-sub" style="text-align:center;margin-bottom:14px" data-i18n="regSub"></div>
+    <input id="regName" maxlength="12" placeholder="Racer...">
+    <div class="section-title" data-i18n="avatarLbl"></div>
+    <div class="avatar-grid" id="regAvatarGrid" style="margin-top:8px"></div>
+    <button class="btn btn-primary" style="width:100%;margin-top:20px" id="regBtn">
+      <svg class="ic"><use href="#i-check"/></svg><span data-i18n="regGo"></span>
+    </button>
+  </div>
+</div>
+
+<!-- SPLASH -->
+<div class="screen active" id="splashScreen">
+  <div class="logo-flag">🏁</div>
+  <div class="title">MEMORY DRIVE</div>
+  <div class="subtitle" data-i18n="subtitle"></div>
+</div>
+
+<!-- INTRO / TUTORIAL -->
+<div class="screen" id="introScreen">
+  <div class="tut-slide active" id="tut0">
+    <div class="tut-visual">
+      <div class="demo-pair">
+        <div class="demo-card d1"><div class="dc-in"><div class="dc-b"><svg class="ic" style="stroke-width:1.8"><use href="#i-wheel"/></svg></div><div class="dc-f">🚗</div></div></div>
+        <div class="demo-card d2"><div class="dc-in"><div class="dc-b"><svg class="ic" style="stroke-width:1.8"><use href="#i-wheel"/></svg></div><div class="dc-f">🚗</div></div></div>
+      </div>
+    </div>
+    <div class="tut-title" data-i18n="tut1t"></div>
+    <div class="tut-desc" data-i18n="tut1d"></div>
+  </div>
+  <div class="tut-slide" id="tut1">
+    <div class="tut-visual">
+      <div class="demo-fuel">
+        <div class="fuel-pill"><svg class="ic"><use href="#i-fuel"/></svg><span>12</span></div>
+        <div class="fuel-bar"><div class="fuel-fill"></div></div>
+      </div>
+    </div>
+    <div class="tut-title" data-i18n="tut2t"></div>
+    <div class="tut-desc" data-i18n="tut2d"></div>
+  </div>
+  <div class="tut-slide" id="tut2">
+    <div class="tut-visual">
+      <div class="demo-sure">
+        <div class="ds-q">Are you sure? 🤔</div>
+        <div class="ds-stakes">✔ = +2 ⛽ &nbsp;•&nbsp; ✘ = 💀 LOSE!</div>
+        <div class="ds-btns"><span class="ds-yes">I'M SURE!</span><span class="ds-no">CHANGE</span></div>
+      </div>
+    </div>
+    <div class="tut-title" data-i18n="tutBt"></div>
+    <div class="tut-desc" data-i18n="tutBd"></div>
+  </div>
+  <div class="tut-slide" id="tut3">
+    <div class="tut-visual">
+      <div class="demo-starwrap">
+        <div class="demo-stars">
+          <svg class="ic"><use href="#i-star"/></svg>
+          <svg class="ic"><use href="#i-star"/></svg>
+          <svg class="ic"><use href="#i-star"/></svg>
+        </div>
+        <div class="demo-seasons">🔧 🚦 🌄 🌙 🏆</div>
+      </div>
+    </div>
+    <div class="tut-title" data-i18n="tut3t"></div>
+    <div class="tut-desc" data-i18n="tut3d"></div>
+  </div>
+  <div class="tut-dots"><span class="dot on"></span><span class="dot"></span><span class="dot"></span><span class="dot"></span></div>
+  <button class="btn btn-primary" id="introBtn" style="margin-top:6px">
+    <span id="introBtnLbl"></span><svg class="ic"><use href="#i-next"/></svg>
+  </button>
+</div>
+
+<!-- MENYJA -->
+<div class="screen" id="menuScreen">
+  <div style="font-size:58px;animation:wobble 1.6s ease-in-out infinite alternate;filter:drop-shadow(0 0 18px rgba(232,161,58,.45))">🏁</div>
+  <div class="title" style="font-size:31px">MEMORY DRIVE</div>
+  <div class="total-stars" id="totalStars"></div>
+  <div class="menu-eco">
+    <div class="coin-pill" id="menuProfile" style="border:1.5px solid rgba(232,161,58,.5)">🚗</div>
+    <div class="coin-pill" id="menuCoins">🪙 0</div>
+    <div class="coin-pill" id="menuBest">🏆 0</div>
+  </div>
+  <div class="menu-btns">
+    <button class="btn btn-primary" onclick="playNext()">
+      <svg class="ic"><use href="#i-play"/></svg><span data-i18n="play"></span>
+    </button>
+    <button class="btn btn-ghost" onclick="playTap();openDuel()">
+      <span style="font-size:17px">🆚</span><span data-i18n="duel"></span>
+    </button>
+    <button class="btn btn-ghost" onclick="playTap();renderSeasons();showScreen('seasonsScreen')">
+      <svg class="ic"><use href="#i-grid"/></svg><span data-i18n="seasons"></span>
+    </button>
+    <button class="btn btn-ghost" onclick="playTap();renderStore();showScreen('storeScreen')">
+      <svg class="ic"><use href="#i-cart"/></svg><span data-i18n="store"></span>
+    </button>
+    <button class="btn btn-ghost" onclick="playTap();showScreen('settingsScreen')">
+      <svg class="ic"><use href="#i-gear"/></svg><span data-i18n="settings"></span>
+    </button>
+  </div>
+</div>
+
+<!-- SEZONET -->
+<div class="screen" id="seasonsScreen">
+  <div class="page-head">
+    <button class="hud-btn" onclick="playTap();showScreen('menuScreen')"><svg class="ic"><use href="#i-back"/></svg></button>
+    <div class="page-title" data-i18n="seasons"></div>
+    <div style="width:42px"></div>
+  </div>
+  <div class="season-list" id="seasonList"></div>
+</div>
+
+<!-- NIVELET E SEZONIT -->
+<div class="screen" id="levelsScreen">
+  <div class="page-head">
+    <button class="hud-btn" onclick="playTap();renderSeasons();showScreen('seasonsScreen')"><svg class="ic"><use href="#i-back"/></svg></button>
+    <div class="page-title" id="levelsTitle"></div>
+    <div style="width:42px"></div>
+  </div>
+  <div class="level-grid" id="levelGrid"></div>
+</div>
+
+<!-- DUELI -->
+<div class="screen" id="duelScreen">
+  <div class="page-head">
+    <button class="hud-btn" onclick="playTap();cancelDuel()"><svg class="ic"><use href="#i-back"/></svg></button>
+    <div class="page-title" data-i18n="duel"></div>
+    <div class="coin-pill" id="duelCoins">🪙 0</div>
+  </div>
+  <div id="duelHome" style="display:flex;flex-direction:column;gap:14px;align-items:center;width:100%;max-width:320px;margin-top:12px">
+    <div style="font-size:54px">🆚</div>
+    <div class="store-sub" style="text-align:center;font-size:13px" data-i18n="betLbl"></div>
+    <button class="btn btn-primary" style="width:100%" onclick="playTap();createRoom()">
+      <svg class="ic"><use href="#i-play"/></svg><span data-i18n="createRoom"></span>
+    </button>
+    <input id="duelCodeInput" inputmode="numeric" maxlength="4" placeholder="0000">
+    <button class="btn btn-ghost" style="width:100%" onclick="playTap();joinWithCode()">
+      <span data-i18n="joinCode"></span>
+    </button>
+    <button class="btn btn-ghost" style="width:100%" onclick="playTap();randomMatch()">
+      <span style="font-size:16px">🎲</span><span data-i18n="randomMatch"></span>
+    </button>
+    <div class="store-note" data-i18n="duelNote"></div>
+  </div>
+  <div id="duelWait" style="display:none;flex-direction:column;gap:14px;align-items:center;margin-top:36px">
+    <div class="store-sub" data-i18n="roomCode"></div>
+    <div id="duelCodeBig" style="font-size:58px;font-weight:900;letter-spacing:14px;color:var(--amber2);text-shadow:0 0 24px rgba(232,161,58,.5)"></div>
+    <div class="store-sub" data-i18n="shareCode"></div>
+    <div id="duelWaitMsg" style="font-weight:800;margin-top:10px;color:rgba(255,255,255,.8)">…</div>
+    <button class="btn btn-danger" style="margin-top:10px" onclick="playTap();cancelDuel()"><span data-i18n="cancel"></span></button>
+  </div>
+</div>
+
+<!-- DYQANI -->
+<div class="screen" id="storeScreen">
+  <div class="page-head">
+    <button class="hud-btn" onclick="playTap();showScreen('menuScreen')"><svg class="ic"><use href="#i-back"/></svg></button>
+    <div class="page-title" data-i18n="store"></div>
+    <div class="coin-pill" id="storeCoins">🪙 0</div>
+  </div>
+  <div class="store-list" id="storeList"></div>
+</div>
+
+<!-- HELP / REKLAMA -->
+<div class="screen" id="helpScreen">
+  <div class="page-head">
+    <button class="hud-btn" onclick="playTap();showScreen('settingsScreen')"><svg class="ic"><use href="#i-back"/></svg></button>
+    <div class="page-title" data-i18n="howTo"></div>
+    <div style="width:42px"></div>
+  </div>
+  <div class="help-wrap">
+
+    <div class="help-sec">
+      <div style="font-size:46px;animation:wobble 1.8s ease-in-out infinite alternate">🏁</div>
+      <div class="help-h grad" style="font-size:28px;letter-spacing:4px">MEMORY DRIVE</div>
+      <div class="help-copy" style="font-size:16px;font-weight:900"><span data-i18n="adTagline"></span></div>
+      <div class="demo-pair" style="margin-top:18px;transform:scale(.85)">
+        <div class="demo-card d1"><div class="dc-in"><div class="dc-b"><svg class="ic" style="stroke-width:1.8"><use href="#i-wheel"/></svg></div><div class="dc-f">🚗</div></div></div>
+        <div class="demo-card d2"><div class="dc-in"><div class="dc-b"><svg class="ic" style="stroke-width:1.8"><use href="#i-wheel"/></svg></div><div class="dc-f">🚗</div></div></div>
+      </div>
+    </div>
+
+    <div class="help-sec">
+      <div class="help-h" data-i18n="adSureH"></div>
+      <div class="demo-sure" style="margin:14px auto 0">
+        <div class="ds-q">Are you sure? 🤔</div>
+        <div class="ds-stakes">✔ = +2 ⛽ &nbsp;•&nbsp; ✘ = 💀</div>
+        <div class="ds-btns"><span class="ds-yes">I'M SURE!</span><span class="ds-no">CHANGE</span></div>
+      </div>
+      <div class="split">
+        <div class="out win"><span class="big">😎</span><span data-i18n="adWin"></span><small>+2 ⛽</small></div>
+        <div class="out lose"><span class="big">💀</span><span data-i18n="adLose"></span><small data-i18n="adLoseSub"></small></div>
+      </div>
+    </div>
+
+    <div class="help-sec">
+      <div class="help-h"><span data-i18n="adTrapsH"></span></div>
+      <div class="help-copy" data-i18n="adTrapsCopy"></div>
+      <div class="demo-pair" style="margin-top:18px;transform:scale(.85)">
+        <div class="demo-card d1"><div class="dc-in"><div class="dc-b"><svg class="ic" style="stroke-width:1.8"><use href="#i-wheel"/></svg></div><div class="dc-f goldf">🔑</div></div></div>
+        <div class="demo-card d2"><div class="dc-in"><div class="dc-b"><svg class="ic" style="stroke-width:1.8"><use href="#i-wheel"/></svg></div><div class="dc-f bombf">🚓</div></div></div>
+      </div>
+      <div class="split">
+        <div class="out win"><span class="big">✨</span><span data-i18n="goldenLbl"></span><small>+3 ⛽ &nbsp;+20 🪙</small></div>
+        <div class="out lose"><span class="big">💥</span><span data-i18n="bombLbl"></span><small>−2 ⛽</small></div>
+      </div>
+      <div class="split">
+        <div class="out" style="background:rgba(155,107,255,.12);border:1.5px solid rgba(155,107,255,.5);color:#C9A8FF"><span class="big">🔀</span><span data-i18n="shufLbl"></span><small data-i18n="shufSub"></small></div>
+        <div class="out" style="background:rgba(58,198,232,.12);border:1.5px solid rgba(58,198,232,.5);color:#8FDFFF"><span class="big">👁</span><span data-i18n="peekLbl"></span><small data-i18n="peekSub"></small></div>
+      </div>
+      <div class="help-copy" style="margin-top:16px" data-i18n="adFuelNote"></div>
+    </div>
+
+    <div class="help-sec">
+      <div class="help-h grad" data-i18n="adWorldH"></div>
+      <div class="sea-strip">
+        <div class="sea" style="--sc:#E8A13A"><span>🔧</span>GARAGE</div>
+        <div class="sea" style="--sc:#3AC6E8"><span>🚦</span>CITY</div>
+        <div class="sea" style="--sc:#7ED957"><span>🌄</span>HIGHWAY</div>
+        <div class="sea" style="--sc:#9B6BFF"><span>🌙</span>NIGHT</div>
+        <div class="sea" style="--sc:#FF5C5C"><span>🏆</span>RACE</div>
+      </div>
+    </div>
+
+    <div class="help-sec">
+      <div class="help-h"><span data-i18n="adDuelH"></span></div>
+      <div class="help-copy" data-i18n="betLbl"></div>
+      <table class="help-table">
+        <tr><th></th><th><span data-i18n="youLbl"></span> 🏆</th><th>ALEX</th></tr>
+        <tr><td data-i18n="resTime"></td><td><b>00:42</b></td><td>00:57</td></tr>
+        <tr><td data-i18n="resMistakes"></td><td><b>2</b></td><td>6</td></tr>
+        <tr><td>🪙</td><td><b style="color:#FFD166">+100</b></td><td>—</td></tr>
+      </table>
+    </div>
+
+    <div class="help-sec" style="display:flex;flex-direction:column;gap:12px;align-items:center">
+      <button class="btn btn-primary" onclick="playTap();startTutorial()">
+        <span style="font-size:16px">🎓</span><span data-i18n="tutorialBtn"></span>
+      </button>
+      <button class="btn btn-ghost" onclick="playTap();showScreen('menuScreen')">
+        <svg class="ic"><use href="#i-check"/></svg><span data-i18n="close"></span>
+      </button>
+    </div>
+
+  </div>
+</div>
+
+<!-- CILËSIMET -->
+<div class="screen" id="settingsScreen">
+  <div class="panel">
+    <h2><svg class="ic"><use href="#i-gear"/></svg><span data-i18n="settings"></span></h2>
+    <div class="section-title" data-i18n="secProfile"></div>
+    <div class="set-row" style="flex-direction:column;align-items:stretch;gap:10px">
+      <span class="set-label"><span style="font-size:16px">😎</span><span data-i18n="avatarLbl"></span></span>
+      <div class="avatar-grid" id="avatarGrid"></div>
+    </div>
+    <div class="set-row">
+      <span class="set-label"><span style="font-size:16px" id="rankEmoji">🐣</span><span data-i18n="rankLbl"></span></span>
+      <b id="rankVal" style="color:var(--amber2);font-size:13px"></b>
+    </div>
+    <div class="set-row">
+      <span class="set-label"><span style="font-size:16px">👑</span><span data-i18n="premiumLbl"></span></span>
+      <button class="btn-mini" id="premiumBtn" onclick="openPremiumSheet()">👑 €4,99</button>
+    </div>
+    <div class="section-title" data-i18n="secSound"></div>
+    <div class="set-row">
+      <span class="set-label"><svg class="ic"><use href="#i-speaker"/></svg><span data-i18n="sfx"></span></span>
+      <div class="toggle on" id="tglSfx" onclick="toggleSet('sfx',this)"></div>
+    </div>
+    <div class="set-row">
+      <span class="set-label"><svg class="ic"><use href="#i-vibrate"/></svg><span data-i18n="haptics"></span></span>
+      <div class="toggle on" id="tglHaptic" onclick="toggleSet('haptic',this)"></div>
+    </div>
+    <div class="set-row" style="cursor:pointer" onclick="playTap();showScreen('helpScreen')">
+      <span class="set-label"><span style="font-size:17px">❓</span><span data-i18n="howTo"></span></span>
+      <svg class="ic" style="color:var(--amber)"><use href="#i-next"/></svg>
+    </div>
+    <div class="section-title" data-i18n="secLang"></div>
+    <div class="lang-group">
+      <button class="lang-btn" data-lang="sq" onclick="setLang('sq')"><span class="flag">🇦🇱</span>Shqip</button>
+      <button class="lang-btn" data-lang="en" onclick="setLang('en')"><span class="flag">🇬🇧</span>English</button>
+      <button class="lang-btn" data-lang="sl" onclick="setLang('sl')"><span class="flag">🇸🇮</span>Slovenščina</button>
+    </div>
+    <button class="btn btn-primary" style="width:100%;margin-top:22px" onclick="playTap();showScreen('menuScreen')">
+      <svg class="ic"><use href="#i-check"/></svg><span data-i18n="close"></span>
+    </button>
+  </div>
+</div>
+
+<!-- LOJA -->
+<div class="screen" id="gameScreen">
+  <div class="hud">
+    <button class="hud-btn" onclick="playTap();document.getElementById('quitDialog').classList.add('show')"><svg class="ic"><use href="#i-back"/></svg></button>
+    <div class="stats">
+      <div class="stat" id="fuelStat"><svg class="ic"><use href="#i-fuel"/></svg><span id="statFuel">0</span></div>
+      <div class="stat"><svg class="ic"><use href="#i-clock"/></svg><span id="statTime">00:00</span></div>
+      <div class="stat" id="pairsStat"><svg class="ic"><use href="#i-check"/></svg><span id="statPairs">0/0</span></div>
+    </div>
+    <button class="hud-btn" onclick="playTap();startLevel(currentLevel)"><svg class="ic"><use href="#i-refresh"/></svg></button>
+  </div>
+  <div class="level-badge" id="levelBadge"></div>
+  <div class="opp-bar" id="oppBar"></div>
+  <div id="board"></div>
+</div>
+
+<!-- FITORJA -->
+<div class="overlay" id="winOverlay">
+  <div id="confettiHolder"></div>
+  <div class="big-emoji">🏆</div>
+  <div class="ov-title win" data-i18n="victory"></div>
+  <div class="win-stars" id="winStars"></div>
+  <div class="ov-stats" id="winStats"></div>
+  <button class="btn btn-primary" id="nextLevelBtn" onclick="playNextFromWin()">
+    <span data-i18n="nextLevel"></span><svg class="ic"><use href="#i-next"/></svg>
+  </button>
+  <button class="btn btn-ghost" onclick="playTap();hideOverlays();renderSeasons();showScreen('seasonsScreen')">
+    <svg class="ic"><use href="#i-grid"/></svg><span data-i18n="seasons"></span>
+  </button>
+  <button class="btn btn-ghost" onclick="playTap();startLevel(currentLevel)">
+    <svg class="ic"><use href="#i-refresh"/></svg><span data-i18n="playAgain"></span>
+  </button>
+  <button class="btn btn-ghost" onclick="playTap();hideOverlays();showScreen('menuScreen')">
+    <svg class="ic"><use href="#i-home"/></svg><span data-i18n="menu"></span>
+  </button>
+</div>
+
+<!-- HUMBJA -->
+<div class="overlay" id="loseOverlay">
+  <div class="big-emoji lose-shake">💥</div>
+  <div class="ov-title lose" data-i18n="defeat"></div>
+  <div class="ov-stats" id="loseStats"></div>
+  <button class="btn btn-primary" onclick="playTap();startLevel(currentLevel)">
+    <svg class="ic"><use href="#i-refresh"/></svg><span data-i18n="tryAgain"></span>
+  </button>
+  <button class="btn btn-ghost" onclick="playTap();hideOverlays();renderSeasons();showScreen('seasonsScreen')">
+    <svg class="ic"><use href="#i-grid"/></svg><span data-i18n="seasons"></span>
+  </button>
+  <button class="btn btn-ghost" onclick="playTap();hideOverlays();showScreen('menuScreen')">
+    <svg class="ic"><use href="#i-home"/></svg><span data-i18n="menu"></span>
+  </button>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- A JE I SIGURT? (gënjeshtra 😏) -->
+<div id="surePopup">
+  <div class="dialog-box">
+    <h3 id="sureMsg" style="font-size:17px;line-height:1.5"></h3>
+    <p style="font-size:13px;font-weight:800;color:var(--amber2);margin:10px 0 16px;line-height:1.5" id="sureHint"></p>
+    <div class="dialog-btns">
+      <button class="btn btn-primary" id="sureFlipBtn"></button>
+      <button class="btn btn-ghost" id="sureChangeBtn"></button>
+    </div>
+  </div>
+</div>
+
+<div id="countOverlay"><div class="count-num">3</div></div>
+
+<!-- REZULTATI I DUELIT -->
+<div class="overlay" id="duelResult">
+  <div class="ov-title win" id="duelResTitle"></div>
+  <div style="font-weight:900;color:var(--amber2);font-size:19px" id="duelResCoins"></div>
+  <table class="duel-table" id="duelTable"></table>
+  <button class="btn btn-primary" id="duelHomeBtn" onclick="playTap();leaveDuelIfAny();showScreen('menuScreen')">
+    <svg class="ic"><use href="#i-home"/></svg><span data-i18n="menu"></span>
+  </button>
+</div>
+
+<!-- PREMIUM SHEET -->
+<div id="premiumSheet">
+  <div class="dialog-box" style="max-width:320px">
+    <div style="font-size:46px;margin-bottom:4px">👑</div>
+    <h3 data-i18n="premiumLbl"></h3>
+    <p style="font-size:11px;color:rgba(255,255,255,.5);margin-top:4px" data-i18n="oneTime"></p>
+    <div class="pro-benefits">
+      <div class="pro-b"><span class="pe">😈</span><span data-i18n="pb1"></span></div>
+      <div class="pro-b"><span class="pe">👑</span><span data-i18n="pb2"></span></div>
+      <div class="pro-b"><span class="pe">🪙</span><span data-i18n="pb3"></span></div>
+      <div class="pro-b"><span class="pe">⛽</span><span data-i18n="pb4"></span></div>
+      <div class="pro-b"><span class="pe">🎨</span><span data-i18n="pb5"></span></div>
+    </div>
+    <button class="btn-mini ap" style="width:100%;padding:14px;font-size:14px;justify-content:center" onclick="buyPremium()">&#63743; Pay &nbsp;€4,99</button>
+    <button class="btn btn-ghost" style="width:100%;margin-top:10px;padding:12px" onclick="playTap();document.getElementById('premiumSheet').classList.remove('show')"><span data-i18n="close"></span></button>
+  </div>
+</div>
+
+<!-- PYETJA E TUTORIALIT -->
+<div id="tutAsk">
+  <div class="dialog-box">
+    <div style="font-size:44px;margin-bottom:6px">🎓</div>
+    <h3 id="tutAskT"></h3>
+    <p id="tutAskD" style="font-size:13px;color:rgba(255,255,255,.6);margin:8px 0 18px;line-height:1.5"></p>
+    <div class="dialog-btns" style="flex-direction:column">
+      <button class="btn btn-primary" id="tutYesBtn" style="width:100%"></button>
+      <button class="btn btn-ghost" id="tutLaterBtn" style="width:100%"></button>
+    </div>
+  </div>
+</div>
+
+<!-- COACH I TUTORIALIT -->
+<div class="coach" id="coach">
+  <div class="coach-text" id="coachText"></div>
+  <div class="coach-cards" id="coachCards">
+    <div class="mini-card mini-gold">✨<small>+3⛽ +20🪙</small></div>
+    <div class="mini-card mini-bomb">💥<small>−2⛽</small></div>
+    <div class="mini-card mini-shuf">🔀<small>MIX!</small></div>
+    <div class="mini-card mini-peek">👁<small>PEEK!</small></div>
+  </div>
+  <button id="coachBtn"></button>
+</div>
+
+<!-- DIALOGU -->
+<div id="quitDialog">
+  <div class="dialog-box">
+    <h3 data-i18n="quitTitle"></h3>
+    <p data-i18n="quitMsg"></p>
+    <div class="dialog-btns">
+      <button class="btn btn-ghost" onclick="playTap();document.getElementById('quitDialog').classList.remove('show')" data-i18n="quitNo"></button>
+      <button class="btn btn-danger" onclick="playTap();document.getElementById('quitDialog').classList.remove('show');stopTimer();leaveDuelIfAny();leaveTutorialIfAny();showScreen('menuScreen')" data-i18n="quitYes"></button>
+    </div>
+  </div>
+</div>
+
+<script>
+/* Fallback për browser normal (GitHub Pages): ruajtja në localStorage */
+if(!window.storage){
+  window.storage={
+    async get(k){const v=localStorage.getItem('mm:'+k);return v==null?null:{key:k,value:v}},
+    async set(k,v){localStorage.setItem('mm:'+k,v);return{key:k,value:v}},
+    async delete(k){localStorage.removeItem('mm:'+k);return{key:k,deleted:true}},
+    async list(p){const keys=[];for(let i=0;i<localStorage.length;i++){const kk=localStorage.key(i);if(kk&&kk.startsWith('mm:'+(p||'')))keys.push(kk.slice(3))}return{keys}}
+  };
+}
+</script>
+<script>
+/* ================= PËRKTHIMET ================= */
+const I18N={
+  sq:{
+    subtitle:'PËRPUTH • KUJTO • FITO',
+    intro:`Në garazhin e vjetër fshihen çifte të humbura...\n\nRruga është e gjatë: 5 sezone, 50 nivele.\n\nKarburanti është i kufizuar — çdo lëvizje kushton.\n\nSa larg mund të shkosh?`,
+    continue:'VAZHDO', tapSkip:'Prek për ta kaluar', next:'TJETRA', start:'FILLO',
+    tut1t:'Gjej Çiftet', tut1d:'Kthe dy karta njëherësh. Nëse përputhen, mbeten hapur — nëse jo, kthehen mbrapsht. Mbaj mend ku fshihet çdo simbol!',
+    tut2t:'Kujdes Karburantin', tut2d:'Çdo provë (dy karta) kushton 1 karburant. Nëse mbaron para se t\u2019i gjesh të gjitha çiftet, humbe nivelin dhe duhet ta provosh përsëri.',
+    tut3t:'Fito Yje & Eksploro', tut3d:'Sa më pak lëvizje, aq më shumë yje (deri në 3). Kalo 50 nivele nëpër 5 sezone unike — Garazhi, Qyteti, Autostrada, Nata dhe Pista!',
+    tutBt:'Loja Do të Të Sfidojë 😏', tutBd:'Ndonjëherë, para kartës së dytë, loja të pyet: "A je i sigurt?" Thua po dhe e qëllon = +2 karburant. Thua po dhe gabon = e humb nivelin menjëherë! Shumë rrezik? Shtyp NDËRRO dhe tërhiqu pa dënim.',
+    howTo:'Si luhet',
+    tutAskT:'Do të mësosh si luhet?', tutAskD:'Stërvitje interaktive 1-minutëshe — të tregoj gjithçka live, hap pas hapi.',
+    tutYes:'PO, MË TREGO!', tutLater:'MË VONË', tutStartReal:'NIS NIVELIN 1', trainingLbl:'🎓 STËRVITJE',
+    tc0:'👋 Mirë se erdhe në stërvitje! Të tregoj si punon gjithçka.',
+    tc1:'⛽ Ky është KARBURANTI. Çdo provë (dy karta) kushton 1. Nëse bie në 0 në nivel të vërtetë — humbe!',
+    tc2:'✓ Ky numërues tregon sa çifte ke gjetur nga totali.',
+    tc3:'👆 Tani kthe një kartë çfarëdo!',
+    tc4:'🧠 Tani gjeje çiftin e saj! Nëse gabon, kartat kthehen mbrapsht — mbaj mend ku janë.',
+    tc5:'✨ PERFEKT! Ky është çift — mbeten hapur përgjithmonë.',
+    tc6:'Tani kthe dy karta të tjera... diçka mund të ndodhë 😏',
+    tc7:'😏 KY ishte BASTI! Thua JAM I SIGURT: saktë = +2 ⛽, gabim = e humb nivelin MENJËHERË. (Në stërvitje je i sigurt!)',
+    tc8:'🏁 Tani mbaro çiftet e mbetura!',
+    tc9:'🎉 Stërvitja u krye! Gati për lojën e vërtetë?',
+    tc10:'🎁 Në nivelet më të mëdha fshihen edhe gracka: ✨ Çifti i artë = +3 ⛽ +20 🪙 • 💥 Bomba = −2 ⛽ • 🔀 Përzierësi i ngatërron të gjitha kartat • 👁 Shikuesi t\u2019i tregon të gjitha për një çast! Dhe në sezonet e vona, kartat ndërrojnë vendet kur gabon! 🌀',
+    comingSoon:'SË SHPEJTI', shufMsg:'🔀 PËRZIERJE! Kartat u ngatërruan!', peekMsg:'👁 SHIKIM! Mbaji mend shpejt!',
+    swapWarn:'🌀 Gabove — dy karta ndërruan vendet!',
+    shufLbl:'ÇIFTI PËRZIERËS', peekLbl:'ÇIFTI SHIKUES', shufSub:'I NGATËRRON KARTAT', peekSub:'TREGON GJITHÇKA',
+    secProfile:'PROFILI ONLINE', usernameLbl:'Emri i lojtarit', avatarLbl:'Avatari', rankLbl:'Rangu', winsLbl:'fitore',
+    premiumLbl:'Memory Drive PRO', proActive:'PRO AKTIV',
+    proOnly:'👑 Avatarët PRO hapen me Premium!', proWelcome:'👑 Mirë se erdhe në PRO! +500 🪙',
+    regTitle:'Krijo profilin', regSub:'Zgjidh emrin dhe avatarin për duelet online', regGo:'FILLO',
+    oneTime:'Blerje një herë — e jotja përgjithmonë',
+    pb1:'6 avatarë ekskluzivë', pb2:'Kurora 👑 pranë emrit online', pb3:'+500 monedha menjëherë',
+    pb4:'+1 karburant shtesë ÇDO nivel', pb5:'Skin i artë + sfondi Neon City falas',
+    adTagline:'Loja e kujtesës që të GËNJEN.', adSureH:'TË PYET: "A JE I SIGURT?" 🤔',
+    adWin:'E SAKTË', adLose:'E GABUAR', adLoseSub:'NIVELI MBARON',
+    adTrapsH:'KURTHE & THESARE', adTrapsCopy:'Dy çifte sekrete fshihen në çdo nivel. Nuk e di cilat — derisa t\u2019i hapësh!',
+    goldenLbl:'ÇIFTI I ARTË', bombLbl:'ÇIFTI BOMBË',
+    adFuelNote:'Karburanti ndryshon çdo herë — kurrë e njëjta lojë dy herë. ⛽',
+    adWorldH:'50 NIVELE. 5 SEZONE.', adDuelH:'DUEL ME SHOKUN 🆚', tutorialBtn:'TUTORIALI',
+    play:'LUAJ', seasons:'SEZONET', settings:'CILËSIMET',
+    secSound:'ZËRI', music:'Muzika', sfx:'Efektet zanore', haptics:'Vibrimet',
+    secLang:'GJUHA', close:'MBYLL',
+    level:'NIVELI', moves:'Lëvizje', time:'Koha', fuel:'Karburanti',
+    victory:'FITORE!', defeat:'HUMBJE!', outOfFuel:'T\u2019u mbarua karburanti!',
+    nextLevel:'NIVELI TJETËR', playAgain:'LUAJ PËRSËRI', tryAgain:'PROVO PËRSËRI', menu:'MENYJA',
+    quitTitle:'Dëshiron të dalësh?', quitMsg:'Progresi i këtij niveli do të humbasë.',
+    quitNo:'VAZHDO', quitYes:'DIL',
+    stars:'yje', levelsLbl:'nivele', allDone:'I përfundove të 50 nivelet! Kampion! 🏆',
+    s1:'Garazhi', s2:'Qyteti', s3:'Autostrada', s4:'Nata', s5:'Pista',
+    store:'DYQANI', best:'Rekordi', scoreLbl:'Pikët', newBest:'REKORD I RI PIKËSH!',
+    buy:'BLEJ', useIt:'PËRDORE', inUse:'NË PËRDORIM', notEnough:'S\u2019ke monedha të mjaftueshme! Shko te dyqani 🪙',
+    secCoins:'MERR MONEDHA', secFuel:'KARBURANT', secSkins:'STILI I KARTAVE', secBgs:'SFONDET',
+    fuelBoost:'Karburant +3', fuelBoostD:'Shtohet automatikisht në nivelin tjetër',
+    coinsAmt:'monedha', demoNote:'Demo — pagesa e vërtetë me Apple Pay bëhet në aplikacionin iOS',
+    purchased:'U ble! 🎉', applied:'U aktivizua ✓',
+    skClassic:'Klasike', skSharp:'Këndore', skPill:'E rrumbullakët', skGold:'E artë', skNeon:'Neon',
+    bgMid:'Mesnata', bgSun:'Perëndimi', bgForest:'Pylli', bgOcean:'Oqeani', bgNeon:'Neon City',
+    sure:['A je i sigurt për atë kartë? 🤔','Po e provon fatin? 🎲','Rrezik i madh, shofer... 😏','Kjo mund të të kushtojë shtrenjtë! 💀'],
+    sureHint:'E saktë = +2 ⛽ • E gabuar = HUMBE NIVELIN!', sureFlip:'JAM I SIGURT!', sureChange:'NDËRRO',
+    gambleWin:'😎 +2 ⛽ Guximtar dhe i saktë!', gambleLose:'Baste dhe humbe! 💀',
+    duel:'DUEL', createRoom:'KRIJO DHOMË', joinCode:'HYR ME KOD', randomMatch:'KUNDËRSHTAR I RASTIT',
+    roomCode:'KODI I DHOMËS', shareCode:'Ndaje këtë kod me shokun', waiting:'Duke pritur kundërshtarin...',
+    enterCode:'Shkruaj kodin 4-shifror!', invalidRoom:'Dhoma s\u2019u gjet!', oppFound:'Kundërshtari u gjet!',
+    betLbl:'Basti: 50 🪙 secili — fituesi merr 100 🪙', notEnoughDuel:'Të duhen 50 🪙 për duel!',
+    youLbl:'TI', oppLbl:'KUNDËRSHTARI', resTime:'Koha', resMoves:'Lëvizje', resMistakes:'Gabime', resPairs:'Çifte',
+    duelWin:'FITOVE!', duelLose:'HUMBE!', duelDraw:'BARAZIM!', wonPot:'+100 🪙', drawRefund:'+50 🪙 u kthyen',
+    duelNote:'Online demo — dhomat sinkronizohen mes lojtarëve të kësaj loje', cancel:'ANULO',
+    waitOpp:'Duke pritur kundërshtarin të mbarojë...', go:'GO!',
+    seasonDoneMsg:'SEZONI U PËRFUNDUA!', improveHint:'Përsërite nivelin me më pak lëvizje për më shumë yje!',
+    goldMsg:'✨ ÇIFT I ARTË! +3 ⛽ +20 🪙', bombMsg:'💥 BUM! -2 ⛽'
+  },
+  en:{
+    subtitle:'MATCH • REMEMBER • WIN',
+    intro:`Lost pairs are hiding in the old garage...\n\nThe road is long: 5 seasons, 50 levels.\n\nFuel is limited — every move has a cost.\n\nHow far can you go?`,
+    continue:'CONTINUE', tapSkip:'Tap to skip', next:'NEXT', start:'START',
+    tut1t:'Find the Pairs', tut1d:'Flip two cards at a time. If they match, they stay open — if not, they flip back. Remember where every symbol hides!',
+    tut2t:'Watch Your Fuel', tut2d:'Every try (two cards) costs 1 fuel. If it runs out before you find all the pairs, you lose the level and have to try again.',
+    tut3t:'Earn Stars & Explore', tut3d:'Fewer moves means more stars (up to 3). Beat 50 levels across 5 unique seasons — the Garage, the City, the Highway, the Night and the Racetrack!',
+    tutBt:'It Will Test You 😏', tutBd:'Sometimes, right before your second card, the game asks: "Are you sure?" Say yes and match = +2 fuel. Say yes and miss = you lose the level instantly! Too risky? Tap CHANGE and back out safely.',
+    howTo:'How to play',
+    tutAskT:'Learn how to play?', tutAskD:'A quick 1-minute interactive training — I\u2019ll show you everything live, step by step.',
+    tutYes:'YES, SHOW ME!', tutLater:'LATER', tutStartReal:'START LEVEL 1', trainingLbl:'🎓 TRAINING',
+    tc0:'👋 Welcome to training! Let me show you how everything works.',
+    tc1:'⛽ This is your FUEL. Every try (two cards) costs 1. If it hits 0 in a real level — you lose!',
+    tc2:'✓ This counter shows how many pairs you\u2019ve found.',
+    tc3:'👆 Now flip any card!',
+    tc4:'🧠 Now find its pair! If you miss, the cards flip back — remember where they are.',
+    tc5:'✨ PERFECT! That\u2019s a pair — they stay open forever.',
+    tc6:'Now flip two more cards... something might happen 😏',
+    tc7:'😏 THAT was the BET! Say I\u2019M SURE: right = +2 ⛽, wrong = you lose the level INSTANTLY. (In training you\u2019re safe!)',
+    tc8:'🏁 Now finish the remaining pairs!',
+    tc9:'🎉 Training complete! Ready for the real thing?',
+    tc10:'🎁 Bigger levels hide even more traps: ✨ Golden pair = +3 ⛽ +20 🪙 • 💥 Bomb = −2 ⛽ • 🔀 Shuffle mixes ALL the cards • 👁 Peek reveals everything for a moment! And in later seasons, cards swap places when you miss! 🌀',
+    comingSoon:'COMING SOON', shufMsg:'🔀 SHUFFLE! Cards mixed up!', peekMsg:'👁 PEEK! Memorize fast!',
+    swapWarn:'🌀 You missed — two cards swapped places!',
+    shufLbl:'SHUFFLE PAIR', peekLbl:'PEEK PAIR', shufSub:'MIXES ALL CARDS', peekSub:'REVEALS EVERYTHING',
+    secProfile:'ONLINE PROFILE', usernameLbl:'Username', avatarLbl:'Avatar', rankLbl:'Rank', winsLbl:'wins',
+    premiumLbl:'Memory Drive PRO', proActive:'PRO ACTIVE',
+    proOnly:'👑 PRO avatars unlock with Premium!', proWelcome:'👑 Welcome to PRO! +500 🪙',
+    regTitle:'Create your profile', regSub:'Pick a name and avatar for online duels', regGo:'START',
+    oneTime:'One-time purchase — yours forever',
+    pb1:'6 exclusive avatars', pb2:'👑 Crown by your name online', pb3:'+500 coins instantly',
+    pb4:'+1 extra fuel EVERY level', pb5:'Gold skin + Neon City background free',
+    adTagline:'The memory game that LIES to you.', adSureH:'IT ASKS: "ARE YOU SURE?" 🤔',
+    adWin:'RIGHT', adLose:'WRONG', adLoseSub:'LEVEL OVER',
+    adTrapsH:'TRAPS & TREASURE', adTrapsCopy:'Two secret pairs hide in every level. You won\u2019t know which — until you flip them!',
+    goldenLbl:'GOLDEN PAIR', bombLbl:'BOMB PAIR',
+    adFuelNote:'Fuel changes every run — never the same game twice. ⛽',
+    adWorldH:'50 LEVELS. 5 SEASONS.', adDuelH:'DUEL A FRIEND 🆚', tutorialBtn:'TUTORIAL',
+    play:'PLAY', seasons:'SEASONS', settings:'SETTINGS',
+    secSound:'SOUND', music:'Music', sfx:'Sound effects', haptics:'Vibration',
+    secLang:'LANGUAGE', close:'CLOSE',
+    level:'LEVEL', moves:'Moves', time:'Time', fuel:'Fuel',
+    victory:'VICTORY!', defeat:'YOU LOSE!', outOfFuel:'You ran out of fuel!',
+    nextLevel:'NEXT LEVEL', playAgain:'PLAY AGAIN', tryAgain:'TRY AGAIN', menu:'MENU',
+    quitTitle:'Quit this level?', quitMsg:'Your progress in this level will be lost.',
+    quitNo:'KEEP PLAYING', quitYes:'QUIT',
+    stars:'stars', levelsLbl:'levels', allDone:'You beat all 50 levels! Champion! 🏆',
+    s1:'The Garage', s2:'The City', s3:'The Highway', s4:'The Night', s5:'The Racetrack',
+    store:'STORE', best:'Best', scoreLbl:'Score', newBest:'NEW HIGH SCORE!',
+    buy:'BUY', useIt:'USE', inUse:'IN USE', notEnough:'Not enough coins! Visit the store 🪙',
+    secCoins:'GET COINS', secFuel:'FUEL', secSkins:'CARD STYLE', secBgs:'BACKGROUNDS',
+    fuelBoost:'Fuel +3', fuelBoostD:'Automatically added to your next level',
+    coinsAmt:'coins', demoNote:'Demo — real Apple Pay payments work in the iOS app',
+    purchased:'Purchased! 🎉', applied:'Applied ✓',
+    skClassic:'Classic', skSharp:'Sharp', skPill:'Rounded', skGold:'Golden', skNeon:'Neon',
+    bgMid:'Midnight', bgSun:'Sunset', bgForest:'Forest', bgOcean:'Ocean', bgNeon:'Neon City',
+    sure:['Are you sure about that card? 🤔','Feeling lucky? 🎲','Big risk, driver... 😏','This could cost you everything! 💀'],
+    sureHint:'Right = +2 ⛽ • Wrong = YOU LOSE THE LEVEL!', sureFlip:'I\u2019M SURE!', sureChange:'CHANGE',
+    gambleWin:'😎 +2 ⛽ Bold and right!', gambleLose:'You gambled and lost! 💀',
+    duel:'DUEL', createRoom:'CREATE ROOM', joinCode:'JOIN WITH CODE', randomMatch:'RANDOM OPPONENT',
+    roomCode:'ROOM CODE', shareCode:'Share this code with your friend', waiting:'Waiting for opponent...',
+    enterCode:'Enter the 4-digit code!', invalidRoom:'Room not found!', oppFound:'Opponent found!',
+    betLbl:'Bet: 50 🪙 each — winner takes 100 🪙', notEnoughDuel:'You need 50 🪙 to duel!',
+    youLbl:'YOU', oppLbl:'OPPONENT', resTime:'Time', resMoves:'Moves', resMistakes:'Mistakes', resPairs:'Pairs',
+    duelWin:'YOU WIN!', duelLose:'YOU LOSE!', duelDraw:'DRAW!', wonPot:'+100 🪙', drawRefund:'+50 🪙 refunded',
+    duelNote:'Online demo — rooms sync between players of this game', cancel:'CANCEL',
+    waitOpp:'Waiting for opponent to finish...', go:'GO!',
+    seasonDoneMsg:'SEASON COMPLETE!', improveHint:'Replay the level with fewer moves to earn more stars!',
+    goldMsg:'✨ GOLDEN PAIR! +3 ⛽ +20 🪙', bombMsg:'💥 BOOM! -2 ⛽'
+  },
+  sl:{
+    subtitle:'POVEŽI • POMNI • ZMAGAJ',
+    intro:`V stari garaži se skrivajo izgubljeni pari...\n\nPot je dolga: 5 sezon, 50 stopenj.\n\nGorivo je omejeno — vsaka poteza šteje.\n\nKako daleč lahko prideš?`,
+    continue:'NAPREJ', tapSkip:'Tapni za preskok', next:'NAPREJ', start:'ZAČNI',
+    tut1t:'Najdi pare', tut1d:'Obrni dve karti hkrati. Če se ujemata, ostaneta odprti — če ne, se obrneta nazaj. Zapomni si, kje se skriva vsak simbol!',
+    tut2t:'Pazi na gorivo', tut2d:'Vsak poskus (dve karti) stane 1 gorivo. Če ti zmanjka, preden najdeš vse pare, izgubiš stopnjo in moraš poskusiti znova.',
+    tut3t:'Zbiraj zvezdice', tut3d:'Manj potez pomeni več zvezdic (do 3). Premagaj 50 stopenj skozi 5 edinstvenih sezon — Garažo, Mesto, Avtocesto, Noč in Dirkališče!',
+    tutBt:'Igra Te Bo Preizkusila 😏', tutBd:'Včasih te igra tik pred drugo karto vpraša: "Si prepričan?" Rečeš da in zadeneš = +2 goriva. Rečeš da in zgrešiš = takoj izgubiš stopnjo! Preveč tvegano? Pritisni ZAMENJAJ in varno odstopi.',
+    howTo:'Kako igrati',
+    tutAskT:'Se naučiš igrati?', tutAskD:'Hitra 1-minutna interaktivna vadba — vse ti pokažem v živo, korak za korakom.',
+    tutYes:'JA, POKAŽI MI!', tutLater:'POZNEJE', tutStartReal:'ZAČNI STOPNJO 1', trainingLbl:'🎓 VADBA',
+    tc0:'👋 Dobrodošel v vadbi! Pokažem ti, kako vse deluje.',
+    tc1:'⛽ To je GORIVO. Vsak poskus (dve karti) stane 1. Če pade na 0 v pravi stopnji — izgubiš!',
+    tc2:'✓ Ta števec kaže, koliko parov si našel.',
+    tc3:'👆 Zdaj obrni katerokoli karto!',
+    tc4:'🧠 Zdaj najdi njen par! Če zgrešiš, se karti obrneta nazaj — zapomni si, kje sta.',
+    tc5:'✨ ODLIČNO! To je par — ostaneta odprti.',
+    tc6:'Zdaj obrni še dve karti... nekaj se lahko zgodi 😏',
+    tc7:'😏 TO je bila STAVA! Rečeš PREPRIČAN SEM: prav = +2 ⛽, narobe = TAKOJ izgubiš stopnjo. (V vadbi si varen!)',
+    tc8:'🏁 Zdaj dokončaj preostale pare!',
+    tc9:'🎉 Vadba končana! Pripravljen na pravo igro?',
+    tc10:'🎁 Večje stopnje skrivajo še več pasti: ✨ Zlati par = +3 ⛽ +20 🪙 • 💥 Bomba = −2 ⛽ • 🔀 Mešanje premeša VSE karte • 👁 Pogled vse pokaže za trenutek! V poznejših sezonah pa karte ob napaki zamenjajo mesta! 🌀',
+    comingSoon:'KMALU', shufMsg:'🔀 MEŠANJE! Karte premešane!', peekMsg:'👁 POGLED! Hitro si zapomni!',
+    swapWarn:'🌀 Zgrešil si — dve karti sta zamenjali mesti!',
+    shufLbl:'PAR MEŠANJA', peekLbl:'PAR POGLEDA', shufSub:'PREMEŠA KARTE', peekSub:'POKAŽE VSE',
+    secProfile:'SPLETNI PROFIL', usernameLbl:'Uporabniško ime', avatarLbl:'Avatar', rankLbl:'Rang', winsLbl:'zmag',
+    premiumLbl:'Memory Drive PRO', proActive:'PRO AKTIVEN',
+    proOnly:'👑 PRO avatarji se odklenejo s Premium!', proWelcome:'👑 Dobrodošel v PRO! +500 🪙',
+    regTitle:'Ustvari profil', regSub:'Izberi ime in avatarja za spletne dvoboje', regGo:'ZAČNI',
+    oneTime:'Enkraten nakup — tvoj za vedno',
+    pb1:'6 ekskluzivnih avatarjev', pb2:'Krona 👑 ob imenu na spletu', pb3:'+500 kovancev takoj',
+    pb4:'+1 dodatnega goriva VSAKO stopnjo', pb5:'Zlati videz + ozadje Neon City brezplačno',
+    adTagline:'Igra spomina, ki ti LAŽE.', adSureH:'VPRAŠA TE: "SI PREPRIČAN?" 🤔',
+    adWin:'PRAV', adLose:'NAROBE', adLoseSub:'KONEC STOPNJE',
+    adTrapsH:'PASTI & ZAKLADI', adTrapsCopy:'V vsaki stopnji se skrivata dva skrivna para. Ne veš katera — dokler ju ne obrneš!',
+    goldenLbl:'ZLATI PAR', bombLbl:'BOMBNI PAR',
+    adFuelNote:'Gorivo se spremeni vsakič — nikoli ista igra dvakrat. ⛽',
+    adWorldH:'50 STOPENJ. 5 SEZON.', adDuelH:'DVOBOJ S PRIJATELJEM 🆚', tutorialBtn:'VODIČ',
+    play:'IGRAJ', seasons:'SEZONE', settings:'NASTAVITVE',
+    secSound:'ZVOK', music:'Glasba', sfx:'Zvočni učinki', haptics:'Vibriranje',
+    secLang:'JEZIK', close:'ZAPRI',
+    level:'STOPNJA', moves:'Poteze', time:'Čas', fuel:'Gorivo',
+    victory:'ZMAGA!', defeat:'PORAZ!', outOfFuel:'Zmanjkalo ti je goriva!',
+    nextLevel:'NASLEDNJA', playAgain:'IGRAJ ZNOVA', tryAgain:'POSKUSI ZNOVA', menu:'MENI',
+    quitTitle:'Želiš zapustiti stopnjo?', quitMsg:'Napredek te stopnje bo izgubljen.',
+    quitNo:'NADALJUJ', quitYes:'IZHOD',
+    stars:'zvezdic', levelsLbl:'stopenj', allDone:'Premagal si vseh 50 stopenj! Prvak! 🏆',
+    s1:'Garaža', s2:'Mesto', s3:'Avtocesta', s4:'Noč', s5:'Dirkališče',
+    store:'TRGOVINA', best:'Rekord', scoreLbl:'Točke', newBest:'NOV REKORD!',
+    buy:'KUPI', useIt:'UPORABI', inUse:'V UPORABI', notEnough:'Premalo kovancev! Obišči trgovino 🪙',
+    secCoins:'KOVANCI', secFuel:'GORIVO', secSkins:'SLOG KART', secBgs:'OZADJA',
+    fuelBoost:'Gorivo +3', fuelBoostD:'Samodejno dodano na naslednji stopnji',
+    coinsAmt:'kovancev', demoNote:'Demo — pravo plačilo z Apple Pay deluje v iOS aplikaciji',
+    purchased:'Kupljeno! 🎉', applied:'Aktivirano ✓',
+    skClassic:'Klasika', skSharp:'Ostri robovi', skPill:'Zaobljene', skGold:'Zlate', skNeon:'Neon',
+    bgMid:'Polnoč', bgSun:'Sončni zahod', bgForest:'Gozd', bgOcean:'Ocean', bgNeon:'Neon City',
+    sure:['Si prepričan glede te karte? 🤔','Poskušaš srečo? 🎲','Veliko tveganje, voznik... 😏','To te lahko stane vsega! 💀'],
+    sureHint:'Prav = +2 ⛽ • Narobe = IZGUBIŠ STOPNJO!', sureFlip:'PREPRIČAN SEM!', sureChange:'ZAMENJAJ',
+    gambleWin:'😎 +2 ⛽ Pogumno in pravilno!', gambleLose:'Stavil si in izgubil! 💀',
+    duel:'DVOBOJ', createRoom:'USTVARI SOBO', joinCode:'PRIDRUŽI SE S KODO', randomMatch:'NAKLJUČNI NASPROTNIK',
+    roomCode:'KODA SOBE', shareCode:'Deli to kodo s prijateljem', waiting:'Čakam nasprotnika...',
+    enterCode:'Vnesi 4-mestno kodo!', invalidRoom:'Soba ne obstaja!', oppFound:'Nasprotnik najden!',
+    betLbl:'Stava: 50 🪙 vsak — zmagovalec dobi 100 🪙', notEnoughDuel:'Potrebuješ 50 🪙 za dvoboj!',
+    youLbl:'TI', oppLbl:'NASPROTNIK', resTime:'Čas', resMoves:'Poteze', resMistakes:'Napake', resPairs:'Pari',
+    duelWin:'ZMAGAL SI!', duelLose:'IZGUBIL SI!', duelDraw:'NEODLOČENO!', wonPot:'+100 🪙', drawRefund:'+50 🪙 vrnjeno',
+    duelNote:'Spletni demo — sobe se sinhronizirajo med igralci te igre', cancel:'PREKLIČI',
+    waitOpp:'Čakam, da nasprotnik konča...', go:'GO!',
+    seasonDoneMsg:'SEZONA KONČANA!', improveHint:'Ponovi stopnjo z manj potezami za več zvezdic!',
+    goldMsg:'✨ ZLATI PAR! +3 ⛽ +20 🪙', bombMsg:'💥 BUM! -2 ⛽'
+  }
+};
+function t(key){return (I18N[settings.lang]||I18N.sq)[key]||key}
+function applyLang(){
+  document.documentElement.lang=settings.lang;
+  document.querySelectorAll('[data-i18n]').forEach(el=>{el.textContent=t(el.dataset.i18n)});
+  document.querySelectorAll('.lang-btn').forEach(b=>b.classList.toggle('sel',b.dataset.lang===settings.lang));
+  updateTotalStars();
+}
+function setLang(l){playTap();settings.lang=l;applyLang();saveData();
+  if(document.getElementById('seasonsScreen').classList.contains('active'))renderSeasons();
+  if(document.getElementById('levelsScreen').classList.contains('active'))renderLevelGrid(currentSeason);
+}
+
+/* ================= SEZONET & NIVELET (50) ================= */
+const SEASONS=[
+  {key:'s1',emoji:'🔧',color:'#E8A13A',symbols:['🚗','🚙','🛻','🚘','🔧','🪛','🔩','🧰','🛞','🔑','⛽️','🛢️']},
+  {key:'s2',emoji:'🚦',color:'#3AC6E8',symbols:['🚕','🚌','🚓','🚑','🚒','🚦','🛵','🚲','🚧','🏢','🅿️','🚏']},
+  {key:'s3',emoji:'🌄',color:'#7ED957',symbols:['🚚','🚛','🚐','🏍️','🌉','⛺','🗺️','🧭','🌄','☀️','🛑','⛰️']},
+  {key:'s4',emoji:'🌙',color:'#9B6BFF',symbols:['🌙','⭐','🌃','💡','🔦','🚨','🦌','🦉','🌌','🌠','🚗','⛽️']},
+  {key:'s5',emoji:'🏆',color:'#FF5C5C',symbols:['🏎️','🏁','🏆','🥇','⏱️','🔥','💨','🛞','⚡','🎖️','🥈','🥉']}
+];
+const TOTAL=50, PER_SEASON=10;
+
+function levelParams(g){
+  const season=Math.floor(g/PER_SEASON);
+  const pairs=Math.min(3+Math.floor(g/5),12);
+  const factor=[3.2,3.0,2.8,2.6,2.4][season];
+  const maxMoves=Math.max(pairs+2, Math.ceil(pairs*factor));
+  const cols=pairs<=3?3:4;
+  return {season,pairs,maxMoves,cols};
+}
+function starsFor(pairs,moves){
+  if(moves<=Math.ceil(pairs*1.6))return 3;
+  if(moves<=Math.ceil(pairs*2.2))return 2;
+  return 1;
+}
+
+let progress={}; // {globalIdx: stars}
+let coins=0, highScore=0, fuelPacks=0;
+let owned=['classic','midnight'], curSkin='classic', curBg='midnight';
+let tutorialSeen=false, tut=null;
+let username='', avatar='🚗', premium=false, duelWins=0, registered=false;
+const nameSuffix=Math.floor(100+Math.random()*900);
+let currentLevel=0, currentSeason=0;
+
+function seasonDone(s){
+  for(let i=s*PER_SEASON;i<(s+1)*PER_SEASON;i++)if(!progress[i])return false;
+  return true;
+}
+function seasonUnlocked(s){return s===0||seasonDone(s-1)}
+function levelUnlocked(g){
+  const s=Math.floor(g/PER_SEASON);
+  if(!seasonUnlocked(s))return false;
+  if(g%PER_SEASON===0)return true;
+  return !!progress[g-1];
+}
+function nextPlayable(){
+  for(let g=0;g<TOTAL;g++){if(!progress[g]&&levelUnlocked(g))return g}
+  return TOTAL-1;
+}
+function seasonStars(s){
+  let sum=0;for(let i=s*PER_SEASON;i<(s+1)*PER_SEASON;i++)sum+=progress[i]||0;
+  return sum;
+}
+function seasonCompleted(s){
+  let c=0;for(let i=s*PER_SEASON;i<(s+1)*PER_SEASON;i++)if(progress[i])c++;
+  return c;
+}
+function totalStarCount(){return Object.values(progress).reduce((a,b)=>a+b,0)}
+function updateTotalStars(){
+  document.getElementById('totalStars').innerHTML=
+    `<svg class="ic star-on"><use href="#i-star"/></svg> ${totalStarCount()} / ${TOTAL*3} ${t('stars')}`;
+  document.getElementById('menuProfile').textContent=`${premium?'👑':''}${avatar} ${myName()}`;
+  document.getElementById('menuCoins').textContent=`🪙 ${coins}`;
+  document.getElementById('menuBest').textContent=`🏆 ${t('best')}: ${highScore}`;
+}
+
+/* ---- Ekrani i sezoneve ---- */
+function renderSeasons(){
+  const list=document.getElementById('seasonList');
+  list.innerHTML='';
+  SEASONS.forEach((se,s)=>{
+    const unlocked=seasonUnlocked(s);
+    const card=document.createElement('div');
+    card.className='season-card'+(unlocked?'':' locked');
+    card.style.setProperty('--sc',se.color);
+    if(unlocked){
+      card.innerHTML=`<div class="season-glow"></div>
+        <div class="season-emoji">${se.emoji}</div>
+        <div class="season-info">
+          <div class="season-name">${s+1}. ${t(se.key)}</div>
+          <div class="season-sub">${seasonCompleted(s)}/${PER_SEASON} ${t('levelsLbl')}</div>
+        </div>
+        <div class="season-prog"><svg class="ic star-on"><use href="#i-star"/></svg>${seasonStars(s)}/${PER_SEASON*3}</div>`;
+      card.addEventListener('click',()=>{playTap();openSeason(s)});
+    }else{
+      card.innerHTML=`<div class="season-emoji" style="filter:grayscale(1)">${se.emoji}</div>
+        <div class="season-info">
+          <div class="season-name">${s+1}. ${t(se.key)}</div>
+          <div class="season-sub">${t('s'+s)||''}</div>
+        </div>
+        <div class="season-lock"><svg class="ic"><use href="#i-lock"/></svg></div>`;
+    }
+    list.appendChild(card);
+  });
+  // Sezonet e ardhshme — Coming Soon
+  ['🚀','🌋'].forEach((em,i)=>{
+    const card=document.createElement('div');
+    card.className='season-card locked';
+    card.style.setProperty('--sc','#999');
+    card.innerHTML=`<div class="season-emoji" style="filter:grayscale(1)">${em}</div>
+      <div class="season-info">
+        <div class="season-name">${6+i}. ???</div>
+        <div class="season-sub" style="color:var(--amber2);font-weight:900;letter-spacing:2px">${t('comingSoon')}</div>
+      </div>
+      <div class="season-lock"><svg class="ic"><use href="#i-lock"/></svg></div>`;
+    list.appendChild(card);
+  });
+}
+function openSeason(s){
+  currentSeason=s;
+  document.getElementById('levelsTitle').textContent=t(SEASONS[s].key).toUpperCase();
+  renderLevelGrid(s);
+  showScreen('levelsScreen');
+}
+function renderLevelGrid(s){
+  const grid=document.getElementById('levelGrid');
+  grid.innerHTML='';
+  grid.style.setProperty('--sc',SEASONS[s].color);
+  for(let i=0;i<PER_SEASON;i++){
+    const g=s*PER_SEASON+i;
+    const stars=progress[g]||0;
+    const unlocked=levelUnlocked(g);
+    const cell=document.createElement('div');
+    cell.className='level-cell'+(unlocked?'':' locked')+(stars?' done':'');
+    cell.style.setProperty('--sc',SEASONS[s].color);
+    if(unlocked){
+      let sh='';
+      for(let k=1;k<=3;k++)sh+=`<svg class="ic ${k<=stars?'star-on':'star-off'}"><use href="#i-star"/></svg>`;
+      cell.innerHTML=`<div class="level-num">${g+1}</div><div class="level-stars">${sh}</div>`;
+      cell.addEventListener('click',()=>{playTap();startLevel(g)});
+    }else{
+      cell.innerHTML=`<svg class="ic lock-ic"><use href="#i-lock"/></svg><div class="level-num" style="font-size:14px;color:rgba(255,255,255,.4)">${g+1}</div>`;
+    }
+    grid.appendChild(cell);
+  }
+}
+function playNext(){playTap();startMusic();startLevel(nextPlayable())}
+
+/* ================= RUAJTJA ================= */
+async function saveData(){
+  try{
+    await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang}}));
+  }catch(e){}
+}
+async function loadData(){
+  let loaded=false;
+  try{
+    const r=await window.storage.get('mm-save-v5');
+    if(r&&r.value){
+      const d=JSON.parse(r.value);
+      progress=d.progress||{};
+      coins=d.coins||0; highScore=d.highScore||0; fuelPacks=d.fuelPacks||0;
+      owned=d.owned||['classic','midnight'];
+      curSkin=d.curSkin||'classic'; curBg=d.curBg||'midnight';
+      tutorialSeen=d.tutorialSeen||false;
+      username=d.username||''; avatar=d.avatar||'🚗';
+      premium=d.premium||false; duelWins=d.duelWins||0;
+      registered=d.registered||false;
+      if(d.settings){
+        settings.sfx=d.settings.sfx??true;
+        settings.haptic=d.settings.haptic??true;
+        settings.lang=d.settings.lang||settings.lang;
+      }
+      loaded=true;
+    }
+  }catch(e){}
+  if(!loaded){
+    // Migro progresin nga versionet e vjetra
+    for(const key of ['mm-save-v4','mm-save-v3']){
+      try{
+        const old=await window.storage.get(key);
+        if(old&&old.value){progress=JSON.parse(old.value).progress||{};break}
+      }catch(e){}
+    }
+  }
+  applyCosmetics();
+  document.getElementById('tglSfx').classList.toggle('on',settings.sfx);
+  document.getElementById('tglHaptic').classList.toggle('on',settings.haptic);
+  applyLang();
+}
+
+/* ================= ZËRI ================= */
+let audioCtx=null;
+const settings={music:true,sfx:true,haptic:true,lang:'en'};
+function ctx(){
+  if(!audioCtx)audioCtx=new (window.AudioContext||window.webkitAudioContext)();
+  if(audioCtx.state==='suspended')audioCtx.resume();
+  return audioCtx;
+}
+function tone(freq,dur,type,vol,when,dest){
+  const c=ctx(),o=c.createOscillator(),g=c.createGain();
+  o.type=type;o.frequency.value=freq;
+  const t0=c.currentTime+(when||0);
+  g.gain.setValueAtTime(0.0001,t0);
+  g.gain.exponentialRampToValueAtTime(vol,t0+0.02);
+  g.gain.exponentialRampToValueAtTime(0.0001,t0+dur);
+  o.connect(g).connect(dest||c.destination);
+  o.start(t0);o.stop(t0+dur+0.05);
+}
+function sfx(freq,dur,type,vol,when){if(settings.sfx)tone(freq,dur,type,vol,when)}
+function playTap(){sfx(520,0.07,'sine',0.035);vibrate(8)}
+function playFlip(){sfx(392,0.10,'sine',0.055);vibrate(8)}
+function playMatch(){sfx(587,0.16,'sine',0.06);sfx(784,0.22,'sine',0.06,0.11);vibrate(24)}
+function playMiss(){sfx(196,0.18,'sine',0.04);vibrate([15,30,15])}
+function vibrate(p){if(settings.haptic&&navigator.vibrate)navigator.vibrate(p)}
+
+/* Muzika e sfondit u hoq — mbeten vetëm efektet zanore */
+function startMusic(){}
+function stopMusic(){}
+
+/* --- Fanfara e fitores (bravo!) --- */
+function playWinMusic(){
+  if(settings.sfx){
+    const seq=[[523.3,0],[659.3,0.14],[784.0,0.28],[1046.5,0.42],[1318.5,0.60]];
+    seq.forEach(([f,w])=>{tone(f,0.38,'sine',0.09,w);tone(f/2,0.38,'sine',0.06,w)});
+    // akord final
+    [1046.5,1318.5,1568.0].forEach(f=>tone(f,1.2,'sine',0.055,0.85));
+    tone(261.6,1.2,'sine',0.07,0.85);
+  }
+  vibrate([40,60,40,60,120]);
+}
+/* --- Muzika e humbjes (loser...) --- */
+function playLoseMusic(){
+  if(settings.sfx){
+    const seq=[[392.0,0],[349.2,0.35],[311.1,0.70],[233.1,1.05]]; // zbritje minore "wah wah"
+    seq.forEach(([f,w])=>{tone(f,0.45,'sine',0.07,w)});
+    tone(116.5,1.5,'sine',0.07,1.05); // bas i trishtë
+  }
+  vibrate([80,80,80,80,200]);
+}
+
+/* ================= EKRANET ================= */
+function showScreen(id){
+  document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  if(id==='menuScreen')updateTotalStars();
+  if(id==='settingsScreen')refreshProfileUI();
+}
+function hideOverlays(){
+  document.getElementById('winOverlay').classList.remove('show');
+  document.getElementById('loseOverlay').classList.remove('show');
+  document.getElementById('duelResult').classList.remove('show');
+  document.getElementById('countOverlay').classList.remove('show');
+  document.getElementById('confettiHolder').innerHTML='';
+}
+
+/* ================= INTRO / TUTORIAL ================= */
+let tutStep=0;
+function runIntro(){
+  showScreen('introScreen');
+  tutStep=0;renderTut();
+}
+function renderTut(){
+  for(let i=0;i<4;i++)document.getElementById('tut'+i).classList.toggle('active',i===tutStep);
+  document.querySelectorAll('.tut-dots .dot').forEach((d,i)=>d.classList.toggle('on',i===tutStep));
+  document.getElementById('introBtnLbl').textContent=tutStep<3?t('next'):t('start');
+}
+document.getElementById('introBtn').addEventListener('click',()=>{
+  playTap();
+  if(tutStep<3){tutStep++;renderTut()}
+  else showScreen('menuScreen');
+});
+
+/* ================= CILËSIMET ================= */
+function toggleSet(key,el){
+  playTap();
+  settings[key]=!settings[key];
+  el.classList.toggle('on',settings[key]);
+  saveData();
+}
+
+/* ================= LOJA ================= */
+let deck=[],firstCard=null,lock=false,moves=0,pairsFound=0,seconds=0,timerInt=null,trapTimer=null,swapNotified=false,params=null,fuelBonus=0,goldSymCur=null,bombSymCur=null,shufSymCur=null,peekSymCur=null,sureShown=false;
+
+function startLevel(g){
+  startMusic();hideOverlays();
+  document.getElementById('quitDialog').classList.remove('show');
+  currentLevel=g;
+  params=levelParams(g);
+  // ⛽ Karburanti ndryshon çdo herë: -2 deri +3 lëvizje
+  params.maxMoves=Math.max(params.pairs+1, params.maxMoves+(Math.floor(Math.random()*6)-2));
+  fuelBonus=0; sureShown=false;
+  if(fuelPacks>0){fuelPacks--; fuelBonus+=3; toast('⛽ +3'); saveData()}
+  if(premium)fuelBonus+=1; // 👑 PRO: +1 karburant çdo nivel
+  const se=SEASONS[params.season];
+  document.documentElement.style.setProperty('--season',se.color);
+
+  const chosen=[...se.symbols].sort(()=>Math.random()-.5).slice(0,params.pairs);
+  deck=[...chosen,...chosen].sort(()=>Math.random()-.5);
+  // Çiftet surprizë: i arti (bonus) dhe bomba (dënim)
+  // Grackat shtohen sezon pas sezoni:
+  // S1: vetëm i arti · S2: +bomba · S3: +përzierësi +ndërrimi pas gabimit
+  // S4: +shikuesi +ndërrime të heshtura çdo 18s · S5: gjithçka, çdo 12s, bomba -3
+  goldSymCur=chosen[0];
+  bombSymCur=(params.season>=1&&params.pairs>=4)?chosen[1]:null;
+  shufSymCur=(params.season>=2&&params.pairs>=6)?chosen[2]:null;
+  peekSymCur=(params.season>=3&&params.pairs>=8)?chosen[3]:null;
+  swapNotified=false;
+  if(trapTimer){clearInterval(trapTimer);trapTimer=null}
+  if(params.season>=3){
+    const iv=params.season>=4?12000:18000;
+    trapTimer=setInterval(()=>{if(!lock&&!document.getElementById('winOverlay').classList.contains('show'))swapTwo(false)},iv);
+  }
+  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;
+  updateHud();
+  document.getElementById('levelBadge').innerHTML=
+    `<div class="profile-chip"><span class="pav">${avatar}</span><b>${myName()}</b>${premium?' 👑':''}</div>`+
+    `<div class="level-chip">${se.emoji} ${t('level')} ${g+1}</div>`;
+
+  const board=document.getElementById('board');
+  board.style.gridTemplateColumns=`repeat(${params.cols},1fr)`;
+  board.style.maxWidth=Math.min(420,params.cols*92)+'px';
+  board.innerHTML='';
+  deck.forEach(sym=>{
+    const c=document.createElement('div');
+    c.className='card';c.dataset.sym=sym;
+    c.innerHTML=`<div class="card-inner">
+      <div class="card-face card-back-face"><svg class="ic" style="width:44%;height:44%;stroke-width:1.8"><use href="#i-wheel"/></svg></div>
+      <div class="card-face card-front${sym===goldSymCur?' gold':sym===bombSymCur?' bomb':sym===shufSymCur?' shuf':sym===peekSymCur?' peek':''}">${sym}</div>
+    </div>`;
+    c.addEventListener('click',()=>chooseCard(c));
+    board.appendChild(c);
+  });
+
+  document.getElementById('oppBar').style.display='none';
+  stopTimer();
+  timerInt=setInterval(()=>{seconds++;updateHud()},1000);
+  showScreen('gameScreen');
+}
+function stopTimer(){if(timerInt){clearInterval(timerInt);timerInt=null}if(trapTimer){clearInterval(trapTimer);trapTimer=null}}
+
+function fuelLeft(){return params.maxMoves+fuelBonus-moves}
+function updateHud(){
+  const m=String(Math.floor(seconds/60)).padStart(2,'0');
+  const s=String(seconds%60).padStart(2,'0');
+  document.getElementById('statTime').textContent=m+':'+s;
+  document.getElementById('statPairs').textContent=pairsFound+'/'+params.pairs;
+  if(duel){
+    document.getElementById('statFuel').textContent='❌'+duelStats.mi;
+    document.getElementById('fuelStat').classList.remove('danger');
+    updateOppBar();
+    return;
+  }
+  const left=fuelLeft();
+  document.getElementById('statFuel').textContent=left;
+  document.getElementById('fuelStat').classList.toggle('danger',left<=3);
+}
+
+function chooseCard(c){
+  if(lock||c.classList.contains('flipped')||c.classList.contains('matched'))return;
+
+  // Karta e parë — hapet normalisht
+  if(!firstCard){
+    playFlip();
+    c.classList.add('flipped');
+    firstCard=c;
+    if(tut)tutFirstFlip();
+    return;
+  }
+
+  // KARTA E DYTË — ndonjëherë del BASTI 😏 (para se të hapet!)
+  if(tut&&tut.forceSure){tut.forceSure=false;showSurePopup(c);return}
+  if(!duel&&!tut&&!sureShown&&Math.random()<0.16){showSurePopup(c);return}
+  flipSecond(c,false);
+}
+
+function flipSecond(c,gamble){
+  playFlip();
+  c.classList.add('flipped');
+  moves++;updateHud();
+  const a=firstCard;firstCard=null;
+
+  if(a.dataset.sym===c.dataset.sym){
+    lock=true;
+    setTimeout(()=>{
+      a.classList.add('matched');c.classList.add('matched');
+      playMatch();pairsFound++;
+      // Basti fitoi! +2 karburant
+      if(gamble){fuelBonus+=2;toast(t('gambleWin'));sfx(880,0.28,'sine',0.07);vibrate([30,40,60]);if(tut)tutAfterSure()}
+      // Efektet surprizë
+      const sym=a.dataset.sym;
+      if(sym===goldSymCur){fuelBonus+=3;coins+=20;toast(t('goldMsg'));sfx(1046,0.3,'sine',0.08);saveData()}
+      else if(sym===bombSymCur){const bx=params.season>=4?3:2;fuelBonus-=bx;toast(t('bombMsg').replace('2',String(bx)));sfx(90,0.35,'sine',0.09);vibrate([60,40,60])}
+      else if(sym===shufSymCur){toast(t('shufMsg'));sfx(300,0.22,'sine',0.07);shuffleRemaining()}
+      else if(sym===peekSymCur){toast(t('peekMsg'));sfx(1200,0.28,'sine',0.06);setTimeout(peekAll,80)}
+      if(tut)tutOnMatch();
+      updateHud();lock=false;
+      if(pairsFound===params.pairs){duel?duelBoardDone():(tut?tutAllPairs():levelWon())}
+      else if(!duel&&!tut&&fuelLeft()<=0){levelLost()}
+    },350);
+  }else{
+    lock=true;
+    if(gamble){
+      // Basti HUMBI — niveli mbaron menjëherë! 💀 (në stërvitje je i sigurt)
+      setTimeout(()=>{
+        a.classList.add('shake');c.classList.add('shake');
+        playMiss();
+        setTimeout(()=>{
+          if(tut){
+            a.classList.remove('flipped','shake');c.classList.remove('flipped','shake');
+            lock=false;tutAfterSure();
+          }else levelLost(true);
+        },500);
+      },520);
+      return;
+    }
+    setTimeout(()=>{
+      a.classList.add('shake');c.classList.add('shake');
+      playMiss();
+      setTimeout(()=>{
+        a.classList.remove('flipped','shake');
+        c.classList.remove('flipped','shake');
+        lock=false;
+        if(duel){duelStats.mi++;updateHud()}
+        else if(!tut){
+          if(params.season>=2)swapTwo(true); // 🌀 gabove? dy karta ndërrojnë vendet!
+          if(fuelLeft()<=0)levelLost();
+        }
+      },380);
+    },520);
+  }
+}
+
+/* ---- Fitorja ---- */
+function levelWon(){
+  stopTimer();playWinMusic();
+  const earned=starsFor(params.pairs,moves);
+  if(!progress[currentLevel]||earned>progress[currentLevel])progress[currentLevel]=earned;
+  // 🪙 Monedhat dhe pikët
+  const coinReward=15*earned+params.season*5;
+  coins+=coinReward;
+  const score=earned*100+fuelLeft()*25+Math.max(0,200-seconds*2);
+  let newHS=false;
+  if(score>highScore){highScore=score;newHS=true}
+  saveData();
+
+  let sh='';
+  for(let k=1;k<=3;k++)sh+=`<svg class="ic ${k<=earned?'star-on':'star-off'}"><use href="#i-star"/></svg>`;
+  document.getElementById('winStars').innerHTML=sh+
+    (earned<3?`<div style="width:100%;text-align:center;font-size:11px;font-weight:800;color:rgba(255,255,255,.55);margin-top:6px">${t('improveHint')}</div>`:'');
+
+  const m=String(Math.floor(seconds/60)).padStart(2,'0');
+  const s2=String(seconds%60).padStart(2,'0');
+  document.getElementById('winStats').innerHTML=
+    `${t('moves')}: <b>${moves}</b> &nbsp;•&nbsp; ${t('time')}: <b>${m}:${s2}</b><br>`+
+    `${t('scoreLbl')}: <b>${score}</b> &nbsp;•&nbsp; +${coinReward} 🪙`+
+    (newHS?`<br><b style="color:#FFD166">🏆 ${t('newBest')}</b>`:'');
+
+  // Sezoni u përfundua i tëri?
+  const seasonIdx=params.season;
+  if(currentLevel%PER_SEASON===PER_SEASON-1&&seasonDone(seasonIdx)){
+    document.getElementById('winStats').innerHTML+=
+      `<br><b style="color:var(--amber2)">${SEASONS[seasonIdx].emoji} ${t('seasonDoneMsg')} ${seasonStars(seasonIdx)}/30 ⭐</b>`;
+  }
+  const nextBtn=document.getElementById('nextLevelBtn');
+  if(currentLevel<TOTAL-1){nextBtn.style.display='flex'}
+  else{
+    nextBtn.style.display='none';
+    document.getElementById('winStats').innerHTML+=`<br><b>${t('allDone')}</b>`;
+  }
+  document.getElementById('winOverlay').classList.add('show');
+  spawnConfetti();
+}
+function playNextFromWin(){
+  playTap();
+  if(currentLevel<TOTAL-1)startLevel(currentLevel+1);
+}
+
+/* ---- Humbja ---- */
+function levelLost(gambled){
+  stopTimer();lock=true;playLoseMusic();
+  document.getElementById('loseStats').innerHTML=
+    `${gambled?t('gambleLose'):t('outOfFuel')}<br>${t('moves')}: <b>${moves}</b>`;
+  setTimeout(()=>{
+    document.getElementById('loseOverlay').classList.add('show');
+  },600);
+}
+
+function spawnConfetti(){
+  const holder=document.getElementById('confettiHolder');
+  const pieces=['🎉','⭐️','🏆','🎊','✨','🏁'];
+  holder.innerHTML='';
+  for(let i=0;i<26;i++){
+    const p=document.createElement('span');
+    p.className='confetti-piece';
+    p.textContent=pieces[i%pieces.length];
+    p.style.left=Math.random()*100+'vw';
+    p.style.fontSize=(16+Math.random()*20)+'px';
+    p.style.animationDuration=(2.2+Math.random()*2)+'s';
+    p.style.animationDelay=(Math.random()*0.8)+'s';
+    holder.appendChild(p);
+  }
+}
+
+/* ================= DYQANI ================= */
+const SKINS=[
+  {id:'classic',name:'skClassic',price:0,  em:'🃏'},
+  {id:'sharp',  name:'skSharp',  price:250,em:'◼️'},
+  {id:'pill',   name:'skPill',   price:250,em:'⬭'},
+  {id:'gold',   name:'skGold',   price:500,em:'🟨'},
+  {id:'neonc',  name:'skNeon',   price:500,em:'🟦'}
+];
+const BGS=[
+  {id:'midnight',name:'bgMid',   price:0,  em:'🌌'},
+  {id:'sunset',  name:'bgSun',   price:400,em:'🌅'},
+  {id:'forest',  name:'bgForest',price:400,em:'🌲'},
+  {id:'ocean',   name:'bgOcean', price:400,em:'🌊'},
+  {id:'neonw',   name:'bgNeon',  price:600,em:'🌇'}
+];
+// Çmimet sipas tiers zyrtare të App Store (€0.99 / €2.99 / €4.99 / €9.99)
+const COINPACKS=[
+  {coins:500, price:'3,99'},
+  {coins:1800,price:'5,99'},
+  {coins:3500,price:'7,99'},
+  {coins:8000,price:'12,99'}
+];
+
+function applyCosmetics(){
+  document.body.dataset.skin=curSkin;
+  document.body.dataset.bg=curBg;
+}
+
+function renderStore(){
+  document.getElementById('storeCoins').textContent=`🪙 ${coins}`;
+  const list=document.getElementById('storeList');
+  let h='';
+
+  // Monedha (Apple Pay demo)
+  h+=`<div class="store-sec">${t('secCoins')}</div>`;
+  COINPACKS.forEach((cp,i)=>{
+    h+=`<div class="store-row">
+      <div class="store-em">${['🪙','💰','💎','👑'][i]}</div>
+      <div class="store-info"><div class="store-name">${cp.coins.toLocaleString()} ${t('coinsAmt')}</div></div>
+      <button class="btn-mini ap" onclick="buyCoins(${i})">&#63743; Pay &nbsp;€${cp.price}</button>
+    </div>`;
+  });
+  h+=`<div class="store-note">${t('demoNote')}</div>`;
+
+  // Karburanti
+  h+=`<div class="store-sec">${t('secFuel')}</div>`;
+  h+=`<div class="store-row">
+    <div class="store-em">⛽</div>
+    <div class="store-info">
+      <div class="store-name">${t('fuelBoost')}${fuelPacks>0?` &nbsp;×${fuelPacks}`:''}</div>
+      <div class="store-sub">${t('fuelBoostD')}</div>
+    </div>
+    <button class="btn-mini" onclick="buyFuel()">${t('buy')} 🪙 60</button>
+  </div>`;
+
+  // Stili i kartave
+  h+=`<div class="store-sec">${t('secSkins')}</div>`;
+  SKINS.forEach(it=>{h+=itemRow(it,'skin')});
+
+  // Sfondet
+  h+=`<div class="store-sec">${t('secBgs')}</div>`;
+  BGS.forEach(it=>{h+=itemRow(it,'bg')});
+
+  list.innerHTML=h;
+}
+function itemRow(it,kind){
+  const isOwned=owned.includes(it.id);
+  const inUse=(kind==='skin'?curSkin:curBg)===it.id;
+  let btn;
+  if(inUse)btn=`<button class="btn-mini inuse">✓ ${t('inUse')}</button>`;
+  else if(isOwned)btn=`<button class="btn-mini ghost" onclick="useItem('${kind}','${it.id}')">${t('useIt')}</button>`;
+  else btn=`<button class="btn-mini" onclick="buyItem('${kind}','${it.id}',${it.price})">${t('buy')} 🪙 ${it.price}</button>`;
+  return `<div class="store-row">
+    <div class="store-em">${it.em}</div>
+    <div class="store-info"><div class="store-name">${t(it.name)}</div></div>
+    ${btn}
+  </div>`;
+}
+function buyCoins(i){
+  playTap();
+  coins+=COINPACKS[i].coins;
+  toast(`${t('purchased')} +${COINPACKS[i].coins.toLocaleString()} 🪙`);
+  saveData();renderStore();
+}
+function buyFuel(){
+  playTap();
+  if(coins<60){toast(t('notEnough'));return}
+  coins-=60;fuelPacks++;
+  toast(t('purchased'));
+  saveData();renderStore();
+}
+function buyItem(kind,id,price){
+  playTap();
+  if(coins<price){toast(t('notEnough'));return}
+  coins-=price;owned.push(id);
+  useItem(kind,id,true);
+  toast(t('purchased'));
+}
+function useItem(kind,id,silent){
+  if(!silent)playTap();
+  if(kind==='skin')curSkin=id;else curBg=id;
+  applyCosmetics();saveData();renderStore();
+  if(!silent)toast(t('applied'));
+}
+
+/* ================= TOAST ================= */
+let toastTimer=null;
+function toast(msg){
+  const el=document.getElementById('toast');
+  el.textContent=msg;el.classList.add('show');
+  clearTimeout(toastTimer);
+  toastTimer=setTimeout(()=>el.classList.remove('show'),1700);
+}
+
+/* ================= BASTI "A JE I SIGURT?" ================= */
+let pendingCard=null;
+function showSurePopup(c){
+  sureShown=true;pendingCard=c;
+  const arr=t('sure');
+  document.getElementById('sureMsg').textContent=arr[Math.floor(Math.random()*arr.length)];
+  document.getElementById('sureHint').textContent=t('sureHint');
+  document.getElementById('sureFlipBtn').textContent=t('sureFlip');
+  document.getElementById('sureChangeBtn').textContent=t('sureChange');
+  document.getElementById('surePopup').classList.add('show');
+}
+document.getElementById('sureFlipBtn').addEventListener('click',()=>{
+  playTap();
+  document.getElementById('surePopup').classList.remove('show');
+  if(pendingCard){const pc=pendingCard;pendingCard=null;flipSecond(pc,true)}
+});
+document.getElementById('sureChangeBtn').addEventListener('click',()=>{
+  playTap();
+  pendingCard=null; // karta e parë mbetet hapur — zgjidh një tjetër të dytë
+  document.getElementById('surePopup').classList.remove('show');
+  if(tut)tutAfterSure();
+});
+
+/* ================= GRIMCAT KUR KLIKON ================= */
+function spawnBurst(x,y){
+  const colors=['#FFD166','#E8A13A','#ffffff','#7ED957','#3AC6E8','#FF8FB1'];
+  for(let i=0;i<7;i++){
+    const pt=document.createElement('div');
+    pt.className='pt';
+    const a=Math.random()*Math.PI*2, d=20+Math.random()*28;
+    pt.style.left=x+'px';pt.style.top=y+'px';
+    pt.style.setProperty('--dx',Math.cos(a)*d+'px');
+    pt.style.setProperty('--dy',Math.sin(a)*d+'px');
+    pt.style.background=colors[i%colors.length];
+    document.body.appendChild(pt);
+    setTimeout(()=>pt.remove(),620);
+  }
+}
+document.addEventListener('pointerdown',e=>{
+  const el=e.target.closest('.card,.btn,.btn-mini,.hud-btn,.level-cell,.season-card,.toggle,.lang-btn');
+  if(el)spawnBurst(e.clientX,e.clientY);
+});
+
+/* ================= PROFILI ONLINE & RANK ================= */
+const RANKS=[[0,'🐣','Rookie'],[3,'🚗','Driver'],[7,'🏎️','Racer'],[15,'🥇','Pro'],[30,'🏆','Champion'],[50,'👑','Legend']];
+function myRank(){let r=RANKS[0];for(const x of RANKS)if(duelWins>=x[0])r=x;return r}
+const FREE_AV=['🚗','🏎️','😎','🐺','🔥','⚡'];
+const PRO_AV=['👑','🐉','💎','🦁','🚀','😈'];
+
+function refreshProfileUI(){
+  const r=myRank();
+  document.getElementById('rankEmoji').textContent=r[1];
+  document.getElementById('rankVal').textContent=r[2]+' • '+duelWins+' '+t('winsLbl');
+  renderAvatars();
+  const b=document.getElementById('premiumBtn');
+  if(premium){b.className='btn-mini inuse';b.innerHTML='👑 '+t('proActive');b.onclick=null}
+  else{b.className='btn-mini';b.innerHTML='👑 €4,99';b.onclick=openPremiumSheet}
+}
+function renderAvatars(gridId){
+  const ids=gridId?[gridId]:['avatarGrid','regAvatarGrid'];
+  ids.forEach(id=>{
+    const g=document.getElementById(id);
+    if(!g)return;
+    g.innerHTML='';
+    [...FREE_AV.map(e=>[e,false]),...PRO_AV.map(e=>[e,true])].forEach(([em,pro])=>{
+      const d=document.createElement('div');
+      d.className='av'+(avatar===em?' sel':'')+(pro&&!premium?' lockedAv':'');
+      d.innerHTML=em+(pro?'<span class="crown">👑</span>':'');
+      d.addEventListener('click',()=>{
+        playTap();
+        if(pro&&!premium){openPremiumSheet();return}
+        avatar=em;saveData();renderAvatars();
+      });
+      g.appendChild(d);
+    });
+  });
+}
+function openPremiumSheet(){
+  playTap();
+  document.getElementById('premiumSheet').classList.add('show');
+}
+function buyPremium(){
+  playTap();premium=true;
+  // Përfitimet e PRO-s
+  coins+=500;
+  if(!owned.includes('gold'))owned.push('gold');
+  if(!owned.includes('neonw'))owned.push('neonw');
+  saveData();
+  document.getElementById('premiumSheet').classList.remove('show');
+  toast(t('proWelcome'));
+  renderAvatars();
+  if(document.getElementById('settingsScreen').classList.contains('active'))refreshProfileUI();
+}
+document.getElementById('regName').addEventListener('input',e=>{
+  username=e.target.value.replace(/[<>"']/g,'').slice(0,12);
+});
+document.getElementById('regBtn').addEventListener('click',()=>{
+  playTap();
+  registered=true;saveData();
+  showScreen('menuScreen');
+  if(!tutorialSeen)askTutorial();
+});
+
+/* ================= DUELI ONLINE ================= */
+let duel=null, duelStats={mi:0}, duelPoll=null, waitPoll=null, goTs=0;
+let oppLast={p:0,mi:0,mo:0,done:false,tm:0};
+const myId=Math.random().toString(36).slice(2,9);
+function myName(){return (username||'Racer'+nameSuffix).slice(0,14)}
+
+async function sGet(k){try{const r=await window.storage.get(k,true);return r&&r.value?JSON.parse(r.value):null}catch(e){return null}}
+async function sSet(k,v){try{await window.storage.set(k,JSON.stringify(v),true)}catch(e){}}
+async function sDel(k){try{await window.storage.delete(k,true)}catch(e){}}
+
+function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
+function seededShuffle(arr,rnd){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
+
+function openDuel(){
+  if(coins<50){toast(t('notEnoughDuel'));return}
+  document.getElementById('duelHome').style.display='flex';
+  document.getElementById('duelWait').style.display='none';
+  document.getElementById('duelCoins').textContent='🪙 '+coins;
+  showScreen('duelScreen');
+}
+function showWaitUI(code){
+  document.getElementById('duelHome').style.display='none';
+  document.getElementById('duelWait').style.display='flex';
+  document.getElementById('duelCodeBig').textContent=code;
+  document.getElementById('duelWaitMsg').textContent=t('waiting');
+}
+async function createRoom(){
+  const code=String(1000+Math.floor(Math.random()*9000));
+  const seed=Math.floor(Math.random()*1e9);
+  await sSet('duel:'+code,{seed,host:myName(),hid:myId,ts:Date.now()});
+  duel={code,role:'h',seed,opName:'???'};
+  showWaitUI(code);
+  waitPoll=setInterval(async()=>{
+    const j=await sGet('duel:'+code+':join');
+    if(j){
+      clearInterval(waitPoll);waitPoll=null;
+      duel.opName=j.guest;toast(t('oppFound'));
+      beginCountdown(j.startAt);
+    }
+  },1500);
+  return code;
+}
+async function joinWithCode(){
+  const code=document.getElementById('duelCodeInput').value.trim();
+  if(code.length!==4){toast(t('enterCode'));return}
+  const meta=await sGet('duel:'+code);
+  if(!meta||Date.now()-meta.ts>600000||meta.hid===myId){toast(t('invalidRoom'));return}
+  const startAt=Date.now()+5000;
+  await sSet('duel:'+code+':join',{guest:myName(),gid:myId,startAt});
+  duel={code,role:'g',seed:meta.seed,opName:meta.host};
+  toast(t('oppFound'));
+  beginCountdown(startAt);
+}
+async function randomMatch(){
+  const lobby=await sGet('duel:lobby');
+  if(lobby&&Date.now()-lobby.ts<90000&&lobby.owner!==myId){
+    await sDel('duel:lobby');
+    document.getElementById('duelCodeInput').value=lobby.code;
+    joinWithCode();
+  }else{
+    const code=await createRoom();
+    await sSet('duel:lobby',{code,ts:Date.now(),owner:myId});
+  }
+}
+function cancelDuel(){
+  if(waitPoll){clearInterval(waitPoll);waitPoll=null}
+  if(duel){sDel('duel:'+duel.code);sDel('duel:lobby');duel=null}
+  showScreen('menuScreen');
+}
+function beginCountdown(startAt){
+  coins-=50;saveData(); // basti paguhet
+  const ov=document.getElementById('countOverlay');
+  const num=ov.querySelector('.count-num');
+  showScreen('gameScreen');
+  document.getElementById('board').innerHTML='';
+  document.getElementById('levelBadge').innerHTML=
+    `<div class="profile-chip"><span class="pav">${avatar}</span><b>${myName()}</b></div>`+
+    `<div class="level-chip">🆚 ${duel.opName}</div>`;
+  ov.classList.add('show');
+  const iv=setInterval(()=>{
+    const left=startAt-Date.now();
+    if(left<=0){
+      clearInterval(iv);
+      num.textContent=t('go');playMatch();
+      setTimeout(()=>{ov.classList.remove('show');startDuelBoard()},450);
+    }else num.textContent=Math.ceil(left/1000);
+  },120);
+}
+function startDuelBoard(){
+  hideOverlays();
+  const rnd=mulberry32(duel.seed);
+  const se=SEASONS[duel.seed%5];
+  document.documentElement.style.setProperty('--season',se.color);
+  params={pairs:8,cols:4,maxMoves:9999,season:duel.seed%5};
+  fuelBonus=0;goldSymCur=null;bombSymCur=null;shufSymCur=null;peekSymCur=null;sureShown=true;
+  duelStats={mi:0};oppLast={p:0,mi:0,mo:0,done:false,tm:0};
+  duel.done=false;duel.tm=0;duel.decided=false;
+
+  const chosen=seededShuffle(se.symbols,rnd).slice(0,8);
+  deck=seededShuffle([...chosen,...chosen],rnd);
+  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;
+
+  const board=document.getElementById('board');
+  board.style.gridTemplateColumns='repeat(4,1fr)';
+  board.style.maxWidth='368px';
+  board.innerHTML='';
+  deck.forEach(sym=>{
+    const c=document.createElement('div');
+    c.className='card';c.dataset.sym=sym;
+    c.innerHTML=`<div class="card-inner">
+      <div class="card-face card-back-face"><svg class="ic" style="width:44%;height:44%;stroke-width:1.8"><use href="#i-wheel"/></svg></div>
+      <div class="card-face card-front">${sym}</div>
+    </div>`;
+    c.addEventListener('click',()=>chooseCard(c));
+    board.appendChild(c);
+  });
+
+  document.getElementById('oppBar').style.display='flex';
+  updateOppBar();
+  stopTimer();
+  goTs=Date.now();
+  timerInt=setInterval(()=>{seconds++;updateHud()},1000);
+  updateHud();
+  if(duelPoll)clearInterval(duelPoll);
+  duelPoll=setInterval(duelSync,1500);
+}
+async function duelSync(){
+  if(!duel)return;
+  sSet('duel:'+duel.code+':'+duel.role,
+    {p:pairsFound,mi:duelStats.mi,mo:moves,done:duel.done,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1]});
+  const op=await sGet('duel:'+duel.code+':'+(duel.role==='h'?'g':'h'));
+  if(op){
+    oppLast=op;updateOppBar();
+    if(duel.done&&op.done)finishDecide();
+  }
+}
+function updateOppBar(){
+  if(!duel)return;
+  document.getElementById('oppBar').innerHTML=
+    `<span>${premium?'👑':''}${avatar} ${myName()}</span>`+
+    `<span style="color:var(--amber2);font-size:15px;font-weight:900">${pairsFound} : ${oppLast.p}</span>`+
+    `<span>${oppLast.pr?'👑':''}${oppLast.av||'❔'} ${duel.opName} ${oppLast.rk||''}</span>`;
+}
+function duelBoardDone(){
+  stopTimer();
+  duel.done=true;duel.tm=Date.now()-goTs;
+  duelSync();
+  showDuelResult(null,true);
+  duel.waitStart=Date.now();
+  duel.timeoutIv=setInterval(()=>{
+    if(!duel)return;
+    if(oppLast.done){finishDecide();return}
+    if(Date.now()-duel.waitStart>120000)finishDecide(true);
+  },2000);
+}
+function finishDecide(timeout){
+  if(!duel||duel.decided)return;
+  duel.decided=true;
+  if(duelPoll){clearInterval(duelPoll);duelPoll=null}
+  if(duel.timeoutIv)clearInterval(duel.timeoutIv);
+  let outcome;
+  if(timeout||!oppLast.done)outcome='win';
+  else if(duel.tm<oppLast.tm)outcome='win';
+  else if(duel.tm>oppLast.tm)outcome='lose';
+  else if(duelStats.mi<oppLast.mi)outcome='win';
+  else if(duelStats.mi>oppLast.mi)outcome='lose';
+  else outcome='draw';
+  if(outcome==='win'){coins+=100;duelWins++;playWinMusic();spawnConfetti()}
+  else if(outcome==='draw'){coins+=50}
+  else playLoseMusic();
+  saveData();
+  showDuelResult(outcome,false);
+  if(duel.role==='h'){
+    sDel('duel:'+duel.code);sDel('duel:'+duel.code+':join');
+    sDel('duel:'+duel.code+':h');sDel('duel:'+duel.code+':g');
+  }
+}
+function showDuelResult(outcome,waiting){
+  const fmt=ms=>{const sec=Math.floor(ms/1000);return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')};
+  const title=document.getElementById('duelResTitle');
+  title.textContent=waiting?t('waitOpp'):(outcome==='win'?t('duelWin'):outcome==='draw'?t('duelDraw'):t('duelLose'));
+  title.className='ov-title '+(outcome==='lose'?'lose':'win');
+  if(waiting)title.style.fontSize='20px';else title.style.fontSize='';
+  document.getElementById('duelResCoins').textContent=
+    waiting?'':(outcome==='win'?t('wonPot'):outcome==='draw'?t('drawRefund'):'');
+  document.getElementById('duelTable').innerHTML=
+    `<tr><th></th><th>${premium?'👑':''}${avatar} ${t('youLbl')}</th><th>${oppLast.pr?'👑':''}${oppLast.av||''} ${t('oppLbl')}</th></tr>`+
+    `<tr><td>${t('resTime')}</td><td>${fmt(duel.tm||Date.now()-goTs)}</td><td>${oppLast.done?fmt(oppLast.tm):'…'}</td></tr>`+
+    `<tr><td>${t('resPairs')}</td><td>${pairsFound}/8</td><td>${oppLast.p}/8</td></tr>`+
+    `<tr><td>${t('resMoves')}</td><td>${moves}</td><td>${oppLast.done?oppLast.mo:'…'}</td></tr>`+
+    `<tr><td>${t('resMistakes')}</td><td>${duelStats.mi}</td><td>${oppLast.mi}</td></tr>`;
+  document.getElementById('duelHomeBtn').style.display=waiting?'none':'flex';
+  document.getElementById('duelResult').classList.add('show');
+}
+function leaveDuelIfAny(){
+  if(!duel)return;
+  if(duelPoll){clearInterval(duelPoll);duelPoll=null}
+  if(waitPoll){clearInterval(waitPoll);waitPoll=null}
+  if(duel.timeoutIv)clearInterval(duel.timeoutIv);
+  sDel('duel:lobby');
+  document.getElementById('oppBar').style.display='none';
+  document.getElementById('duelResult').classList.remove('show');
+  document.getElementById('countOverlay').classList.remove('show');
+  duel=null;
+}
+
+/* ================= GRACKAT: PËRZIERËSI & SHIKUESI ================= */
+function frontClass(sym){
+  return 'card-face card-front'+(sym===goldSymCur?' gold':sym===bombSymCur?' bomb':sym===shufSymCur?' shuf':sym===peekSymCur?' peek':'');
+}
+function shuffleRemaining(){
+  const rest=[...document.querySelectorAll('#board .card')]
+    .filter(c=>!c.classList.contains('matched')&&!c.classList.contains('flipped'));
+  const syms=rest.map(c=>c.dataset.sym).sort(()=>Math.random()-.5);
+  rest.forEach((c,i)=>{
+    c.dataset.sym=syms[i];
+    const f=c.querySelector('.card-front');
+    f.textContent=syms[i];
+    f.className=frontClass(syms[i]);
+    c.classList.add('spinX');
+    setTimeout(()=>c.classList.remove('spinX'),650);
+  });
+  vibrate([30,30,30,30]);
+}
+function swapTwo(animated){
+  const rest=[...document.querySelectorAll('#board .card')]
+    .filter(c=>!c.classList.contains('matched')&&!c.classList.contains('flipped'));
+  if(rest.length<2)return;
+  const i=Math.floor(Math.random()*rest.length);
+  let j=Math.floor(Math.random()*rest.length);
+  if(j===i)j=(j+1)%rest.length;
+  const a=rest[i],b=rest[j];
+  const tmp=a.dataset.sym;
+  a.dataset.sym=b.dataset.sym;b.dataset.sym=tmp;
+  [a,b].forEach(c=>{
+    const f=c.querySelector('.card-front');
+    f.textContent=c.dataset.sym;
+    f.className=frontClass(c.dataset.sym);
+    if(animated){c.classList.add('wiggle');setTimeout(()=>c.classList.remove('wiggle'),500)}
+  });
+  if(animated&&!swapNotified){swapNotified=true;toast(t('swapWarn'))}
+}
+function peekAll(){
+  lock=true;
+  const rest=[...document.querySelectorAll('#board .card')]
+    .filter(c=>!c.classList.contains('matched')&&!c.classList.contains('flipped'));
+  rest.forEach(c=>c.classList.add('flipped'));
+  setTimeout(()=>{
+    rest.forEach(c=>c.classList.remove('flipped'));
+    lock=false;
+  },1500);
+}
+
+/* ================= TUTORIALI INTERAKTIV ================= */
+function askTutorial(){
+  document.getElementById('tutAskT').textContent=t('tutAskT');
+  document.getElementById('tutAskD').textContent=t('tutAskD');
+  document.getElementById('tutYesBtn').textContent=t('tutYes');
+  document.getElementById('tutLaterBtn').textContent=t('tutLater');
+  document.getElementById('tutAsk').classList.add('show');
+}
+document.getElementById('tutYesBtn').addEventListener('click',()=>{
+  playTap();document.getElementById('tutAsk').classList.remove('show');startTutorial();
+});
+document.getElementById('tutLaterBtn').addEventListener('click',()=>{
+  playTap();document.getElementById('tutAsk').classList.remove('show');
+  tutorialSeen=true;saveData();showScreen('menuScreen');
+});
+
+function startTutorial(){
+  hideOverlays();leaveDuelIfAny();
+  tut={step:0,forceSure:false,firstMatch:false};
+  params={pairs:3,cols:3,maxMoves:15,season:0};
+  fuelBonus=0;goldSymCur=null;bombSymCur=null;shufSymCur=null;peekSymCur=null;sureShown=true;
+  const syms=['🚗','🔧','🔑'];
+  deck=[...syms,...syms].sort(()=>Math.random()-.5);
+  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;
+  document.documentElement.style.setProperty('--season',SEASONS[0].color);
+  document.getElementById('levelBadge').innerHTML=
+    `<div class="profile-chip"><span class="pav">${avatar}</span><b>${myName()}</b></div>`+
+    `<div class="level-chip">${t('trainingLbl')}</div>`;
+  const board=document.getElementById('board');
+  board.style.gridTemplateColumns='repeat(3,1fr)';
+  board.style.maxWidth='276px';
+  board.innerHTML='';
+  deck.forEach(sym=>{
+    const c=document.createElement('div');
+    c.className='card';c.dataset.sym=sym;
+    c.innerHTML=`<div class="card-inner">
+      <div class="card-face card-back-face"><svg class="ic" style="width:44%;height:44%;stroke-width:1.8"><use href="#i-wheel"/></svg></div>
+      <div class="card-face card-front">${sym}</div>
+    </div>`;
+    c.addEventListener('click',()=>chooseCard(c));
+    board.appendChild(c);
+  });
+  document.getElementById('oppBar').style.display='none';
+  stopTimer();
+  timerInt=setInterval(()=>{seconds++;updateHud()},1000);
+  updateHud();
+  showScreen('gameScreen');
+  coachStep(0);
+}
+
+function hlEl(id,on){const e=document.getElementById(id);if(e)e.classList.toggle('hl',on)}
+function unHlAll(){hlEl('fuelStat',false);hlEl('pairsStat',false)}
+
+// Rrjedha: 0 mirëseardhje →1 karburanti →2 çiftet →3 kthe kartë →4 gjej çiftin
+// →5 perfekt →6 basti (i detyruar) →7 shpjegimi →8 mbaro →9 fund
+const coachFlow={0:1,1:2,2:3,5:6,7:10,10:8,9:'go'};
+function coachStep(n){
+  if(!tut)return;
+  tut.step=n;
+  unHlAll();
+  if(n===1)hlEl('fuelStat',true);
+  if(n===2)hlEl('pairsStat',true);
+  if(n===6)tut.forceSure=true;
+  document.getElementById('coachText').textContent=t('tc'+n);
+  document.getElementById('coachCards').classList.toggle('show',n===10);
+  const b=document.getElementById('coachBtn');
+  const btnSteps=[0,1,2,5,7,10,9];
+  b.style.display=btnSteps.includes(n)?'inline-flex':'none';
+  b.textContent=n===9?t('tutStartReal'):t('next');
+  document.getElementById('coach').classList.add('show');
+}
+document.getElementById('coachBtn').addEventListener('click',()=>{
+  playTap();
+  if(!tut)return;
+  const nx=coachFlow[tut.step];
+  if(nx==='go'){finishTutorial();return}
+  if(nx!==undefined)coachStep(nx);
+});
+function tutFirstFlip(){if(tut&&tut.step===3)coachStep(4)}
+function tutOnMatch(){
+  if(tut&&!tut.firstMatch){tut.firstMatch=true;if(tut.step===4)coachStep(5)}
+}
+function tutAfterSure(){if(tut&&tut.step===6)setTimeout(()=>coachStep(7),700)}
+function tutAllPairs(){stopTimer();setTimeout(()=>coachStep(9),700)}
+function finishTutorial(){
+  tutorialSeen=true;tut=null;saveData();
+  document.getElementById('coach').classList.remove('show');
+  unHlAll();
+  startLevel(0); // niset loja e vërtetë!
+}
+function leaveTutorialIfAny(){
+  if(!tut)return;
+  tut=null;tutorialSeen=true;saveData();
+  document.getElementById('coach').classList.remove('show');
+  unHlAll();
+}
+
+/* ================= YJET NË SFOND ================= */
+(function makeStars(){
+  const holder=document.getElementById('stars');
+  for(let i=0;i<44;i++){
+    const s=document.createElement('div');
+    s.className='tw';
+    s.style.left=Math.random()*100+'vw';
+    s.style.top=Math.random()*100+'vh';
+    s.style.animationDuration=(1.5+Math.random()*2.5)+'s';
+    s.style.animationDelay=(Math.random()*2)+'s';
+    document.body.appendChild(s);
+  }
+})();
+
+/* ================= NISJA ================= */
+(async()=>{
+  await loadData();
+  setTimeout(()=>{
+    if(!registered){renderAvatars('regAvatarGrid');showScreen('registerScreen')}
+    else if(tutorialSeen)showScreen('menuScreen');
+    else askTutorial();
+  },2900);
+})();
+document.body.addEventListener('touchstart',()=>ctx(),{once:true});
+document.body.addEventListener('click',()=>ctx(),{once:true});
+</script>
+</body>
+</html>
