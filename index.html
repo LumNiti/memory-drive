@@ -365,7 +365,15 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 .tscore{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:420px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:7px 12px;margin-bottom:8px;font-weight:900;font-size:13px}
 .tscore .mine{color:var(--amber2)}
 .tscore .tnum{font-size:17px}
-.emote-pop{position:fixed;left:50%;top:34%;transform:translateX(-50%);font-size:110px;z-index:58;pointer-events:none;animation:emotePop 1.5s ease-out forwards}
+.emote-pop{position:fixed;left:50%;top:32%;transform:translateX(-50%);font-size:128px;z-index:58;pointer-events:none;animation:emotePop 1.5s ease-out forwards;filter:drop-shadow(0 6px 20px rgba(0,0,0,.5))}
+/* Fluska e chat-it në duel */
+.chat-bubble{position:fixed;left:50%;top:26%;transform:translateX(-50%);z-index:58;pointer-events:none;background:rgba(16,14,34,.96);border:1.5px solid rgba(232,161,58,.5);border-radius:18px;padding:10px 16px;font-weight:800;font-size:15px;color:#fff;max-width:80%;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.5);animation:chatPop 2.4s ease-out forwards}
+.chat-bubble .cb-who{display:block;font-size:10px;color:var(--amber2);margin-bottom:2px;letter-spacing:.5px}
+@keyframes chatPop{0%{opacity:0;transform:translateX(-50%) translateY(10px) scale(.9)}12%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}85%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-8px)}}
+/* Chat row në picker */
+.ep-chat{display:flex;flex-direction:column;gap:6px;margin-top:10px;border-top:1px solid rgba(255,255,255,.12);padding-top:10px}
+.ep-chat .ep-msg{background:rgba(14,12,30,.6);border:1px solid rgba(255,255,255,.1);border-radius:10px;padding:8px 10px;font-size:13px;font-weight:700;cursor:pointer;text-align:left}
+.ep-chat .ep-msg:active{background:rgba(232,161,58,.15)}
 @keyframes emotePop{0%{transform:translateX(-50%) scale(0) rotate(-25deg);opacity:0}14%{transform:translateX(-50%) scale(1.25) rotate(10deg);opacity:1}68%{transform:translateX(-50%) scale(1) rotate(0);opacity:1}100%{transform:translateX(-50%) scale(1.15) translateY(-46px);opacity:0}}
 .emote-tag{position:fixed;left:50%;top:54%;transform:translateX(-50%);z-index:58;pointer-events:none;font-weight:900;font-size:14px;color:#fff;background:rgba(14,12,30,.7);padding:5px 14px;border-radius:16px;text-shadow:0 2px 8px rgba(0,0,0,.6);animation:emoteTag 1.5s ease-out forwards}
 @keyframes emoteTag{0%{opacity:0}18%{opacity:1}80%{opacity:1}100%{opacity:0}}
@@ -1388,19 +1396,7 @@ function screenBurst(cx,cy,colors,count,lightning,ring){
               {duration:560,easing:'cubic-bezier(.15,.7,.3,1)'});
     setTimeout(()=>r.remove(),600);
   }
-  if(lightning){
-    for(let i=0;i<3;i++){
-      const rot=i*120-60;
-      const bo=document.createElement('div');bo.className='bolt';bo.textContent='⚡';
-      bo.style.left=cx+'px';bo.style.top=cy+'px';bo.style.fontSize=(46+Math.random()*24)+'px';
-      holder.appendChild(bo);
-      bo.animate([{opacity:0,transform:`translate(-50%,-50%) scale(.4) rotate(${rot-18}deg)`},
-                  {opacity:1,offset:.22,transform:`translate(-50%,-50%) scale(1.35) rotate(${rot+10}deg)`},
-                  {opacity:0,transform:`translate(-50%,-50%) scale(1.1) rotate(${rot}deg)`}],
-                 {duration:520,easing:'ease-out'});
-      setTimeout(()=>bo.remove(),540);
-    }
-  }
+  if(lightning){ drawLightning(cx,cy); }
   for(let i=0;i<count;i++){
     const s=document.createElement('div');s.className='spark';
     const sz=6+Math.random()*10;
@@ -1415,6 +1411,54 @@ function screenBurst(cx,cy,colors,count,lightning,ring){
               {duration:620+Math.random()*320,easing:'cubic-bezier(.2,.7,.3,1)'});
     setTimeout(()=>s.remove(),960);
   }
+}
+/* ⚡ Rrufe realiste e vizatuar (jagged, me shkëlqim) */
+function drawLightning(cx,cy){
+  const fx=document.getElementById('fx')||document.body;
+  const NS='http://www.w3.org/2000/svg';
+  const svg=document.createElementNS(NS,'svg');
+  svg.setAttribute('style','position:fixed;inset:0;width:100vw;height:100vh;pointer-events:none;z-index:59;overflow:visible');
+  const bolts=2+Math.floor(Math.random()*2);
+  for(let b=0;b<bolts;b++){
+    let x=cx+(Math.random()*180-90), y=-30;
+    let d='M '+x.toFixed(1)+' '+y;
+    const steps=9;
+    for(let i=1;i<=steps;i++){
+      const t=i/steps;
+      const nx=x+(cx-x)*(t) + (Math.random()*70-35)*(1-t);
+      const ny=y+(cy-y)*t;
+      d+=' L '+nx.toFixed(1)+' '+ny.toFixed(1);
+      x=nx;
+      if(Math.random()<0.35){ // degë anësore
+        const bx=nx+(Math.random()*50-25), by=ny+20+Math.random()*30;
+        d+=' M '+nx.toFixed(1)+' '+ny.toFixed(1)+' L '+bx.toFixed(1)+' '+by.toFixed(1)+' M '+nx.toFixed(1)+' '+ny.toFixed(1);
+      }
+    }
+    // shtresa e jashtme (glow blu)
+    const glow=document.createElementNS(NS,'path');
+    glow.setAttribute('d',d);glow.setAttribute('fill','none');
+    glow.setAttribute('stroke','#7fbfff');glow.setAttribute('stroke-width','7');
+    glow.setAttribute('stroke-linecap','round');glow.setAttribute('stroke-linejoin','round');
+    glow.setAttribute('opacity','0.5');glow.setAttribute('style','filter:blur(3px)');
+    svg.appendChild(glow);
+    // bërthama e bardhë
+    const core=document.createElementNS(NS,'path');
+    core.setAttribute('d',d);core.setAttribute('fill','none');
+    core.setAttribute('stroke','#ffffff');core.setAttribute('stroke-width','2.4');
+    core.setAttribute('stroke-linecap','round');core.setAttribute('stroke-linejoin','round');
+    core.setAttribute('style','filter:drop-shadow(0 0 5px #cfeaff)');
+    svg.appendChild(core);
+  }
+  fx.appendChild(svg);
+  svg.animate([{opacity:0},{opacity:1,offset:.08},{opacity:.2,offset:.2},{opacity:1,offset:.32},{opacity:0,offset:.55},{opacity:.7,offset:.66},{opacity:0}],
+              {duration:520,easing:'linear'});
+  setTimeout(()=>svg.remove(),540);
+}
+/* 💥 Bomba: hap TË GJITHA kartat pak, pastaj i mbyll (kaos) */
+function bombRevealAll(){
+  const rest=[...document.querySelectorAll('#board .card')].filter(c=>!c.classList.contains('matched')&&c!==firstCard);
+  rest.forEach(c=>c.classList.add('flipped'));
+  setTimeout(()=>rest.forEach(c=>{if(!c.classList.contains('matched'))c.classList.remove('flipped')}),1300);
 }
 /* Shkëndija te një kartë kur bën çift */
 function cardSparkle(el){
@@ -1626,7 +1670,7 @@ function flipSecond(c,gamble){
       // Efektet surprizë
       const sym=a.dataset.sym;
       if(sym===goldSymCur){fuelBonus+=3;coins+=8;toast(t('goldMsg'));sfx(1046,0.3,'sine',0.08);saveData();screenBurst(window.innerWidth/2,window.innerHeight*0.44,['#ffd166','#fff','#ffe08a'],16,true,false)}
-      else if(sym===bombSymCur){const bx=params.season>=4?4:params.season>=2?3:2;fuelBonus-=bx;toast('💥 '+t('bombMsg').replace('2',String(bx)));bombFX();if(params.season>=3&&pairsFound<params.pairs)swapTwo(true)}
+      else if(sym===bombSymCur){const bx=params.season>=4?4:params.season>=2?3:2;fuelBonus-=bx;toast('💥 '+t('bombMsg').replace('2',String(bx)));bombFX();bombRevealAll();if(params.season>=3&&pairsFound<params.pairs)swapTwo(true)}
       else if(sym===shufSymCur){toast(t('shufMsg'));sfx(300,0.22,'sine',0.07);shuffleRemaining()}
       else if(sym===peekSymCur){toast(t('peekMsg'));sfx(1200,0.28,'sine',0.06);setTimeout(peekAll,80)}
       if(tut)tutOnMatch();
@@ -2298,9 +2342,10 @@ async function duelSync(){
     {p:pairsFound,mi:duelStats.mi,mo:moves,done:duel.done,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],em:myEmote});
   const op=await sGet('duel:'+duel.code+':'+(duel.role==='h'?'g':'h'));
   if(op){
+    if(op.left){ if(duelPoll){clearInterval(duelPoll);duelPoll=null} toast('👋 Opponent left — you win!'); if(!duel.decided){duel.done=true;duel.tm=duel.tm||(Date.now()-goTs);oppLast=op;finishDecide(true);} return; }
     oppLast=op;updateOppBar();
-    // Emoji nga kundërshtari
-    if(op.em&&op.em.t>lastOppEmoteT){lastOppEmoteT=op.em.t;showEmote(op.em.e,duel.opName||'Opp')}
+    // Emoji / chat nga kundërshtari
+    if(op.em&&op.em.t>lastOppEmoteT){lastOppEmoteT=op.em.t; op.em.chat?showChat(op.em.e,duel.opName||'Opp'):showEmote(op.em.e,duel.opName||'Opp');}
     if(duel.done&&op.done)finishDecide();
   }
 }
@@ -2313,18 +2358,40 @@ function updateOppBar(){
     `<span onclick="openEmotePicker()">${oppLast.pr?'👑':''}${oppLast.av||'❔'} ${duel.opName} ${oppLast.rk||''} 💬</span>`;
 }
 /* 🙂 Emote picker stil Ludo: kliko profilin → zgjidh → dërgohet */
+const CHATS=['👋 Hi!','😎 Good luck','🔥 Nice one','😂 Haha','🤝 GG!','😅 Oops','⏱️ Hurry up!','😱 No way!'];
 function openEmotePicker(){
   const p=document.getElementById('emotePicker');
   if(!p)return;
   if(p.classList.contains('show')){p.classList.remove('show');return}
-  p.innerHTML='<div class="ep-hint">Tap to send an emoji 👇</div><div class="ep-grid">'+
-    EMOTES.map(e=>`<div class="ep-btn" onclick="pickEmote('${e}')">${e}</div>`).join('')+'</div>';
+  p.innerHTML='<div class="ep-hint">Send emoji or message 👇</div>'+
+    '<div class="ep-grid">'+EMOTES.map(e=>`<div class="ep-btn" onclick="pickEmote('${e}')">${e}</div>`).join('')+'</div>'+
+    '<div class="ep-chat">'+CHATS.map(c=>`<div class="ep-msg" onclick="pickChat(${JSON.stringify(c).replace(/"/g,'&quot;')})">${c}</div>`).join('')+'</div>';
   p.classList.add('show');
 }
 function pickEmote(e){
   sendEmote(e);
   const p=document.getElementById('emotePicker');
   if(p)p.classList.remove('show');
+}
+function pickChat(txt){
+  sendChat(txt);
+  const p=document.getElementById('emotePicker');
+  if(p)p.classList.remove('show');
+}
+function sendChat(txt){
+  playTap();
+  showChat(txt,myName());
+  myEmote={e:txt,t:Date.now(),chat:true};
+  if(settings.sfx){tone(700,0.08,'sine',0.05)}
+  duelSync();
+}
+function showChat(txt,who){
+  const b=document.createElement('div');
+  b.className='chat-bubble';
+  b.innerHTML='<span class="cb-who">'+who+'</span>'+txt;
+  document.body.appendChild(b);
+  vibrate(12);
+  setTimeout(()=>b.remove(),2400);
 }
 /* ---- Sinkronizimi & skorbordi 2v2 ---- */
 async function duelSync2v2(){
@@ -2335,7 +2402,7 @@ async function duelSync2v2(){
   const sumA=((st.a1&&st.a1.p)||0)+((st.a2&&st.a2.p)||0);
   const sumB=((st.b1&&st.b1.p)||0)+((st.b2&&st.b2.p)||0);
   update2v2Bar(sumA,sumB,st);
-  SLOTS2.forEach(s=>{ if(s!==duel.role){const o=st[s]; if(o&&o.em&&o.em.t>lastOppEmoteT){lastOppEmoteT=o.em.t;showEmote(o.em.e,o.name||'Rival')}} });
+  SLOTS2.forEach(s=>{ if(s!==duel.role){const o=st[s]; if(o&&o.left&&!duel['left_'+s]){duel['left_'+s]=1;toast('👋 '+(o.name||'A player')+' left');} if(o&&o.em&&o.em.t>lastOppEmoteT){lastOppEmoteT=o.em.t; o.em.chat?showChat(o.em.e,o.name||'Rival'):showEmote(o.em.e,o.name||'Rival');}} });
   if(duel.done){
     const present=SLOTS2.filter(s=>st[s]);
     const allDone=present.every(s=> s===duel.role ? true : st[s].done);
@@ -2438,6 +2505,11 @@ function leaveDuelIfAny(){
   {const w2=document.getElementById('duel2v2Wait');if(w2)w2.style.display='none';}
   document.getElementById('duelResult').classList.remove('show');
   document.getElementById('countOverlay').classList.remove('show');
+  // Njofto kundërshtarin se u largova (nëse dola pa përfunduar)
+  if(duel.code && !duel.decided){
+    const k = duel.mode==='2v2' ? 'duel:'+duel.code+':st:'+duel.role : 'duel:'+duel.code+':'+duel.role;
+    sSet(k,{left:true});
+  }
   duel=null;
 }
 
