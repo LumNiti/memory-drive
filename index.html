@@ -1742,8 +1742,9 @@ function updateHud(){
   if(duel){
     document.getElementById('statFuel').textContent='❌'+duelStats.mi;
     document.getElementById('fuelStat').classList.remove('danger');
-    // ⏱️ Numërim mbrapsht: koha e mbetur
-    const rem=Math.max(0,DUEL_TIME-seconds);
+    // ⏱️ Numërim mbrapsht: koha totale e mbetur (ndër raunde)
+    const elapsed=Math.floor((Date.now()-(duel.startTs||goTs))/1000);
+    const rem=Math.max(0,DUEL_TIME-elapsed);
     const rm=String(Math.floor(rem/60)).padStart(2,'0'), rs=String(rem%60).padStart(2,'0');
     const timeEl=document.getElementById('statTime');
     timeEl.textContent=rm+':'+rs;
@@ -1795,7 +1796,7 @@ function flipSecond(c,gamble){
       const sym=a.dataset.sym;
       if(sym===goldSymCur){fuelBonus+=3;coins+=3;toast(t('goldMsg'));sfx(1046,0.3,'sine',0.08);saveData();screenBurst(window.innerWidth/2,window.innerHeight*0.44,['#ffd166','#fff','#ffe08a'],16,true,false)}
       else if(sym===bombSymCur){
-        if(duel){duelStats.bh++;seconds+=5;toast('💣 Bomb! +5s');bombFX();shuffleRemaining();updateHud();}
+        if(duel){duelStats.bh++;if(duel.startTs)duel.startTs-=5000;toast('💣 Bomb! −5s');bombFX();shuffleRemaining();updateHud();}
         else{const bx=params.season>=4?4:params.season>=2?3:2;fuelBonus-=bx;toast('💥 '+t('bombMsg').replace('2',String(bx)));bombFX();bombRevealAll();if(params.season>=3&&pairsFound<params.pairs)swapTwo(true)}
       }
       else if(sym===shufSymCur){if(duel)duelStats.th++;toast(t('shufMsg'));sfx(300,0.22,'sine',0.07);shuffleRemaining()}
@@ -1829,7 +1830,12 @@ function flipSecond(c,gamble){
         a.classList.remove('flipped','shake');
         c.classList.remove('flipped','shake');
         lock=false;
-        if(duel){duelStats.mi++;updateHud()}
+        if(duel){
+          duelStats.mi++;updateHud();
+          // ⚡ gabim në duel → rrufe + letrat ndërrohen (kaos)
+          try{const r=c.getBoundingClientRect();drawLightning(r.left+r.width/2,r.top+r.height/2);}catch(e){}
+          if(pairsFound<params.pairs)swapTwo(true);
+        }
         else if(!tut){
           if(params.season>=2)swapTwo(true); // 🌀 gabove? dy karta ndërrojnë vendet!
           if(fuelLeft()<=0)levelLost();
@@ -2277,7 +2283,9 @@ document.getElementById('regBtn').addEventListener('click',()=>{
 
 /* ================= DUELI ONLINE ================= */
 let duel=null, duelStats={mi:0}, duelPoll=null, waitPoll=null, goTs=0;
-const DUEL_TIME=180; // ⏱️ kohë-limit i duelit online (sekonda)
+const DUEL_TIME=300; // ⏱️ kohë-limit i duelit online (sekonda) — mjaft për 5 raunde
+// 🎚️ Raundet progresive të duelit 1v1: fillon me pak karta, rritet gjithnjë e më shumë
+const DUEL_ROUNDS=[{pairs:3,cols:3},{pairs:5,cols:5},{pairs:6,cols:4},{pairs:8,cols:4},{pairs:10,cols:5}]; // 6→10→12→16→20 karta
 let duelMode='1v1';
 const SLOTS2=['a1','a2','b1','b2'];
 function teamOf(s){return s[0]==='a'?'A':'B';}
@@ -2471,28 +2479,34 @@ function startDuelBoard(){
   hideOverlays();
   {const rb=document.getElementById('refreshBtn');if(rb)rb.style.display='none';} // pa refresh në duel online
   {const bb=document.getElementById('boosterBar');if(bb)bb.style.display='none';} // pa ndihmësa në duel
-  const rnd=mulberry32(duel.seed);
-  const se=SEASONS[duel.seed%5];
+  const twoV2=(duel.mode==='2v2');
+  if(duel.round==null)duel.round=0;
+  const rdCfg = twoV2 ? {pairs:8,cols:4} : (DUEL_ROUNDS[duel.round]||DUEL_ROUNDS[DUEL_ROUNDS.length-1]);
+  const rnd=mulberry32(duel.seed + duel.round*7919);   // seed per raund → i njëjtë për të dy
+  const se=SEASONS[(duel.seed+duel.round)%5];
   document.documentElement.style.setProperty('--season',se.color);
-  params={pairs:8,cols:4,maxMoves:9999,season:duel.seed%5};
+  params={pairs:rdCfg.pairs,cols:rdCfg.cols,maxMoves:9999,season:(duel.seed+duel.round)%5};
   fuelBonus=0;goldSymCur=null;sureShown=true;
-  duelStats={mi:0,bh:0,th:0};oppLast={p:0,mi:0,mo:0,done:false,tm:0,bh:0,th:0};
+  // statistikat mbahen ndër raunde; rivendosen vetëm në raundin e parë
+  if(duel.round===0){ duelStats={mi:0,bh:0,th:0}; oppLast={p:0,mi:0,mo:0,done:false,tm:0,bh:0,th:0,rd:0}; duel.startTs=Date.now(); }
   duel.done=false;duel.tm=0;duel.decided=false;
 
-  const chosen=seededShuffle(se.symbols,rnd).slice(0,8);
+  const chosen=seededShuffle(se.symbols,rnd).slice(0,rdCfg.pairs);
   deck=seededShuffle([...chosen,...chosen],rnd);
-  // 💣 Grackat në duel — të njëjta për të dy (seed) → e drejtë
-  bombSymCur=chosen[1];shufSymCur=chosen[2];peekSymCur=chosen[3];
-  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;combo=0;maxCombo=0;comboCoins=0;shufLock=false;freezeUntil=0;
+  // 💣 Shumë gracka në duel — të njëjta për të dy (seed) → e drejtë
+  bombSymCur = chosen.length>=2 ? chosen[1] : null;
+  shufSymCur = chosen.length>=3 ? chosen[2] : null;
+  peekSymCur = chosen.length>=4 ? chosen[3] : null;
+  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;combo=0;maxCombo=0;comboCoins=0;shufLock=false;freezeUntil=0;swapNotified=false;
 
   const board=document.getElementById('board');
-  board.style.gridTemplateColumns='repeat(4,1fr)';
-  board.style.maxWidth='368px';
+  board.style.gridTemplateColumns='repeat('+rdCfg.cols+',1fr)';
+  board.style.maxWidth=(rdCfg.cols>=5?'404px':'368px');
   board.innerHTML='';
   deck.forEach((sym,i)=>{
     const c=document.createElement('div');
     c.className='card dealIn';c.dataset.sym=sym;
-    c.style.animationDelay=(i*0.04)+'s';
+    c.style.animationDelay=(i*0.06)+'s';   // shpërndarje një-nga-një më e dukshme
     c.innerHTML=`<div class="card-inner">
       <div class="card-face card-back-face"><svg class="ic" style="width:44%;height:44%;stroke-width:1.8"><use href="#i-wheel"/></svg></div>
       <div class="card-face card-front">${sym}</div>
@@ -2507,7 +2521,10 @@ function startDuelBoard(){
   if(duel.mode==='2v2')update2v2Bar(0,0,{});else updateOppBar();
   stopTimer();
   goTs=Date.now();
-  timerInt=setInterval(()=>{seconds++;updateHud(); if(duel&&!duel.decided&&seconds>=DUEL_TIME)duelTimeUp();},1000);
+  timerInt=setInterval(()=>{seconds++;updateHud(); if(duel&&!duel.decided&&(Date.now()-(duel.startTs||goTs))/1000>=DUEL_TIME)duelTimeUp();},1000);
+  // 🌀 Grackë periodike: letrat ndërrojnë vendet çdo ~9s (kaos)
+  if(trapTimer){clearInterval(trapTimer);trapTimer=null}
+  trapTimer=setInterval(()=>{ if(duel&&!lock&&!duel.decided&&!document.getElementById('duelResult').classList.contains('show'))swapTwo(true); }, 9000);
   updateHud();
   if(duelPoll)clearInterval(duelPoll);
   duelPoll=setInterval(duel.mode==='2v2'?duelSync2v2:duelSync,1500);
@@ -2516,7 +2533,7 @@ async function duelSync(){
   if(!duel)return;
   if(duel.mode==='2v2')return duelSync2v2();
   sSet('duel:'+duel.code+':'+duel.role,
-    {p:pairsFound,mi:duelStats.mi,mo:moves,bh:duelStats.bh,th:duelStats.th,done:duel.done,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],em:myEmote});
+    {p:pairsFound,rd:duel.round||0,mi:duelStats.mi,mo:moves,bh:duelStats.bh,th:duelStats.th,done:duel.done,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],em:myEmote});
   const op=await sGet('duel:'+duel.code+':'+(duel.role==='h'?'g':'h'));
   if(op){
     if(op.left){ if(duelPoll){clearInterval(duelPoll);duelPoll=null} toast('👋 Opponent left — you win!'); if(!duel.decided){duel.oppLeft=true;duel.done=true;duel.tm=duel.tm||(Date.now()-goTs);oppLast=op;finishDecide(true);} return; }
@@ -2529,10 +2546,11 @@ async function duelSync(){
 function updateOppBar(){
   if(!duel)return;
   if(duel.mode==='2v2')return; // skorbordi i ekipeve menaxhohet nga update2v2Bar
+  const rInfo = `<div style="font-size:9px;opacity:.75;text-align:center;letter-spacing:.5px">ROUND ${(duel.round||0)+1}/${DUEL_ROUNDS.length}</div>`;
   document.getElementById('oppBar').innerHTML=
     `<span class="me-prof" onclick="openEmotePicker()">${premium?'👑':''}${avatar} ${myName()} 💬</span>`+
-    `<span style="color:var(--amber2);font-size:15px;font-weight:900">${pairsFound} : ${oppLast.p}</span>`+
-    `<span class="opp-prof">${oppLast.pr?'👑':''}${oppLast.av||'❔'} ${duel.opName} ${oppLast.rk||''}</span>`;
+    `<span style="display:flex;flex-direction:column;align-items:center">${rInfo}<span style="color:var(--amber2);font-size:15px;font-weight:900">${pairsFound} : ${oppLast.p}</span></span>`+
+    `<span class="opp-prof">${oppLast.pr?'👑':''}${oppLast.av||'❔'} ${duel.opName} R${(oppLast.rd||0)+1}</span>`;
 }
 /* 🙂 Emote picker stil Ludo: kliko profilin → zgjidh → dërgohet */
 const CHATS=['👋 Hi!','😎 Good luck','🔥 Nice one','😂 Haha','🤝 GG!','😅 Oops','⏱️ Hurry up!','😱 No way!'];
@@ -2616,9 +2634,10 @@ function duelTimeUp(){
   if(duel.mode==='2v2'){ try{duelSync2v2();}catch(e){} finish2v2(duel.lastSumA||0, duel.lastSumB||0); return; }
   if(duelPoll){clearInterval(duelPoll);duelPoll=null}
   duel.decided=true;
-  try{ sSet('duel:'+duel.code+':'+duel.role,{p:pairsFound,mi:duelStats.mi,mo:moves,bh:duelStats.bh,th:duelStats.th,done:true,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],em:myEmote}); }catch(e){}
-  const myP=pairsFound, opP=oppLast.p||0;
-  let outcome = myP>opP?'win':myP<opP?'lose':(duelStats.mi<(oppLast.mi||0)?'win':duelStats.mi>(oppLast.mi||0)?'lose':'draw');
+  try{ sSet('duel:'+duel.code+':'+duel.role,{p:pairsFound,rd:duel.round||0,mi:duelStats.mi,mo:moves,bh:duelStats.bh,th:duelStats.th,done:true,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],em:myEmote}); }catch(e){}
+  // fituesi: raundi më i lartë → pastaj çiftet → pastaj më pak gabime
+  const myR=duel.round||0, opR=oppLast.rd||0, myP=pairsFound, opP=oppLast.p||0;
+  let outcome = myR>opR?'win':myR<opR?'lose':(myP>opP?'win':myP<opP?'lose':(duelStats.mi<(oppLast.mi||0)?'win':duelStats.mi>(oppLast.mi||0)?'lose':'draw'));
   if(outcome==='win'){coins+=100;duelWins++;playWinMusic();spawnConfetti();bumpLeaderboard()}
   else if(outcome==='draw'){coins+=50}
   else playLoseMusic();
@@ -2657,7 +2676,17 @@ function finish2v2(sumA,sumB){
 }
 function duelBoardDone(){
   stopTimer();
-  duel.done=true;duel.tm=Date.now()-goTs;
+  if(trapTimer){clearInterval(trapTimer);trapTimer=null}
+  // ▶️ 1v1: kalo në raundin tjetër nëse ka
+  if(duel.mode!=='2v2' && duel.round < DUEL_ROUNDS.length-1){
+    duel.round++;
+    if(settings.sfx)playMatch();
+    toast('✅ Round '+duel.round+'/'+DUEL_ROUNDS.length+' — next!');
+    duelSync(); // njofto progresin
+    setTimeout(()=>{ if(duel&&!duel.decided)startDuelBoard(); }, 800);
+    return;
+  }
+  duel.done=true;duel.tm=Date.now()-(duel.startTs||goTs);
   if(duel.mode==='2v2'){ duelSync2v2(); showDuelResult(null,true); return; }
   duelSync();
   showDuelResult(null,true);
@@ -2772,7 +2801,7 @@ async function rematchDuel(){
 }
 function beginRematch(seed){
   if(!duel)return;
-  duel.seed=seed; duel.decided=false; duel.oppLeft=false;
+  duel.seed=seed; duel.decided=false; duel.oppLeft=false; duel.round=0;
   document.getElementById('duelResult').classList.remove('show');
   toast('🔁 Rematch!');
   startDuelBoard();
