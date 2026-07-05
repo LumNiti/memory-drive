@@ -156,8 +156,7 @@ svg{display:block}
 .av.sel{border-color:var(--amber);background:rgba(232,161,58,.18)}
 .av.lockedAv{opacity:.45}
 .av .crown{position:absolute;top:-7px;right:-5px;font-size:11px}
-.av .lvtag{position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:900;background:rgba(255,255,255,.2);color:#fff;padding:1px 5px;border-radius:8px;white-space:nowrap;letter-spacing:.3px}
-.av .lvtag.got{background:#2fbf6a;color:#04240f}
+.av .lockbadge{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);font-size:11px}
 .av.proglow{border-color:var(--amber)!important;box-shadow:0 0 0 2px var(--amber),0 0 16px rgba(232,161,58,.75);animation:proGlow 1.6s ease-in-out infinite}
 @keyframes proGlow{0%,100%{box-shadow:0 0 0 2px var(--amber),0 0 12px rgba(232,161,58,.55)}50%{box-shadow:0 0 0 2px #ffe08a,0 0 22px rgba(232,161,58,.95)}}
 
@@ -2162,7 +2161,8 @@ function addXP(n){
 }
 const FREE_AV=['🚗','🏎️','😎','🐺','🔥','⚡'];
 const PRO_AV=['👑','🐉','💎','🦁','🚀','😈','🔱','🫅']; // +2 ekskluzive për PRO
-const LEVEL_AV=[[10,'🐯'],[15,'🦅'],[20,'🥷'],[28,'🤖'],[36,'👽'],[45,'⚔️'],[55,'🐲']]; // hapen kur arrin level-in
+// Çdo level hap një avatar super (kërkesa NUK tregohet — surprizë)
+const LEVEL_AV=[[2,'🐯'],[3,'🦅'],[4,'🥷'],[5,'🤖'],[6,'👽'],[7,'⚔️'],[8,'🐲'],[9,'🦈'],[10,'🐙'],[11,'🦖'],[12,'🦂'],[13,'🐍'],[14,'🦇'],[15,'🕷️'],[16,'🦑'],[18,'🐆'],[20,'🦏'],[24,'🦍'],[28,'🐗'],[34,'🦬'],[42,'🐊'],[50,'🦣']];
 
 function refreshProfileUI(){
   const r=myRank(), nr=nextRank(), pl=playerLevel();
@@ -2222,12 +2222,12 @@ function renderAvatars(gridId){
       d.className='av'+(avatar===a.em?' sel':'')+((lockedPro||lockedLvl)?' lockedAv':'')+(premium&&avatar===a.em?' proglow':'');
       let badge='';
       if(a.kind==='pro')badge='<span class="crown">👑</span>';
-      else if(a.kind==='level')badge='<span class="lvtag'+(lockedLvl?'':' got')+'">'+(lockedLvl?('Lv'+a.lv):'✓')+'</span>';
+      else if(lockedLvl)badge='<span class="lockbadge">🔒</span>';   // kërkesa nuk tregohet
       d.innerHTML=a.em+badge;
       d.addEventListener('click',()=>{
         playTap();
         if(lockedPro){openPremiumSheet();return}
-        if(lockedLvl){toast('🔒 Reach level '+a.lv+' to unlock');return}
+        if(lockedLvl){toast('🔒 Level up to unlock this avatar!');return}
         avatar=a.em;saveData();renderAvatars();
         const ss=document.getElementById('settingsScreen');
         if(ss&&ss.classList.contains('active'))refreshProfileUI();
