@@ -1783,9 +1783,12 @@ function flipSecond(c,gamble){
       // Efektet surprizë
       const sym=a.dataset.sym;
       if(sym===goldSymCur){fuelBonus+=3;coins+=8;toast(t('goldMsg'));sfx(1046,0.3,'sine',0.08);saveData();screenBurst(window.innerWidth/2,window.innerHeight*0.44,['#ffd166','#fff','#ffe08a'],16,true,false)}
-      else if(sym===bombSymCur){const bx=params.season>=4?4:params.season>=2?3:2;fuelBonus-=bx;toast('💥 '+t('bombMsg').replace('2',String(bx)));bombFX();bombRevealAll();if(params.season>=3&&pairsFound<params.pairs)swapTwo(true)}
-      else if(sym===shufSymCur){toast(t('shufMsg'));sfx(300,0.22,'sine',0.07);shuffleRemaining()}
-      else if(sym===peekSymCur){toast(t('peekMsg'));sfx(1200,0.28,'sine',0.06);setTimeout(peekAll,80)}
+      else if(sym===bombSymCur){
+        if(duel){duelStats.bh++;seconds+=5;toast('💣 Bomb! +5s');bombFX();shuffleRemaining();updateHud();}
+        else{const bx=params.season>=4?4:params.season>=2?3:2;fuelBonus-=bx;toast('💥 '+t('bombMsg').replace('2',String(bx)));bombFX();bombRevealAll();if(params.season>=3&&pairsFound<params.pairs)swapTwo(true)}
+      }
+      else if(sym===shufSymCur){if(duel)duelStats.th++;toast(t('shufMsg'));sfx(300,0.22,'sine',0.07);shuffleRemaining()}
+      else if(sym===peekSymCur){if(duel)duelStats.th++;toast(t('peekMsg'));sfx(1200,0.28,'sine',0.06);setTimeout(peekAll,80)}
       if(tut)tutOnMatch();
       updateHud();lock=false;
       if(pairsFound===params.pairs){duel?duelBoardDone():(tut?tutAllPairs():levelWon())}
@@ -2442,12 +2445,14 @@ function startDuelBoard(){
   const se=SEASONS[duel.seed%5];
   document.documentElement.style.setProperty('--season',se.color);
   params={pairs:8,cols:4,maxMoves:9999,season:duel.seed%5};
-  fuelBonus=0;goldSymCur=null;bombSymCur=null;shufSymCur=null;peekSymCur=null;sureShown=true;
-  duelStats={mi:0};oppLast={p:0,mi:0,mo:0,done:false,tm:0};
+  fuelBonus=0;goldSymCur=null;sureShown=true;
+  duelStats={mi:0,bh:0,th:0};oppLast={p:0,mi:0,mo:0,done:false,tm:0,bh:0,th:0};
   duel.done=false;duel.tm=0;duel.decided=false;
 
   const chosen=seededShuffle(se.symbols,rnd).slice(0,8);
   deck=seededShuffle([...chosen,...chosen],rnd);
+  // 💣 Grackat në duel — të njëjta për të dy (seed) → e drejtë
+  bombSymCur=chosen[1];shufSymCur=chosen[2];peekSymCur=chosen[3];
   firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;combo=0;maxCombo=0;comboCoins=0;shufLock=false;freezeUntil=0;
 
   const board=document.getElementById('board');
@@ -2481,7 +2486,7 @@ async function duelSync(){
   if(!duel)return;
   if(duel.mode==='2v2')return duelSync2v2();
   sSet('duel:'+duel.code+':'+duel.role,
-    {p:pairsFound,mi:duelStats.mi,mo:moves,done:duel.done,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],em:myEmote});
+    {p:pairsFound,mi:duelStats.mi,mo:moves,bh:duelStats.bh,th:duelStats.th,done:duel.done,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],em:myEmote});
   const op=await sGet('duel:'+duel.code+':'+(duel.role==='h'?'g':'h'));
   if(op){
     if(op.left){ if(duelPoll){clearInterval(duelPoll);duelPoll=null} toast('👋 Opponent left — you win!'); if(!duel.decided){duel.oppLeft=true;duel.done=true;duel.tm=duel.tm||(Date.now()-goTs);oppLast=op;finishDecide(true);} return; }
@@ -2552,7 +2557,7 @@ function showChat(txt,who,side){
 /* ---- Sinkronizimi & skorbordi 2v2 ---- */
 async function duelSync2v2(){
   if(!duel)return;
-  sSet('duel:'+duel.code+':st:'+duel.role,{p:pairsFound,mi:duelStats.mi,mo:moves,done:duel.done,tm:duel.tm,name:myName(),av:avatar,em:myEmote});
+  sSet('duel:'+duel.code+':st:'+duel.role,{p:pairsFound,mi:duelStats.mi,mo:moves,bh:duelStats.bh,th:duelStats.th,done:duel.done,tm:duel.tm,name:myName(),av:avatar,em:myEmote});
   const st={};
   await Promise.all(SLOTS2.map(async s=>{ st[s]=(s===duel.role)?{p:pairsFound,done:duel.done,name:myName(),av:avatar}:(await sGet('duel:'+duel.code+':st:'+s)); }));
   const sumA=((st.a1&&st.a1.p)||0)+((st.a2&&st.a2.p)||0);
@@ -2647,7 +2652,10 @@ function showDuelResult(outcome,waiting){
     `<tr><td>${t('resTime')}</td><td>${fmt(duel.tm||Date.now()-goTs)}</td><td>${oppLast.done?fmt(oppLast.tm):'…'}</td></tr>`+
     `<tr><td>${t('resPairs')}</td><td>${pairsFound}/8</td><td>${oppLast.p}/8</td></tr>`+
     `<tr><td>${t('resMoves')}</td><td>${moves}</td><td>${oppLast.done?oppLast.mo:'…'}</td></tr>`+
-    `<tr><td>${t('resMistakes')}</td><td>${duelStats.mi}</td><td>${oppLast.mi}</td></tr>`;
+    `<tr><td>${t('resMistakes')}</td><td>${duelStats.mi}</td><td>${oppLast.mi}</td></tr>`+
+    `<tr><td>💣 Bombs</td><td>${duelStats.bh||0}</td><td>${oppLast.bh||0}</td></tr>`+
+    `<tr><td>🌀 Traps</td><td>${duelStats.th||0}</td><td>${oppLast.th||0}</td></tr>`+
+    `<tr><td>✨ Perfect</td><td>${duelStats.mi===0?'✅':'—'}</td><td>${oppLast.done&&oppLast.mi===0?'✅':'—'}</td></tr>`;
   document.getElementById('duelHomeBtn').style.display=waiting?'none':'flex';
   if(!waiting&&duel)duel.resultAt=Date.now(); // pikënisje për freskinë e rematch-it
   // 🔁 Rematch vetëm në 1v1 dhe kur kundërshtari s'ka dalë
