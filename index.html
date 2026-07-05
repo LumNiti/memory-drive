@@ -381,6 +381,16 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 @keyframes emotePop{0%{transform:translateX(-50%) scale(0) rotate(-25deg);opacity:0}14%{transform:translateX(-50%) scale(1.25) rotate(10deg);opacity:1}68%{transform:translateX(-50%) scale(1) rotate(0);opacity:1}100%{transform:translateX(-50%) scale(1.15) translateY(-46px);opacity:0}}
 .emote-tag{position:fixed;left:50%;top:54%;transform:translateX(-50%);z-index:58;pointer-events:none;font-weight:900;font-size:14px;color:#fff;background:rgba(14,12,30,.7);padding:5px 14px;border-radius:16px;text-shadow:0 2px 8px rgba(0,0,0,.6);animation:emoteTag 1.5s ease-out forwards}
 @keyframes emoteTag{0%{opacity:0}18%{opacity:1}80%{opacity:1}100%{opacity:0}}
+/* 🔥 Combo popup */
+.combo-pop{position:fixed;left:50%;top:34%;transform:translateX(-50%);z-index:58;pointer-events:none;font-weight:900;font-size:30px;color:#ffd166;text-shadow:0 3px 14px rgba(255,120,40,.7),0 0 4px rgba(0,0,0,.6);white-space:nowrap;animation:comboPop 1.1s cubic-bezier(.2,1.4,.4,1) forwards}
+.combo-pop span{color:#7ED957;font-size:22px;margin-left:4px}
+@keyframes comboPop{0%{transform:translateX(-50%) scale(.3) rotate(-12deg);opacity:0}20%{transform:translateX(-50%) scale(1.3) rotate(6deg);opacity:1}55%{transform:translateX(-50%) scale(1) rotate(0);opacity:1}100%{transform:translateX(-50%) scale(1.1) translateY(-54px);opacity:0}}
+/* 🎒 Ndihmësat (boosters) */
+.booster-bar{display:none;align-items:center;justify-content:center;gap:8px;width:100%;max-width:420px;margin:0 auto 8px;flex-wrap:nowrap}
+.boost-btn{flex:1;min-width:0;background:rgba(14,12,30,.6);border:1.5px solid rgba(232,161,58,.35);border-radius:12px;padding:8px 4px;color:#fff;font-weight:900;font-size:12px;cursor:pointer;transition:transform .1s,border-color .15s,opacity .15s;white-space:nowrap}
+.boost-btn:active{transform:scale(.9)}
+.boost-btn.dim{opacity:.4}
+.stat.frozen{color:#7fd8ff;text-shadow:0 0 10px rgba(120,200,255,.7)}
 /* ---- Dueli ---- */
 .opp-bar{display:none;align-items:center;justify-content:space-between;width:100%;max-width:420px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:9px 14px;font-weight:800;font-size:13px;margin-bottom:8px;gap:10px}
 #countOverlay{position:absolute;inset:0;background:rgba(5,6,12,.88);z-index:26;display:none;align-items:center;justify-content:center}
@@ -435,8 +445,13 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 #coachBtn{align-self:center;padding:11px 28px;border:none;border-radius:13px;font-family:'Nunito';font-weight:900;font-size:13px;letter-spacing:1px;background:linear-gradient(180deg,var(--amber2),var(--amber));color:#1a1410;cursor:pointer}
 .hl{box-shadow:0 0 0 3px var(--amber2),0 0 22px rgba(255,209,102,.7)!important;z-index:23;position:relative}
 /* ---- Dialogu ---- */
-#quitDialog,#surePopup,#tutAsk,#premiumSheet{position:absolute;inset:0;background:rgba(0,0,0,.7);z-index:20;display:none;align-items:center;justify-content:center;padding:32px}
-#quitDialog.show,#surePopup.show,#tutAsk.show,#premiumSheet.show{display:flex}
+#quitDialog,#surePopup,#tutAsk,#premiumSheet,#lbOverlay{position:absolute;inset:0;background:rgba(0,0,0,.7);z-index:20;display:none;align-items:center;justify-content:center;padding:32px}
+#quitDialog.show,#surePopup.show,#tutAsk.show,#premiumSheet.show,#lbOverlay.show{display:flex}
+.lb-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:11px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.08);margin-bottom:6px;font-weight:800;font-size:14px}
+.lb-row .lb-rank{width:26px;text-align:center;font-weight:900}
+.lb-row .lb-name{flex:1;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.lb-row .lb-wins{color:var(--amber2);font-weight:900}
+.lb-row.me{border-color:var(--amber2);background:rgba(232,161,58,.14)}
 .dialog-box{background:#1c1e2e;border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:26px;text-align:center;max-width:300px}
 .dialog-box h3{margin-bottom:8px}
 .dialog-box p{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:20px}
@@ -642,6 +657,9 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
     <button class="btn btn-ghost" style="width:100%" onclick="playTap();randomMatch()">
       <span style="font-size:16px">🎲</span><span data-i18n="randomMatch"></span>
     </button>
+    <button class="btn btn-ghost" style="width:100%" onclick="playTap();openLeaderboard()">
+      <span style="font-size:16px">🏆</span><span>Leaderboard</span>
+    </button>
     <div class="store-note" data-i18n="duelNote"></div>
   </div>
   <div id="duelWait" style="display:none;flex-direction:column;gap:14px;align-items:center;margin-top:36px">
@@ -812,6 +830,12 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
   <div class="level-badge" id="levelBadge"></div>
   <div class="opp-bar" id="oppBar"></div>
   <div class="emote-bar" id="emoteBar"></div>
+  <div class="booster-bar" id="boosterBar">
+    <button class="boost-btn" id="bPeek" onclick="playTap();boostPeek()"><span class="bc">👁️ 15</span></button>
+    <button class="boost-btn" id="bFuel" onclick="playTap();boostFuel()"><span class="bc">⛽ 10</span></button>
+    <button class="boost-btn" id="bFreeze" onclick="playTap();boostFreeze()"><span class="bc">⏸️ 12</span></button>
+    <button class="boost-btn" id="bLock" onclick="playTap();boostLock()"><span class="bc">🔒 12</span></button>
+  </div>
   <div id="board"></div>
 </div>
 
@@ -873,9 +897,23 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
   <div class="ov-title win" id="duelResTitle"></div>
   <div style="font-weight:900;color:var(--amber2);font-size:19px" id="duelResCoins"></div>
   <table class="duel-table" id="duelTable"></table>
-  <button class="btn btn-primary" id="duelHomeBtn" onclick="playTap();leaveDuelIfAny();showScreen('menuScreen')">
+  <button class="btn btn-primary" id="duelRematchBtn" onclick="playTap();rematchDuel()">
+    <svg class="ic"><use href="#i-refresh"/></svg><span>Rematch</span>
+  </button>
+  <button class="btn btn-ghost" id="duelHomeBtn" onclick="playTap();leaveDuelIfAny();showScreen('menuScreen')">
     <svg class="ic"><use href="#i-home"/></svg><span data-i18n="menu"></span>
   </button>
+</div>
+
+<!-- TABELA E RENDITJES (LEADERBOARD) -->
+<div id="lbOverlay">
+  <div class="dialog-box" style="max-width:340px;width:calc(100% - 40px)">
+    <div style="font-size:38px;margin-bottom:2px">🏆</div>
+    <h3 style="margin-bottom:2px">Leaderboard</h3>
+    <p style="font-size:11px;color:rgba(255,255,255,.5);margin-bottom:12px">Most duel wins</p>
+    <div id="lbList" style="max-height:52vh;overflow-y:auto;-webkit-overflow-scrolling:touch;text-align:left"></div>
+    <button class="btn btn-ghost" style="width:100%;margin-top:12px" onclick="playTap();document.getElementById('lbOverlay').classList.remove('show')">Close</button>
+  </div>
 </div>
 
 <!-- PREMIUM SHEET -->
@@ -1560,6 +1598,9 @@ function toggleSet(key,el){
 
 /* ================= LOJA ================= */
 let deck=[],firstCard=null,lock=false,moves=0,pairsFound=0,seconds=0,timerInt=null,trapTimer=null,swapNotified=false,params=null,fuelBonus=0,goldSymCur=null,bombSymCur=null,shufSymCur=null,peekSymCur=null,sureShown=false;
+let combo=0,maxCombo=0,comboCoins=0;
+let shufLock=false,freezeUntil=0;
+const BOOST={peek:15,fuel:10,freeze:12,lock:12};
 
 function startLevel(g){
   startMusic();hideOverlays();
@@ -1591,7 +1632,7 @@ function startLevel(g){
     const iv=params.season>=4?12000:18000;
     trapTimer=setInterval(()=>{if(!lock&&!document.getElementById('winOverlay').classList.contains('show'))swapTwo(false)},iv);
   }
-  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;
+  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;combo=0;maxCombo=0;comboCoins=0;shufLock=false;freezeUntil=0;
   updateHud();
   document.getElementById('levelBadge').innerHTML=
     `<div class="profile-chip"><span class="pav">${avatar}</span><b>${myName()}</b> <span title="${myRank()[2]}">${myRank()[1]}</span>${premium?' 👑':''}</div>`+
@@ -1617,8 +1658,10 @@ function startLevel(g){
 
   document.getElementById('oppBar').style.display='none';
   {const eb=document.getElementById('emoteBar');if(eb)eb.style.display='none';}
+  {const bb=document.getElementById('boosterBar');if(bb)bb.style.display='flex';} // ndihmësat në fushatë
+  updateBoosterBar();
   stopTimer();
-  timerInt=setInterval(()=>{seconds++;updateHud()},1000);
+  timerInt=setInterval(()=>{if(Date.now()<freezeUntil)return;seconds++;updateHud()},1000);
   showScreen('gameScreen');
 }
 function stopTimer(){if(timerInt){clearInterval(timerInt);timerInt=null}if(trapTimer){clearInterval(trapTimer);trapTimer=null}}
@@ -1670,6 +1713,9 @@ function flipSecond(c,gamble){
       a.classList.add('matched');c.classList.add('matched');
       playMatch();pairsFound++;
       cardSparkle(a);cardSparkle(c);
+      // 🔥 Combo: çifte radhazi pa gabim → shpërblim + efekte
+      combo++; if(combo>maxCombo)maxCombo=combo;
+      if(combo>=2){ comboReward(combo, c); }
       // Basti fitoi! +2 karburant
       if(gamble){fuelBonus+=2;toast(t('gambleWin'));sfx(880,0.28,'sine',0.07);vibrate([30,40,60]);if(tut)tutAfterSure()}
       // Efektet surprizë
@@ -1685,6 +1731,7 @@ function flipSecond(c,gamble){
     },350);
   }else{
     lock=true;
+    combo=0; // gabove → seria e çifteve u ndërpre
     if(gamble){
       // Basti HUMBI — niveli mbaron menjëherë! 💀 (në stërvitje je i sigurt)
       setTimeout(()=>{
@@ -1716,6 +1763,22 @@ function flipSecond(c,gamble){
   }
 }
 
+/* 🔥 Shpërblim për çifte radhazi (combo) */
+function comboReward(n, el){
+  const bonus = duel ? 0 : Math.min(n-1, 6);   // fushatë: 2→+1, 3→+2 ... max +6 monedha
+  if(bonus>0){ coins+=bonus; comboCoins+=bonus; }
+  addXP(3 + n*3);                               // XP gjithmonë
+  try{ sfx(520 + Math.min(n,8)*70, 0.12, 'triangle', 0.06); }catch(e){}
+  const p=document.createElement('div');
+  p.className='combo-pop';
+  p.innerHTML='🔥 Combo x'+n+(bonus>0?' <span>+'+bonus+'</span>':'');
+  document.body.appendChild(p);
+  setTimeout(()=>p.remove(),1100);
+  vibrate(16);
+  const col = n>=5?['#ff3b6b','#ffd166','#fff']:n>=3?['#ffd166','#ff8cc8','#fff']:['#7ED957','#ffd166','#fff'];
+  try{ screenBurst(window.innerWidth/2, window.innerHeight*0.4, col, 8+n*2, n>=4, false); }catch(e){}
+  updateHud(); if(!duel)updateBoosterBar();
+}
 /* ---- Fitorja ---- */
 function levelWon(){
   stopTimer();playWinMusic();
@@ -2302,6 +2365,7 @@ function beginCountdown(startAt){
 function startDuelBoard(){
   hideOverlays();
   {const rb=document.getElementById('refreshBtn');if(rb)rb.style.display='none';} // pa refresh në duel online
+  {const bb=document.getElementById('boosterBar');if(bb)bb.style.display='none';} // pa ndihmësa në duel
   const rnd=mulberry32(duel.seed);
   const se=SEASONS[duel.seed%5];
   document.documentElement.style.setProperty('--season',se.color);
@@ -2312,7 +2376,7 @@ function startDuelBoard(){
 
   const chosen=seededShuffle(se.symbols,rnd).slice(0,8);
   deck=seededShuffle([...chosen,...chosen],rnd);
-  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;
+  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;combo=0;maxCombo=0;comboCoins=0;shufLock=false;freezeUntil=0;
 
   const board=document.getElementById('board');
   board.style.gridTemplateColumns='repeat(4,1fr)';
@@ -2432,7 +2496,7 @@ function finish2v2(sumA,sumB){
   const myTeam=teamOf(duel.role);
   const mySum=myTeam==='A'?sumA:sumB, oppSum=myTeam==='A'?sumB:sumA;
   let outcome = mySum>oppSum?'win':mySum<oppSum?'lose':'draw';
-  if(outcome==='win'){coins+=100;duelWins++;playWinMusic();spawnConfetti()}
+  if(outcome==='win'){coins+=100;duelWins++;playWinMusic();spawnConfetti();bumpLeaderboard()}
   else if(outcome==='draw'){coins+=50}
   else playLoseMusic();
   saveData();
@@ -2475,7 +2539,7 @@ function finishDecide(timeout){
   else if(duelStats.mi<oppLast.mi)outcome='win';
   else if(duelStats.mi>oppLast.mi)outcome='lose';
   else outcome='draw';
-  if(outcome==='win'){coins+=100;duelWins++;playWinMusic();spawnConfetti()}
+  if(outcome==='win'){coins+=100;duelWins++;playWinMusic();spawnConfetti();bumpLeaderboard()}
   else if(outcome==='draw'){coins+=50}
   else playLoseMusic();
   saveData();
@@ -2501,10 +2565,77 @@ function showDuelResult(outcome,waiting){
     `<tr><td>${t('resMoves')}</td><td>${moves}</td><td>${oppLast.done?oppLast.mo:'…'}</td></tr>`+
     `<tr><td>${t('resMistakes')}</td><td>${duelStats.mi}</td><td>${oppLast.mi}</td></tr>`;
   document.getElementById('duelHomeBtn').style.display=waiting?'none':'flex';
+  if(!waiting&&duel)duel.resultAt=Date.now(); // pikënisje për freskinë e rematch-it
+  // 🔁 Rematch vetëm në 1v1 dhe kur kundërshtari s'ka dalë
+  const rb=document.getElementById('duelRematchBtn');
+  if(rb){ const canRe = !waiting && duel && duel.mode==='1v1' && !oppLeft; rb.style.display=canRe?'flex':'none'; rb.disabled=false; rb.querySelector('span').textContent='Rematch'; }
   document.getElementById('duelResult').classList.add('show');
+}
+/* 🏆 Tabela e renditjes (leaderboard) — fitoret e dueleve, e ndarë përmes serverit */
+async function bumpLeaderboard(){
+  try{
+    const lb=(await sGet('leaderboard'))||{};
+    const nm=myName();
+    lb[nm]=(lb[nm]||0)+1;
+    await sSet('leaderboard',lb);
+  }catch(e){}
+}
+async function openLeaderboard(){
+  const list=document.getElementById('lbList');
+  list.innerHTML='<div style="text-align:center;color:rgba(255,255,255,.5);font-size:13px;padding:14px">Loading…</div>';
+  document.getElementById('lbOverlay').classList.add('show');
+  let lb={};
+  try{ lb=(await sGet('leaderboard'))||{}; }catch(e){}
+  const me=myName();
+  if(duelWins>(lb[me]||0)) lb[me]=duelWins; // përfshi fitoret e mia lokale
+  renderLeaderboard(lb);
+}
+function renderLeaderboard(lb){
+  const list=document.getElementById('lbList');
+  const rows=Object.entries(lb).filter(r=>r[1]>0).sort((a,b)=>b[1]-a[1]).slice(0,15);
+  const me=myName();
+  const medal=i=>i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.';
+  if(!rows.length){ list.innerHTML='<div style="text-align:center;color:rgba(255,255,255,.5);font-size:13px;padding:14px">No wins yet — be the first! 🏁</div>'; return; }
+  list.innerHTML=rows.map((r,i)=>`<div class="lb-row${r[0]===me?' me':''}"><span class="lb-rank">${medal(i)}</span><span class="lb-name">${r[0]}</span><span class="lb-wins">🏆 ${r[1]}</span></div>`).join('');
+}
+/* 🔁 Rematch (vetëm 1v1): të dy shtypin Rematch → fillon një duel i ri me të njëjtin kundërshtar */
+async function rematchDuel(){
+  if(!duel){ showScreen('duelScreen'); return; }
+  const btn=document.getElementById('duelRematchBtn');
+  if(btn){ btn.disabled=true; btn.querySelector('span').textContent='Waiting…'; }
+  const code=duel.code, host=(duel.role==='h'), since=duel.resultAt||0;
+  const newSeed=(Math.random()*1e9)|0;
+  duel.decided=false; duel.oppLeft=false;
+  try{
+    if(host) await sSet('duel:'+code+':rmh',{seed:newSeed,t:Date.now()});
+    else await sSet('duel:'+code+':rmg',{ready:1,t:Date.now()});
+  }catch(e){}
+  if(duel.rmPoll){clearInterval(duel.rmPoll);duel.rmPoll=null}
+  const start=Date.now();
+  duel.rmPoll=setInterval(async()=>{
+    if(!duel){return}
+    try{
+      if(host){
+        const g=await sGet('duel:'+code+':rmg');
+        if(g&&g.ready&&g.t>since){ clearInterval(duel.rmPoll);duel.rmPoll=null; beginRematch(newSeed); return; }
+      }else{
+        const hh=await sGet('duel:'+code+':rmh');
+        if(hh&&hh.seed!=null&&hh.t>since){ clearInterval(duel.rmPoll);duel.rmPoll=null; beginRematch(hh.seed); return; }
+      }
+    }catch(e){}
+    if(Date.now()-start>25000){ clearInterval(duel.rmPoll);duel.rmPoll=null; toast('⌛ No rematch — opponent did not join'); if(btn){btn.disabled=false;btn.querySelector('span').textContent='Rematch';} }
+  },1500);
+}
+function beginRematch(seed){
+  if(!duel)return;
+  duel.seed=seed; duel.decided=false; duel.oppLeft=false;
+  document.getElementById('duelResult').classList.remove('show');
+  toast('🔁 Rematch!');
+  startDuelBoard();
 }
 function leaveDuelIfAny(){
   if(!duel)return;
+  if(duel.rmPoll){clearInterval(duel.rmPoll);duel.rmPoll=null}
   if(duelPoll){clearInterval(duelPoll);duelPoll=null}
   if(waitPoll){clearInterval(waitPoll);waitPoll=null}
   if(duel.timeoutIv)clearInterval(duel.timeoutIv);
@@ -2540,7 +2671,21 @@ function shuffleRemaining(){
   });
   vibrate([30,30,30,30]);
 }
+/* 🎒 Ndihmësat (boosters) — vetëm në fushatë/offline */
+function updateBoosterBar(){
+  const set=(id,cost)=>{const b=document.getElementById(id);if(b)b.classList.toggle('dim',coins<cost);};
+  set('bPeek',BOOST.peek);set('bFuel',BOOST.fuel);set('bFreeze',BOOST.freeze);set('bLock',BOOST.lock);
+}
+function boostPay(cost){
+  if(coins<cost){toast('❌ Not enough coins');sfx(200,0.15,'sine',0.05);return false}
+  coins-=cost;saveData();updateHud();updateBoosterBar();vibrate(18);return true;
+}
+function boostPeek(){ if(lock||duel)return; if(!boostPay(BOOST.peek))return; toast('👁️ Peek!'); sfx(1200,0.2,'sine',0.06); peekAll(); }
+function boostFuel(){ if(duel)return; if(!boostPay(BOOST.fuel))return; fuelBonus+=3; toast('⛽ +3 fuel'); sfx(720,0.16,'sine',0.06); updateHud(); }
+function boostFreeze(){ if(duel)return; if(freezeUntil>Date.now()){toast('⏸️ Already frozen');return} if(!boostPay(BOOST.freeze))return; freezeUntil=Date.now()+8000; toast('⏸️ Time frozen 8s'); sfx(420,0.22,'sine',0.06); const ts=document.getElementById('statTime').closest('.stat'); if(ts){ts.classList.add('frozen');setTimeout(()=>ts.classList.remove('frozen'),8000);} }
+function boostLock(){ if(duel)return; if(shufLock){toast('🔒 Already locked');return} if(!boostPay(BOOST.lock))return; shufLock=true; if(trapTimer){clearInterval(trapTimer);trapTimer=null} toast('🔒 Shuffle locked'); sfx(300,0.2,'sine',0.06); }
 function swapTwo(animated){
+  if(shufLock)return; // 🔒 ndihmësa e ndaloi përzierjen
   const rest=[...document.querySelectorAll('#board .card')]
     .filter(c=>!c.classList.contains('matched')&&!c.classList.contains('flipped'));
   if(rest.length<2)return;
@@ -2592,7 +2737,7 @@ function startTutorial(){
   fuelBonus=0;goldSymCur=null;bombSymCur=null;shufSymCur=null;peekSymCur=null;sureShown=true;
   const syms=['🚗','🔧','🔑'];
   deck=[...syms,...syms].sort(()=>Math.random()-.5);
-  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;
+  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;combo=0;maxCombo=0;comboCoins=0;shufLock=false;freezeUntil=0;
   document.documentElement.style.setProperty('--season',SEASONS[0].color);
   document.getElementById('levelBadge').innerHTML=
     `<div class="profile-chip"><span class="pav">${avatar}</span><b>${myName()}</b></div>`+
