@@ -807,7 +807,7 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
       <div class="stat"><svg class="ic"><use href="#i-clock"/></svg><span id="statTime">00:00</span></div>
       <div class="stat" id="pairsStat"><svg class="ic"><use href="#i-check"/></svg><span id="statPairs">0/0</span></div>
     </div>
-    <button class="hud-btn" onclick="playTap();startLevel(currentLevel)"><svg class="ic"><use href="#i-refresh"/></svg></button>
+    <button class="hud-btn" id="refreshBtn" onclick="playTap();startLevel(currentLevel)"><svg class="ic"><use href="#i-refresh"/></svg></button>
   </div>
   <div class="level-badge" id="levelBadge"></div>
   <div class="opp-bar" id="oppBar"></div>
@@ -1564,6 +1564,7 @@ let deck=[],firstCard=null,lock=false,moves=0,pairsFound=0,seconds=0,timerInt=nu
 function startLevel(g){
   startMusic();hideOverlays();
   document.getElementById('quitDialog').classList.remove('show');
+  {const rb=document.getElementById('refreshBtn');if(rb)rb.style.display='';} // refresh vetëm në fushatë/offline
   currentLevel=g;
   params=levelParams(g);
   // ⛽ Karburanti ndryshon pak çdo herë: -2 deri +1 lëvizje (më zor)
@@ -2300,6 +2301,7 @@ function beginCountdown(startAt){
 }
 function startDuelBoard(){
   hideOverlays();
+  {const rb=document.getElementById('refreshBtn');if(rb)rb.style.display='none';} // pa refresh në duel online
   const rnd=mulberry32(duel.seed);
   const se=SEASONS[duel.seed%5];
   document.documentElement.style.setProperty('--season',se.color);
@@ -2346,7 +2348,7 @@ async function duelSync(){
     {p:pairsFound,mi:duelStats.mi,mo:moves,done:duel.done,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],em:myEmote});
   const op=await sGet('duel:'+duel.code+':'+(duel.role==='h'?'g':'h'));
   if(op){
-    if(op.left){ if(duelPoll){clearInterval(duelPoll);duelPoll=null} toast('👋 Opponent left — you win!'); if(!duel.decided){duel.done=true;duel.tm=duel.tm||(Date.now()-goTs);oppLast=op;finishDecide(true);} return; }
+    if(op.left){ if(duelPoll){clearInterval(duelPoll);duelPoll=null} toast('👋 Opponent left — you win!'); if(!duel.decided){duel.oppLeft=true;duel.done=true;duel.tm=duel.tm||(Date.now()-goTs);oppLast=op;finishDecide(true);} return; }
     oppLast=op;updateOppBar();
     // Emoji / chat nga kundërshtari
     if(op.em&&op.em.t>lastOppEmoteT){lastOppEmoteT=op.em.t; op.em.chat?showChat(op.em.e,duel.opName||'Opp'):showEmote(op.em.e,duel.opName||'Opp');}
@@ -2486,7 +2488,8 @@ function finishDecide(timeout){
 function showDuelResult(outcome,waiting){
   const fmt=ms=>{const sec=Math.floor(ms/1000);return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')};
   const title=document.getElementById('duelResTitle');
-  title.textContent=waiting?t('waitOpp'):(outcome==='win'?t('duelWin'):outcome==='draw'?t('duelDraw'):t('duelLose'));
+  const oppLeft=duel&&duel.oppLeft;
+  title.textContent=waiting?t('waitOpp'):(oppLeft?'👋 Opponent left — You win!':(outcome==='win'?t('duelWin'):outcome==='draw'?t('duelDraw'):t('duelLose')));
   title.className='ov-title '+(outcome==='lose'?'lose':'win');
   if(waiting)title.style.fontSize='20px';else title.style.fontSize='';
   document.getElementById('duelResCoins').textContent=
