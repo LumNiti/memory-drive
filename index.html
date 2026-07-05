@@ -154,8 +154,12 @@ svg{display:block}
 .av{aspect-ratio:1;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;background:rgba(255,255,255,.06);border:2px solid transparent;cursor:pointer;position:relative;transition:transform .15s}
 .av:active{transform:scale(.9)}
 .av.sel{border-color:var(--amber);background:rgba(232,161,58,.18)}
-.av.lockedAv{opacity:.4}
+.av.lockedAv{opacity:.45}
 .av .crown{position:absolute;top:-7px;right:-5px;font-size:11px}
+.av .lvtag{position:absolute;bottom:-7px;left:50%;transform:translateX(-50%);font-size:8px;font-weight:900;background:rgba(255,255,255,.2);color:#fff;padding:1px 5px;border-radius:8px;white-space:nowrap;letter-spacing:.3px}
+.av .lvtag.got{background:#2fbf6a;color:#04240f}
+.av.proglow{border-color:var(--amber)!important;box-shadow:0 0 0 2px var(--amber),0 0 16px rgba(232,161,58,.75);animation:proGlow 1.6s ease-in-out infinite}
+@keyframes proGlow{0%,100%{box-shadow:0 0 0 2px var(--amber),0 0 12px rgba(232,161,58,.55)}50%{box-shadow:0 0 0 2px #ffe08a,0 0 22px rgba(232,161,58,.95)}}
 
 /* ---- Sezonet ---- */
 #seasonsScreen,#levelsScreen{justify-content:flex-start;padding-top:max(20px, env(safe-area-inset-top))}
@@ -1121,7 +1125,7 @@ const I18N={
     proOnly:'👑 PRO avatars unlock with Premium!', proWelcome:'👑 Welcome to PRO! +500 🪙',
     regTitle:'Create your profile', regSub:'Pick a name and avatar for online duels', regGo:'START',
     oneTime:'One-time purchase — yours forever',
-    pb1:'6 exclusive avatars', pb2:'👑 Crown by your name online', pb3:'+500 coins instantly',
+    pb1:'8 exclusive avatars + golden glow', pb2:'👑 Crown by your name online', pb3:'+500 coins instantly',
     pb4:'+1 extra fuel EVERY level', pb5:'Gold skin + Neon City background free',
     adTagline:'The memory game that LIES to you.', adSureH:'IT ASKS: "ARE YOU SURE?" 🤔',
     adWin:'RIGHT', adLose:'WRONG', adLoseSub:'LEVEL OVER',
@@ -2157,7 +2161,8 @@ function addXP(n){
   if(after!==before)setTimeout(()=>toast('⬆️ '+after+'!'),900);
 }
 const FREE_AV=['🚗','🏎️','😎','🐺','🔥','⚡'];
-const PRO_AV=['👑','🐉','💎','🦁','🚀','😈'];
+const PRO_AV=['👑','🐉','💎','🦁','🚀','😈','🔱','🫅']; // +2 ekskluzive për PRO
+const LEVEL_AV=[[10,'🐯'],[15,'🦅'],[20,'🥷'],[28,'🤖'],[36,'👽'],[45,'⚔️'],[55,'🐲']]; // hapen kur arrin level-in
 
 function refreshProfileUI(){
   const r=myRank(), nr=nextRank(), pl=playerLevel();
@@ -2196,20 +2201,36 @@ function refreshProfileUI(){
     else{b.className='btn-mini';b.innerHTML='👑 €4,99';b.onclick=openPremiumSheet}
   }
 }
+function avEntries(){
+  const list=[];
+  FREE_AV.forEach(e=>list.push({em:e,kind:'free'}));
+  LEVEL_AV.forEach(([lv,e])=>list.push({em:e,kind:'level',lv}));
+  PRO_AV.forEach(e=>list.push({em:e,kind:'pro'}));
+  return list;
+}
 function renderAvatars(gridId){
   const ids=gridId?[gridId]:['avatarGrid','regAvatarGrid'];
+  const pl=playerLevel();
   ids.forEach(id=>{
     const g=document.getElementById(id);
     if(!g)return;
     g.innerHTML='';
-    [...FREE_AV.map(e=>[e,false]),...PRO_AV.map(e=>[e,true])].forEach(([em,pro])=>{
+    avEntries().forEach(a=>{
+      const lockedPro=a.kind==='pro'&&!premium;
+      const lockedLvl=a.kind==='level'&&pl<a.lv;
       const d=document.createElement('div');
-      d.className='av'+(avatar===em?' sel':'')+(pro&&!premium?' lockedAv':'');
-      d.innerHTML=em+(pro?'<span class="crown">👑</span>':'');
+      d.className='av'+(avatar===a.em?' sel':'')+((lockedPro||lockedLvl)?' lockedAv':'')+(premium&&avatar===a.em?' proglow':'');
+      let badge='';
+      if(a.kind==='pro')badge='<span class="crown">👑</span>';
+      else if(a.kind==='level')badge='<span class="lvtag'+(lockedLvl?'':' got')+'">'+(lockedLvl?('Lv'+a.lv):'✓')+'</span>';
+      d.innerHTML=a.em+badge;
       d.addEventListener('click',()=>{
         playTap();
-        if(pro&&!premium){openPremiumSheet();return}
-        avatar=em;saveData();renderAvatars();
+        if(lockedPro){openPremiumSheet();return}
+        if(lockedLvl){toast('🔒 Reach level '+a.lv+' to unlock');return}
+        avatar=a.em;saveData();renderAvatars();
+        const ss=document.getElementById('settingsScreen');
+        if(ss&&ss.classList.contains('active'))refreshProfileUI();
       });
       g.appendChild(d);
     });
