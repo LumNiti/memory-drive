@@ -400,6 +400,21 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 .mc-ic{font-size:30px;line-height:1}
 .mc-t{font-weight:900;font-size:17px;letter-spacing:2px;margin-top:5px}
 .mc-s{font-size:10.5px;opacity:.7;font-weight:700;margin-top:2px}
+/* 👑 Bastet e duelit */
+.bet-cards{display:flex;gap:8px;width:100%}
+.bet-card{flex:1;background:rgba(14,12,30,.55);border:2px solid rgba(255,255,255,.12);border-radius:14px;padding:10px 4px;text-align:center;cursor:pointer;transition:transform .12s,border-color .15s,background .15s;opacity:.6}
+.bet-card:active{transform:scale(.94)}
+.bet-card.bet-on{opacity:1;border-color:var(--amber2);box-shadow:0 0 14px rgba(232,161,58,.3);background:rgba(232,161,58,.12)}
+.bet-card .bc-a{font-weight:900;font-size:17px;color:#ffd166}
+.bet-card .bc-s{font-size:9.5px;opacity:.75;font-weight:800;margin-top:2px}
+/* 😀 Shiriti i emoteve live + emoji i madh i kundërshtarit */
+.emote-bar{display:none;align-items:center;justify-content:center;gap:6px;width:100%;max-width:420px;margin:0 auto 8px;flex-wrap:nowrap}
+.le-btn{position:relative;background:rgba(14,12,30,.6);border:1.5px solid rgba(255,255,255,.12);border-radius:11px;padding:6px 10px;font-size:19px;cursor:pointer;transition:transform .1s}
+.le-btn:active{transform:scale(.85)}
+.le-btn.locked{opacity:.5}
+.le-btn .le-lock{position:absolute;top:-6px;right:-4px;font-size:11px}
+.big-emote{position:fixed;left:50%;top:20%;transform:translateX(-50%);font-size:100px;z-index:59;pointer-events:none;animation:bigEmotePop 1.5s ease-out forwards;filter:drop-shadow(0 6px 20px rgba(0,0,0,.5))}
+@keyframes bigEmotePop{0%{transform:translateX(-50%) scale(0) rotate(-22deg);opacity:0}18%{transform:translateX(-50%) scale(1.3) rotate(9deg);opacity:1}70%{transform:translateX(-50%) scale(1) rotate(0);opacity:1}100%{transform:translateX(-50%) scale(1.1) translateY(-42px);opacity:0}}
 .duel2v2wait{display:none;flex-direction:column;gap:12px;align-items:center;width:100%;max-width:340px;margin-top:20px}
 .roster2{display:flex;gap:10px;width:100%;justify-content:center;align-items:stretch}
 .team-col{flex:1;display:flex;flex-direction:column;gap:8px}
@@ -500,8 +515,8 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 #coachBtn{align-self:center;padding:11px 28px;border:none;border-radius:13px;font-family:'Nunito';font-weight:900;font-size:13px;letter-spacing:1px;background:linear-gradient(180deg,var(--amber2),var(--amber));color:#1a1410;cursor:pointer}
 .hl{box-shadow:0 0 0 3px var(--amber2),0 0 22px rgba(255,209,102,.7)!important;z-index:23;position:relative}
 /* ---- Dialogu ---- */
-#quitDialog,#surePopup,#tutAsk,#premiumSheet,#lbOverlay{position:absolute;inset:0;background:rgba(0,0,0,.7);z-index:20;display:none;align-items:center;justify-content:center;padding:32px}
-#quitDialog.show,#surePopup.show,#tutAsk.show,#premiumSheet.show,#lbOverlay.show{display:flex}
+#quitDialog,#surePopup,#tutAsk,#premiumSheet,#lbOverlay,#secondChance{position:absolute;inset:0;background:rgba(0,0,0,.7);z-index:20;display:none;align-items:center;justify-content:center;padding:32px}
+#quitDialog.show,#surePopup.show,#tutAsk.show,#premiumSheet.show,#lbOverlay.show,#secondChance.show{display:flex}
 .lb-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:11px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.08);margin-bottom:6px;font-weight:800;font-size:14px}
 .lb-row .lb-rank{width:26px;text-align:center;font-weight:900}
 .lb-row .lb-name{flex:1;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -701,7 +716,13 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
         <div class="mc-ic">👥</div><div class="mc-t">2 v 2</div><div class="mc-s">Team battle</div>
       </div>
     </div>
-    <div class="store-sub" style="text-align:center;font-size:13px" data-i18n="betLbl"></div>
+    <div class="mode-label">Bet 🪙</div>
+    <div class="bet-cards">
+      <div class="bet-card bet-on" data-b="50" onclick="setDuelBet(50)"><div class="bc-a">50</div><div class="bc-s">All</div></div>
+      <div class="bet-card" data-b="100" onclick="setDuelBet(100)"><div class="bc-a">100</div><div class="bc-s">👑 PRO</div></div>
+      <div class="bet-card" data-b="250" onclick="setDuelBet(250)"><div class="bc-a">250</div><div class="bc-s">👑 PRO</div></div>
+    </div>
+    <div class="store-sub" style="text-align:center;font-size:12px" id="betInfo"></div>
     <button class="btn btn-primary" style="width:100%" onclick="playTap();createRoom()">
       <svg class="ic"><use href="#i-play"/></svg><span data-i18n="createRoom"></span>
     </button>
@@ -983,9 +1004,26 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
       <div class="pro-b"><span class="pe">🪙</span><span data-i18n="pb3"></span></div>
       <div class="pro-b"><span class="pe">⛽</span><span data-i18n="pb4"></span></div>
       <div class="pro-b"><span class="pe">🎨</span><span data-i18n="pb5"></span></div>
+      <div class="pro-b"><span class="pe">💰</span><span data-i18n="pb6"></span></div>
+      <div class="pro-b"><span class="pe">🔥</span><span data-i18n="pb7"></span></div>
+      <div class="pro-b"><span class="pe">🛟</span><span data-i18n="pb8"></span></div>
+      <div class="pro-b"><span class="pe">⚡</span><span data-i18n="pb9"></span></div>
     </div>
     <button class="btn-mini ap" style="width:100%;padding:14px;font-size:14px;justify-content:center" onclick="buyPremium()">&#63743; Pay &nbsp;€4,99</button>
     <button class="btn btn-ghost" style="width:100%;margin-top:10px;padding:12px" onclick="playTap();document.getElementById('premiumSheet').classList.remove('show')"><span data-i18n="close"></span></button>
+  </div>
+</div>
+
+<!-- 🛟 SECOND CHANCE (PRO) -->
+<div id="secondChance">
+  <div class="dialog-box" style="max-width:300px">
+    <div style="font-size:44px;margin-bottom:4px">🛟</div>
+    <h3>SECOND CHANCE</h3>
+    <p style="font-size:13px;color:rgba(255,255,255,.6);margin:8px 0 16px">Out of fuel! Continue with <b style="color:#ffd166">+3 ⛽</b>?</p>
+    <div class="dialog-btns">
+      <button class="btn btn-primary" id="scContinueBtn" onclick="playTap();scContinue()">CONTINUE</button>
+      <button class="btn btn-ghost" onclick="playTap();scGiveUp()">GIVE UP</button>
+    </div>
   </div>
 </div>
 
@@ -1061,6 +1099,7 @@ const I18N={
     oneTime:'Blerje një herë — e jotja përgjithmonë',
     pb1:'6 avatarë ekskluzivë', pb2:'Kurora 👑 pranë emrit online', pb3:'+500 monedha menjëherë',
     pb4:'+1 karburant shtesë ÇDO nivel', pb5:'Skin i artë + sfondi Neon City falas',
+    pb6:'Baste të larta 100/250 🪙 në duel', pb7:'Emote PRO live: 🔥💀😏👑', pb8:'🛟 Second Chance: +3 ⛽/nivel', pb9:'⚡ 2× XP kudo',
     adTagline:'Loja e kujtesës që të GËNJEN.', adSureH:'TË PYET: "A JE I SIGURT?" 🤔',
     adWin:'E SAKTË', adLose:'E GABUAR', adLoseSub:'NIVELI MBARON',
     adTrapsH:'KURTHE & THESARE', adTrapsCopy:'Dy çifte sekrete fshihen në çdo nivel. Nuk e di cilat — derisa t\u2019i hapësh!',
@@ -1134,6 +1173,7 @@ const I18N={
     oneTime:'One-time purchase — yours forever',
     pb1:'8 exclusive avatars + golden glow', pb2:'👑 Crown by your name online', pb3:'+500 coins instantly',
     pb4:'+1 extra fuel EVERY level', pb5:'Gold skin + Neon City background free',
+    pb6:'High duel bets: 100/250 🪙', pb7:'PRO live emotes 🔥💀😏👑', pb8:'🛟 Second Chance: +3 ⛽/level', pb9:'⚡ Double XP everywhere',
     adTagline:'The memory game that LIES to you.', adSureH:'IT ASKS: "ARE YOU SURE?" 🤔',
     adWin:'RIGHT', adLose:'WRONG', adLoseSub:'LEVEL OVER',
     adTrapsH:'TRAPS & TREASURE', adTrapsCopy:'Two secret pairs hide in every level. You won\u2019t know which — until you flip them!',
@@ -1207,6 +1247,7 @@ const I18N={
     oneTime:'Enkraten nakup — tvoj za vedno',
     pb1:'6 ekskluzivnih avatarjev', pb2:'Krona 👑 ob imenu na spletu', pb3:'+500 kovancev takoj',
     pb4:'+1 dodatnega goriva VSAKO stopnjo', pb5:'Zlati videz + ozadje Neon City brezplačno',
+    pb6:'Visoke stave 100/250 🪙 v dvoboju', pb7:'PRO emoji v živo 🔥💀😏👑', pb8:'🛟 Druga priložnost: +3 ⛽', pb9:'⚡ Dvojni XP povsod',
     adTagline:'Igra spomina, ki ti LAŽE.', adSureH:'VPRAŠA TE: "SI PREPRIČAN?" 🤔',
     adWin:'PRAV', adLose:'NAROBE', adLoseSub:'KONEC STOPNJE',
     adTrapsH:'PASTI & ZAKLADI', adTrapsCopy:'V vsaki stopnji se skrivata dva skrivna para. Ne veš katera — dokler ju ne obrneš!',
@@ -1749,7 +1790,7 @@ function toggleSet(key,el){
 /* ================= LOJA ================= */
 let deck=[],firstCard=null,lock=false,moves=0,pairsFound=0,seconds=0,timerInt=null,trapTimer=null,swapNotified=false,params=null,fuelBonus=0,goldSymCur=null,bombSymCur=null,shufSymCur=null,peekSymCur=null,sureShown=false;
 let combo=0,maxCombo=0,comboCoins=0;
-let shufLock=false,freezeUntil=0;
+let shufLock=false,freezeUntil=0,secondChanceUsed=false; // 🛟 Second Chance (PRO)
 const BOOST={peek:15,fuel:10,freeze:12,lock:12};
 
 function startLevel(g){
@@ -1782,7 +1823,7 @@ function startLevel(g){
     const iv=params.season>=4?12000:18000;
     trapTimer=setInterval(()=>{if(!lock&&!document.getElementById('winOverlay').classList.contains('show'))swapTwo(false)},iv);
   }
-  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;combo=0;maxCombo=0;comboCoins=0;shufLock=false;freezeUntil=0;
+  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;combo=0;maxCombo=0;comboCoins=0;shufLock=false;freezeUntil=0;secondChanceUsed=false;
   updateHud();
   document.getElementById('levelBadge').innerHTML=
     `<div class="profile-chip"><span class="pav">${avatar}</span><b>${myName()}</b> <span title="${myRank()[2]}">${myRank()[1]}</span>${premium?' 👑':''}</div>`+
@@ -1908,7 +1949,7 @@ function flipSecond(c,gamble){
       updateHud();lock=false;
       if(pairsFound===params.pairs){duel?duelBoardDone():(tut?tutAllPairs():levelWon())}
       else if(!duel&&!tut&&pairsFound===params.pairs-1){ autoFinishJoke(); } // 🃏 2 karta → hapen vetë me shaka
-      else if(!duel&&!tut&&fuelLeft()<=0){levelLost()}
+      else if(!duel&&!tut&&fuelLeft()<=0){handleFuelOut()}
     },350);
   }else{
     lock=true;
@@ -1943,7 +1984,7 @@ function flipSecond(c,gamble){
         else if(!tut){
           if(params.season>=2)swapTwo(true); // 🌀 gabove? dy karta ndërrojnë vendet!
           if(moves>=4 && Math.random()<0.14) toast(FUNNY_MISS[Math.floor(Math.random()*FUNNY_MISS.length)]); // 😄 shaka e rrallë kur gabon
-          if(fuelLeft()<=0)levelLost();
+          if(fuelLeft()<=0)handleFuelOut();
         }
       },380);
     },520);
@@ -2021,7 +2062,7 @@ function levelWon(){
   const s2=String(seconds%60).padStart(2,'0');
   document.getElementById('winStats').innerHTML=
     `${t('moves')}: <b>${moves}</b> &nbsp;•&nbsp; ${t('time')}: <b>${m}:${s2}</b><br>`+
-    `${t('scoreLbl')}: <b>${score}</b> &nbsp;•&nbsp; +${xpGain} XP`+
+    `${t('scoreLbl')}: <b>${score}</b> &nbsp;•&nbsp; +${premium?xpGain*2:xpGain} XP${premium?' <b style="color:#ffd166">(2× PRO 👑)</b>':''}`+
     (coinReward>0?` &nbsp;•&nbsp; +${coinReward} 🪙`:'')+
     (earned===3?`<br><b style="color:#3ef0a0">✨ EXCELLENT!</b>`:'')+
     (newHS?`<br><b style="color:#FFD166">🏆 ${t('newBest')}</b>`:'');
@@ -2047,6 +2088,26 @@ function playNextFromWin(){
 }
 
 /* ---- Humbja ---- */
+/* 🛟 SECOND CHANCE — kur mbaron karburanti (vetëm fushatë) */
+function handleFuelOut(){
+  if(secondChanceUsed){ levelLost(); return; }
+  stopTimer();
+  const btn=document.getElementById('scContinueBtn');
+  if(btn)btn.innerHTML = premium ? 'CONTINUE (+3 ⛽)' : 'CONTINUE 👑';
+  document.getElementById('secondChance').classList.add('show');
+}
+function scContinue(){
+  document.getElementById('secondChance').classList.remove('show');
+  if(!premium){ openPremiumSheet(); return; }   // teaser për jo-PRO
+  secondChanceUsed=true; fuelBonus+=3;
+  timerInt=setInterval(()=>{if(Date.now()<freezeUntil)return;seconds++;updateHud()},1000);
+  updateHud();
+  toast('🛟 Second chance! +3 ⛽');
+}
+function scGiveUp(){
+  document.getElementById('secondChance').classList.remove('show');
+  levelLost();
+}
 function levelLost(gambled){
   stopTimer();lock=true;playLoseMusic();
   document.getElementById('loseStats').innerHTML=
@@ -2296,7 +2357,7 @@ function myRank(){let r=RANKS[0];const pl=playerLevel();for(const x of RANKS)if(
 function nextRank(){const pl=playerLevel();for(const x of RANKS)if(x[0]>pl)return x;return null}
 function addXP(n){
   const before=myRank()[2], lvBefore=playerLevel();
-  xp+=n;
+  xp += premium ? n*2 : n;   // 👑 2× XP për PRO
   const after=myRank()[2], lvAfter=playerLevel();
   if(after!==before)setTimeout(()=>toast('⬆️ '+after+'!'),900);
   // 🎖️ Avatar i ri që hapet automatikisht kur ngjitesh level (stil COD)
@@ -2420,6 +2481,7 @@ document.getElementById('regBtn').addEventListener('click',()=>{
 
 /* ================= DUELI ONLINE ================= */
 let duel=null, duelStats={mi:0}, duelPoll=null, waitPoll=null, goTs=0;
+let duelBet=50, lastEmoteSent=0; const lastEmoteSeen={};   // 👑 basti dhe emotet live
 const DUEL_TIME=300; // ⏱️ kohë-limit i duelit online (sekonda) — mjaft për 5 raunde
 // 🎚️ Raundet progresive të duelit 1v1: fillon me pak karta, rritet gjithnjë e më shumë
 const DUEL_ROUNDS=[{pairs:3,cols:3},{pairs:5,cols:5},{pairs:6,cols:4},{pairs:8,cols:4},{pairs:10,cols:5}]; // 6→10→12→16→20 karta
@@ -2490,7 +2552,17 @@ function openDuel(){
   document.getElementById('duelWait').style.display='none';
   document.getElementById('duel2v2Wait').style.display='none';
   document.getElementById('duelCoins').textContent='🪙 '+coins;
+  if(!premium&&duelBet>50)duelBet=50; // jo-PRO kthehet te 50
+  setDuelBet(duelBet);
   showScreen('duelScreen');
+}
+/* 👑 Zgjedhja e bastit — 100/250 vetëm PRO */
+function setDuelBet(amount){
+  if(amount>50 && !premium){ openPremiumSheet(); return; }
+  duelBet=amount;
+  document.querySelectorAll('#duelScreen .bet-card').forEach(c=>c.classList.toggle('bet-on',+c.dataset.b===amount));
+  const info=document.getElementById('betInfo');
+  if(info)info.textContent='Each pays '+duelBet+' 🪙 — winner takes '+(duelBet*2)+' 🪙';
 }
 function showWaitUI(code){
   document.getElementById('duelHome').style.display='none';
@@ -2500,10 +2572,11 @@ function showWaitUI(code){
 }
 async function createRoom(){
   if(duelMode==='2v2')return create2v2();
+  if(coins<duelBet){toast(t('notEnoughDuel'));return}
   const code=String(1000+Math.floor(Math.random()*9000));
   const seed=Math.floor(Math.random()*1e9);
-  await sSet('duel:'+code,{seed,host:myName(),hid:myId,ts:Date.now(),mode:'1v1'});
-  duel={code,role:'h',seed,mode:'1v1',opName:'???'};
+  await sSet('duel:'+code,{seed,host:myName(),hid:myId,ts:Date.now(),mode:'1v1',bet:duelBet});
+  duel={code,role:'h',seed,mode:'1v1',opName:'???',bet:duelBet};
   showWaitUI(code);
   waitPoll=setInterval(async()=>{
     const j=await sGet('duel:'+code+':join');
@@ -2520,20 +2593,23 @@ async function joinWithCode(){
   if(code.length!==4){toast(t('enterCode'));return}
   const meta=await sGet('duel:'+code);
   if(!meta||Date.now()-meta.ts>600000||meta.hid===myId){toast(t('invalidRoom'));return}
+  const rbet=meta.bet||50;
+  if(coins<rbet){toast(t('notEnoughDuel'));return}   // guest paguan të njëjtin bast
   if(meta.mode==='2v2')return join2v2(code,meta);
   const startAt=Date.now()+5000;
   await sSet('duel:'+code+':join',{guest:myName(),gid:myId,startAt});
-  duel={code,role:'g',seed:meta.seed,mode:'1v1',opName:meta.host};
+  duel={code,role:'g',seed:meta.seed,mode:'1v1',opName:meta.host,bet:rbet};
   toast(t('oppFound'));
   beginCountdown(startAt);
 }
 /* ================= 2v2 (ekipe) ================= */
 async function create2v2(){
+  if(coins<duelBet){toast(t('notEnoughDuel'));return}
   const code=String(1000+Math.floor(Math.random()*9000));
   const seed=Math.floor(Math.random()*1e9);
-  await sSet('duel:'+code,{seed,host:myName(),hid:myId,ts:Date.now(),mode:'2v2'});
+  await sSet('duel:'+code,{seed,host:myName(),hid:myId,ts:Date.now(),mode:'2v2',bet:duelBet});
   await sSet('duel:'+code+':roster',{a1:{name:myName(),av:avatar,id:myId},a2:null,b1:null,b2:null});
-  duel={code,role:'a1',seed,mode:'2v2',opName:'2v2'};
+  duel={code,role:'a1',seed,mode:'2v2',opName:'2v2',bet:duelBet};
   show2v2Wait(code,true);
   waitPoll=setInterval(async()=>{
     const r=await sGet('duel:'+code+':roster'); if(r)render2v2Roster(r,true);
@@ -2542,12 +2618,14 @@ async function create2v2(){
   return code;
 }
 async function join2v2(code,meta){
+  const rbet=meta.bet||50;
+  if(coins<rbet){toast(t('notEnoughDuel'));return}
   let roster=await sGet('duel:'+code+':roster')||{a1:null,a2:null,b1:null,b2:null};
   const free=['a2','b1','b2'].find(s=>!roster[s]||roster[s].id===myId);
   if(!free){toast('Room full 👥');return}
   roster[free]={name:myName(),av:avatar,id:myId};
   await sSet('duel:'+code+':roster',roster);
-  duel={code,role:free,seed:meta.seed,mode:'2v2',opName:'2v2'};
+  duel={code,role:free,seed:meta.seed,mode:'2v2',opName:'2v2',bet:rbet};
   show2v2Wait(code,false);
   render2v2Roster(roster,false);
   waitPoll=setInterval(async()=>{
@@ -2594,7 +2672,7 @@ function cancelDuel(){
   showScreen('menuScreen');
 }
 function beginCountdown(startAt){
-  coins-=50;saveData(); // basti paguhet
+  coins-=(duel&&duel.bet)||50;saveData(); // basti paguhet (i zgjedhur)
   const ov=document.getElementById('countOverlay');
   const num=ov.querySelector('.count-num');
   showScreen('gameScreen');
@@ -2635,7 +2713,7 @@ function startDuelBoard(){
   bombSymCur = chosen.length>=2 ? chosen[1] : null;
   shufSymCur = chosen.length>=3 ? chosen[2] : null;
   peekSymCur = chosen.length>=4 ? chosen[3] : null;
-  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;combo=0;maxCombo=0;comboCoins=0;shufLock=false;freezeUntil=0;swapNotified=false;
+  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;combo=0;maxCombo=0;comboCoins=0;shufLock=false;freezeUntil=0;secondChanceUsed=false;swapNotified=false;
 
   const board=document.getElementById('board');
   board.style.gridTemplateColumns='repeat('+rdCfg.cols+',1fr)';
@@ -2656,7 +2734,7 @@ function startDuelBoard(){
 
   document.getElementById('oppBar').style.display='flex';
   myEmote=null;lastOppEmoteT=0;
-  document.getElementById('emoteBar').style.display='none'; // emojit tani me kliko profilin (stil Ludo)
+  renderEmoteBar(); // 👑 shiriti i emoteve live (free + PRO)
   if(duel.mode==='2v2')update2v2Bar(0,0,{});else updateOppBar();
   stopTimer();
   goTs=Date.now();
@@ -2680,6 +2758,7 @@ async function duelSync(){
     oppLast=op;updateOppBar();
     // Emoji / chat nga kundërshtari
     if(op.em&&op.em.t>lastOppEmoteT){lastOppEmoteT=op.em.t; op.em.chat?showChat(op.em.e,duel.opName||'Opp','opp'):showEmote(op.em.e,duel.opName||'Opp','opp');}
+    pollLiveEmotes(); // 👑 emotet live me çelësin e ri
     if(duel.done&&op.done)finishDecide();
   }
 }
@@ -2691,6 +2770,39 @@ function updateOppBar(){
     `<span class="me-prof" onclick="openEmotePicker()">${premium?'👑':''}${avatar} ${myName()} 💬</span>`+
     `<span style="display:flex;flex-direction:column;align-items:center">${rInfo}<span style="color:var(--amber2);font-size:15px;font-weight:900">${pairsFound} : ${oppLast.p}</span></span>`+
     `<span class="opp-prof">${oppLast.pr?'👑':''}${oppLast.av||'❔'} ${duel.opName} R${(oppLast.rd||0)+1}</span>`;
+}
+/* 👑 Emote bar LIVE në duel — free: 👍😢 · PRO: +🔥💀😏👑 */
+const EMOTE_FREE=['👍','😢'];
+const EMOTE_PRO=['🔥','💀','😏','👑'];
+function renderEmoteBar(){
+  const bar=document.getElementById('emoteBar'); if(!bar)return;
+  bar.style.display='flex';
+  const mk=(e,pro)=>`<button class="le-btn${pro&&!premium?' locked':''}" onclick="sendLiveEmote('${e}',${pro})">${e}${pro&&!premium?'<span class="le-lock">👑</span>':''}</button>`;
+  bar.innerHTML=EMOTE_FREE.map(e=>mk(e,false)).join('')+EMOTE_PRO.map(e=>mk(e,true)).join('');
+}
+function sendLiveEmote(e,pro){
+  if(pro&&!premium){openPremiumSheet();return}
+  if(!duel)return;
+  const now=Date.now();
+  if(now-lastEmoteSent<3000){toast('⏳ Slow down!');return}   // anti-spam 1/3s
+  lastEmoteSent=now;
+  sSet('duel:'+duel.code+':emote:'+duel.role,{e,t:now});
+  vibrate(12); playTap();
+}
+function showBigEmote(e){
+  const p=document.createElement('div'); p.className='big-emote'; p.textContent=e;
+  document.body.appendChild(p); vibrate(14);
+  setTimeout(()=>p.remove(),1500);
+}
+async function pollLiveEmotes(){
+  if(!duel)return;
+  const roles = duel.mode==='2v2' ? SLOTS2.filter(s=>s!==duel.role) : [duel.role==='h'?'g':'h'];
+  for(const r of roles){
+    try{
+      const em=await sGet('duel:'+duel.code+':emote:'+r);
+      if(em&&em.e&&em.t>(lastEmoteSeen[r]||0)){ lastEmoteSeen[r]=em.t; showBigEmote(em.e); }
+    }catch(e){}
+  }
 }
 /* 🙂 Emote picker stil Ludo: kliko profilin → zgjidh → dërgohet */
 const CHATS=['👋 Hi!','😎 Good luck','🔥 Nice one','😂 Haha','🤝 GG!','😅 Oops','⏱️ Hurry up!','😱 No way!'];
@@ -2753,6 +2865,7 @@ async function duelSync2v2(){
   duel.lastSumA=sumA;duel.lastSumB=sumB; // për vendimin me kohë-limit
   update2v2Bar(sumA,sumB,st);
   SLOTS2.forEach(s=>{ if(s!==duel.role){const o=st[s]; if(o&&o.left&&!duel['left_'+s]){duel['left_'+s]=1;toast('👋 '+(o.name||'A player')+' left');} if(o&&o.em&&o.em.t>lastOppEmoteT){lastOppEmoteT=o.em.t; o.em.chat?showChat(o.em.e,o.name||'Rival','opp'):showEmote(o.em.e,o.name||'Rival','opp');}} });
+  pollLiveEmotes(); // 👑 emotet live 2v2
   if(duel.done){
     const present=SLOTS2.filter(s=>st[s]);
     const allDone=present.every(s=> s===duel.role ? true : st[s].done);
@@ -2778,8 +2891,8 @@ function duelTimeUp(){
   // fituesi: raundi më i lartë → pastaj çiftet → pastaj më pak gabime
   const myR=duel.round||0, opR=oppLast.rd||0, myP=pairsFound, opP=oppLast.p||0;
   let outcome = myR>opR?'win':myR<opR?'lose':(myP>opP?'win':myP<opP?'lose':(duelStats.mi<(oppLast.mi||0)?'win':duelStats.mi>(oppLast.mi||0)?'lose':'draw'));
-  if(outcome==='win'){coins+=100;duelWins++;playWinMusic();spawnConfetti();bumpLeaderboard()}
-  else if(outcome==='draw'){coins+=50}
+  if(outcome==='win'){coins+=((duel&&duel.bet)||50)*2;duelWins++;playWinMusic();spawnConfetti();bumpLeaderboard()}
+  else if(outcome==='draw'){coins+=(duel&&duel.bet)||50}
   else playLoseMusic();
   saveData();
   toast('⏱️ Time up!');
@@ -2793,14 +2906,14 @@ function finish2v2(sumA,sumB){
   const myTeam=teamOf(duel.role);
   const mySum=myTeam==='A'?sumA:sumB, oppSum=myTeam==='A'?sumB:sumA;
   let outcome = mySum>oppSum?'win':mySum<oppSum?'lose':'draw';
-  if(outcome==='win'){coins+=100;duelWins++;playWinMusic();spawnConfetti();bumpLeaderboard()}
-  else if(outcome==='draw'){coins+=50}
+  if(outcome==='win'){coins+=((duel&&duel.bet)||50)*2;duelWins++;playWinMusic();spawnConfetti();bumpLeaderboard()}
+  else if(outcome==='draw'){coins+=(duel&&duel.bet)||50}
   else playLoseMusic();
   saveData();
   const title=document.getElementById('duelResTitle');
   title.textContent=outcome==='win'?t('duelWin'):outcome==='draw'?t('duelDraw'):t('duelLose');
   title.className='ov-title '+(outcome==='lose'?'lose':'win');title.style.fontSize='';
-  document.getElementById('duelResCoins').textContent=outcome==='win'?t('wonPot'):outcome==='draw'?t('drawRefund'):'';
+  {const bp=(duel&&duel.bet)||50;document.getElementById('duelResCoins').textContent=outcome==='win'?('+'+(bp*2)+' 🪙'):outcome==='draw'?('+'+bp+' 🪙'):'';}
   const fmt2=ms=>{const sec=Math.floor(ms/1000);return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')};
   document.getElementById('duelTable').innerHTML=
     `<tr><th></th><th>${myTeam==='A'?'🟢 Team A':'🔴 Team B'} (you)</th><th>${myTeam==='A'?'🔴 Team B':'🟢 Team A'}</th></tr>`+
@@ -2849,8 +2962,8 @@ function finishDecide(timeout){
   else if(duelStats.mi<oppLast.mi)outcome='win';
   else if(duelStats.mi>oppLast.mi)outcome='lose';
   else outcome='draw';
-  if(outcome==='win'){coins+=100;duelWins++;playWinMusic();spawnConfetti();bumpLeaderboard()}
-  else if(outcome==='draw'){coins+=50}
+  if(outcome==='win'){coins+=((duel&&duel.bet)||50)*2;duelWins++;playWinMusic();spawnConfetti();bumpLeaderboard()}
+  else if(outcome==='draw'){coins+=(duel&&duel.bet)||50}
   else playLoseMusic();
   saveData();
   showDuelResult(outcome,false);
@@ -2867,7 +2980,7 @@ function showDuelResult(outcome,waiting){
   title.className='ov-title '+(outcome==='lose'?'lose':'win');
   if(waiting)title.style.fontSize='20px';else title.style.fontSize='';
   document.getElementById('duelResCoins').textContent=
-    waiting?'':(outcome==='win'?t('wonPot'):outcome==='draw'?t('drawRefund'):'');
+    waiting?'':(()=>{const bp=(duel&&duel.bet)||50;return outcome==='win'?('+'+(bp*2)+' 🪙'):outcome==='draw'?('+'+bp+' 🪙'):'';})();
   document.getElementById('duelTable').innerHTML=
     `<tr><th></th><th>${premium?'👑':''}${avatar} ${t('youLbl')}</th><th>${oppLast.pr?'👑':''}${oppLast.av||''} ${t('oppLbl')}</th></tr>`+
     `<tr><td>${t('resTime')}</td><td>${fmt(duel.tm||Date.now()-goTs)}</td><td>${oppLast.done?fmt(oppLast.tm):'…'}</td></tr>`+
@@ -3051,7 +3164,7 @@ function startTutorial(){
   fuelBonus=0;goldSymCur=null;bombSymCur=null;shufSymCur=null;peekSymCur=null;sureShown=true;
   const syms=['🚗','🔧','🔑'];
   deck=[...syms,...syms].sort(()=>Math.random()-.5);
-  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;combo=0;maxCombo=0;comboCoins=0;shufLock=false;freezeUntil=0;
+  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;combo=0;maxCombo=0;comboCoins=0;shufLock=false;freezeUntil=0;secondChanceUsed=false;
   document.documentElement.style.setProperty('--season',SEASONS[0].color);
   document.getElementById('levelBadge').innerHTML=
     `<div class="profile-chip"><span class="pav">${avatar}</span><b>${myName()}</b></div>`+
