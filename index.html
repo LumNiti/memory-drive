@@ -44,6 +44,19 @@ svg{display:block}
 
 .float-emoji{position:absolute;font-size:26px;opacity:.08;pointer-events:none;z-index:0;animation:floaty 5s ease-in-out infinite alternate}
 @keyframes floaty{to{transform:translateY(-22px)}}
+/* ===== Sfond i gjallë: rrota, makina, rreze ===== */
+@keyframes spin{to{transform:rotate(360deg)}}
+.spin-wheel{position:fixed;pointer-events:none;z-index:0;opacity:.10;animation:spin linear infinite;filter:drop-shadow(0 0 8px rgba(232,161,58,.25))}
+.drive{position:fixed;pointer-events:none;z-index:0;opacity:.12;white-space:nowrap;animation:drive linear infinite}
+@keyframes drive{from{transform:translateX(-18vw)}to{transform:translateX(118vw)}}
+.rays{position:fixed;top:50%;left:50%;width:230vmax;height:230vmax;transform:translate(-50%,-50%);pointer-events:none;z-index:0;opacity:.6;
+  background:conic-gradient(from 0deg,transparent 0 7%,rgba(232,161,58,.035) 7% 9%,transparent 9% 20%,rgba(125,85,225,.035) 20% 22%,transparent 22% 33%,rgba(60,200,235,.03) 33% 35%,transparent 35% 50%,rgba(255,120,80,.03) 50% 52%,transparent 52%);
+  animation:spin 70s linear infinite}
+/* ===== Efektet e shpërthimit / juice ===== */
+#fx{position:fixed;inset:0;pointer-events:none;z-index:59}
+.shock{position:fixed;border-radius:50%;border:5px solid #fff;transform:translate(-50%,-50%);pointer-events:none;z-index:59;box-shadow:0 0 20px rgba(255,220,140,.6)}
+.bolt{position:fixed;pointer-events:none;z-index:59;transform:translate(-50%,-50%);filter:drop-shadow(0 0 10px #ffe08a)}
+.spark{position:fixed;border-radius:50%;pointer-events:none;z-index:59}
 
 /* ============ EKRANET ============ */
 .screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .5s ease;z-index:1}
@@ -244,7 +257,7 @@ svg{display:block}
 #storeScreen{justify-content:flex-start;padding-top:max(20px, env(safe-area-inset-top))}
 .coin-pill{display:flex;align-items:center;gap:5px;background:rgba(14,12,30,.6);padding:8px 13px;border-radius:18px;font-weight:900;font-size:13px;white-space:nowrap}
 .menu-eco{display:flex;gap:10px;margin-top:10px}
-.store-list{display:flex;flex-direction:column;gap:9px;width:100%;max-width:390px;overflow-y:auto;padding-bottom:24px}
+.store-list{display:flex;flex-direction:column;gap:9px;width:100%;max-width:390px;flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:24px}
 .store-sec{font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.5);font-weight:800;margin:10px 2px 0}
 .store-row{display:flex;align-items:center;gap:12px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px 14px}
 .store-em{font-size:27px;width:42px;text-align:center;flex-shrink:0}
@@ -267,6 +280,54 @@ body[data-bg="sunset"]{background:radial-gradient(ellipse 130% 50% at 50% 62%, r
 body[data-bg="forest"]{background:radial-gradient(ellipse 85% 55% at 20% 12%, rgba(90,200,120,.16), transparent 60%),linear-gradient(165deg,#0a1f14 0%,#12321f 40%,#1a3d24 70%,#0e2415 100%)}
 body[data-bg="ocean"]{background:radial-gradient(ellipse 85% 55% at 80% 15%, rgba(60,180,230,.18), transparent 60%),linear-gradient(165deg,#06182e 0%,#0b2b4a 40%,#0e3a5c 70%,#082238 100%)}
 body[data-bg="neonw"]{background:radial-gradient(ellipse 80% 50% at 25% 15%, rgba(255,60,180,.20), transparent 60%),radial-gradient(ellipse 70% 50% at 85% 80%, rgba(60,220,255,.16), transparent 60%),linear-gradient(165deg,#160822 0%,#2a0e3d 40%,#3d1050 70%,#1c0830 100%)}
+/* ---- Stile të reja kartash ---- */
+body[data-skin="wood"] .card-back-face{background:linear-gradient(160deg,#5a3a1a,#8a5a2a);border-color:#c8894a;color:#f0d0a0}
+body[data-skin="ice"] .card-back-face{background:linear-gradient(160deg,#0a3a4a,#1a6a8a);border-color:#7fe6ff;color:#dff6ff;box-shadow:0 0 14px rgba(127,230,255,.35)}
+body[data-skin="ruby"] .card-back-face{background:linear-gradient(160deg,#4a0812,#8a1428);border-color:#ff5a7a;color:#ffd0da;box-shadow:0 0 12px rgba(255,90,122,.3)}
+body[data-skin="carbon"] .card-back-face{background:repeating-linear-gradient(45deg,#141414,#141414 4px,#242424 4px,#242424 8px);border-color:#5a5a5a;color:#dcdcdc}
+body[data-skin="emerald"] .card-back-face{background:linear-gradient(160deg,#08301f,#12613f);border-color:#3ef0a0;color:#d0ffe6;box-shadow:0 0 14px rgba(62,240,160,.32)}
+body[data-skin="holo"] .card-back-face{background:linear-gradient(135deg,#ff5aa8,#ffd166,#3ef0a0,#2de2ff,#a06bff);border-color:#fff;color:#1a1030;text-shadow:0 1px 2px rgba(255,255,255,.5)}
+/* ---- Sfonde të reja ---- */
+body[data-bg="lava"]{background:radial-gradient(ellipse 90% 55% at 50% 92%, rgba(255,90,20,.35), transparent 60%),linear-gradient(180deg,#1a0806 0%,#3d0f08 40%,#7a1f0c 70%,#c24016 88%,#ff7a2a 100%)}
+body[data-bg="aurora"]{background:radial-gradient(ellipse 80% 50% at 30% 10%, rgba(60,240,160,.22), transparent 60%),radial-gradient(ellipse 70% 50% at 80% 20%, rgba(160,110,255,.20), transparent 60%),linear-gradient(170deg,#04121f 0%,#08243a 45%,#0b3050 75%,#061826 100%)}
+body[data-bg="candy"]{background:radial-gradient(ellipse 85% 55% at 25% 15%, rgba(255,140,200,.28), transparent 60%),linear-gradient(165deg,#3a1030 0%,#6a2050 40%,#a83a78 70%,#e86ba0 100%)}
+body[data-bg="space"]{background:radial-gradient(ellipse 60% 40% at 70% 25%, rgba(120,90,255,.22), transparent 60%),radial-gradient(circle at 20% 80%, rgba(90,140,255,.15), transparent 55%),linear-gradient(165deg,#05060f 0%,#0a0a1e 45%,#12123a 75%,#070713 100%)}
+body[data-bg="desert"]{background:radial-gradient(ellipse 90% 50% at 50% 85%, rgba(255,200,120,.28), transparent 60%),linear-gradient(180deg,#2a1e0c 0%,#5a3f18 38%,#997028 66%,#d0a050 100%)}
+body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba(255,255,255,.06), transparent 60%),linear-gradient(165deg,#0a0a0c 0%,#161619 45%,#232328 75%,#0e0e11 100%)}
+/* ---- Karta e profilit ---- */
+.profile-card{background:linear-gradient(160deg,rgba(232,161,58,.14),rgba(14,12,30,.5));border:1px solid rgba(232,161,58,.35);border-radius:18px;padding:14px;margin-bottom:14px}
+.pc-top{display:flex;align-items:center;gap:12px}
+.pc-badge{font-size:30px;width:50px;height:50px;display:flex;align-items:center;justify-content:center;background:rgba(14,12,30,.55);border-radius:14px;border:1px solid rgba(255,255,255,.12);flex-shrink:0}
+.pc-id{flex:1;min-width:0}
+.pc-rank{font-weight:900;font-size:18px;color:var(--amber2)}
+.pc-lvl{font-size:12px;font-weight:700;color:rgba(255,255,255,.7)}
+.pc-av{font-size:24px;flex-shrink:0}
+.pc-xpbar{height:8px;border-radius:6px;background:rgba(255,255,255,.12);margin:12px 0 5px;overflow:hidden}
+.pc-xpfill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--amber),var(--amber2));transition:width .5s}
+.pc-xptext{font-size:10.5px;font-weight:700;color:rgba(255,255,255,.6);text-align:center}
+.pc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.pc-stat{background:rgba(14,12,30,.5);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px 4px;text-align:center}
+.pc-stat b{display:block;font-size:16px;font-weight:900;color:#fff}
+.pc-stat span{font-size:9.5px;font-weight:700;color:rgba(255,255,255,.55)}
+/* ---- Flash i shpërthimit të bombës ---- */
+#flash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:60}
+#flash.on{animation:flashPop .55s ease-out}
+@keyframes flashPop{0%{opacity:0}7%{opacity:.95}26%{opacity:.5}55%{opacity:.2}100%{opacity:0}}
+.board-shake{animation:boardShake .5s cubic-bezier(.36,.07,.19,.97)}
+@keyframes boardShake{10%,90%{transform:translateX(-3px)}20%,80%{transform:translateX(5px)}30%,50%,70%{transform:translateX(-8px)}40%,60%{transform:translateX(8px)}}
+/* ---- Folderat e dyqanit ---- */
+.store-folder{margin-top:14px;border:1px solid rgba(255,255,255,.1);border-radius:14px;overflow:hidden}
+.folder-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:rgba(14,12,30,.55);cursor:pointer;font-weight:900;font-size:13px;letter-spacing:1px;color:#fff}
+.folder-chev{color:var(--amber2);font-size:14px}
+.folder-body{padding:6px 10px 10px}
+/* ---- Emojit e duelit (emotes) ---- */
+.emote-bar{display:none;gap:6px;justify-content:center;flex-wrap:wrap;width:100%;max-width:420px;margin:8px auto 2px}
+.emote-btn{font-size:21px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.14);border-radius:12px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .12s}
+.emote-btn:active{transform:scale(.82)}
+.emote-pop{position:fixed;left:50%;top:34%;transform:translateX(-50%);font-size:110px;z-index:58;pointer-events:none;animation:emotePop 1.5s ease-out forwards}
+@keyframes emotePop{0%{transform:translateX(-50%) scale(0) rotate(-25deg);opacity:0}14%{transform:translateX(-50%) scale(1.25) rotate(10deg);opacity:1}68%{transform:translateX(-50%) scale(1) rotate(0);opacity:1}100%{transform:translateX(-50%) scale(1.15) translateY(-46px);opacity:0}}
+.emote-tag{position:fixed;left:50%;top:54%;transform:translateX(-50%);z-index:58;pointer-events:none;font-weight:900;font-size:14px;color:#fff;background:rgba(14,12,30,.7);padding:5px 14px;border-radius:16px;text-shadow:0 2px 8px rgba(0,0,0,.6);animation:emoteTag 1.5s ease-out forwards}
+@keyframes emoteTag{0%{opacity:0}18%{opacity:1}80%{opacity:1}100%{opacity:0}}
 /* ---- Dueli ---- */
 .opp-bar{display:none;align-items:center;justify-content:space-between;width:100%;max-width:420px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:9px 14px;font-weight:800;font-size:13px;margin-bottom:8px;gap:10px}
 #countOverlay{position:absolute;inset:0;background:rgba(5,6,12,.88);z-index:26;display:none;align-items:center;justify-content:center}
@@ -332,12 +393,24 @@ body[data-bg="neonw"]{background:radial-gradient(ellipse 80% 50% at 25% 15%, rgb
 </head>
 <body>
 
+<div class="rays"></div>
 <div class="glow glow1"></div>
 <div class="glow glow2"></div>
 <div id="stars"></div>
+<div id="flash"></div>
+<div id="fx"></div>
 <span class="float-emoji" style="top:13%;left:8%">🚗</span>
 <span class="float-emoji" style="top:22%;right:10%;animation-delay:1s">🏎️</span>
 <span class="float-emoji" style="top:45%;left:15%;animation-delay:2s">🛞</span>
+<!-- Rrota që rrotullohen -->
+<span class="spin-wheel" style="top:16%;left:5%;font-size:44px;animation-duration:9s">🛞</span>
+<span class="spin-wheel" style="bottom:12%;right:7%;font-size:60px;animation-duration:14s">⚙️</span>
+<span class="spin-wheel" style="top:58%;left:82%;font-size:30px;animation-duration:6s">🛞</span>
+<span class="spin-wheel" style="bottom:28%;left:10%;font-size:34px;animation-duration:11s;animation-direction:reverse">⚙️</span>
+<!-- Makina që kalojnë -->
+<span class="drive" style="top:34%;font-size:30px;animation-duration:19s">🚗💨</span>
+<span class="drive" style="top:72%;font-size:26px;animation-duration:26s;animation-delay:7s">🏎️💨</span>
+<span class="drive" style="top:9%;font-size:24px;animation-duration:34s;animation-delay:14s">🚙</span>
 
 <svg style="display:none">
   <symbol id="i-play" viewBox="0 0 24 24"><path d="M6 4l14 8-14 8z" fill="currentColor" stroke="none"/></symbol>
@@ -612,19 +685,25 @@ body[data-bg="neonw"]{background:radial-gradient(ellipse 80% 50% at 25% 15%, rgb
   <div class="panel">
     <h2><svg class="ic"><use href="#i-gear"/></svg><span data-i18n="settings"></span></h2>
     <div class="section-title" data-i18n="secProfile"></div>
-    <div class="set-row" style="flex-direction:column;align-items:stretch;gap:10px">
-      <span class="set-label"><span style="font-size:16px">😎</span><span data-i18n="avatarLbl"></span></span>
-      <div class="avatar-grid" id="avatarGrid"></div>
+    <div class="folder-head" onclick="toggleProfile()">
+      <span id="profSummary">👤 Profile</span><span class="folder-chev" id="profChev">▸</span>
     </div>
-    <div class="set-row">
-      <span class="set-label"><span style="font-size:16px" id="rankEmoji">🐣</span><span data-i18n="rankLbl"></span></span>
-      <b id="rankVal" style="color:var(--amber2);font-size:13px"></b>
+    <div id="profilePanel" style="display:none;margin-top:10px">
+      <div id="profileCard" class="profile-card"></div>
+      <div class="set-row" style="flex-direction:column;align-items:stretch;gap:10px">
+        <span class="set-label"><span style="font-size:16px">😎</span><span data-i18n="avatarLbl"></span></span>
+        <div class="avatar-grid" id="avatarGrid"></div>
+      </div>
     </div>
     <div class="set-row">
       <span class="set-label"><span style="font-size:16px">👑</span><span data-i18n="premiumLbl"></span></span>
       <button class="btn-mini" id="premiumBtn" onclick="openPremiumSheet()">👑 €4,99</button>
     </div>
     <div class="section-title" data-i18n="secSound"></div>
+    <div class="set-row">
+      <span class="set-label"><svg class="ic"><use href="#i-music"/></svg><span data-i18n="music"></span></span>
+      <div class="toggle on" id="tglMusic" onclick="toggleSet('music',this)"></div>
+    </div>
     <div class="set-row">
       <span class="set-label"><svg class="ic"><use href="#i-speaker"/></svg><span data-i18n="sfx"></span></span>
       <div class="toggle on" id="tglSfx" onclick="toggleSet('sfx',this)"></div>
@@ -636,12 +715,6 @@ body[data-bg="neonw"]{background:radial-gradient(ellipse 80% 50% at 25% 15%, rgb
     <div class="set-row" style="cursor:pointer" onclick="playTap();showScreen('helpScreen')">
       <span class="set-label"><span style="font-size:17px">❓</span><span data-i18n="howTo"></span></span>
       <svg class="ic" style="color:var(--amber)"><use href="#i-next"/></svg>
-    </div>
-    <div class="section-title" data-i18n="secLang"></div>
-    <div class="lang-group">
-      <button class="lang-btn" data-lang="sq" onclick="setLang('sq')"><span class="flag">🇦🇱</span>Shqip</button>
-      <button class="lang-btn" data-lang="en" onclick="setLang('en')"><span class="flag">🇬🇧</span>English</button>
-      <button class="lang-btn" data-lang="sl" onclick="setLang('sl')"><span class="flag">🇸🇮</span>Slovenščina</button>
     </div>
     <button class="btn btn-primary" style="width:100%;margin-top:22px" onclick="playTap();showScreen('menuScreen')">
       <svg class="ic"><use href="#i-check"/></svg><span data-i18n="close"></span>
@@ -662,6 +735,7 @@ body[data-bg="neonw"]{background:radial-gradient(ellipse 80% 50% at 25% 15%, rgb
   </div>
   <div class="level-badge" id="levelBadge"></div>
   <div class="opp-bar" id="oppBar"></div>
+  <div class="emote-bar" id="emoteBar"></div>
   <div id="board"></div>
 </div>
 
@@ -784,17 +858,6 @@ body[data-bg="neonw"]{background:radial-gradient(ellipse 80% 50% at 25% 15%, rgb
 </div>
 
 <script>
-/* Fallback për browser normal (GitHub Pages): ruajtja në localStorage */
-if(!window.storage){
-  window.storage={
-    async get(k){const v=localStorage.getItem('mm:'+k);return v==null?null:{key:k,value:v}},
-    async set(k,v){localStorage.setItem('mm:'+k,v);return{key:k,value:v}},
-    async delete(k){localStorage.removeItem('mm:'+k);return{key:k,deleted:true}},
-    async list(p){const keys=[];for(let i=0;i<localStorage.length;i++){const kk=localStorage.key(i);if(kk&&kk.startsWith('mm:'+(p||'')))keys.push(kk.slice(3))}return{keys}}
-  };
-}
-</script>
-<script>
 /* ================= PËRKTHIMET ================= */
 const I18N={
   sq:{
@@ -852,7 +915,10 @@ const I18N={
     coinsAmt:'monedha', demoNote:'Demo — pagesa e vërtetë me Apple Pay bëhet në aplikacionin iOS',
     purchased:'U ble! 🎉', applied:'U aktivizua ✓',
     skClassic:'Klasike', skSharp:'Këndore', skPill:'E rrumbullakët', skGold:'E artë', skNeon:'Neon',
+    skWood:'Druri', skIce:'Akulli', skRuby:'Rubin', skCarbon:'Karbon', skEmerald:'Smerald', skHolo:'Holografike',
     bgMid:'Mesnata', bgSun:'Perëndimi', bgForest:'Pylli', bgOcean:'Oqeani', bgNeon:'Neon City',
+    bgLava:'Llava', bgAurora:'Aurora', bgCandy:'Sheqerka', bgSpace:'Hapësira', bgDesert:'Shkretëtira', bgMono:'Mono',
+    lvlLbl:'Niveli', nextRank:'Deri te rangu tjetër', statTotalStars:'Yje', statLevelsDone:'Nivele', statPerfect:'Perfekt', statCoins:'Monedha', statBest:'Rekordi',
     sure:['A je i sigurt për atë kartë? 🤔','Po e provon fatin? 🎲','Rrezik i madh, shofer... 😏','Kjo mund të të kushtojë shtrenjtë! 💀'],
     sureHint:'E saktë = +2 ⛽ • E gabuar = HUMBE NIVELIN!', sureFlip:'JAM I SIGURT!', sureChange:'NDËRRO',
     gambleWin:'😎 +2 ⛽ Guximtar dhe i saktë!', gambleLose:'Baste dhe humbe! 💀',
@@ -922,7 +988,10 @@ const I18N={
     coinsAmt:'coins', demoNote:'Demo — real Apple Pay payments work in the iOS app',
     purchased:'Purchased! 🎉', applied:'Applied ✓',
     skClassic:'Classic', skSharp:'Sharp', skPill:'Rounded', skGold:'Golden', skNeon:'Neon',
+    skWood:'Wood', skIce:'Ice', skRuby:'Ruby', skCarbon:'Carbon', skEmerald:'Emerald', skHolo:'Holographic',
     bgMid:'Midnight', bgSun:'Sunset', bgForest:'Forest', bgOcean:'Ocean', bgNeon:'Neon City',
+    bgLava:'Lava', bgAurora:'Aurora', bgCandy:'Candy', bgSpace:'Space', bgDesert:'Desert', bgMono:'Mono',
+    lvlLbl:'Level', nextRank:'To next rank', statTotalStars:'Stars', statLevelsDone:'Levels', statPerfect:'Perfect', statCoins:'Coins', statBest:'Best',
     sure:['Are you sure about that card? 🤔','Feeling lucky? 🎲','Big risk, driver... 😏','This could cost you everything! 💀'],
     sureHint:'Right = +2 ⛽ • Wrong = YOU LOSE THE LEVEL!', sureFlip:'I\u2019M SURE!', sureChange:'CHANGE',
     gambleWin:'😎 +2 ⛽ Bold and right!', gambleLose:'You gambled and lost! 💀',
@@ -935,7 +1004,7 @@ const I18N={
     duelNote:'Online demo — rooms sync between players of this game', cancel:'CANCEL',
     waitOpp:'Waiting for opponent to finish...', go:'GO!',
     seasonDoneMsg:'SEASON COMPLETE!', improveHint:'Replay the level with fewer moves to earn more stars!',
-    goldMsg:'✨ GOLDEN PAIR! +3 ⛽ +20 🪙', bombMsg:'💥 BOOM! -2 ⛽'
+    goldMsg:'✨ GOLDEN PAIR! +3 ⛽ +8 🪙', bombMsg:'💥 BOOM! -2 ⛽'
   },
   sl:{
     subtitle:'POVEŽI • POMNI • ZMAGAJ',
@@ -992,7 +1061,10 @@ const I18N={
     coinsAmt:'kovancev', demoNote:'Demo — pravo plačilo z Apple Pay deluje v iOS aplikaciji',
     purchased:'Kupljeno! 🎉', applied:'Aktivirano ✓',
     skClassic:'Klasika', skSharp:'Ostri robovi', skPill:'Zaobljene', skGold:'Zlate', skNeon:'Neon',
+    skWood:'Les', skIce:'Led', skRuby:'Rubin', skCarbon:'Karbon', skEmerald:'Smaragd', skHolo:'Holografske',
     bgMid:'Polnoč', bgSun:'Sončni zahod', bgForest:'Gozd', bgOcean:'Ocean', bgNeon:'Neon City',
+    bgLava:'Lava', bgAurora:'Avrora', bgCandy:'Sladkarije', bgSpace:'Vesolje', bgDesert:'Puščava', bgMono:'Mono',
+    lvlLbl:'Nivo', nextRank:'Do naslednjega ranga', statTotalStars:'Zvezdice', statLevelsDone:'Stopnje', statPerfect:'Popolno', statCoins:'Kovanci', statBest:'Rekord',
     sure:['Si prepričan glede te karte? 🤔','Poskušaš srečo? 🎲','Veliko tveganje, voznik... 😏','To te lahko stane vsega! 💀'],
     sureHint:'Prav = +2 ⛽ • Narobe = IZGUBIŠ STOPNJO!', sureFlip:'PREPRIČAN SEM!', sureChange:'ZAMENJAJ',
     gambleWin:'😎 +2 ⛽ Pogumno in pravilno!', gambleLose:'Stavil si in izgubil! 💀',
@@ -1033,8 +1105,9 @@ const TOTAL=50, PER_SEASON=10;
 function levelParams(g){
   const season=Math.floor(g/PER_SEASON);
   const pairs=Math.min(3+Math.floor(g/5),12);
-  const factor=[3.2,3.0,2.8,2.6,2.4][season];
-  const maxMoves=Math.max(pairs+2, Math.ceil(pairs*factor));
+  // Karburanti bëhet gjithnjë e më i pakët: S1 pak zor → S3+ shumë zor
+  const factor=[2.8,2.55,2.3,2.1,1.9][season];
+  const maxMoves=Math.max(pairs+1, Math.ceil(pairs*factor));
   const cols=pairs<=3?3:4;
   return {season,pairs,maxMoves,cols};
 }
@@ -1045,7 +1118,7 @@ function starsFor(pairs,moves){
 }
 
 let progress={}; // {globalIdx: stars}
-let coins=0, highScore=0, fuelPacks=0;
+let coins=0, highScore=0, fuelPacks=0, xp=0;
 let owned=['classic','midnight'], curSkin='classic', curBg='midnight';
 let tutorialSeen=false, tut=null;
 let username='', avatar='🚗', premium=false, duelWins=0, registered=false;
@@ -1159,7 +1232,7 @@ function playNext(){playTap();startMusic();startLevel(nextPlayable())}
 /* ================= RUAJTJA ================= */
 async function saveData(){
   try{
-    await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang}}));
+    await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,xp,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang}}));
   }catch(e){}
 }
 async function loadData(){
@@ -1176,6 +1249,8 @@ async function loadData(){
       username=d.username||''; avatar=d.avatar||'🚗';
       premium=d.premium||false; duelWins=d.duelWins||0;
       registered=d.registered||false;
+      // XP: nëse mungon (lojtarë të vjetër), llogaritet nga yjet + fitoret
+      xp=(d.xp!=null)?d.xp:(Object.values(progress).reduce((a,b)=>a+(b||0),0)*40+duelWins*40);
       if(d.settings){
         settings.sfx=d.settings.sfx??true;
         settings.haptic=d.settings.haptic??true;
@@ -1193,7 +1268,9 @@ async function loadData(){
       }catch(e){}
     }
   }
+  settings.lang='en'; // vetëm anglisht
   applyCosmetics();
+  document.getElementById('tglMusic').classList.toggle('on',settings.music);
   document.getElementById('tglSfx').classList.toggle('on',settings.sfx);
   document.getElementById('tglHaptic').classList.toggle('on',settings.haptic);
   applyLang();
@@ -1223,10 +1300,81 @@ function playFlip(){sfx(392,0.10,'sine',0.055);vibrate(8)}
 function playMatch(){sfx(587,0.16,'sine',0.06);sfx(784,0.22,'sine',0.06,0.11);vibrate(24)}
 function playMiss(){sfx(196,0.18,'sine',0.04);vibrate([15,30,15])}
 function vibrate(p){if(settings.haptic&&navigator.vibrate)navigator.vibrate(p)}
+/* 💥 Shpërthimi i bombës — Candy Crush style: flash + rrufe + grimca + shockwave */
+function bombFX(){
+  const f=document.getElementById('flash');
+  if(f){f.classList.remove('on');void f.offsetWidth;f.classList.add('on')}
+  const b=document.getElementById('board');
+  if(b){b.classList.remove('board-shake');void b.offsetWidth;b.classList.add('board-shake')}
+  const cx=window.innerWidth/2, cy=window.innerHeight*0.44;
+  screenBurst(cx,cy,['#fff','#ffd166','#ff5c5c','#ff8c42','#ffe08a','#2de2ff'],30,true,true);
+  if(settings.sfx){tone(90,0.42,'sawtooth',0.13);tone(55,0.55,'sine',0.11,0.02);tone(160,0.25,'square',0.05,0.0)}
+  vibrate([90,50,130]);
+}
+/* Grimca + rreze + shockwave në një pikë të ekranit */
+function screenBurst(cx,cy,colors,count,lightning,ring){
+  const holder=document.getElementById('fx')||document.body;
+  if(ring!==false){
+    const r=document.createElement('div');r.className='shock';
+    r.style.left=cx+'px';r.style.top=cy+'px';r.style.width='20px';r.style.height='20px';
+    holder.appendChild(r);
+    r.animate([{width:'20px',height:'20px',opacity:.95,borderWidth:'6px'},
+               {width:'340px',height:'340px',opacity:0,borderWidth:'1px'}],
+              {duration:560,easing:'cubic-bezier(.15,.7,.3,1)'});
+    setTimeout(()=>r.remove(),600);
+  }
+  if(lightning){
+    for(let i=0;i<3;i++){
+      const rot=i*120-60;
+      const bo=document.createElement('div');bo.className='bolt';bo.textContent='⚡';
+      bo.style.left=cx+'px';bo.style.top=cy+'px';bo.style.fontSize=(46+Math.random()*24)+'px';
+      holder.appendChild(bo);
+      bo.animate([{opacity:0,transform:`translate(-50%,-50%) scale(.4) rotate(${rot-18}deg)`},
+                  {opacity:1,offset:.22,transform:`translate(-50%,-50%) scale(1.35) rotate(${rot+10}deg)`},
+                  {opacity:0,transform:`translate(-50%,-50%) scale(1.1) rotate(${rot}deg)`}],
+                 {duration:520,easing:'ease-out'});
+      setTimeout(()=>bo.remove(),540);
+    }
+  }
+  for(let i=0;i<count;i++){
+    const s=document.createElement('div');s.className='spark';
+    const sz=6+Math.random()*10;
+    s.style.left=cx+'px';s.style.top=cy+'px';s.style.width=sz+'px';s.style.height=sz+'px';
+    const col=colors[i%colors.length];
+    s.style.background=col;s.style.boxShadow='0 0 8px '+col;
+    holder.appendChild(s);
+    const ang=Math.random()*Math.PI*2, dist=50+Math.random()*180;
+    const dx=Math.cos(ang)*dist, dy=Math.sin(ang)*dist;
+    s.animate([{transform:'translate(-50%,-50%) scale(1)',opacity:1},
+               {transform:`translate(calc(-50% + ${dx}px),calc(-50% + ${dy}px)) scale(0)`,opacity:0}],
+              {duration:620+Math.random()*320,easing:'cubic-bezier(.2,.7,.3,1)'});
+    setTimeout(()=>s.remove(),960);
+  }
+}
+/* Shkëndija te një kartë kur bën çift */
+function cardSparkle(el){
+  if(!el||!el.getBoundingClientRect)return;
+  const r=el.getBoundingClientRect();
+  screenBurst(r.left+r.width/2, r.top+r.height/2, ['#7ED957','#ffd166','#2de2ff','#fff','#ff8cc8'], 10, false, false);
+}
 
-/* Muzika e sfondit u hoq — mbeten vetëm efektet zanore */
-function startMusic(){}
-function stopMusic(){}
+/* 🎵 Muzikë e qetë ambientale (loop i butë WebAudio) */
+let musicTimer=null, musicStep=0;
+const MUSIC_NOTES=[261.63,293.66,329.63,392.00,440.00,392.00,329.63,293.66]; // pentatonik e ëmbël
+function startMusic(){
+  if(!settings.music||musicTimer)return;
+  const beat=()=>{
+    if(!settings.music){stopMusic();return}
+    const base=MUSIC_NOTES[musicStep%MUSIC_NOTES.length];
+    tone(base,2.6,'sine',0.028);          // nota kryesore e butë
+    tone(base/2,3.2,'sine',0.016);         // bas i ngrohtë
+    if(musicStep%4===0)tone(base*1.5,2.2,'triangle',0.010,0.35); // shkëlqim herë pas here
+    musicStep++;
+  };
+  beat();
+  musicTimer=setInterval(beat,2200);
+}
+function stopMusic(){if(musicTimer){clearInterval(musicTimer);musicTimer=null}}
 
 /* --- Fanfara e fitores (bravo!) --- */
 function playWinMusic(){
@@ -1286,6 +1434,7 @@ function toggleSet(key,el){
   playTap();
   settings[key]=!settings[key];
   el.classList.toggle('on',settings[key]);
+  if(key==='music'){settings.music?startMusic():stopMusic()}
   saveData();
 }
 
@@ -1297,8 +1446,8 @@ function startLevel(g){
   document.getElementById('quitDialog').classList.remove('show');
   currentLevel=g;
   params=levelParams(g);
-  // ⛽ Karburanti ndryshon çdo herë: -2 deri +3 lëvizje
-  params.maxMoves=Math.max(params.pairs+1, params.maxMoves+(Math.floor(Math.random()*6)-2));
+  // ⛽ Karburanti ndryshon pak çdo herë: -2 deri +1 lëvizje (më zor)
+  params.maxMoves=Math.max(params.pairs+1, params.maxMoves+(Math.floor(Math.random()*4)-2));
   fuelBonus=0; sureShown=false;
   if(fuelPacks>0){fuelPacks--; fuelBonus+=3; toast('⛽ +3'); saveData()}
   if(premium)fuelBonus+=1; // 👑 PRO: +1 karburant çdo nivel
@@ -1324,7 +1473,7 @@ function startLevel(g){
   firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;
   updateHud();
   document.getElementById('levelBadge').innerHTML=
-    `<div class="profile-chip"><span class="pav">${avatar}</span><b>${myName()}</b>${premium?' 👑':''}</div>`+
+    `<div class="profile-chip"><span class="pav">${avatar}</span><b>${myName()}</b> <span title="${myRank()[2]}">${myRank()[1]}</span>${premium?' 👑':''}</div>`+
     `<div class="level-chip">${se.emoji} ${t('level')} ${g+1}</div>`;
 
   const board=document.getElementById('board');
@@ -1343,6 +1492,7 @@ function startLevel(g){
   });
 
   document.getElementById('oppBar').style.display='none';
+  {const eb=document.getElementById('emoteBar');if(eb)eb.style.display='none';}
   stopTimer();
   timerInt=setInterval(()=>{seconds++;updateHud()},1000);
   showScreen('gameScreen');
@@ -1395,12 +1545,13 @@ function flipSecond(c,gamble){
     setTimeout(()=>{
       a.classList.add('matched');c.classList.add('matched');
       playMatch();pairsFound++;
+      cardSparkle(a);cardSparkle(c);
       // Basti fitoi! +2 karburant
       if(gamble){fuelBonus+=2;toast(t('gambleWin'));sfx(880,0.28,'sine',0.07);vibrate([30,40,60]);if(tut)tutAfterSure()}
       // Efektet surprizë
       const sym=a.dataset.sym;
-      if(sym===goldSymCur){fuelBonus+=3;coins+=20;toast(t('goldMsg'));sfx(1046,0.3,'sine',0.08);saveData()}
-      else if(sym===bombSymCur){const bx=params.season>=4?3:2;fuelBonus-=bx;toast(t('bombMsg').replace('2',String(bx)));sfx(90,0.35,'sine',0.09);vibrate([60,40,60])}
+      if(sym===goldSymCur){fuelBonus+=3;coins+=8;toast(t('goldMsg'));sfx(1046,0.3,'sine',0.08);saveData()}
+      else if(sym===bombSymCur){const bx=params.season>=4?4:params.season>=2?3:2;fuelBonus-=bx;toast('💥 '+t('bombMsg').replace('2',String(bx)));bombFX();if(params.season>=3&&pairsFound<params.pairs)swapTwo(true)}
       else if(sym===shufSymCur){toast(t('shufMsg'));sfx(300,0.22,'sine',0.07);shuffleRemaining()}
       else if(sym===peekSymCur){toast(t('peekMsg'));sfx(1200,0.28,'sine',0.06);setTimeout(peekAll,80)}
       if(tut)tutOnMatch();
@@ -1446,9 +1597,12 @@ function levelWon(){
   stopTimer();playWinMusic();
   const earned=starsFor(params.pairs,moves);
   if(!progress[currentLevel]||earned>progress[currentLevel])progress[currentLevel]=earned;
-  // 🪙 Monedhat dhe pikët
-  const coinReward=15*earned+params.season*5;
+  // 🪙 Monedha VETËM për lojë EXCELLENT (3 yje, pa gabime). Përndryshe → vetëm rang.
+  const coinReward = earned===3 ? 10 : 0;
   coins+=coinReward;
+  // ⭐ XP fitohet gjithmonë (edhe me gabime) → rrit rangun/nivelin
+  const xpGain = earned===3 ? 60 : earned===2 ? 35 : 20;
+  addXP(xpGain);
   const score=earned*100+fuelLeft()*25+Math.max(0,200-seconds*2);
   let newHS=false;
   if(score>highScore){highScore=score;newHS=true}
@@ -1463,7 +1617,9 @@ function levelWon(){
   const s2=String(seconds%60).padStart(2,'0');
   document.getElementById('winStats').innerHTML=
     `${t('moves')}: <b>${moves}</b> &nbsp;•&nbsp; ${t('time')}: <b>${m}:${s2}</b><br>`+
-    `${t('scoreLbl')}: <b>${score}</b> &nbsp;•&nbsp; +${coinReward} 🪙`+
+    `${t('scoreLbl')}: <b>${score}</b> &nbsp;•&nbsp; +${xpGain} XP`+
+    (coinReward>0?` &nbsp;•&nbsp; +${coinReward} 🪙`:'')+
+    (earned===3?`<br><b style="color:#3ef0a0">✨ EXCELLENT!</b>`:'')+
     (newHS?`<br><b style="color:#FFD166">🏆 ${t('newBest')}</b>`:'');
 
   // Sezoni u përfundua i tëri?
@@ -1518,22 +1674,35 @@ const SKINS=[
   {id:'sharp',  name:'skSharp',  price:250,em:'◼️'},
   {id:'pill',   name:'skPill',   price:250,em:'⬭'},
   {id:'gold',   name:'skGold',   price:500,em:'🟨'},
-  {id:'neonc',  name:'skNeon',   price:500,em:'🟦'}
+  {id:'neonc',  name:'skNeon',   price:500,em:'🟦'},
+  {id:'wood',   name:'skWood',   price:300,em:'🪵'},
+  {id:'ice',    name:'skIce',    price:350,em:'🧊'},
+  {id:'ruby',   name:'skRuby',   price:450,em:'🔴'},
+  {id:'carbon', name:'skCarbon', price:500,em:'🏁'},
+  {id:'emerald',name:'skEmerald',price:600,em:'🟢'},
+  {id:'holo',   name:'skHolo',   price:800,em:'🌈'}
 ];
 const BGS=[
   {id:'midnight',name:'bgMid',   price:0,  em:'🌌'},
   {id:'sunset',  name:'bgSun',   price:400,em:'🌅'},
   {id:'forest',  name:'bgForest',price:400,em:'🌲'},
   {id:'ocean',   name:'bgOcean', price:400,em:'🌊'},
-  {id:'neonw',   name:'bgNeon',  price:600,em:'🌇'}
+  {id:'neonw',   name:'bgNeon',  price:600,em:'🌇'},
+  {id:'lava',    name:'bgLava',  price:450,em:'🌋'},
+  {id:'aurora',  name:'bgAurora',price:500,em:'🌠'},
+  {id:'candy',   name:'bgCandy', price:500,em:'🍭'},
+  {id:'space',   name:'bgSpace', price:600,em:'🪐'},
+  {id:'desert',  name:'bgDesert',price:550,em:'🏜️'},
+  {id:'mono',    name:'bgMono',  price:700,em:'⚫'}
 ];
 // Çmimet sipas tiers zyrtare të App Store (€0.99 / €2.99 / €4.99 / €9.99)
 const COINPACKS=[
-  {coins:500, price:'3,99'},
-  {coins:1800,price:'5,99'},
-  {coins:3500,price:'7,99'},
-  {coins:8000,price:'12,99'}
+  {coins:500, price:'3,99', pid:'com.arianit.memorydrive.coins500'},
+  {coins:1800,price:'5,99', pid:'com.arianit.memorydrive.coins1800'},
+  {coins:3500,price:'7,99', pid:'com.arianit.memorydrive.coins3500'},
+  {coins:8000,price:'12,99',pid:'com.arianit.memorydrive.coins8000'}
 ];
+const PRO_PRODUCT='com.arianit.memorydrive.pro';
 
 function applyCosmetics(){
   document.body.dataset.skin=curSkin;
@@ -1564,18 +1733,46 @@ function renderStore(){
       <div class="store-name">${t('fuelBoost')}${fuelPacks>0?` &nbsp;×${fuelPacks}`:''}</div>
       <div class="store-sub">${t('fuelBoostD')}</div>
     </div>
-    <button class="btn-mini" onclick="buyFuel()">${t('buy')} 🪙 60</button>
+    <button class="btn-mini" onclick="buyFuel()">${t('buy')} 🪙 600</button>
   </div>`;
 
-  // Stili i kartave
-  h+=`<div class="store-sec">${t('secSkins')}</div>`;
-  SKINS.forEach(it=>{h+=itemRow(it,'skin')});
-
-  // Sfondet
-  h+=`<div class="store-sec">${t('secBgs')}</div>`;
-  BGS.forEach(it=>{h+=itemRow(it,'bg')});
+  // Stili i kartave & Sfondet — të organizuara në folder të palosshëm
+  h+=folderSection('skins','🃏 '+t('secSkins'), SKINS.map(it=>itemRow(it,'skin')).join(''), SKINS.length);
+  h+=folderSection('bgs','🖼️ '+t('secBgs'), BGS.map(it=>itemRow(it,'bg')).join(''), BGS.length);
 
   list.innerHTML=h;
+}
+let storeOpen={skins:false,bgs:false};
+function folderSection(id,title,inner,count){
+  const open=storeOpen[id];
+  return `<div class="store-folder" id="folder-${id}">
+    <div class="folder-head" onclick="toggleFolder('${id}')">
+      <span>${title} &nbsp;<span style="color:rgba(255,255,255,.4);font-weight:700">(${count})</span></span>
+      <span class="folder-chev">${open?'▾':'▸'}</span>
+    </div>
+    <div class="folder-body" style="display:${open?'block':'none'}">${inner}</div>
+  </div>`;
+}
+function toggleFolder(id){
+  playTap();
+  const opening=!storeOpen[id];
+  storeOpen[id]=opening;
+  renderStore();
+  if(opening){
+    // Rrëshqit te folderi i sapohapur
+    requestAnimationFrame(()=>{
+      const el=document.getElementById('folder-'+id);
+      if(el)el.scrollIntoView({behavior:'smooth',block:'start'});
+    });
+  }
+}
+function toggleProfile(){
+  playTap();
+  const p=document.getElementById('profilePanel');
+  const open=p.style.display==='none';
+  p.style.display=open?'block':'none';
+  document.getElementById('profChev').textContent=open?'▾':'▸';
+  if(open)refreshProfileUI();
 }
 function itemRow(it,kind){
   const isOwned=owned.includes(it.id);
@@ -1592,14 +1789,18 @@ function itemRow(it,kind){
 }
 function buyCoins(i){
   playTap();
+  if(window.NATIVE_APP && window.IAP){ IAP.buy(COINPACKS[i].pid); return; }
+  grantCoins(i); // fallback demo në web
+}
+function grantCoins(i){
   coins+=COINPACKS[i].coins;
   toast(`${t('purchased')} +${COINPACKS[i].coins.toLocaleString()} 🪙`);
   saveData();renderStore();
 }
 function buyFuel(){
   playTap();
-  if(coins<60){toast(t('notEnough'));return}
-  coins-=60;fuelPacks++;
+  if(coins<600){toast(t('notEnough'));return}
+  coins-=600;fuelPacks++;
   toast(t('purchased'));
   saveData();renderStore();
 }
@@ -1670,19 +1871,61 @@ document.addEventListener('pointerdown',e=>{
 });
 
 /* ================= PROFILI ONLINE & RANK ================= */
-const RANKS=[[0,'🐣','Rookie'],[3,'🚗','Driver'],[7,'🏎️','Racer'],[15,'🥇','Pro'],[30,'🏆','Champion'],[50,'👑','Legend']];
-function myRank(){let r=RANKS[0];for(const x of RANKS)if(duelWins>=x[0])r=x;return r}
+// Rangjet bazohen te niveli i lojtarit (nga XP-ja e fituar duke luajtur)
+const XP_PER_LEVEL=150;
+const RANKS=[
+  [1,'🐣','Rookie'],[3,'🚗','Driver'],[6,'🏎️','Racer'],
+  [10,'🥉','Skilled'],[15,'🥈','Expert'],[20,'🥇','Pro'],
+  [28,'💎','Master'],[36,'🏆','Champion'],[45,'🔥','Elite'],[55,'👑','Legend']
+];
+function playerLevel(){return 1+Math.floor(xp/XP_PER_LEVEL)}
+function myRank(){let r=RANKS[0];const pl=playerLevel();for(const x of RANKS)if(pl>=x[0])r=x;return r}
+function nextRank(){const pl=playerLevel();for(const x of RANKS)if(x[0]>pl)return x;return null}
+function addXP(n){
+  const before=myRank()[2];
+  xp+=n;
+  const after=myRank()[2];
+  if(after!==before)setTimeout(()=>toast('⬆️ '+after+'!'),900);
+}
 const FREE_AV=['🚗','🏎️','😎','🐺','🔥','⚡'];
 const PRO_AV=['👑','🐉','💎','🦁','🚀','😈'];
 
 function refreshProfileUI(){
-  const r=myRank();
-  document.getElementById('rankEmoji').textContent=r[1];
-  document.getElementById('rankVal').textContent=r[2]+' • '+duelWins+' '+t('winsLbl');
+  const r=myRank(), nr=nextRank(), pl=playerLevel();
+  const inLvl=xp-(pl-1)*XP_PER_LEVEL;                 // XP brenda nivelit aktual
+  const pct=Math.min(100,Math.round(inLvl/XP_PER_LEVEL*100));
+  const perfect=Object.values(progress).filter(v=>v===3).length;
+  const done=Object.keys(progress).filter(k=>progress[k]>0).length;
+  const card=document.getElementById('profileCard');
+  if(card){
+    card.innerHTML=`
+      <div class="pc-top">
+        <div class="pc-badge">${r[1]}</div>
+        <div class="pc-id">
+          <div class="pc-rank">${r[2]}</div>
+          <div class="pc-lvl">${t('lvlLbl')} ${pl} • ${duelWins} ${t('winsLbl')}</div>
+        </div>
+        <div class="pc-av">${premium?'👑':''}${avatar}</div>
+      </div>
+      <div class="pc-xpbar"><div class="pc-xpfill" style="width:${pct}%"></div></div>
+      <div class="pc-xptext">${inLvl}/${XP_PER_LEVEL} XP${nr?` • ${t('nextRank')}: ${nr[1]} ${nr[2]} (${t('lvlLbl')} ${nr[0]})`:' • MAX 👑'}</div>
+      <div class="pc-stats">
+        <div class="pc-stat"><b>${totalStarCount()}</b><span>${t('statTotalStars')} ⭐</span></div>
+        <div class="pc-stat"><b>${done}/${TOTAL}</b><span>${t('statLevelsDone')}</span></div>
+        <div class="pc-stat"><b>${perfect}</b><span>${t('statPerfect')} ✨</span></div>
+        <div class="pc-stat"><b>${coins}</b><span>${t('statCoins')} 🪙</span></div>
+        <div class="pc-stat"><b>${highScore}</b><span>${t('statBest')} 🏆</span></div>
+        <div class="pc-stat"><b>${xp}</b><span>XP</span></div>
+      </div>`;
+  }
+  const summ=document.getElementById('profSummary');
+  if(summ)summ.textContent=`${r[1]} ${r[2]} • ${t('lvlLbl')} ${pl}`;
   renderAvatars();
   const b=document.getElementById('premiumBtn');
-  if(premium){b.className='btn-mini inuse';b.innerHTML='👑 '+t('proActive');b.onclick=null}
-  else{b.className='btn-mini';b.innerHTML='👑 €4,99';b.onclick=openPremiumSheet}
+  if(b){
+    if(premium){b.className='btn-mini inuse';b.innerHTML='👑 '+t('proActive');b.onclick=null}
+    else{b.className='btn-mini';b.innerHTML='👑 €4,99';b.onclick=openPremiumSheet}
+  }
 }
 function renderAvatars(gridId){
   const ids=gridId?[gridId]:['avatarGrid','regAvatarGrid'];
@@ -1708,7 +1951,13 @@ function openPremiumSheet(){
   document.getElementById('premiumSheet').classList.add('show');
 }
 function buyPremium(){
-  playTap();premium=true;
+  playTap();
+  if(window.NATIVE_APP && window.IAP){ IAP.buy(PRO_PRODUCT); return; }
+  grantPremium(); // fallback demo në web
+}
+function grantPremium(){
+  if(premium)return;
+  premium=true;
   // Përfitimet e PRO-s
   coins+=500;
   if(!owned.includes('gold'))owned.push('gold');
@@ -1719,6 +1968,13 @@ function buyPremium(){
   renderAvatars();
   if(document.getElementById('settingsScreen').classList.contains('active'))refreshProfileUI();
 }
+// Thirret nga StoreKit-i native pas një blerjeje të verifikuar
+window.__iapResult=function(pid, ok){
+  if(!ok)return;
+  if(pid===PRO_PRODUCT){ grantPremium(); return; }
+  const idx=COINPACKS.findIndex(c=>c.pid===pid);
+  if(idx>=0) grantCoins(idx);
+};
 document.getElementById('regName').addEventListener('input',e=>{
   username=e.target.value.replace(/[<>"']/g,'').slice(0,12);
 });
@@ -1731,13 +1987,58 @@ document.getElementById('regBtn').addEventListener('click',()=>{
 
 /* ================= DUELI ONLINE ================= */
 let duel=null, duelStats={mi:0}, duelPoll=null, waitPoll=null, goTs=0;
+/* 🔥 Emojit hype të duelit (stil ishowspeed) */
+const EMOTES=['🔥','😈','💀','🤡','👑','🐐','😭','💪','⚡','🤪'];
+let myEmote=null, lastOppEmoteT=0;
+function renderEmoteBar(){
+  const bar=document.getElementById('emoteBar');
+  if(!bar)return;
+  bar.innerHTML=EMOTES.map(e=>`<div class="emote-btn" onclick="sendEmote('${e}')">${e}</div>`).join('');
+}
+function sendEmote(e){
+  playTap();
+  showEmote(e,myName());
+  myEmote={e,t:Date.now()};
+  if(settings.sfx){tone(660,0.12,'square',0.05);tone(990,0.14,'square',0.05,0.06)}
+  duelSync(); // dërgo menjëherë te kundërshtari
+}
+function showEmote(e,who){
+  const pop=document.createElement('div');
+  pop.className='emote-pop';pop.textContent=e;
+  const tag=document.createElement('div');
+  tag.className='emote-tag';tag.textContent=who;
+  document.body.appendChild(pop);document.body.appendChild(tag);
+  vibrate(20);
+  setTimeout(()=>{pop.remove();tag.remove()},1500);
+}
 let oppLast={p:0,mi:0,mo:0,done:false,tm:0};
 const myId=Math.random().toString(36).slice(2,9);
 function myName(){return (username||'Racer'+nameSuffix).slice(0,14)}
 
-async function sGet(k){try{const r=await window.storage.get(k,true);return r&&r.value?JSON.parse(r.value):null}catch(e){return null}}
-async function sSet(k,v){try{await window.storage.set(k,JSON.stringify(v),true)}catch(e){}}
-async function sDel(k){try{await window.storage.delete(k,true)}catch(e){}}
+// 🌐 Serveri i duelit online (Cloudflare Worker + KV). API: GET /kv?k=  •  PUT /kv {k,v}
+const DUEL_SERVER='https://memory-duel.arianitlumi4.workers.dev';
+async function sGet(k){
+  if(DUEL_SERVER){
+    try{
+      const r=await fetch(DUEL_SERVER+'/kv?k='+encodeURIComponent(k),{cache:'no-store'});
+      if(!r.ok)return null;
+      const txt=await r.text();
+      return txt?JSON.parse(txt):null;
+    }catch(e){return null}
+  }
+  try{const r=await window.storage.get(k,true);return r&&r.value?JSON.parse(r.value):null}catch(e){return null}
+}
+async function sSet(k,v){
+  if(DUEL_SERVER){
+    try{await fetch(DUEL_SERVER+'/kv',{method:'PUT',headers:{'Content-Type':'application/json'},body:JSON.stringify({k:k,v:JSON.stringify(v)})})}catch(e){}
+    return;
+  }
+  try{await window.storage.set(k,JSON.stringify(v),true)}catch(e){}
+}
+async function sDel(k){
+  if(DUEL_SERVER)return; // serveri s'ka DELETE; dhomat skadojnë vetë (TTL 15 min)
+  try{await window.storage.delete(k,true)}catch(e){}
+}
 
 function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a^a>>>15,1|a);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296}}
 function seededShuffle(arr,rnd){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
@@ -1847,6 +2148,9 @@ function startDuelBoard(){
   });
 
   document.getElementById('oppBar').style.display='flex';
+  myEmote=null;lastOppEmoteT=0;
+  renderEmoteBar();
+  document.getElementById('emoteBar').style.display='flex';
   updateOppBar();
   stopTimer();
   goTs=Date.now();
@@ -1858,10 +2162,12 @@ function startDuelBoard(){
 async function duelSync(){
   if(!duel)return;
   sSet('duel:'+duel.code+':'+duel.role,
-    {p:pairsFound,mi:duelStats.mi,mo:moves,done:duel.done,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1]});
+    {p:pairsFound,mi:duelStats.mi,mo:moves,done:duel.done,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],em:myEmote});
   const op=await sGet('duel:'+duel.code+':'+(duel.role==='h'?'g':'h'));
   if(op){
     oppLast=op;updateOppBar();
+    // Emoji nga kundërshtari
+    if(op.em&&op.em.t>lastOppEmoteT){lastOppEmoteT=op.em.t;showEmote(op.em.e,duel.opName||'Opp')}
     if(duel.done&&op.done)finishDecide();
   }
 }
@@ -1930,6 +2236,7 @@ function leaveDuelIfAny(){
   if(duel.timeoutIv)clearInterval(duel.timeoutIv);
   sDel('duel:lobby');
   document.getElementById('oppBar').style.display='none';
+  {const eb=document.getElementById('emoteBar');if(eb)eb.style.display='none';}
   document.getElementById('duelResult').classList.remove('show');
   document.getElementById('countOverlay').classList.remove('show');
   duel=null;
@@ -2025,6 +2332,7 @@ function startTutorial(){
     board.appendChild(c);
   });
   document.getElementById('oppBar').style.display='none';
+  {const eb=document.getElementById('emoteBar');if(eb)eb.style.display='none';}
   stopTimer();
   timerInt=setInterval(()=>{seconds++;updateHud()},1000);
   updateHud();
