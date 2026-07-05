@@ -346,6 +346,14 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 /* Mode 1v1 / 2v2 */
 .dm-btn{opacity:.55;border:1.5px solid rgba(255,255,255,.15)!important}
 .dm-btn.dm-on{opacity:1;border-color:var(--amber2)!important;box-shadow:0 0 14px rgba(232,161,58,.3)}
+.mode-label{font-size:11px;font-weight:800;letter-spacing:1.5px;color:rgba(255,255,255,.55);text-transform:uppercase}
+.mode-cards{display:flex;gap:10px;width:100%}
+.mode-card{flex:1;background:rgba(14,12,30,.55);border:2px solid rgba(255,255,255,.12);border-radius:16px;padding:14px 8px;text-align:center;cursor:pointer;transition:transform .12s,border-color .15s,background .15s;opacity:.6}
+.mode-card:active{transform:scale(.95)}
+.mode-card.dm-on{opacity:1;border-color:var(--amber2);box-shadow:0 0 18px rgba(232,161,58,.35);background:rgba(232,161,58,.12)}
+.mc-ic{font-size:30px;line-height:1}
+.mc-t{font-weight:900;font-size:17px;letter-spacing:2px;margin-top:5px}
+.mc-s{font-size:10.5px;opacity:.7;font-weight:700;margin-top:2px}
 .duel2v2wait{display:none;flex-direction:column;gap:12px;align-items:center;width:100%;max-width:340px;margin-top:20px}
 .roster2{display:flex;gap:10px;width:100%;justify-content:center;align-items:stretch}
 .team-col{flex:1;display:flex;flex-direction:column;gap:8px}
@@ -601,10 +609,15 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
     <div class="coin-pill" id="duelCoins">🪙 0</div>
   </div>
   <div id="duelHome" style="display:flex;flex-direction:column;gap:14px;align-items:center;width:100%;max-width:320px;margin-top:12px">
-    <div style="font-size:44px">🆚</div>
-    <div style="display:flex;gap:8px;width:100%">
-      <button class="btn btn-ghost dm-btn dm-on" data-m="1v1" onclick="setDuelMode('1v1')" style="flex:1">1 v 1</button>
-      <button class="btn btn-ghost dm-btn" data-m="2v2" onclick="setDuelMode('2v2')" style="flex:1">2 v 2</button>
+    <div style="font-size:34px;margin-bottom:2px">🆚</div>
+    <div class="mode-label">Choose mode</div>
+    <div class="mode-cards">
+      <div class="mode-card dm-on" data-m="1v1" onclick="setDuelMode('1v1')">
+        <div class="mc-ic">⚔️</div><div class="mc-t">1 v 1</div><div class="mc-s">Classic duel</div>
+      </div>
+      <div class="mode-card" data-m="2v2" onclick="setDuelMode('2v2')">
+        <div class="mc-ic">👥</div><div class="mc-t">2 v 2</div><div class="mc-s">Team battle</div>
+      </div>
     </div>
     <div class="store-sub" style="text-align:center;font-size:13px" data-i18n="betLbl"></div>
     <button class="btn btn-primary" style="width:100%" onclick="playTap();createRoom()">
@@ -1052,7 +1065,7 @@ const I18N={
     betLbl:'Bet: 50 🪙 each — winner takes 100 🪙', notEnoughDuel:'You need 50 🪙 to duel!',
     youLbl:'YOU', oppLbl:'OPPONENT', resTime:'Time', resMoves:'Moves', resMistakes:'Mistakes', resPairs:'Pairs',
     duelWin:'YOU WIN!', duelLose:'YOU LOSE!', duelDraw:'DRAW!', wonPot:'+100 🪙', drawRefund:'+50 🪙 refunded',
-    duelNote:'Online demo — rooms sync between players of this game', cancel:'CANCEL',
+    duelNote:'🌐 Live online — play with friends anywhere in real time', cancel:'CANCEL',
     waitOpp:'Waiting for opponent to finish...', go:'GO!',
     seasonDoneMsg:'SEASON COMPLETE!', improveHint:'Replay the level with fewer moves to earn more stars!',
     goldMsg:'✨ GOLDEN PAIR! +3 ⛽ +8 🪙', bombMsg:'💥 BOOM! -2 ⛽'
@@ -2052,7 +2065,7 @@ let duel=null, duelStats={mi:0}, duelPoll=null, waitPoll=null, goTs=0;
 let duelMode='1v1';
 const SLOTS2=['a1','a2','b1','b2'];
 function teamOf(s){return s[0]==='a'?'A':'B';}
-function setDuelMode(m){playTap();duelMode=m;document.querySelectorAll('.dm-btn').forEach(b=>b.classList.toggle('dm-on',b.dataset.m===m));}
+function setDuelMode(m){playTap();duelMode=m;document.querySelectorAll('.dm-btn,.mode-card').forEach(b=>b.classList.toggle('dm-on',b.dataset.m===m));}
 /* 🔥 Emojit hype të duelit (stil ishowspeed) */
 const EMOTES=['🔥','😈','💀','🤡','👑','🐐','😭','💪','⚡','🤪'];
 let myEmote=null, lastOppEmoteT=0;
