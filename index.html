@@ -254,10 +254,17 @@ svg{display:block}
 @keyframes wig{25%{transform:rotate(-6deg) scale(1.05)}75%{transform:rotate(6deg) scale(1.05)}}
 @keyframes spinX{to{transform:rotate(360deg)}}
 /* ---- Dyqani ---- */
-#storeScreen{justify-content:flex-start;padding-top:max(20px, env(safe-area-inset-top))}
+#storeScreen{justify-content:flex-start;padding-top:max(20px, env(safe-area-inset-top));overflow-y:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain}
 .coin-pill{display:flex;align-items:center;gap:5px;background:rgba(14,12,30,.6);padding:8px 13px;border-radius:18px;font-weight:900;font-size:13px;white-space:nowrap}
 .menu-eco{display:flex;gap:10px;margin-top:10px}
-.store-list{display:flex;flex-direction:column;gap:9px;width:100%;max-width:390px;flex:1;min-height:0;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:24px}
+/* Menyja: logo lart-majtas, coins+best lart-djathtas */
+.menu-topbar{position:absolute;top:max(14px,env(safe-area-inset-top));left:0;right:0;display:flex;justify-content:space-between;align-items:flex-start;padding:0 16px;z-index:3;pointer-events:none}
+.menu-logo{display:flex;align-items:center;gap:8px}
+.menu-logo .ml-flag{font-size:30px;filter:drop-shadow(0 0 10px rgba(232,161,58,.55));animation:wobble 1.8s ease-in-out infinite alternate}
+.menu-logo .ml-name{font-weight:900;letter-spacing:1.5px;font-size:13px;line-height:1.05;color:var(--amber2);text-shadow:0 0 10px rgba(232,161,58,.4)}
+.menu-corner{display:flex;flex-direction:column;gap:6px;align-items:flex-end;pointer-events:auto}
+.menu-corner .coin-pill{font-size:12px}
+.store-list{display:flex;flex-direction:column;gap:9px;width:100%;max-width:390px;padding-bottom:60px}
 .store-sec{font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.5);font-weight:800;margin:10px 2px 0}
 .store-row{display:flex;align-items:center;gap:12px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px 14px}
 .store-em{font-size:27px;width:42px;text-align:center;flex-shrink:0}
@@ -324,6 +331,32 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 .emote-bar{display:none;gap:6px;justify-content:center;flex-wrap:wrap;width:100%;max-width:420px;margin:8px auto 2px}
 .emote-btn{font-size:21px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.14);border-radius:12px;width:40px;height:40px;display:flex;align-items:center;justify-content:center;cursor:pointer;transition:transform .12s}
 .emote-btn:active{transform:scale(.82)}
+/* Emote picker stil Ludo (kliko profilin → zgjidh emoji) */
+.opp-bar span[onclick]{cursor:pointer}
+.opp-tap{position:relative}
+#emotePicker{position:fixed;left:50%;top:16%;transform:translateX(-50%);background:rgba(16,14,34,.97);border:1px solid rgba(232,161,58,.45);border-radius:20px;padding:14px;z-index:57;display:none;box-shadow:0 14px 44px rgba(0,0,0,.6)}
+#emotePicker.show{display:block;animation:pop .28s cubic-bezier(.2,1.5,.4,1) both}
+.ep-hint{text-align:center;font-size:11px;color:rgba(255,255,255,.6);margin-bottom:10px;font-weight:800}
+.ep-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
+.ep-btn{font-size:26px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:rgba(14,12,30,.6);border:1px solid rgba(255,255,255,.1);border-radius:12px;cursor:pointer;transition:transform .1s}
+.ep-btn:active{transform:scale(.78)}
+/* Shpërndarja e kartave (deal-in) */
+@keyframes dealIn{0%{opacity:0;transform:translateY(-46px) scale(.55) rotate(-10deg)}70%{opacity:1}100%{opacity:1;transform:translateY(0) scale(1) rotate(0)}}
+.card.dealIn{animation:dealIn .5s cubic-bezier(.2,1.25,.4,1) both}
+/* Mode 1v1 / 2v2 */
+.dm-btn{opacity:.55;border:1.5px solid rgba(255,255,255,.15)!important}
+.dm-btn.dm-on{opacity:1;border-color:var(--amber2)!important;box-shadow:0 0 14px rgba(232,161,58,.3)}
+.duel2v2wait{display:none;flex-direction:column;gap:12px;align-items:center;width:100%;max-width:340px;margin-top:20px}
+.roster2{display:flex;gap:10px;width:100%;justify-content:center;align-items:stretch}
+.team-col{flex:1;display:flex;flex-direction:column;gap:8px}
+.team-h{font-weight:900;font-size:12px;letter-spacing:1px;text-align:center}
+.rslot{background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.12);border-radius:12px;padding:10px 8px;font-weight:800;font-size:13px;text-align:center;min-height:20px}
+.rslot.filled{border-color:rgba(232,161,58,.5);background:rgba(232,161,58,.1)}
+.vs2{display:flex;align-items:center;font-weight:900;color:var(--amber2);font-size:16px}
+/* Skorbordi i ekipeve në lojë */
+.tscore{display:flex;justify-content:space-between;align-items:center;width:100%;max-width:420px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:7px 12px;margin-bottom:8px;font-weight:900;font-size:13px}
+.tscore .mine{color:var(--amber2)}
+.tscore .tnum{font-size:17px}
 .emote-pop{position:fixed;left:50%;top:34%;transform:translateX(-50%);font-size:110px;z-index:58;pointer-events:none;animation:emotePop 1.5s ease-out forwards}
 @keyframes emotePop{0%{transform:translateX(-50%) scale(0) rotate(-25deg);opacity:0}14%{transform:translateX(-50%) scale(1.25) rotate(10deg);opacity:1}68%{transform:translateX(-50%) scale(1) rotate(0);opacity:1}100%{transform:translateX(-50%) scale(1.15) translateY(-46px);opacity:0}}
 .emote-tag{position:fixed;left:50%;top:54%;transform:translateX(-50%);z-index:58;pointer-events:none;font-weight:900;font-size:14px;color:#fff;background:rgba(14,12,30,.7);padding:5px 14px;border-radius:16px;text-shadow:0 2px 8px rgba(0,0,0,.6);animation:emoteTag 1.5s ease-out forwards}
@@ -399,6 +432,7 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 <div id="stars"></div>
 <div id="flash"></div>
 <div id="fx"></div>
+<div id="emotePicker"></div>
 <span class="float-emoji" style="top:13%;left:8%">🚗</span>
 <span class="float-emoji" style="top:22%;right:10%;animation-delay:1s">🏎️</span>
 <span class="float-emoji" style="top:45%;left:15%;animation-delay:2s">🛞</span>
@@ -508,13 +542,17 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 
 <!-- MENYJA -->
 <div class="screen" id="menuScreen">
-  <div style="font-size:58px;animation:wobble 1.6s ease-in-out infinite alternate;filter:drop-shadow(0 0 18px rgba(232,161,58,.45))">🏁</div>
-  <div class="title" style="font-size:31px">MEMORY DRIVE</div>
+  <div class="menu-topbar">
+    <div class="menu-logo"><span class="ml-flag">🏁</span><span class="ml-name">MEMORY<br>DRIVE</span></div>
+    <div class="menu-corner">
+      <div class="coin-pill" id="menuCoins">🪙 0</div>
+      <div class="coin-pill" id="menuBest">🏆 0</div>
+    </div>
+  </div>
   <div class="total-stars" id="totalStars"></div>
   <div class="menu-eco">
     <div class="coin-pill" id="menuProfile" style="border:1.5px solid rgba(232,161,58,.5)">🚗</div>
-    <div class="coin-pill" id="menuCoins">🪙 0</div>
-    <div class="coin-pill" id="menuBest">🏆 0</div>
+    <button class="coin-pill" id="menuPro" onclick="playTap();openPremiumSheet()" style="border:1.5px solid rgba(232,161,58,.5);color:#fff;cursor:pointer">👑 PRO</button>
   </div>
   <div class="menu-btns">
     <button class="btn btn-primary" onclick="playNext()">
@@ -563,7 +601,11 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
     <div class="coin-pill" id="duelCoins">🪙 0</div>
   </div>
   <div id="duelHome" style="display:flex;flex-direction:column;gap:14px;align-items:center;width:100%;max-width:320px;margin-top:12px">
-    <div style="font-size:54px">🆚</div>
+    <div style="font-size:44px">🆚</div>
+    <div style="display:flex;gap:8px;width:100%">
+      <button class="btn btn-ghost dm-btn dm-on" data-m="1v1" onclick="setDuelMode('1v1')" style="flex:1">1 v 1</button>
+      <button class="btn btn-ghost dm-btn" data-m="2v2" onclick="setDuelMode('2v2')" style="flex:1">2 v 2</button>
+    </div>
     <div class="store-sub" style="text-align:center;font-size:13px" data-i18n="betLbl"></div>
     <button class="btn btn-primary" style="width:100%" onclick="playTap();createRoom()">
       <svg class="ic"><use href="#i-play"/></svg><span data-i18n="createRoom"></span>
@@ -583,6 +625,15 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
     <div class="store-sub" data-i18n="shareCode"></div>
     <div id="duelWaitMsg" style="font-weight:800;margin-top:10px;color:rgba(255,255,255,.8)">…</div>
     <button class="btn btn-danger" style="margin-top:10px" onclick="playTap();cancelDuel()"><span data-i18n="cancel"></span></button>
+  </div>
+  <div id="duel2v2Wait" class="duel2v2wait">
+    <div class="store-sub" data-i18n="roomCode"></div>
+    <div id="duel2v2Code" style="font-size:44px;font-weight:900;letter-spacing:10px;color:var(--amber2);text-shadow:0 0 20px rgba(232,161,58,.5)"></div>
+    <div class="store-sub">Share this code — teams of 2</div>
+    <div class="roster2" id="duel2v2Roster"></div>
+    <button class="btn btn-primary" id="duel2v2Start" style="width:100%;display:none" onclick="playTap();start2v2()">▶ START MATCH</button>
+    <div id="duel2v2Msg" style="font-weight:800;color:rgba(255,255,255,.8);font-size:13px"></div>
+    <button class="btn btn-danger" onclick="playTap();cancelDuel()"><span data-i18n="cancel"></span></button>
   </div>
 </div>
 
@@ -1154,7 +1205,8 @@ function updateTotalStars(){
     `<svg class="ic star-on"><use href="#i-star"/></svg> ${totalStarCount()} / ${TOTAL*3} ${t('stars')}`;
   document.getElementById('menuProfile').textContent=`${premium?'👑':''}${avatar} ${myName()}`;
   document.getElementById('menuCoins').textContent=`🪙 ${coins}`;
-  document.getElementById('menuBest').textContent=`🏆 ${t('best')}: ${highScore}`;
+  document.getElementById('menuBest').textContent=`🏆 ${highScore}`;
+  {const pb=document.getElementById('menuPro'); if(pb) pb.innerHTML = premium ? '👑 PRO ✓' : '👑 PRO';}
 }
 
 /* ---- Ekrani i sezoneve ---- */
@@ -1358,21 +1410,28 @@ function cardSparkle(el){
   screenBurst(r.left+r.width/2, r.top+r.height/2, ['#7ED957','#ffd166','#2de2ff','#fff','#ff8cc8'], 10, false, false);
 }
 
-/* 🎵 Muzikë e qetë ambientale (loop i butë WebAudio) */
-let musicTimer=null, musicStep=0;
-const MUSIC_NOTES=[261.63,293.66,329.63,392.00,440.00,392.00,329.63,293.66]; // pentatonik e ëmbël
+/* 🎵 Muzikë ritmike e sfondit (groove elektronik — jo melodi/piano) */
+let musicTimer=null, musicBeat=0;
+const MUSIC_BASS=[55.00,55.00,73.42,65.41]; // A1 A1 D2 C2 — bas i ngadaltë, jo lead melodik
+function musicKick(){ // puls bas si "kick"
+  const c=ctx(),o=c.createOscillator(),g=c.createGain(),t0=c.currentTime;
+  o.type='sine';o.frequency.setValueAtTime(120,t0);o.frequency.exponentialRampToValueAtTime(45,t0+0.12);
+  g.gain.setValueAtTime(0.12,t0);g.gain.exponentialRampToValueAtTime(0.0001,t0+0.16);
+  o.connect(g).connect(c.destination);o.start(t0);o.stop(t0+0.18);
+}
 function startMusic(){
   if(!settings.music||musicTimer)return;
-  const beat=()=>{
+  const step=()=>{
     if(!settings.music){stopMusic();return}
-    const base=MUSIC_NOTES[musicStep%MUSIC_NOTES.length];
-    tone(base,2.6,'sine',0.028);          // nota kryesore e butë
-    tone(base/2,3.2,'sine',0.016);         // bas i ngrohtë
-    if(musicStep%4===0)tone(base*1.5,2.2,'triangle',0.010,0.35); // shkëlqim herë pas here
-    musicStep++;
+    const b=musicBeat%16;
+    if(b%4===0) musicKick();                                   // kick në çdo rrahje
+    if(b%8===0) tone(MUSIC_BASS[(musicBeat/8|0)%MUSIC_BASS.length],0.55,'triangle',0.05); // bas
+    if(b%4===2) tone(8200,0.018,'square',0.006);               // hi-hat i butë (offbeat)
+    if(b===0){ const r=MUSIC_BASS[(musicBeat/16|0)%MUSIC_BASS.length]; tone(r*4,1.6,'sine',0.016); tone(r*6,1.6,'sine',0.011); } // pad i ngrohtë
+    musicBeat++;
   };
-  beat();
-  musicTimer=setInterval(beat,2200);
+  step();
+  musicTimer=setInterval(step,150); // ~100 BPM (16th-notes)
 }
 function stopMusic(){if(musicTimer){clearInterval(musicTimer);musicTimer=null}}
 
@@ -1480,9 +1539,10 @@ function startLevel(g){
   board.style.gridTemplateColumns=`repeat(${params.cols},1fr)`;
   board.style.maxWidth=Math.min(420,params.cols*92)+'px';
   board.innerHTML='';
-  deck.forEach(sym=>{
+  deck.forEach((sym,i)=>{
     const c=document.createElement('div');
-    c.className='card';c.dataset.sym=sym;
+    c.className='card dealIn';c.dataset.sym=sym;
+    c.style.animationDelay=(i*0.045)+'s';
     c.innerHTML=`<div class="card-inner">
       <div class="card-face card-back-face"><svg class="ic" style="width:44%;height:44%;stroke-width:1.8"><use href="#i-wheel"/></svg></div>
       <div class="card-face card-front${sym===goldSymCur?' gold':sym===bombSymCur?' bomb':sym===shufSymCur?' shuf':sym===peekSymCur?' peek':''}">${sym}</div>
@@ -1490,6 +1550,8 @@ function startLevel(g){
     c.addEventListener('click',()=>chooseCard(c));
     board.appendChild(c);
   });
+  // ⚡ shkreptimë e lehtë kur shpërndahen kartat
+  setTimeout(()=>{const cx=window.innerWidth/2,cy=window.innerHeight*0.5;screenBurst(cx,cy,['#fff','#ffd166','#2de2ff'],8,false,false);},deck.length*45+120);
 
   document.getElementById('oppBar').style.display='none';
   {const eb=document.getElementById('emoteBar');if(eb)eb.style.display='none';}
@@ -1550,7 +1612,7 @@ function flipSecond(c,gamble){
       if(gamble){fuelBonus+=2;toast(t('gambleWin'));sfx(880,0.28,'sine',0.07);vibrate([30,40,60]);if(tut)tutAfterSure()}
       // Efektet surprizë
       const sym=a.dataset.sym;
-      if(sym===goldSymCur){fuelBonus+=3;coins+=8;toast(t('goldMsg'));sfx(1046,0.3,'sine',0.08);saveData()}
+      if(sym===goldSymCur){fuelBonus+=3;coins+=8;toast(t('goldMsg'));sfx(1046,0.3,'sine',0.08);saveData();screenBurst(window.innerWidth/2,window.innerHeight*0.44,['#ffd166','#fff','#ffe08a'],16,true,false)}
       else if(sym===bombSymCur){const bx=params.season>=4?4:params.season>=2?3:2;fuelBonus-=bx;toast('💥 '+t('bombMsg').replace('2',String(bx)));bombFX();if(params.season>=3&&pairsFound<params.pairs)swapTwo(true)}
       else if(sym===shufSymCur){toast(t('shufMsg'));sfx(300,0.22,'sine',0.07);shuffleRemaining()}
       else if(sym===peekSymCur){toast(t('peekMsg'));sfx(1200,0.28,'sine',0.06);setTimeout(peekAll,80)}
@@ -1987,6 +2049,10 @@ document.getElementById('regBtn').addEventListener('click',()=>{
 
 /* ================= DUELI ONLINE ================= */
 let duel=null, duelStats={mi:0}, duelPoll=null, waitPoll=null, goTs=0;
+let duelMode='1v1';
+const SLOTS2=['a1','a2','b1','b2'];
+function teamOf(s){return s[0]==='a'?'A':'B';}
+function setDuelMode(m){playTap();duelMode=m;document.querySelectorAll('.dm-btn').forEach(b=>b.classList.toggle('dm-on',b.dataset.m===m));}
 /* 🔥 Emojit hype të duelit (stil ishowspeed) */
 const EMOTES=['🔥','😈','💀','🤡','👑','🐐','😭','💪','⚡','🤪'];
 let myEmote=null, lastOppEmoteT=0;
@@ -2047,6 +2113,7 @@ function openDuel(){
   if(coins<50){toast(t('notEnoughDuel'));return}
   document.getElementById('duelHome').style.display='flex';
   document.getElementById('duelWait').style.display='none';
+  document.getElementById('duel2v2Wait').style.display='none';
   document.getElementById('duelCoins').textContent='🪙 '+coins;
   showScreen('duelScreen');
 }
@@ -2057,10 +2124,11 @@ function showWaitUI(code){
   document.getElementById('duelWaitMsg').textContent=t('waiting');
 }
 async function createRoom(){
+  if(duelMode==='2v2')return create2v2();
   const code=String(1000+Math.floor(Math.random()*9000));
   const seed=Math.floor(Math.random()*1e9);
-  await sSet('duel:'+code,{seed,host:myName(),hid:myId,ts:Date.now()});
-  duel={code,role:'h',seed,opName:'???'};
+  await sSet('duel:'+code,{seed,host:myName(),hid:myId,ts:Date.now(),mode:'1v1'});
+  duel={code,role:'h',seed,mode:'1v1',opName:'???'};
   showWaitUI(code);
   waitPoll=setInterval(async()=>{
     const j=await sGet('duel:'+code+':join');
@@ -2077,10 +2145,61 @@ async function joinWithCode(){
   if(code.length!==4){toast(t('enterCode'));return}
   const meta=await sGet('duel:'+code);
   if(!meta||Date.now()-meta.ts>600000||meta.hid===myId){toast(t('invalidRoom'));return}
+  if(meta.mode==='2v2')return join2v2(code,meta);
   const startAt=Date.now()+5000;
   await sSet('duel:'+code+':join',{guest:myName(),gid:myId,startAt});
-  duel={code,role:'g',seed:meta.seed,opName:meta.host};
+  duel={code,role:'g',seed:meta.seed,mode:'1v1',opName:meta.host};
   toast(t('oppFound'));
+  beginCountdown(startAt);
+}
+/* ================= 2v2 (ekipe) ================= */
+async function create2v2(){
+  const code=String(1000+Math.floor(Math.random()*9000));
+  const seed=Math.floor(Math.random()*1e9);
+  await sSet('duel:'+code,{seed,host:myName(),hid:myId,ts:Date.now(),mode:'2v2'});
+  await sSet('duel:'+code+':roster',{a1:{name:myName(),av:avatar,id:myId},a2:null,b1:null,b2:null});
+  duel={code,role:'a1',seed,mode:'2v2',opName:'2v2'};
+  show2v2Wait(code,true);
+  waitPoll=setInterval(async()=>{
+    const r=await sGet('duel:'+code+':roster'); if(r)render2v2Roster(r,true);
+    const st=await sGet('duel:'+code+':start'); if(st){clearInterval(waitPoll);waitPoll=null;beginCountdown(st.startAt);}
+  },1500);
+  return code;
+}
+async function join2v2(code,meta){
+  let roster=await sGet('duel:'+code+':roster')||{a1:null,a2:null,b1:null,b2:null};
+  const free=['a2','b1','b2'].find(s=>!roster[s]||roster[s].id===myId);
+  if(!free){toast('Room full 👥');return}
+  roster[free]={name:myName(),av:avatar,id:myId};
+  await sSet('duel:'+code+':roster',roster);
+  duel={code,role:free,seed:meta.seed,mode:'2v2',opName:'2v2'};
+  show2v2Wait(code,false);
+  render2v2Roster(roster,false);
+  waitPoll=setInterval(async()=>{
+    const r=await sGet('duel:'+code+':roster'); if(r)render2v2Roster(r,false);
+    const st=await sGet('duel:'+code+':start'); if(st){clearInterval(waitPoll);waitPoll=null;beginCountdown(st.startAt);}
+  },1500);
+}
+function show2v2Wait(code,isHost){
+  document.getElementById('duelHome').style.display='none';
+  document.getElementById('duelWait').style.display='none';
+  document.getElementById('duel2v2Wait').style.display='flex';
+  document.getElementById('duel2v2Code').textContent=code;
+  document.getElementById('duel2v2Start').style.display=isHost?'block':'none';
+  document.getElementById('duel2v2Msg').textContent=isHost?'Tap START when your team is ready':'Waiting for host to start…';
+}
+function render2v2Roster(r,isHost){
+  const el=document.getElementById('duel2v2Roster'); if(!el)return;
+  const slot=(s)=>`<div class="rslot ${r[s]?'filled':''}">${r[s]?(r[s].av+' '+r[s].name):'<span style="opacity:.45">waiting…</span>'}</div>`;
+  el.innerHTML=`<div class="team-col"><div class="team-h" style="color:#5fe0c0">TEAM A</div>${slot('a1')}${slot('a2')}</div>`+
+               `<div class="vs2">VS</div>`+
+               `<div class="team-col"><div class="team-h" style="color:#ff7a8a">TEAM B</div>${slot('b1')}${slot('b2')}</div>`;
+  if(isHost){const n=SLOTS2.filter(s=>r[s]).length;document.getElementById('duel2v2Start').style.display=n>=2?'block':'none';}
+}
+async function start2v2(){
+  const startAt=Date.now()+5000;
+  await sSet('duel:'+duel.code+':start',{startAt,seed:duel.seed});
+  if(waitPoll){clearInterval(waitPoll);waitPoll=null}
   beginCountdown(startAt);
 }
 async function randomMatch(){
@@ -2136,9 +2255,10 @@ function startDuelBoard(){
   board.style.gridTemplateColumns='repeat(4,1fr)';
   board.style.maxWidth='368px';
   board.innerHTML='';
-  deck.forEach(sym=>{
+  deck.forEach((sym,i)=>{
     const c=document.createElement('div');
-    c.className='card';c.dataset.sym=sym;
+    c.className='card dealIn';c.dataset.sym=sym;
+    c.style.animationDelay=(i*0.04)+'s';
     c.innerHTML=`<div class="card-inner">
       <div class="card-face card-back-face"><svg class="ic" style="width:44%;height:44%;stroke-width:1.8"><use href="#i-wheel"/></svg></div>
       <div class="card-face card-front">${sym}</div>
@@ -2149,18 +2269,18 @@ function startDuelBoard(){
 
   document.getElementById('oppBar').style.display='flex';
   myEmote=null;lastOppEmoteT=0;
-  renderEmoteBar();
-  document.getElementById('emoteBar').style.display='flex';
-  updateOppBar();
+  document.getElementById('emoteBar').style.display='none'; // emojit tani me kliko profilin (stil Ludo)
+  if(duel.mode==='2v2')update2v2Bar(0,0,{});else updateOppBar();
   stopTimer();
   goTs=Date.now();
   timerInt=setInterval(()=>{seconds++;updateHud()},1000);
   updateHud();
   if(duelPoll)clearInterval(duelPoll);
-  duelPoll=setInterval(duelSync,1500);
+  duelPoll=setInterval(duel.mode==='2v2'?duelSync2v2:duelSync,1500);
 }
 async function duelSync(){
   if(!duel)return;
+  if(duel.mode==='2v2')return duelSync2v2();
   sSet('duel:'+duel.code+':'+duel.role,
     {p:pairsFound,mi:duelStats.mi,mo:moves,done:duel.done,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],em:myEmote});
   const op=await sGet('duel:'+duel.code+':'+(duel.role==='h'?'g':'h'));
@@ -2173,14 +2293,79 @@ async function duelSync(){
 }
 function updateOppBar(){
   if(!duel)return;
+  if(duel.mode==='2v2')return; // skorbordi i ekipeve menaxhohet nga update2v2Bar
   document.getElementById('oppBar').innerHTML=
-    `<span>${premium?'👑':''}${avatar} ${myName()}</span>`+
+    `<span onclick="openEmotePicker()">${premium?'👑':''}${avatar} ${myName()} 💬</span>`+
     `<span style="color:var(--amber2);font-size:15px;font-weight:900">${pairsFound} : ${oppLast.p}</span>`+
-    `<span>${oppLast.pr?'👑':''}${oppLast.av||'❔'} ${duel.opName} ${oppLast.rk||''}</span>`;
+    `<span onclick="openEmotePicker()">${oppLast.pr?'👑':''}${oppLast.av||'❔'} ${duel.opName} ${oppLast.rk||''} 💬</span>`;
+}
+/* 🙂 Emote picker stil Ludo: kliko profilin → zgjidh → dërgohet */
+function openEmotePicker(){
+  const p=document.getElementById('emotePicker');
+  if(!p)return;
+  if(p.classList.contains('show')){p.classList.remove('show');return}
+  p.innerHTML='<div class="ep-hint">Tap to send an emoji 👇</div><div class="ep-grid">'+
+    EMOTES.map(e=>`<div class="ep-btn" onclick="pickEmote('${e}')">${e}</div>`).join('')+'</div>';
+  p.classList.add('show');
+}
+function pickEmote(e){
+  sendEmote(e);
+  const p=document.getElementById('emotePicker');
+  if(p)p.classList.remove('show');
+}
+/* ---- Sinkronizimi & skorbordi 2v2 ---- */
+async function duelSync2v2(){
+  if(!duel)return;
+  sSet('duel:'+duel.code+':st:'+duel.role,{p:pairsFound,mi:duelStats.mi,mo:moves,done:duel.done,tm:duel.tm,name:myName(),av:avatar,em:myEmote});
+  const st={};
+  await Promise.all(SLOTS2.map(async s=>{ st[s]=(s===duel.role)?{p:pairsFound,done:duel.done,name:myName(),av:avatar}:(await sGet('duel:'+duel.code+':st:'+s)); }));
+  const sumA=((st.a1&&st.a1.p)||0)+((st.a2&&st.a2.p)||0);
+  const sumB=((st.b1&&st.b1.p)||0)+((st.b2&&st.b2.p)||0);
+  update2v2Bar(sumA,sumB,st);
+  SLOTS2.forEach(s=>{ if(s!==duel.role){const o=st[s]; if(o&&o.em&&o.em.t>lastOppEmoteT){lastOppEmoteT=o.em.t;showEmote(o.em.e,o.name||'Rival')}} });
+  if(duel.done){
+    const present=SLOTS2.filter(s=>st[s]);
+    const allDone=present.every(s=> s===duel.role ? true : st[s].done);
+    if(allDone) finish2v2(sumA,sumB);
+  }
+}
+function update2v2Bar(sumA,sumB){
+  if(!duel)return;
+  const myTeam=teamOf(duel.role);
+  document.getElementById('oppBar').innerHTML=
+    `<span style="color:${myTeam==='A'?'#5fe0c0':'rgba(255,255,255,.75)'};font-weight:900;font-size:15px" onclick="openEmotePicker()">🟢 A ${sumA}</span>`+
+    `<span style="font-size:10px;opacity:.7">TEAM • tap 💬</span>`+
+    `<span style="color:${myTeam==='B'?'#ff7a8a':'rgba(255,255,255,.75)'};font-weight:900;font-size:15px" onclick="openEmotePicker()">${sumB} B 🔴</span>`;
+}
+function finish2v2(sumA,sumB){
+  if(!duel||duel.decided)return;
+  duel.decided=true;
+  if(duelPoll){clearInterval(duelPoll);duelPoll=null}
+  const myTeam=teamOf(duel.role);
+  const mySum=myTeam==='A'?sumA:sumB, oppSum=myTeam==='A'?sumB:sumA;
+  let outcome = mySum>oppSum?'win':mySum<oppSum?'lose':'draw';
+  if(outcome==='win'){coins+=100;duelWins++;playWinMusic();spawnConfetti()}
+  else if(outcome==='draw'){coins+=50}
+  else playLoseMusic();
+  saveData();
+  const title=document.getElementById('duelResTitle');
+  title.textContent=outcome==='win'?t('duelWin'):outcome==='draw'?t('duelDraw'):t('duelLose');
+  title.className='ov-title '+(outcome==='lose'?'lose':'win');title.style.fontSize='';
+  document.getElementById('duelResCoins').textContent=outcome==='win'?t('wonPot'):outcome==='draw'?t('drawRefund'):'';
+  document.getElementById('duelTable').innerHTML=
+    `<tr><th></th><th>${myTeam==='A'?'🟢 Team A':'🔴 Team B'} (you)</th><th>${myTeam==='A'?'🔴 Team B':'🟢 Team A'}</th></tr>`+
+    `<tr><td>${t('resPairs')}</td><td>${mySum}</td><td>${oppSum}</td></tr>`;
+  document.getElementById('duelHomeBtn').style.display='flex';
+  document.getElementById('duelResult').classList.add('show');
+  if(duel.role==='a1'){
+    sDel('duel:'+duel.code);sDel('duel:'+duel.code+':roster');sDel('duel:'+duel.code+':start');
+    SLOTS2.forEach(s=>sDel('duel:'+duel.code+':st:'+s));
+  }
 }
 function duelBoardDone(){
   stopTimer();
   duel.done=true;duel.tm=Date.now()-goTs;
+  if(duel.mode==='2v2'){ duelSync2v2(); showDuelResult(null,true); return; }
   duelSync();
   showDuelResult(null,true);
   duel.waitStart=Date.now();
@@ -2237,6 +2422,7 @@ function leaveDuelIfAny(){
   sDel('duel:lobby');
   document.getElementById('oppBar').style.display='none';
   {const eb=document.getElementById('emoteBar');if(eb)eb.style.display='none';}
+  {const w2=document.getElementById('duel2v2Wait');if(w2)w2.style.display='none';}
   document.getElementById('duelResult').classList.remove('show');
   document.getElementById('countOverlay').classList.remove('show');
   duel=null;
@@ -2321,9 +2507,10 @@ function startTutorial(){
   board.style.gridTemplateColumns='repeat(3,1fr)';
   board.style.maxWidth='276px';
   board.innerHTML='';
-  deck.forEach(sym=>{
+  deck.forEach((sym,i)=>{
     const c=document.createElement('div');
-    c.className='card';c.dataset.sym=sym;
+    c.className='card dealIn';c.dataset.sym=sym;
+    c.style.animationDelay=(i*0.04)+'s';
     c.innerHTML=`<div class="card-inner">
       <div class="card-face card-back-face"><svg class="ic" style="width:44%;height:44%;stroke-width:1.8"><use href="#i-wheel"/></svg></div>
       <div class="card-face card-front">${sym}</div>
