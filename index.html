@@ -2377,10 +2377,12 @@ function closeEmotePicker(){
   if(p)p.classList.remove('show');
 }
 function pickEmote(e){
-  sendEmote(e);            /* mbetet hapur — mund të dërgosh disa; mbyllet vetëm me ✕ */
+  sendEmote(e);
+  closeEmotePicker();      /* dërgo dhe mbyll vetvetiu */
 }
 function pickChat(txt){
-  sendChat(txt);           /* mbetet hapur — mbyllet vetëm me ✕ */
+  sendChat(txt);
+  closeEmotePicker();      /* dërgo dhe mbyll vetvetiu */
 }
 function sendChat(txt){
   playTap();
