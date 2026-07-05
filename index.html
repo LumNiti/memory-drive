@@ -206,7 +206,7 @@ svg{display:block}
 .profile-chip{display:flex;align-items:center;gap:8px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.12);border-radius:22px;padding:4px 13px 4px 4px;font-weight:900;font-size:13px;color:#fff}
 .pav{width:30px;height:30px;border-radius:50%;background:rgba(232,161,58,.18);border:1.5px solid var(--amber);display:flex;align-items:center;justify-content:center;font-size:16px;flex-shrink:0}
 .level-chip{background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:8px 14px;font-weight:900;font-size:12px;letter-spacing:2px;color:var(--season);white-space:nowrap}
-#board{display:grid;gap:9px;width:100%;max-width:420px;flex:1;align-content:start;margin:26px auto 0}
+#board{display:grid;gap:9px;width:100%;max-width:420px;flex:1;align-content:center;margin:0 auto}
 .card{position:relative;aspect-ratio:0.8;perspective:600px;cursor:pointer}
 .card-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.3,1.2,.4,1)}
 .card.flipped .card-inner{transform:rotateY(180deg)}
@@ -294,6 +294,37 @@ body[data-skin="ruby"] .card-back-face{background:linear-gradient(160deg,#4a0812
 body[data-skin="carbon"] .card-back-face{background:repeating-linear-gradient(45deg,#141414,#141414 4px,#242424 4px,#242424 8px);border-color:#5a5a5a;color:#dcdcdc}
 body[data-skin="emerald"] .card-back-face{background:linear-gradient(160deg,#08301f,#12613f);border-color:#3ef0a0;color:#d0ffe6;box-shadow:0 0 14px rgba(62,240,160,.32)}
 body[data-skin="holo"] .card-back-face{background:linear-gradient(135deg,#ff5aa8,#ffd166,#3ef0a0,#2de2ff,#a06bff);border-color:#fff;color:#1a1030;text-shadow:0 1px 2px rgba(255,255,255,.5)}
+/* 🎴 Stilet tematike: fshij rrotën, shto emoji-në tematike */
+body[data-skin="ninja"] .card-back-face svg,body[data-skin="pirate"] .card-back-face svg,body[data-skin="supercar"] .card-back-face svg,body[data-skin="streamer"] .card-back-face svg,body[data-skin="dragon"] .card-back-face svg,body[data-skin="samurai"] .card-back-face svg,body[data-skin="soccer"] .card-back-face svg,body[data-skin="alien"] .card-back-face svg,body[data-skin="fire"] .card-back-face svg,body[data-skin="diamond"] .card-back-face svg,body[data-skin="skull"] .card-back-face svg,body[data-skin="royal"] .card-back-face svg,body[data-skin="shark"] .card-back-face svg,body[data-skin="galaxy"] .card-back-face svg{display:none}
+body[data-skin="ninja"] .card-back-face::after,body[data-skin="pirate"] .card-back-face::after,body[data-skin="supercar"] .card-back-face::after,body[data-skin="streamer"] .card-back-face::after,body[data-skin="dragon"] .card-back-face::after,body[data-skin="samurai"] .card-back-face::after,body[data-skin="soccer"] .card-back-face::after,body[data-skin="alien"] .card-back-face::after,body[data-skin="fire"] .card-back-face::after,body[data-skin="diamond"] .card-back-face::after,body[data-skin="skull"] .card-back-face::after,body[data-skin="royal"] .card-back-face::after,body[data-skin="shark"] .card-back-face::after,body[data-skin="galaxy"] .card-back-face::after{font-size:min(11vw,40px);line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+body[data-skin="ninja"] .card-back-face{background:linear-gradient(160deg,#0d1420,#243349);border-color:#5aa0ff}
+body[data-skin="ninja"] .card-back-face::after{content:'🥷'}
+body[data-skin="pirate"] .card-back-face{background:linear-gradient(160deg,#1a1410,#3a1e12);border-color:#e0b050}
+body[data-skin="pirate"] .card-back-face::after{content:'☠️'}
+body[data-skin="supercar"] .card-back-face{background:linear-gradient(160deg,#2a0508,#7a0f16);border-color:#ff5a6a;box-shadow:0 0 12px rgba(255,90,106,.35)}
+body[data-skin="supercar"] .card-back-face::after{content:'🏎️'}
+body[data-skin="streamer"] .card-back-face{background:linear-gradient(160deg,#1a0838,#3d1070);border-color:#b06bff;box-shadow:0 0 14px rgba(176,107,255,.4)}
+body[data-skin="streamer"] .card-back-face::after{content:'🎮'}
+body[data-skin="dragon"] .card-back-face{background:linear-gradient(160deg,#08260f,#0f5a2a);border-color:#ffd166;box-shadow:0 0 12px rgba(255,209,102,.3)}
+body[data-skin="dragon"] .card-back-face::after{content:'🐉'}
+body[data-skin="samurai"] .card-back-face{background:linear-gradient(160deg,#160406,#4a0a12);border-color:#ff3b4e}
+body[data-skin="samurai"] .card-back-face::after{content:'⚔️'}
+body[data-skin="soccer"] .card-back-face{background:linear-gradient(160deg,#06301a,#0f6a38);border-color:#eaffef}
+body[data-skin="soccer"] .card-back-face::after{content:'⚽'}
+body[data-skin="alien"] .card-back-face{background:linear-gradient(160deg,#04120a,#0a3a1e);border-color:#4dff9a;box-shadow:0 0 14px rgba(77,255,154,.4)}
+body[data-skin="alien"] .card-back-face::after{content:'👽'}
+body[data-skin="fire"] .card-back-face{background:linear-gradient(160deg,#2a0c02,#7a2708);border-color:#ff8c2a;box-shadow:0 0 14px rgba(255,140,42,.45)}
+body[data-skin="fire"] .card-back-face::after{content:'🔥'}
+body[data-skin="diamond"] .card-back-face{background:linear-gradient(160deg,#0a2a3a,#166a8a);border-color:#bfeeff;box-shadow:0 0 14px rgba(191,238,255,.45)}
+body[data-skin="diamond"] .card-back-face::after{content:'💎'}
+body[data-skin="skull"] .card-back-face{background:linear-gradient(160deg,#101014,#2a2a30);border-color:#9aa0aa}
+body[data-skin="skull"] .card-back-face::after{content:'💀'}
+body[data-skin="royal"] .card-back-face{background:linear-gradient(160deg,#1e0a3a,#4a1e12);border-color:#ffd166;box-shadow:0 0 14px rgba(255,209,102,.4)}
+body[data-skin="royal"] .card-back-face::after{content:'👑'}
+body[data-skin="shark"] .card-back-face{background:linear-gradient(160deg,#05202e,#0e4a66);border-color:#7fd8ff}
+body[data-skin="shark"] .card-back-face::after{content:'🦈'}
+body[data-skin="galaxy"] .card-back-face{background:linear-gradient(160deg,#0a061e,#2a1050,#0a061e);border-color:#a06bff;box-shadow:0 0 16px rgba(160,107,255,.45)}
+body[data-skin="galaxy"] .card-back-face::after{content:'🌌'}
 /* ---- Sfonde të reja ---- */
 body[data-bg="lava"]{background:radial-gradient(ellipse 90% 55% at 50% 92%, rgba(255,90,20,.35), transparent 60%),linear-gradient(180deg,#1a0806 0%,#3d0f08 40%,#7a1f0c 70%,#c24016 88%,#ff7a2a 100%)}
 body[data-bg="aurora"]{background:radial-gradient(ellipse 80% 50% at 30% 10%, rgba(60,240,160,.22), transparent 60%),radial-gradient(ellipse 70% 50% at 80% 20%, rgba(160,110,255,.20), transparent 60%),linear-gradient(170deg,#04121f 0%,#08243a 45%,#0b3050 75%,#061826 100%)}
@@ -1889,16 +1920,23 @@ function spawnConfetti(){
 /* ================= DYQANI ================= */
 const SKINS=[
   {id:'classic',name:'skClassic',price:0,  em:'🃏'},
-  {id:'sharp',  name:'skSharp',  price:250,em:'◼️'},
-  {id:'pill',   name:'skPill',   price:250,em:'⬭'},
   {id:'gold',   name:'skGold',   price:500,em:'🟨'},
-  {id:'neonc',  name:'skNeon',   price:500,em:'🟦'},
-  {id:'wood',   name:'skWood',   price:300,em:'🪵'},
-  {id:'ice',    name:'skIce',    price:350,em:'🧊'},
-  {id:'ruby',   name:'skRuby',   price:450,em:'🔴'},
-  {id:'carbon', name:'skCarbon', price:500,em:'🏁'},
-  {id:'emerald',name:'skEmerald',price:600,em:'🟢'},
-  {id:'holo',   name:'skHolo',   price:800,em:'🌈'}
+  {id:'holo',   name:'skHolo',   price:800,em:'🌈'},
+  // 🎴 Stile tematike të reja
+  {id:'ninja',  label:'Ninja',    price:400,em:'🥷'},
+  {id:'pirate', label:'Pirate',   price:400,em:'☠️'},
+  {id:'supercar',label:'Supercar',price:600,em:'🏎️'},
+  {id:'streamer',label:'Streamer',price:500,em:'🎮'},
+  {id:'dragon', label:'Dragon',   price:600,em:'🐉'},
+  {id:'samurai',label:'Samurai',  price:450,em:'⚔️'},
+  {id:'soccer', label:'Football',  price:350,em:'⚽'},
+  {id:'alien',  label:'Alien',    price:450,em:'👽'},
+  {id:'fire',   label:'Inferno',  price:500,em:'🔥'},
+  {id:'diamond',label:'Diamond',  price:800,em:'💎'},
+  {id:'skull',  label:'Skull',    price:400,em:'💀'},
+  {id:'royal',  label:'Royal',    price:700,em:'👑'},
+  {id:'shark',  label:'Shark',    price:450,em:'🦈'},
+  {id:'galaxy', label:'Galaxy',   price:700,em:'🌌'}
 ];
 const BGS=[
   {id:'midnight',name:'bgMid',   price:0,  em:'🌌'},
@@ -1923,6 +1961,8 @@ const COINPACKS=[
 const PRO_PRODUCT='com.arianit.memorydrive.pro';
 
 function applyCosmetics(){
+  if(!SKINS.find(s=>s.id===curSkin))curSkin='classic'; // stilet e vjetra u hoqën → kthehu te klasik
+  if(!BGS.find(b=>b.id===curBg))curBg='midnight';
   document.body.dataset.skin=curSkin;
   document.body.dataset.bg=curBg;
 }
@@ -2001,7 +2041,7 @@ function itemRow(it,kind){
   else btn=`<button class="btn-mini" onclick="buyItem('${kind}','${it.id}',${it.price})">${t('buy')} 🪙 ${it.price}</button>`;
   return `<div class="store-row">
     <div class="store-em">${it.em}</div>
-    <div class="store-info"><div class="store-name">${t(it.name)}</div></div>
+    <div class="store-info"><div class="store-name">${it.label||t(it.name)}</div></div>
     ${btn}
   </div>`;
 }
@@ -2210,7 +2250,7 @@ const SLOTS2=['a1','a2','b1','b2'];
 function teamOf(s){return s[0]==='a'?'A':'B';}
 function setDuelMode(m){playTap();duelMode=m;document.querySelectorAll('.dm-btn,.mode-card').forEach(b=>b.classList.toggle('dm-on',b.dataset.m===m));}
 /* 🔥 Emojit hype të duelit (stil ishowspeed) */
-const EMOTES=['🔥','😈','💀','🤡','👑','🐐','😭','💪','⚡','🤪'];
+const EMOTES=['🔥','😈','💀','🤡','👑','🐐','😭','💪','⚡','🤪','😂','😎','🥶','🤯','👍','👎','🙏','🤝','🎉','❤️','💯','😤','😱','🥳','🫡','🤙','👀','🧠','🚀','🏆'];
 let myEmote=null, lastOppEmoteT=0;
 function renderEmoteBar(){
   const bar=document.getElementById('emoteBar');
