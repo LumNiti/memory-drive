@@ -433,6 +433,8 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 .boost-btn:active{transform:scale(.9)}
 .boost-btn.dim{opacity:.4}
 .stat.frozen{color:#7fd8ff;text-shadow:0 0 10px rgba(120,200,255,.7)}
+.stat.timelow{color:#ff6b6b;text-shadow:0 0 10px rgba(255,90,90,.6);animation:pulseLow .8s ease-in-out infinite}
+@keyframes pulseLow{0%,100%{opacity:1}50%{opacity:.55}}
 /* ---- Dueli ---- */
 .opp-bar{display:none;align-items:center;justify-content:space-between;width:100%;max-width:420px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:9px 14px;font-weight:800;font-size:13px;margin-bottom:8px;gap:10px}
 #countOverlay{position:absolute;inset:0;background:rgba(5,6,12,.88);z-index:26;display:none;align-items:center;justify-content:center}
@@ -1737,6 +1739,12 @@ function updateHud(){
   if(duel){
     document.getElementById('statFuel').textContent='❌'+duelStats.mi;
     document.getElementById('fuelStat').classList.remove('danger');
+    // ⏱️ Numërim mbrapsht: koha e mbetur
+    const rem=Math.max(0,DUEL_TIME-seconds);
+    const rm=String(Math.floor(rem/60)).padStart(2,'0'), rs=String(rem%60).padStart(2,'0');
+    const timeEl=document.getElementById('statTime');
+    timeEl.textContent=rm+':'+rs;
+    const ts=timeEl.closest('.stat'); if(ts)ts.classList.toggle('timelow',rem<=20);
     updateOppBar();
     return;
   }
@@ -2248,6 +2256,7 @@ document.getElementById('regBtn').addEventListener('click',()=>{
 
 /* ================= DUELI ONLINE ================= */
 let duel=null, duelStats={mi:0}, duelPoll=null, waitPoll=null, goTs=0;
+const DUEL_TIME=180; // ⏱️ kohë-limit i duelit online (sekonda)
 let duelMode='1v1';
 const SLOTS2=['a1','a2','b1','b2'];
 function teamOf(s){return s[0]==='a'?'A':'B';}
@@ -2477,7 +2486,7 @@ function startDuelBoard(){
   if(duel.mode==='2v2')update2v2Bar(0,0,{});else updateOppBar();
   stopTimer();
   goTs=Date.now();
-  timerInt=setInterval(()=>{seconds++;updateHud()},1000);
+  timerInt=setInterval(()=>{seconds++;updateHud(); if(duel&&!duel.decided&&seconds>=DUEL_TIME)duelTimeUp();},1000);
   updateHud();
   if(duelPoll)clearInterval(duelPoll);
   duelPoll=setInterval(duel.mode==='2v2'?duelSync2v2:duelSync,1500);
@@ -2562,6 +2571,7 @@ async function duelSync2v2(){
   await Promise.all(SLOTS2.map(async s=>{ st[s]=(s===duel.role)?{p:pairsFound,done:duel.done,name:myName(),av:avatar}:(await sGet('duel:'+duel.code+':st:'+s)); }));
   const sumA=((st.a1&&st.a1.p)||0)+((st.a2&&st.a2.p)||0);
   const sumB=((st.b1&&st.b1.p)||0)+((st.b2&&st.b2.p)||0);
+  duel.lastSumA=sumA;duel.lastSumB=sumB; // për vendimin me kohë-limit
   update2v2Bar(sumA,sumB,st);
   SLOTS2.forEach(s=>{ if(s!==duel.role){const o=st[s]; if(o&&o.left&&!duel['left_'+s]){duel['left_'+s]=1;toast('👋 '+(o.name||'A player')+' left');} if(o&&o.em&&o.em.t>lastOppEmoteT){lastOppEmoteT=o.em.t; o.em.chat?showChat(o.em.e,o.name||'Rival','opp'):showEmote(o.em.e,o.name||'Rival','opp');}} });
   if(duel.done){
@@ -2578,6 +2588,24 @@ function update2v2Bar(sumA,sumB){
     `<span style="font-size:10px;opacity:.7">TEAM • tap 💬</span>`+
     `<span style="color:${myTeam==='B'?'#ff7a8a':'rgba(255,255,255,.75)'};font-weight:900;font-size:15px" onclick="openEmotePicker()">${sumB} B 🔴</span>`;
 }
+/* ⏱️ Koha mbaroi — vendos fituesin (kush s'e kreu, humb sipas çifteve) */
+function duelTimeUp(){
+  if(!duel||duel.decided)return;
+  duel.done=true; duel.tm=DUEL_TIME*1000;
+  if(duel.mode==='2v2'){ try{duelSync2v2();}catch(e){} finish2v2(duel.lastSumA||0, duel.lastSumB||0); return; }
+  if(duelPoll){clearInterval(duelPoll);duelPoll=null}
+  duel.decided=true;
+  try{ sSet('duel:'+duel.code+':'+duel.role,{p:pairsFound,mi:duelStats.mi,mo:moves,bh:duelStats.bh,th:duelStats.th,done:true,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],em:myEmote}); }catch(e){}
+  const myP=pairsFound, opP=oppLast.p||0;
+  let outcome = myP>opP?'win':myP<opP?'lose':(duelStats.mi<(oppLast.mi||0)?'win':duelStats.mi>(oppLast.mi||0)?'lose':'draw');
+  if(outcome==='win'){coins+=100;duelWins++;playWinMusic();spawnConfetti();bumpLeaderboard()}
+  else if(outcome==='draw'){coins+=50}
+  else playLoseMusic();
+  saveData();
+  toast('⏱️ Time up!');
+  showDuelResult(outcome,false);
+  if(duel.role==='h'){sDel('duel:'+duel.code);sDel('duel:'+duel.code+':join');sDel('duel:'+duel.code+':h');sDel('duel:'+duel.code+':g');}
+}
 function finish2v2(sumA,sumB){
   if(!duel||duel.decided)return;
   duel.decided=true;
@@ -2593,9 +2621,12 @@ function finish2v2(sumA,sumB){
   title.textContent=outcome==='win'?t('duelWin'):outcome==='draw'?t('duelDraw'):t('duelLose');
   title.className='ov-title '+(outcome==='lose'?'lose':'win');title.style.fontSize='';
   document.getElementById('duelResCoins').textContent=outcome==='win'?t('wonPot'):outcome==='draw'?t('drawRefund'):'';
+  const fmt2=ms=>{const sec=Math.floor(ms/1000);return String(Math.floor(sec/60)).padStart(2,'0')+':'+String(sec%60).padStart(2,'0')};
   document.getElementById('duelTable').innerHTML=
     `<tr><th></th><th>${myTeam==='A'?'🟢 Team A':'🔴 Team B'} (you)</th><th>${myTeam==='A'?'🔴 Team B':'🟢 Team A'}</th></tr>`+
-    `<tr><td>${t('resPairs')}</td><td>${mySum}</td><td>${oppSum}</td></tr>`;
+    `<tr><td>${t('resPairs')}</td><td>${mySum}</td><td>${oppSum}</td></tr>`+
+    `<tr><td>⏱️ ${t('resTime')}</td><td>${fmt2(duel.tm||Date.now()-goTs)}</td><td>—</td></tr>`+
+    `<tr><td>💣 Bombs</td><td>${duelStats.bh||0}</td><td>—</td></tr>`;
   document.getElementById('duelHomeBtn').style.display='flex';
   document.getElementById('duelResult').classList.add('show');
   if(duel.role==='a1'){
