@@ -379,8 +379,13 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 .ep-btn{font-size:26px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:rgba(14,12,30,.6);border:1px solid rgba(255,255,255,.1);border-radius:12px;cursor:pointer;transition:transform .1s}
 .ep-btn:active{transform:scale(.78)}
 /* Shpërndarja e kartave (deal-in) */
-@keyframes dealIn{0%{opacity:0;transform:translateY(-46px) scale(.55) rotate(-10deg)}70%{opacity:1}100%{opacity:1;transform:translateY(0) scale(1) rotate(0)}}
-.card.dealIn{animation:dealIn .5s cubic-bezier(.2,1.25,.4,1) both}
+@keyframes dealIn{0%{opacity:0;transform:translateY(-64px) scale(.4) rotate(-14deg);filter:brightness(2)}55%{opacity:1;filter:brightness(1.35)}100%{opacity:1;transform:translateY(0) scale(1) rotate(0);filter:brightness(1)}}
+.card.dealIn{animation:dealIn .6s cubic-bezier(.2,1.35,.35,1) both}
+/* ✨ Festa EXCELLENT (3 yje) */
+.excellent-banner{position:fixed;left:50%;top:30%;transform:translateX(-50%);z-index:60;pointer-events:none;font-size:34px;font-weight:900;color:#ffd166;text-shadow:0 0 18px rgba(255,180,40,.9),0 3px 10px rgba(0,0,0,.5);white-space:nowrap;animation:excBanner 1.8s cubic-bezier(.2,1.4,.3,1) both}
+@keyframes excBanner{0%{transform:translateX(-50%) scale(.3) rotate(-8deg);opacity:0}15%{transform:translateX(-50%) scale(1.3) rotate(5deg);opacity:1}40%{transform:translateX(-50%) scale(1) rotate(0);opacity:1}80%{opacity:1}100%{transform:translateX(-50%) scale(1.1) translateY(-34px);opacity:0}}
+/* 🌟 Grimca ambient në anët gjatë lojës */
+.ambient-p{position:fixed;border-radius:50%;pointer-events:none;z-index:2;opacity:.6}
 /* Mode 1v1 / 2v2 */
 .dm-btn{opacity:.55;border:1.5px solid rgba(255,255,255,.15)!important}
 .dm-btn.dm-on{opacity:1;border-color:var(--amber2)!important;box-shadow:0 0 14px rgba(232,161,58,.3)}
@@ -1397,8 +1402,17 @@ async function saveData(){
     await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,xp,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang}}));
   }catch(e){}
 }
+const RESET_TOKEN='reset-2026-07-05'; // 🔄 ndrysho këtë vlerë për një reset të ri një-herësh
 async function loadData(){
   let loaded=false;
+  // 🔄 Reset një-herësh: fillo nga zero (coins, level/XP, progres, stole, fitore…)
+  try{
+    const rf=await window.storage.get('mm-reset');
+    if(!rf || rf.value!==RESET_TOKEN){
+      for(const k of ['mm-save-v5','mm-save-v4','mm-save-v3']){ try{await window.storage.delete(k);}catch(e){} }
+      await window.storage.set('mm-reset',RESET_TOKEN);
+    }
+  }catch(e){}
   try{
     const r=await window.storage.get('mm-save-v5');
     if(r&&r.value){
@@ -1576,28 +1590,52 @@ function cardSparkle(el){
   screenBurst(r.left+r.width/2, r.top+r.height/2, ['#7ED957','#ffd166','#2de2ff','#fff','#ff8cc8'], 10, false, false);
 }
 
-/* 🎵 Muzikë ritmike e sfondit (groove elektronik — jo melodi/piano) */
+/* 🎵 Muzikë e re — groove elektronik i gëzuar me arpexho që të shtin me luajtur (origjinale) */
 let musicTimer=null, musicBeat=0;
-const MUSIC_BASS=[55.00,55.00,73.42,65.41]; // A1 A1 D2 C2 — bas i ngadaltë, jo lead melodik
-function musicKick(){ // puls bas si "kick"
+// Progresion akordesh (Am–F–C–G): rrënja + gjysmëtonet e arpexhos
+const MUSIC_CHORDS=[
+  {root:110.00, arp:[0,3,7,10]}, // Am7
+  {root:87.31,  arp:[0,4,7,11]}, // Fmaj7
+  {root:65.41,  arp:[0,4,7,11]}, // Cmaj7
+  {root:98.00,  arp:[0,4,7,10]}  // G7
+];
+const semi=(f,n)=>f*Math.pow(2,n/12);
+function musicKick(){
   const c=ctx(),o=c.createOscillator(),g=c.createGain(),t0=c.currentTime;
-  o.type='sine';o.frequency.setValueAtTime(120,t0);o.frequency.exponentialRampToValueAtTime(45,t0+0.12);
-  g.gain.setValueAtTime(0.12,t0);g.gain.exponentialRampToValueAtTime(0.0001,t0+0.16);
+  o.type='sine';o.frequency.setValueAtTime(140,t0);o.frequency.exponentialRampToValueAtTime(45,t0+0.11);
+  g.gain.setValueAtTime(0.14,t0);g.gain.exponentialRampToValueAtTime(0.0001,t0+0.16);
   o.connect(g).connect(c.destination);o.start(t0);o.stop(t0+0.18);
+}
+function musicPluck(freq,vol){
+  const c=ctx(),o=c.createOscillator(),o2=c.createOscillator(),g=c.createGain(),t0=c.currentTime;
+  o.type='triangle';o2.type='sine';o.frequency.value=freq;o2.frequency.value=freq*2;
+  g.gain.setValueAtTime((vol||0.05),t0);g.gain.exponentialRampToValueAtTime(0.0001,t0+0.22);
+  o.connect(g);o2.connect(g);g.connect(c.destination);o.start(t0);o2.start(t0);o.stop(t0+0.24);o2.stop(t0+0.24);
+}
+function musicSnare(){
+  const c=ctx(),t0=c.currentTime,len=Math.floor(c.sampleRate*0.13);
+  const buf=c.createBuffer(1,len,c.sampleRate),d=buf.getChannelData(0);
+  for(let i=0;i<len;i++)d[i]=(Math.random()*2-1)*Math.pow(1-i/len,2.2);
+  const s=c.createBufferSource();s.buffer=buf;
+  const hp=c.createBiquadFilter();hp.type='highpass';hp.frequency.value=1400;
+  const g=c.createGain();g.gain.value=0.035;
+  s.connect(hp).connect(g).connect(c.destination);s.start(t0);
 }
 function startMusic(){
   if(!settings.music||musicTimer)return;
   const step=()=>{
     if(!settings.music){stopMusic();return}
-    const b=musicBeat%16;
-    if(b%4===0) musicKick();                                   // kick në çdo rrahje
-    if(b%8===0) tone(MUSIC_BASS[(musicBeat/8|0)%MUSIC_BASS.length],0.55,'triangle',0.05); // bas
-    if(b%4===2) tone(8200,0.018,'square',0.006);               // hi-hat i butë (offbeat)
-    if(b===0){ const r=MUSIC_BASS[(musicBeat/16|0)%MUSIC_BASS.length]; tone(r*4,1.6,'sine',0.016); tone(r*6,1.6,'sine',0.011); } // pad i ngrohtë
+    const bar=(musicBeat/16|0)%4, ch=MUSIC_CHORDS[bar], b=musicBeat%16;
+    if(b%4===0) musicKick();                       // kick 4-on-the-floor
+    if(b%2===1) tone(9000,0.015,'square',0.005);   // hi-hat offbeat
+    if(b===4||b===12) musicSnare();                // snare në 2 & 4
+    if(b===0||b===6||b===10) tone(ch.root,0.4,'triangle',0.055); // bas groovy
+    if(b%2===0){ const n=ch.arp[(musicBeat/2)%4]; musicPluck(semi(ch.root*2,n),0.045); } // arpexho lead
+    if(b===0){ tone(semi(ch.root*2,0),1.7,'sine',0.02); tone(semi(ch.root*2,ch.arp[2]),1.7,'sine',0.014); } // pad
     musicBeat++;
   };
   step();
-  musicTimer=setInterval(step,150); // ~100 BPM (16th-notes)
+  musicTimer=setInterval(step,130); // ~115 BPM, më e gjallë
 }
 function stopMusic(){if(musicTimer){clearInterval(musicTimer);musicTimer=null}}
 
@@ -1729,6 +1767,7 @@ function startLevel(g){
   updateBoosterBar();
   stopTimer();
   timerInt=setInterval(()=>{if(Date.now()<freezeUntil)return;seconds++;updateHud()},1000);
+  startAmbient();
   showScreen('gameScreen');
 }
 function stopTimer(){if(timerInt){clearInterval(timerInt);timerInt=null}if(trapTimer){clearInterval(trapTimer);trapTimer=null}}
@@ -1861,6 +1900,36 @@ function comboReward(n, el){
   try{ screenBurst(window.innerWidth/2, window.innerHeight*0.4, col, 8+n*2, n>=4, false); }catch(e){}
   updateHud(); if(!duel)updateBoosterBar();
 }
+/* ✨ Festë e madhe kur del EXCELLENT (3 yje) */
+function celebrateExcellent(){
+  const f=document.getElementById('flash');
+  if(f){f.classList.remove('on');void f.offsetWidth;f.classList.add('on');}
+  try{spawnConfetti();}catch(e){}
+  const cols=[['#ffd166','#fff','#ffe08a'],['#ff5aa8','#fff','#ffd166'],['#3ef0a0','#2de2ff','#fff'],['#a06bff','#ff8cc8','#fff']];
+  for(let i=0;i<5;i++){ setTimeout(()=>{ try{screenBurst(window.innerWidth*(0.2+Math.random()*0.6), window.innerHeight*(0.24+Math.random()*0.4), cols[i%cols.length], 16, i%2===0, true);}catch(e){} }, i*170); }
+  const b=document.createElement('div'); b.className='excellent-banner'; b.textContent='✨ EXCELLENT! ✨';
+  document.body.appendChild(b); setTimeout(()=>b.remove(),1800);
+  if(settings.sfx){[[523,0],[659,0.1],[784,0.2],[1046,0.32],[1318,0.46]].forEach(([fr,w])=>tone(fr,0.4,'triangle',0.08,w));}
+  vibrate([40,50,40,50,120]);
+}
+/* 🌟 Grimca ambient që dalin anash gjatë lojës */
+let ambientTimer=null;
+function startAmbient(){
+  if(ambientTimer)return;
+  ambientTimer=setInterval(()=>{
+    const gs=document.getElementById('gameScreen');
+    if(!gs||!gs.classList.contains('active'))return;
+    const p=document.createElement('div'); p.className='ambient-p';
+    const sz=4+Math.random()*7; p.style.width=sz+'px'; p.style.height=sz+'px';
+    p.style.left=(Math.random()<0.5?Math.random()*13:87+Math.random()*13)+'vw'; p.style.top='102vh';
+    const hue=['#ffd166','#7fd8ff','#ff8cc8','#7ED957'][Math.floor(Math.random()*4)];
+    p.style.background=hue; p.style.boxShadow='0 0 8px '+hue;
+    (document.body).appendChild(p);
+    const dx=Math.random()*70-35;
+    p.animate([{transform:'translate(0,0)',opacity:0},{opacity:.65,offset:.15},{transform:`translate(${dx}px,-112vh)`,opacity:0}],{duration:4500+Math.random()*1600,easing:'ease-out'});
+    setTimeout(()=>p.remove(),6200);
+  },1100);
+}
 /* ---- Fitorja ---- */
 function levelWon(){
   stopTimer();playWinMusic();
@@ -1876,6 +1945,7 @@ function levelWon(){
   let newHS=false;
   if(score>highScore){highScore=score;newHS=true}
   saveData();
+  if(earned===3) celebrateExcellent();   // ✨ festë e madhe për 3 yje
 
   let sh='';
   for(let k=1;k<=3;k++)sh+=`<svg class="ic ${k<=earned?'star-on':'star-off'}"><use href="#i-star"/></svg>`;
@@ -2526,6 +2596,7 @@ function startDuelBoard(){
   if(trapTimer){clearInterval(trapTimer);trapTimer=null}
   trapTimer=setInterval(()=>{ if(duel&&!lock&&!duel.decided&&!document.getElementById('duelResult').classList.contains('show'))swapTwo(true); }, 9000);
   updateHud();
+  startAmbient();
   if(duelPoll)clearInterval(duelPoll);
   duelPoll=setInterval(duel.mode==='2v2'?duelSync2v2:duelSync,1500);
 }
