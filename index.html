@@ -334,9 +334,13 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 /* Emote picker stil Ludo (kliko profilin → zgjidh emoji) */
 .opp-bar span[onclick]{cursor:pointer}
 .opp-tap{position:relative}
-#emotePicker{position:fixed;left:50%;top:16%;transform:translateX(-50%);background:rgba(16,14,34,.97);border:1px solid rgba(232,161,58,.45);border-radius:20px;padding:14px;z-index:57;display:none;box-shadow:0 14px 44px rgba(0,0,0,.6)}
-#emotePicker.show{display:block;animation:pop .28s cubic-bezier(.2,1.5,.4,1) both}
-.ep-hint{text-align:center;font-size:11px;color:rgba(255,255,255,.6);margin-bottom:10px;font-weight:800}
+#emotePicker{position:fixed;left:50%;top:14%;transform:translateX(-50%);width:min(340px,92vw);max-height:72vh;overflow-y:auto;-webkit-overflow-scrolling:touch;background:rgba(16,14,34,.98);border:1px solid rgba(232,161,58,.45);border-radius:20px;padding:12px 14px 16px;z-index:57;display:none;box-shadow:0 14px 44px rgba(0,0,0,.6)}
+#emotePicker.show{display:block;animation:epPop .28s cubic-bezier(.2,1.5,.4,1) both}
+@keyframes epPop{from{transform:translateX(-50%) scale(.7);opacity:0}to{transform:translateX(-50%) scale(1);opacity:1}}
+.ep-head{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px}
+.ep-hint{text-align:left;font-size:11px;color:rgba(255,255,255,.6);font-weight:800}
+.ep-close{flex:0 0 auto;width:30px;height:30px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;font-weight:900;color:#fff;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.18);cursor:pointer;line-height:1}
+.ep-close:active{transform:scale(.85);background:rgba(232,161,58,.25)}
 .ep-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:8px}
 .ep-btn{font-size:26px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;background:rgba(14,12,30,.6);border:1px solid rgba(255,255,255,.1);border-radius:12px;cursor:pointer;transition:transform .1s}
 .ep-btn:active{transform:scale(.78)}
@@ -2362,21 +2366,21 @@ const CHATS=['👋 Hi!','😎 Good luck','🔥 Nice one','😂 Haha','🤝 GG!',
 function openEmotePicker(){
   const p=document.getElementById('emotePicker');
   if(!p)return;
-  if(p.classList.contains('show')){p.classList.remove('show');return}
-  p.innerHTML='<div class="ep-hint">Send emoji or message 👇</div>'+
+  if(p.classList.contains('show')){closeEmotePicker();return}
+  p.innerHTML='<div class="ep-head"><div class="ep-hint">Send emoji or message</div><div class="ep-close" onclick="closeEmotePicker()">✕</div></div>'+
     '<div class="ep-grid">'+EMOTES.map(e=>`<div class="ep-btn" onclick="pickEmote('${e}')">${e}</div>`).join('')+'</div>'+
     '<div class="ep-chat">'+CHATS.map(c=>`<div class="ep-msg" onclick="pickChat(${JSON.stringify(c).replace(/"/g,'&quot;')})">${c}</div>`).join('')+'</div>';
   p.classList.add('show');
 }
-function pickEmote(e){
-  sendEmote(e);
+function closeEmotePicker(){
   const p=document.getElementById('emotePicker');
   if(p)p.classList.remove('show');
 }
+function pickEmote(e){
+  sendEmote(e);            /* mbetet hapur — mund të dërgosh disa; mbyllet vetëm me ✕ */
+}
 function pickChat(txt){
-  sendChat(txt);
-  const p=document.getElementById('emotePicker');
-  if(p)p.classList.remove('show');
+  sendChat(txt);           /* mbetet hapur — mbyllet vetëm me ✕ */
 }
 function sendChat(txt){
   playTap();
