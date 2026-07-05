@@ -60,7 +60,7 @@ svg{display:block}
 
 /* ============ EKRANET ============ */
 .screen{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;padding:24px;opacity:0;pointer-events:none;transition:opacity .5s ease;z-index:1}
-.screen.active{opacity:1;pointer-events:auto}
+.screen.active{opacity:1;pointer-events:auto;z-index:2}
 
 /* ---- Splash ---- */
 .logo-flag{font-size:88px;animation:pop .9s cubic-bezier(.2,1.4,.4,1) both, wobble 1.8s ease-in-out .9s infinite alternate;filter:drop-shadow(0 0 30px rgba(232,161,58,.5))}
@@ -3207,7 +3207,7 @@ async function openLeaderboard(cat){
   const me=myName();
   let lb={};
   if(cat==='endless'){
-    try{ lb=(await sGet('endless-lb'))||{}; }catch(e){}
+    try{ lb=(await sGet('duel:endless-lb'))||{}; }catch(e){}
     if(endlessBestWave>(lb[me]||0)) lb[me]=endlessBestWave;
     renderLeaderboard(lb,'♾️');
   }else{
@@ -3693,20 +3693,23 @@ function dailyLost(){
 }
 async function submitDailyScore(ms){
   try{
-    const key='daily:'+utcDateKey();
+    const key='duel:daily:'+utcDateKey(); // prefiks 'duel:' — i vetmi që pranon serveri
     const board=(await sGet(key))||{};
-    const cur=board[myId];
-    if(!cur||ms<cur.ms){ board[myId]={name:myName(),av:avatar,ms}; await sSet(key,board); }
+    const me=myName();
+    const cur=board[me];
+    if(!cur||ms<cur.ms){ board[me]={name:me,av:avatar,ms}; await sSet(key,board); }
   }catch(e){}
 }
 async function loadDailyLeaderboard(){
   const list=document.getElementById('dailyLbList'); if(!list)return;
   list.innerHTML='<div style="text-align:center;color:rgba(255,255,255,.45);font-size:12px;padding:10px">Loading…</div>';
-  let board={}; try{ board=(await sGet('daily:'+utcDateKey()))||{}; }catch(e){}
+  let board={}; try{ board=(await sGet('duel:daily:'+utcDateKey()))||{}; }catch(e){}
+  const me=myName();
+  if(dailyDoneToday()&&dailyBestMs){ const cur=board[me]; if(!cur||dailyBestMs<cur.ms)board[me]={name:me,av:avatar,ms:dailyBestMs}; } // përfshi gjithmonë rezultatin tim lokal
   const rows=Object.entries(board).map(([id,v])=>({id,...v})).filter(v=>v&&v.ms).sort((a,b)=>a.ms-b.ms).slice(0,20);
   if(!rows.length){ list.innerHTML=`<div style="text-align:center;color:rgba(255,255,255,.45);font-size:12px;padding:10px">${t('dailyNoScores')}</div>`; return; }
   const medal=i=>i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.';
-  list.innerHTML=rows.map((r,i)=>`<div class="lb-row${r.id===myId?' me':''}"><span class="lb-rank">${medal(i)}</span><span class="lb-name">${r.av||''} ${r.name||'Racer'}</span><span class="lb-wins">⏱️ ${fmtMs(r.ms)}</span></div>`).join('');
+  list.innerHTML=rows.map((r,i)=>`<div class="lb-row${(r.name||r.id)===me?' me':''}"><span class="lb-rank">${medal(i)}</span><span class="lb-name">${r.av||''} ${r.name||'Racer'}</span><span class="lb-wins">⏱️ ${fmtMs(r.ms)}</span></div>`).join('');
 }
 
 /* ========== ♾️ ENDLESS (SURVIVAL) ========== */
@@ -3771,7 +3774,7 @@ function endlessOver(){
   }),500);
 }
 async function submitEndlessScore(){
-  try{ const lb=(await sGet('endless-lb'))||{}; const nm=myName(); if(endlessBestWave>(lb[nm]||0)){lb[nm]=endlessBestWave;await sSet('endless-lb',lb);} }catch(e){}
+  try{ const lb=(await sGet('duel:endless-lb'))||{}; const nm=myName(); if(endlessBestWave>(lb[nm]||0)){lb[nm]=endlessBestWave;await sSet('duel:endless-lb',lb);} }catch(e){}
 }
 
 /* ========== 📤 SHARE + LINK SFIDE ========== */
