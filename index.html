@@ -354,6 +354,9 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 #flash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:60}
 #flash.on{animation:flashPop .55s ease-out}
 @keyframes flashPop{0%{opacity:0}7%{opacity:.95}26%{opacity:.5}55%{opacity:.2}100%{opacity:0}}
+/* 💣 Flash i bombës: i bardhë plot ~2s që s'i sheh letrat */
+#flash.bombwhite{animation:bombWhite 2s ease-out}
+@keyframes bombWhite{0%{opacity:0}5%{opacity:1}62%{opacity:1}100%{opacity:0}}
 .board-shake{animation:boardShake .5s cubic-bezier(.36,.07,.19,.97)}
 @keyframes boardShake{10%,90%{transform:translateX(-3px)}20%,80%{transform:translateX(5px)}30%,50%,70%{transform:translateX(-8px)}40%,60%{transform:translateX(8px)}}
 /* ---- Folderat e dyqanit ---- */
@@ -1479,7 +1482,7 @@ function vibrate(p){if(settings.haptic&&navigator.vibrate)navigator.vibrate(p)}
 /* 💥 Shpërthimi i bombës — Candy Crush style: flash + rrufe + grimca + shockwave */
 function bombFX(){
   const f=document.getElementById('flash');
-  if(f){f.classList.remove('on');void f.offsetWidth;f.classList.add('on')}
+  if(f){f.classList.remove('on','bombwhite');void f.offsetWidth;f.classList.add('bombwhite');setTimeout(()=>f.classList.remove('bombwhite'),2100)}
   const b=document.getElementById('board');
   if(b){b.classList.remove('board-shake');void b.offsetWidth;b.classList.add('board-shake')}
   const cx=window.innerWidth/2, cy=window.innerHeight*0.44;
@@ -1636,23 +1639,50 @@ function musicSnare(){
   const g=c.createGain();g.gain.value=0.035;
   s.connect(hp).connect(g).connect(c.destination);s.start(t0);
 }
-function startMusic(){
-  if(!settings.music||musicTimer)return;
-  const step=()=>{
-    if(!settings.music){stopMusic();return}
-    const bar=(musicBeat/16|0)%4, ch=MUSIC_CHORDS[bar], b=musicBeat%16;
-    if(b%4===0) musicKick();                       // kick 4-on-the-floor
-    if(b%2===1) tone(9000,0.015,'square',0.005);   // hi-hat offbeat
-    if(b===4||b===12) musicSnare();                // snare në 2 & 4
-    if(b===0||b===6||b===10) tone(ch.root,0.4,'triangle',0.055); // bas groovy
-    if(b%2===0){ const n=ch.arp[(musicBeat/2)%4]; musicPluck(semi(ch.root*2,n),0.045); } // arpexho lead
-    if(b===0){ tone(semi(ch.root*2,0),1.7,'sine',0.02); tone(semi(ch.root*2,ch.arp[2]),1.7,'sine',0.014); } // pad
-    musicBeat++;
-  };
-  step();
-  musicTimer=setInterval(step,130); // ~115 BPM, më e gjallë
+// Bleep i shkurtër chiptune për arpexhon e duelit
+function musicBleep(freq,vol){
+  const c=ctx(),o=c.createOscillator(),g=c.createGain(),t0=c.currentTime;
+  o.type='square';o.frequency.value=freq;
+  g.gain.setValueAtTime(vol||0.03,t0);g.gain.exponentialRampToValueAtTime(0.0001,t0+0.09);
+  o.connect(g).connect(c.destination);o.start(t0);o.stop(t0+0.1);
 }
-function stopMusic(){if(musicTimer){clearInterval(musicTimer);musicTimer=null}}
+// 🌆 Akorde për të dy modet (origjinale)
+const CHILL_CHORDS=[{root:65.41,arp:[0,4,7,11]},{root:55.00,arp:[0,3,7,10]},{root:43.65,arp:[0,4,7,11]},{root:49.00,arp:[0,4,7,10]}]; // C Am F G — synthwave i qetë
+const DUEL_CHORDS =[{root:55.00,arp:[0,3,7,12]},{root:65.41,arp:[0,3,7,10]},{root:49.00,arp:[0,4,7,12]},{root:73.42,arp:[0,3,7,10]}]; // Am C G Dm — arcade me tension
+// 🌙 MENU/LOJË: synthwave/lo-fi i qetë, ~100 BPM, loop i pastër
+function musicStepChill(){
+  if(!settings.music){stopMusic();return}
+  const bar=(musicBeat/16|0)%4, ch=CHILL_CHORDS[bar], b=musicBeat%16;
+  if(b===0||b===8) musicKick();                              // kick half-time
+  if(b%4===2) tone(9000,0.012,'square',0.0035);             // hat i butë
+  if(b===0||b===10) tone(ch.root,0.9,'sine',0.05);          // bas i ngrohtë
+  if(b%4===0){ const n=ch.arp[(musicBeat/4)%4]; musicPluck(semi(ch.root*4,n),0.028); } // arpexho e ngadaltë e ëmbël
+  if(b===0){ tone(semi(ch.root*2,0),2.2,'sine',0.02); tone(semi(ch.root*2,ch.arp[2]),2.2,'sine',0.014); tone(semi(ch.root*2,ch.arp[1]),2.2,'sine',0.01); } // pad i pasur
+  musicBeat++;
+}
+// 🏁 DUELI: arcade retro i shpejtë, ~130 BPM, me tension
+function musicStepDuel(){
+  if(!settings.music){stopMusic();return}
+  const bar=(musicBeat/16|0)%4, ch=DUEL_CHORDS[bar], b=musicBeat%16;
+  if(b%4===0) musicKick();                                   // kick 4-on-the-floor
+  if(b%2===1) tone(9600,0.014,'square',0.006);               // hat i shpejtë
+  if(b===4||b===12) musicSnare();                            // snare 2 & 4
+  if(b%2===0) tone(ch.root,0.14,'square',0.05);              // bas i fortë 8-ta
+  musicBleep(semi(ch.root*4,ch.arp[musicBeat%4]),0.024);     // arpexho chiptune 16-ta
+  musicBeat++;
+}
+let musicMode=null;
+function startMusic(){
+  if(!settings.music)return;
+  const mode = duel ? 'duel' : 'chill';
+  if(musicTimer && musicMode===mode) return;   // moda e duhur po luan
+  stopMusic(); musicMode=mode; musicBeat=0;
+  const stepFn = mode==='duel' ? musicStepDuel : musicStepChill;
+  const interval = mode==='duel' ? 115 : 150;  // duel ~130 BPM · chill ~100 BPM
+  stepFn();
+  musicTimer=setInterval(stepFn,interval);
+}
+function stopMusic(){if(musicTimer){clearInterval(musicTimer);musicTimer=null}musicMode=null;}
 
 /* --- Fanfara e fitores (bravo!) --- */
 function playWinMusic(){
@@ -1679,7 +1709,7 @@ function playLoseMusic(){
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  if(id==='menuScreen')updateTotalStars();
+  if(id==='menuScreen'){updateTotalStars();startMusic();} // 🌙 muzika e qetë e menusë
   if(id==='settingsScreen')refreshProfileUI();
 }
 function hideOverlays(){
@@ -1830,6 +1860,24 @@ function chooseCard(c){
   flipSecond(c,false);
 }
 
+/* 😄 Mesazhe humori (origjinale) */
+const FUNNY_END=['😏 Easy — only two left!','🍰 Piece of cake!','🎯 You got this!','🐣 Even a baby could!','😎 Watch this…','🤖 Auto-pilot engaged!','🎁 Free pair for you!'];
+const FUNNY_MISS=['😅 Oops… again?','🙈 So close!','🤔 Think, think!','😬 It happens!','🧠 Use that memory!'];
+/* 🃏 Kur mbeten vetëm 2 karta në fund → hapen vetë me një shaka (vetëm fushatë) */
+function autoFinishJoke(){
+  const rest=[...document.querySelectorAll('#board .card')].filter(c=>!c.classList.contains('matched')&&!c.classList.contains('flipped'));
+  if(rest.length!==2){ if(pairsFound===params.pairs)levelWon(); return; }
+  lock=true;
+  toast(FUNNY_END[Math.floor(Math.random()*FUNNY_END.length)]);
+  setTimeout(()=>{
+    rest.forEach(c=>c.classList.add('flipped')); playFlip();
+    setTimeout(()=>{
+      rest.forEach(c=>{c.classList.add('matched');cardSparkle(c);});
+      playMatch(); pairsFound++; updateHud(); lock=false;
+      if(pairsFound===params.pairs)levelWon();
+    },850);
+  },700);
+}
 function flipSecond(c,gamble){
   playFlip();
   c.classList.add('flipped');
@@ -1859,6 +1907,7 @@ function flipSecond(c,gamble){
       if(tut)tutOnMatch();
       updateHud();lock=false;
       if(pairsFound===params.pairs){duel?duelBoardDone():(tut?tutAllPairs():levelWon())}
+      else if(!duel&&!tut&&pairsFound===params.pairs-1){ autoFinishJoke(); } // 🃏 2 karta → hapen vetë me shaka
       else if(!duel&&!tut&&fuelLeft()<=0){levelLost()}
     },350);
   }else{
@@ -1893,6 +1942,7 @@ function flipSecond(c,gamble){
         }
         else if(!tut){
           if(params.season>=2)swapTwo(true); // 🌀 gabove? dy karta ndërrojnë vendet!
+          if(moves>=4 && Math.random()<0.14) toast(FUNNY_MISS[Math.floor(Math.random()*FUNNY_MISS.length)]); // 😄 shaka e rrallë kur gabon
           if(fuelLeft()<=0)levelLost();
         }
       },380);
@@ -2564,6 +2614,7 @@ function beginCountdown(startAt){
 }
 function startDuelBoard(){
   hideOverlays();
+  startMusic(); // 🏁 kalo te muzika arcade e duelit
   {const rb=document.getElementById('refreshBtn');if(rb)rb.style.display='none';} // pa refresh në duel online
   {const bb=document.getElementById('boosterBar');if(bb)bb.style.display='none';} // pa ndihmësa në duel
   const twoV2=(duel.mode==='2v2');
@@ -2913,6 +2964,7 @@ function leaveDuelIfAny(){
     sSet(k,{left:true});
   }
   duel=null;
+  startMusic(); // 🌙 kthehu te muzika e qetë e menusë
 }
 
 /* ================= GRACKAT: PËRZIERËSI & SHIKUESI ================= */
