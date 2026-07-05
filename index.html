@@ -1584,6 +1584,21 @@ function bombRevealAll(){
   setTimeout(()=>rest.forEach(c=>{if(!c.classList.contains('matched'))c.classList.remove('flipped')}),1300);
 }
 /* Shkëndija te një kartë kur bën çift */
+/* 🎇 Efekte kur shpërndahen kartat — sa më i lartë niveli, aq më i fortë */
+function dealSparkles(){
+  const season=(params&&params.season)||0;   // 0..4 (sa më lart, aq më shumë)
+  const cards=[...document.querySelectorAll('#board .card')];
+  cards.forEach((c,i)=>{
+    setTimeout(()=>{
+      if(!c.isConnected)return;
+      const r=c.getBoundingClientRect(), cx=r.left+r.width/2, cy=r.top+r.height/2;
+      try{cardSparkle(c);}catch(e){}
+      const palette=[['#7fd8ff','#fff'],['#ffd166','#fff'],['#ff8cc8','#fff','#ffd166'],['#3ef0a0','#2de2ff','#fff'],['#ff5aa8','#ffd166','#fff','#a06bff']][Math.min(season,4)];
+      if(season>=1){ try{screenBurst(cx,cy,palette,2+season*2,false,false);}catch(e){} }
+      if(season>=3 && i%4===0){ try{drawLightning(cx,cy);}catch(e){} }   // pak rrufe, vetëm nivele të larta
+    }, i*60+200);
+  });
+}
 function cardSparkle(el){
   if(!el||!el.getBoundingClientRect)return;
   const r=el.getBoundingClientRect();
@@ -1760,6 +1775,7 @@ function startLevel(g){
   });
   // ⚡ shkreptimë e lehtë kur shpërndahen kartat
   setTimeout(()=>{const cx=window.innerWidth/2,cy=window.innerHeight*0.5;screenBurst(cx,cy,['#fff','#ffd166','#2de2ff'],8,false,false);},deck.length*45+120);
+  dealSparkles(); // 🎇 efekte kartash sipas levelit
 
   document.getElementById('oppBar').style.display='none';
   {const eb=document.getElementById('emoteBar');if(eb)eb.style.display='none';}
@@ -1914,9 +1930,7 @@ function celebrateExcellent(){
 }
 /* 🌟 Grimca ambient që dalin anash gjatë lojës */
 let ambientTimer=null;
-function startAmbient(){
-  if(ambientTimer)return;
-  ambientTimer=setInterval(()=>{
+function spawnAmbient(){
     const gs=document.getElementById('gameScreen');
     if(!gs||!gs.classList.contains('active'))return;
     const p=document.createElement('div'); p.className='ambient-p';
@@ -1928,8 +1942,8 @@ function startAmbient(){
     const dx=Math.random()*70-35;
     p.animate([{transform:'translate(0,0)',opacity:0},{opacity:.65,offset:.15},{transform:`translate(${dx}px,-112vh)`,opacity:0}],{duration:4500+Math.random()*1600,easing:'ease-out'});
     setTimeout(()=>p.remove(),6200);
-  },1100);
 }
+function startAmbient(){ if(ambientTimer)return; ambientTimer=setInterval(spawnAmbient,700); } // më dendur
 /* ---- Fitorja ---- */
 function levelWon(){
   stopTimer();playWinMusic();
@@ -1946,6 +1960,7 @@ function levelWon(){
   if(score>highScore){highScore=score;newHS=true}
   saveData();
   if(earned===3) celebrateExcellent();   // ✨ festë e madhe për 3 yje
+  else { try{spawnConfetti();}catch(e){} for(let i=0;i<3;i++){setTimeout(()=>{try{screenBurst(window.innerWidth*(0.3+Math.random()*0.4),window.innerHeight*(0.3+Math.random()*0.3),['#ffd166','#7fd8ff','#fff'],12,false,true);}catch(e){}},i*180);} } // festë kur kryen
 
   let sh='';
   for(let k=1;k<=3;k++)sh+=`<svg class="ic ${k<=earned?'star-on':'star-off'}"><use href="#i-star"/></svg>`;
@@ -2010,36 +2025,36 @@ function spawnConfetti(){
 /* ================= DYQANI ================= */
 const SKINS=[
   {id:'classic',name:'skClassic',price:0,   em:'🃏'},
-  {id:'gold',   name:'skGold',   price:1200,em:'🟨'},
-  {id:'holo',   name:'skHolo',   price:2800,em:'🌈'},
+  {id:'gold',   name:'skGold',   price:2000,em:'🟨'},
+  {id:'holo',   name:'skHolo',   price:4500,em:'🌈'},
   // 🎴 Stile tematike të reja
-  {id:'ninja',  label:'Ninja',    price:900, em:'🥷'},
-  {id:'pirate', label:'Pirate',   price:900, em:'☠️'},
-  {id:'supercar',label:'Supercar',price:2000,em:'🏎️'},
-  {id:'streamer',label:'Streamer',price:1400,em:'🎮'},
-  {id:'dragon', label:'Dragon',   price:1800,em:'🐉'},
-  {id:'samurai',label:'Samurai',  price:1100,em:'⚔️'},
-  {id:'soccer', label:'Football',  price:800, em:'⚽'},
-  {id:'alien',  label:'Alien',    price:1100,em:'👽'},
-  {id:'fire',   label:'Inferno',  price:1400,em:'🔥'},
-  {id:'diamond',label:'Diamond',  price:3000,em:'💎'},
-  {id:'skull',  label:'Skull',    price:900, em:'💀'},
-  {id:'royal',  label:'Royal',    price:2500,em:'👑'},
-  {id:'shark',  label:'Shark',    price:1100,em:'🦈'},
-  {id:'galaxy', label:'Galaxy',   price:2500,em:'🌌'}
+  {id:'ninja',  label:'Ninja',    price:1500,em:'🥷'},
+  {id:'pirate', label:'Pirate',   price:1500,em:'☠️'},
+  {id:'supercar',label:'Supercar',price:3200,em:'🏎️'},
+  {id:'streamer',label:'Streamer',price:2400,em:'🎮'},
+  {id:'dragon', label:'Dragon',   price:3000,em:'🐉'},
+  {id:'samurai',label:'Samurai',  price:1800,em:'⚔️'},
+  {id:'soccer', label:'Football',  price:1400,em:'⚽'},
+  {id:'alien',  label:'Alien',    price:1800,em:'👽'},
+  {id:'fire',   label:'Inferno',  price:2400,em:'🔥'},
+  {id:'diamond',label:'Diamond',  price:5000,em:'💎'},
+  {id:'skull',  label:'Skull',    price:1500,em:'💀'},
+  {id:'royal',  label:'Royal',    price:4000,em:'👑'},
+  {id:'shark',  label:'Shark',    price:1800,em:'🦈'},
+  {id:'galaxy', label:'Galaxy',   price:4000,em:'🌌'}
 ];
 const BGS=[
   {id:'midnight',name:'bgMid',   price:0,   em:'🌌'},
-  {id:'sunset',  name:'bgSun',   price:900, em:'🌅'},
-  {id:'forest',  name:'bgForest',price:900, em:'🌲'},
-  {id:'ocean',   name:'bgOcean', price:900, em:'🌊'},
-  {id:'neonw',   name:'bgNeon',  price:1600,em:'🌇'},
-  {id:'lava',    name:'bgLava',  price:1100,em:'🌋'},
-  {id:'aurora',  name:'bgAurora',price:1300,em:'🌠'},
-  {id:'candy',   name:'bgCandy', price:1300,em:'🍭'},
-  {id:'space',   name:'bgSpace', price:1600,em:'🪐'},
-  {id:'desert',  name:'bgDesert',price:1300,em:'🏜️'},
-  {id:'mono',    name:'bgMono',  price:1800,em:'⚫'}
+  {id:'sunset',  name:'bgSun',   price:1500,em:'🌅'},
+  {id:'forest',  name:'bgForest',price:1500,em:'🌲'},
+  {id:'ocean',   name:'bgOcean', price:1500,em:'🌊'},
+  {id:'neonw',   name:'bgNeon',  price:2600,em:'🌇'},
+  {id:'lava',    name:'bgLava',  price:1800,em:'🌋'},
+  {id:'aurora',  name:'bgAurora',price:2200,em:'🌠'},
+  {id:'candy',   name:'bgCandy', price:2200,em:'🍭'},
+  {id:'space',   name:'bgSpace', price:2600,em:'🪐'},
+  {id:'desert',  name:'bgDesert',price:2200,em:'🏜️'},
+  {id:'mono',    name:'bgMono',  price:3000,em:'⚫'}
 ];
 // Çmimet sipas tiers zyrtare të App Store (€0.99 / €2.99 / €4.99 / €9.99)
 const COINPACKS=[
@@ -2230,10 +2245,15 @@ function playerLevel(){return 1+Math.floor(xp/XP_PER_LEVEL)}
 function myRank(){let r=RANKS[0];const pl=playerLevel();for(const x of RANKS)if(pl>=x[0])r=x;return r}
 function nextRank(){const pl=playerLevel();for(const x of RANKS)if(x[0]>pl)return x;return null}
 function addXP(n){
-  const before=myRank()[2];
+  const before=myRank()[2], lvBefore=playerLevel();
   xp+=n;
-  const after=myRank()[2];
+  const after=myRank()[2], lvAfter=playerLevel();
   if(after!==before)setTimeout(()=>toast('⬆️ '+after+'!'),900);
+  // 🎖️ Avatar i ri që hapet automatikisht kur ngjitesh level (stil COD)
+  if(lvAfter>lvBefore){
+    const unlocked=LEVEL_AV.filter(([lv])=>lv>lvBefore&&lv<=lvAfter);
+    if(unlocked.length)setTimeout(()=>toast('🎖️ New avatar unlocked! '+unlocked.map(([,e])=>e).join(' ')),1500);
+  }
 }
 const FREE_AV=['🚗','🏎️','😎','🐺','🔥','⚡'];
 const PRO_AV=['👑','🐉','💎','🦁','🚀','😈','🔱','🫅']; // +2 ekskluzive për PRO
@@ -2292,18 +2312,15 @@ function renderAvatars(gridId){
     if(!g)return;
     g.innerHTML='';
     avEntries().forEach(a=>{
+      // 🎖️ Avatarët e levelit: fshihen derisa i arrin (stil Call of Duty — dalin auto në profil)
+      if(a.kind==='level' && pl < a.lv) return;
       const lockedPro=a.kind==='pro'&&!premium;
-      const lockedLvl=a.kind==='level'&&pl<a.lv;
       const d=document.createElement('div');
-      d.className='av'+(avatar===a.em?' sel':'')+((lockedPro||lockedLvl)?' lockedAv':'')+(premium&&avatar===a.em?' proglow':'');
-      let badge='';
-      if(a.kind==='pro')badge='<span class="crown">👑</span>';
-      else if(lockedLvl)badge='<span class="lockbadge">🔒</span>';   // kërkesa nuk tregohet
-      d.innerHTML=a.em+badge;
+      d.className='av'+(avatar===a.em?' sel':'')+(lockedPro?' lockedAv':'')+(premium&&avatar===a.em?' proglow':'');
+      d.innerHTML=a.em+(a.kind==='pro'?'<span class="crown">👑</span>':'');
       d.addEventListener('click',()=>{
         playTap();
         if(lockedPro){openPremiumSheet();return}
-        if(lockedLvl){toast('🔒 Level up to unlock this avatar!');return}
         avatar=a.em;saveData();renderAvatars();
         const ss=document.getElementById('settingsScreen');
         if(ss&&ss.classList.contains('active'))refreshProfileUI();
@@ -2584,6 +2601,7 @@ function startDuelBoard(){
     c.addEventListener('click',()=>chooseCard(c));
     board.appendChild(c);
   });
+  dealSparkles(); // 🎇 efekte kartash sipas levelit/sezonit
 
   document.getElementById('oppBar').style.display='flex';
   myEmote=null;lastOppEmoteT=0;
