@@ -66,6 +66,20 @@ svg{display:block}
 .logo-flag{font-size:88px;animation:pop .9s cubic-bezier(.2,1.4,.4,1) both, wobble 1.8s ease-in-out .9s infinite alternate;filter:drop-shadow(0 0 30px rgba(232,161,58,.5))}
 @keyframes pop{from{transform:scale(.4);opacity:0}to{transform:scale(1);opacity:1}}
 @keyframes wobble{from{transform:rotate(-4deg)}to{transform:rotate(4deg)}}
+/* 🚗 Skena hyrëse Bip */
+.intro-skip{position:absolute;top:max(16px,env(safe-area-inset-top));right:16px;background:rgba(14,12,30,.6);border:1px solid rgba(255,255,255,.18);color:rgba(255,255,255,.8);border-radius:14px;padding:7px 14px;font-weight:900;font-size:12px;letter-spacing:1px;cursor:pointer;z-index:5}
+.bip-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;flex:1;width:100%;max-width:360px;padding:0 20px;cursor:pointer}
+.bip-car{font-size:96px;animation:bipBounce 1.1s ease-in-out infinite;filter:drop-shadow(0 8px 20px rgba(0,0,0,.4))}
+.bip-car.shake{animation:bipShake .5s ease-in-out 3}
+@keyframes bipBounce{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-16px) rotate(2deg)}}
+@keyframes bipShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px) rotate(-4deg)}40%{transform:translateX(9px) rotate(4deg)}60%{transform:translateX(-7px)}80%{transform:translateX(7px)}}
+.bip-name{font-weight:900;letter-spacing:3px;font-size:13px;color:var(--amber2)}
+.bip-bubble{background:rgba(16,14,34,.9);border:1.5px solid rgba(232,161,58,.5);border-radius:18px;padding:16px 18px;font-weight:800;font-size:16px;line-height:1.5;color:#fff;min-height:70px;display:flex;align-items:center;justify-content:center;text-align:center;box-shadow:0 10px 30px rgba(0,0,0,.5);width:100%}
+.bip-hint{font-size:11px;font-weight:800;color:rgba(255,255,255,.4);animation:blink 1.4s ease-in-out infinite}
+@keyframes blink{0%,100%{opacity:.3}50%{opacity:.9}}
+.intro-go{width:calc(100% - 40px);max-width:320px;margin:0 auto 30px;animation:fadeUp .5s both}
+.boom-pop{position:fixed;left:50%;top:38%;transform:translateX(-50%);font-size:80px;z-index:6;pointer-events:none;animation:boomPop 1s cubic-bezier(.2,1.4,.3,1) forwards}
+@keyframes boomPop{0%{transform:translateX(-50%) scale(.2) rotate(-20deg);opacity:0}25%{transform:translateX(-50%) scale(1.4) rotate(10deg);opacity:1}70%{transform:translateX(-50%) scale(1) rotate(0);opacity:1}100%{transform:translateX(-50%) scale(1.2) translateY(-30px);opacity:0}}
 .title{
   font-weight:900;font-size:34px;letter-spacing:6px;margin-top:14px;
   background:linear-gradient(90deg,var(--amber2),var(--amber));
@@ -592,6 +606,18 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
   <div class="subtitle" data-i18n="subtitle"></div>
 </div>
 
+<!-- 🚗 SKENA HYRËSE (Bip) — vetëm herën e parë -->
+<div class="screen" id="introSceneScreen">
+  <button class="intro-skip" id="introSkip" onclick="playTap();finishIntro()">SKIP ✕</button>
+  <div class="bip-wrap" id="bipWrap" onclick="introNext()">
+    <div class="bip-car" id="bipCar">🚗</div>
+    <div class="bip-name">BIP</div>
+    <div class="bip-bubble" id="bipText"></div>
+    <div class="bip-hint" id="bipHint">tap ▶</div>
+  </div>
+  <button class="btn btn-primary intro-go" id="introGo" style="display:none" onclick="playTap();finishIntro()">LET'S GO! 🏁</button>
+</div>
+
 <!-- INTRO / TUTORIAL -->
 <div class="screen" id="introScreen">
   <div class="tut-slide active" id="tut0">
@@ -886,6 +912,10 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
       <span class="set-label"><span style="font-size:17px">❓</span><span data-i18n="howTo"></span></span>
       <svg class="ic" style="color:var(--amber)"><use href="#i-next"/></svg>
     </div>
+    <a class="set-row" href="https://lumniti.github.io/memory-drive/privacy.html" target="_blank" rel="noopener" style="cursor:pointer;text-decoration:none;color:inherit" onclick="playTap()">
+      <span class="set-label"><span style="font-size:17px">🔒</span><span data-i18n="privacyLbl"></span></span>
+      <svg class="ic" style="color:var(--amber)"><use href="#i-next"/></svg>
+    </a>
     <button class="btn btn-primary" style="width:100%;margin-top:22px" onclick="playTap();showScreen('menuScreen')">
       <svg class="ic"><use href="#i-check"/></svg><span data-i18n="close"></span>
     </button>
@@ -1076,6 +1106,7 @@ const I18N={
     tut3t:'Fito Yje & Eksploro', tut3d:'Sa më pak lëvizje, aq më shumë yje (deri në 3). Kalo 50 nivele nëpër 5 sezone unike — Garazhi, Qyteti, Autostrada, Nata dhe Pista!',
     tutBt:'Loja Do të Të Sfidojë 😏', tutBd:'Ndonjëherë, para kartës së dytë, loja të pyet: "A je i sigurt?" Thua po dhe e qëllon = +2 karburant. Thua po dhe gabon = e humb nivelin menjëherë! Shumë rrezik? Shtyp NDËRRO dhe tërhiqu pa dënim.',
     howTo:'Si luhet',
+    privacyLbl:'Politika e Privatësisë',
     tutAskT:'Do të mësosh si luhet?', tutAskD:'Stërvitje interaktive 1-minutëshe — të tregoj gjithçka live, hap pas hapi.',
     tutYes:'PO, MË TREGO!', tutLater:'MË VONË', tutStartReal:'NIS NIVELIN 1', trainingLbl:'🎓 STËRVITJE',
     tc0:'👋 Mirë se erdhe në stërvitje! Të tregoj si punon gjithçka.',
@@ -1150,6 +1181,7 @@ const I18N={
     tut3t:'Earn Stars & Explore', tut3d:'Fewer moves means more stars (up to 3). Beat 50 levels across 5 unique seasons — the Garage, the City, the Highway, the Night and the Racetrack!',
     tutBt:'It Will Test You 😏', tutBd:'Sometimes, right before your second card, the game asks: "Are you sure?" Say yes and match = +2 fuel. Say yes and miss = you lose the level instantly! Too risky? Tap CHANGE and back out safely.',
     howTo:'How to play',
+    privacyLbl:'Privacy Policy',
     tutAskT:'Learn how to play?', tutAskD:'A quick 1-minute interactive training — I\u2019ll show you everything live, step by step.',
     tutYes:'YES, SHOW ME!', tutLater:'LATER', tutStartReal:'START LEVEL 1', trainingLbl:'🎓 TRAINING',
     tc0:'👋 Welcome to training! Let me show you how everything works.',
@@ -1224,6 +1256,7 @@ const I18N={
     tut3t:'Zbiraj zvezdice', tut3d:'Manj potez pomeni več zvezdic (do 3). Premagaj 50 stopenj skozi 5 edinstvenih sezon — Garažo, Mesto, Avtocesto, Noč in Dirkališče!',
     tutBt:'Igra Te Bo Preizkusila 😏', tutBd:'Včasih te igra tik pred drugo karto vpraša: "Si prepričan?" Rečeš da in zadeneš = +2 goriva. Rečeš da in zgrešiš = takoj izgubiš stopnjo! Preveč tvegano? Pritisni ZAMENJAJ in varno odstopi.',
     howTo:'Kako igrati',
+    privacyLbl:'Politika zasebnosti',
     tutAskT:'Se naučiš igrati?', tutAskD:'Hitra 1-minutna interaktivna vadba — vse ti pokažem v živo, korak za korakom.',
     tutYes:'JA, POKAŽI MI!', tutLater:'POZNEJE', tutStartReal:'ZAČNI STOPNJO 1', trainingLbl:'🎓 VADBA',
     tc0:'👋 Dobrodošel v vadbi! Pokažem ti, kako vse deluje.',
@@ -1331,7 +1364,7 @@ let progress={}; // {globalIdx: stars}
 let coins=0, highScore=0, fuelPacks=0, xp=0;
 let owned=['classic','midnight'], curSkin='classic', curBg='midnight';
 let tutorialSeen=false, tut=null;
-let username='', avatar='🚗', premium=false, duelWins=0, registered=false;
+let username='', avatar='🚗', premium=false, duelWins=0, registered=false, introSceneSeen=false;
 const nameSuffix=Math.floor(100+Math.random()*900);
 let currentLevel=0, currentSeason=0;
 
@@ -1443,7 +1476,7 @@ function playNext(){playTap();startMusic();startLevel(nextPlayable())}
 /* ================= RUAJTJA ================= */
 async function saveData(){
   try{
-    await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,xp,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang}}));
+    await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,xp,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,introSceneSeen,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang}}));
   }catch(e){}
 }
 const RESET_TOKEN='reset-2026-07-05'; // 🔄 ndrysho këtë vlerë për një reset të ri një-herësh
@@ -1469,6 +1502,7 @@ async function loadData(){
       username=d.username||''; avatar=d.avatar||'🚗';
       premium=d.premium||false; duelWins=d.duelWins||0;
       registered=d.registered||false;
+      introSceneSeen=d.introSceneSeen||false;
       // XP: nëse mungon (lojtarë të vjetër), llogaritet nga yjet + fitoret
       xp=(d.xp!=null)?d.xp:(Object.values(progress).reduce((a,b)=>a+(b||0),0)*40+duelWins*40);
       if(d.settings){
@@ -3254,13 +3288,65 @@ function leaveTutorialIfAny(){
   }
 })();
 
+/* ================= 🚗 SKENA HYRËSE (Bip) ================= */
+const INTRO_LINES={
+  en:["Oh! A driver! Finally!","I lost my keys. And my wheels. And... honestly, my memory too.","Help me match the pairs before the fuel runs out. No pressure.","(Okay... a LITTLE pressure. 💥)"],
+  sq:["O! Një shofer! Më në fund!","I humba çelësat. Edhe gomat. Dhe... sinqerisht, edhe kujtesën.","Më ndihmo t'i gjej çiftet para se të mbarojë karburanti. Pa presion.","(Mirë... PAK presion. 💥)"],
+  sl:["O! Voznik! Končno!","Izgubil sem ključe. In gume. In... iskreno, tudi spomin.","Pomagaj mi najti pare, preden zmanjka goriva. Brez pritiska.","(No... MALO pritiska. 💥)"]
+};
+let introIdx=0, introTyping=false, introTimer=null, introAutoT=null;
+function introLines(){ return INTRO_LINES[settings.lang]||INTRO_LINES.en; }
+function showIntroScene(){
+  introIdx=0;
+  document.getElementById('introGo').style.display='none';
+  document.getElementById('bipCar').classList.remove('shake');
+  document.getElementById('bipHint').style.display='';
+  showScreen('introSceneScreen');
+  typeIntroLine();
+}
+function typeIntroLine(){
+  clearTimeout(introAutoT); clearInterval(introTimer);
+  const line=introLines()[introIdx]||'';
+  const el=document.getElementById('bipText'); el.textContent='';
+  introTyping=true; let i=0;
+  if(settings.sfx)try{sfx(660,0.03,'square',0.02)}catch(e){}
+  introTimer=setInterval(()=>{ el.textContent=line.slice(0,++i); if(i>=line.length){clearInterval(introTimer);introTyping=false;onIntroLineDone();} },38);
+}
+function onIntroLineDone(){
+  const lines=introLines();
+  if(introIdx===lines.length-1){
+    const car=document.getElementById('bipCar'); car.classList.remove('shake');void car.offsetWidth;car.classList.add('shake');
+    const b=document.createElement('div'); b.className='boom-pop'; b.textContent='💥';
+    document.getElementById('introSceneScreen').appendChild(b); setTimeout(()=>b.remove(),1000);
+    if(settings.sfx)try{sfx(90,0.35,'sawtooth',0.12)}catch(e){}
+    vibrate([40,40,80]);
+    document.getElementById('bipHint').style.display='none';
+    document.getElementById('introGo').style.display='';
+  } else {
+    introAutoT=setTimeout(()=>introNext(),2500);
+  }
+}
+function introNext(){
+  if(introTyping){ clearInterval(introTimer); introTyping=false; document.getElementById('bipText').textContent=introLines()[introIdx]; onIntroLineDone(); return; }
+  const lines=introLines();
+  if(introIdx<lines.length-1){ introIdx++; typeIntroLine(); }
+}
+function afterIntroFlow(){
+  if(!registered){renderAvatars('regAvatarGrid');showScreen('registerScreen')}
+  else if(tutorialSeen)showScreen('menuScreen');
+  else askTutorial();
+}
+function finishIntro(){
+  clearTimeout(introAutoT); clearInterval(introTimer);
+  introSceneSeen=true; saveData();
+  afterIntroFlow(); // vazhdon rrjedha EKZISTUESE pa ndryshuar asgjë
+}
 /* ================= NISJA ================= */
 (async()=>{
   await loadData();
   setTimeout(()=>{
-    if(!registered){renderAvatars('regAvatarGrid');showScreen('registerScreen')}
-    else if(tutorialSeen)showScreen('menuScreen');
-    else askTutorial();
+    if(!introSceneSeen){ showIntroScene(); return; } // 🚗 herën e parë: skena para regjistrimit
+    afterIntroFlow();
   },2900);
 })();
 document.body.addEventListener('touchstart',()=>ctx(),{once:true});
