@@ -1850,7 +1850,7 @@ function updateTotalStars(){
 }
 
 /* 🔒 ---- Kyçja e modeve sipas progresit (levele të kaluara) ---- */
-const MODE_UNLOCK={daily:4,endless:7,duel:10,love:14};
+const MODE_UNLOCK={daily:4,endless:7,duel:10,love:11};
 function levelsDone(){return Object.keys(progress).filter(k=>progress[k]>0).length}
 function modeReq(m){const need=MODE_UNLOCK[m]||0;return levelsDone()>=need?0:need}
 function modeLocked(m){
