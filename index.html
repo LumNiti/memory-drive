@@ -333,7 +333,8 @@ svg{display:block}
 @keyframes funFloat{0%{opacity:0;transform:translateX(-50%) translateY(14px) scale(.9)}12%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}80%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-18px)}}
 /* 💘 Harta e niveleve Love Match (stil Candy Crush Saga) */
 #loveMapScreen{justify-content:flex-start}
-#loveMapScreen .page-head{margin-top:max(24px,calc(env(safe-area-inset-top) + 14px))} /* back pak më poshtë (nën notch) */
+#loveMapScreen .page-head,#albumScreen .page-head,#leagueScreen .page-head{margin-top:max(24px,calc(env(safe-area-inset-top) + 14px))} /* back+titull pak më poshtë (nën notch) */
+#albumScreen,#leagueScreen{justify-content:flex-start}
 .love-map{position:relative;width:100%;max-width:340px;margin:0 auto;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;align-items:center;padding:34px 0 60px}
 .love-map::before{content:'';position:absolute;top:10px;bottom:10px;left:50%;width:0;border-left:4px dashed rgba(255,140,190,.35);transform:translateX(-50%);z-index:0}
 .lv-node{position:relative;z-index:1;width:74px;height:74px;margin:12px 0;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;cursor:pointer;border:3px solid;transition:transform .15s}
