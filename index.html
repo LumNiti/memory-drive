@@ -2166,7 +2166,7 @@ const CHILL_CHORDS=[{root:65.41,arp:[0,4,7,11]},{root:55.00,arp:[0,3,7,10]},{roo
 const DUEL_CHORDS =[{root:55.00,arp:[0,3,7,12]},{root:65.41,arp:[0,3,7,10]},{root:49.00,arp:[0,4,7,12]},{root:73.42,arp:[0,3,7,10]}]; // Am C G Dm — arcade me tension
 // 🌙 MENU/LOJË: synthwave/lo-fi i qetë, ~100 BPM, loop i pastër
 function musicStepChill(){
-  if(!settings.music){stopMusic();return}
+  if(!settings.music){stopSynth();return}
   const bar=(musicBeat/16|0)%4, ch=CHILL_CHORDS[bar], b=musicBeat%16;
   if(b===0||b===8) musicKick();                              // kick half-time
   if(b%4===2) tone(9000,0.012,'square',0.0035);             // hat i butë
@@ -2177,7 +2177,7 @@ function musicStepChill(){
 }
 // 🏁 DUELI: arcade retro i shpejtë, ~130 BPM, me tension
 function musicStepDuel(){
-  if(!settings.music){stopMusic();return}
+  if(!settings.music){stopSynth();return}
   const bar=(musicBeat/16|0)%4, ch=DUEL_CHORDS[bar], b=musicBeat%16;
   if(b%4===0) musicKick();                                   // kick 4-on-the-floor
   if(b%2===1) tone(9600,0.014,'square',0.006);               // hat i shpejtë
@@ -2187,20 +2187,76 @@ function musicStepDuel(){
   musicBeat++;
 }
 let musicMode=null;
-function startMusic(){
+/* Synth-i (fallback nëse MP3-të s'ngarkohen) */
+function startSynth(){
   if(!settings.music)return;
-  const mode = duel ? 'duel' : 'chill';
-  if(musicTimer && musicMode===mode) return;   // moda e duhur po luan
-  stopMusic(); musicMode=mode; musicBeat=0;
-  const stepFn = mode==='duel' ? musicStepDuel : musicStepChill;
-  const interval = mode==='duel' ? 115 : 150;  // duel ~130 BPM · chill ~100 BPM
+  const mmode = duel ? 'duel' : 'chill';
+  if(musicTimer && musicMode===mmode) return;   // moda e duhur po luan
+  stopSynth(); musicMode=mmode; musicBeat=0;
+  const stepFn = mmode==='duel' ? musicStepDuel : musicStepChill;
+  const interval = mmode==='duel' ? 115 : 150;  // duel ~130 BPM · chill ~100 BPM
   stepFn();
   musicTimer=setInterval(stepFn,interval);
 }
-function stopMusic(){if(musicTimer){clearInterval(musicTimer);musicTimer=null}musicMode=null;}
+function stopSynth(){if(musicTimer){clearInterval(musicTimer);musicTimer=null}musicMode=null;}
 
+/* ===== 🎵 MUZIKË MP3 (moderne) me fallback te synth-i ===== */
+const MUSIC_FILES={menu:'music-menu.mp3',game:'music-game.mp3',duel:'music-duel.mp3',endless:'music-endless.mp3'};
+const STING_FILES={win:'sfx-win.mp3',lose:'sfx-lose.mp3'};
+const MUSIC_VOL=0.38;                 // 38% që të mos mbulojë SFX-të
+let mp3={}, mp3Sting={}, mp3Unlocked=false, curMp3=null;
+function initMusicFiles(){
+  if(Object.keys(mp3).length) return;
+  const mk=(f,loop,vol)=>{ let a; try{a=new Audio(f);}catch(e){return null;} a.loop=loop; a.preload='auto'; a.volume=0; a.dataset.ok='0';
+    a.addEventListener('canplaythrough',()=>{if(a.dataset.ok!=='err')a.dataset.ok='1';}); a.addEventListener('error',()=>a.dataset.ok='err'); a.load&&a.load(); return a; };
+  Object.entries(MUSIC_FILES).forEach(([k,f])=>{const a=mk(f,true,MUSIC_VOL); if(a)mp3[k]=a;});
+  Object.entries(STING_FILES).forEach(([k,f])=>{const a=mk(f,false,MUSIC_VOL+0.15); if(a)mp3Sting[k]=a;});
+}
+function mp3Ok(a){ return a && a.dataset.ok==='1'; }   // vetëm nëse ngarkohet me sukses
+function unlockMusic(){
+  if(mp3Unlocked)return; mp3Unlocked=true; initMusicFiles();
+  [...Object.values(mp3),...Object.values(mp3Sting)].forEach(a=>{ try{const p=a.play(); if(p&&p.then)p.then(()=>{a.pause();a.currentTime=0;}).catch(()=>{});}catch(e){} });
+  setTimeout(()=>{ if(settings.music)startMusic(); },250);
+}
+function fadeAudio(a,to,ms,cb){
+  if(a._fv){clearInterval(a._fv);a._fv=null;}
+  const from=a.volume, steps=12, dt=Math.max(16,ms/steps); let i=0;
+  a._fv=setInterval(()=>{ i++; a.volume=Math.max(0,Math.min(1,from+(to-from)*(i/steps))); if(i>=steps){clearInterval(a._fv);a._fv=null; if(cb)cb();} },dt);
+}
+let musicScr='menu';
+function musicScreenFor(){ return duel ? 'duel' : musicScr; }
+function mp3PlayScreen(scr){
+  initMusicFiles();
+  const a=mp3[scr]; if(!mp3Ok(a)||!mp3Unlocked||!settings.music) return false;
+  if(curMp3===a){ if(a.paused){a.play().catch(()=>{});} return true; }
+  const old=curMp3; curMp3=a;
+  try{ a.volume=0; const p=a.play(); if(p&&p.catch)p.catch(()=>{}); }catch(e){ curMp3=old; return false; }
+  fadeAudio(a, MUSIC_VOL, 500);                    // 🔊 crossfade in
+  if(old && old!==a){ fadeAudio(old, 0, 500, ()=>{try{old.pause();}catch(e){}}); } // fade out i vjetri
+  return true;
+}
+function stopMp3(){ Object.values(mp3).forEach(a=>{try{a.pause();}catch(e){}}); curMp3=null; }
+
+/* ---- API publike (e njëjta që thërret loja) ---- */
+function startMusic(){
+  if(!settings.music){ stopMusic(); return; }
+  if(mp3PlayScreen(musicScreenFor())){ stopSynth(); return; } // MP3 mbuloi → ndal synth
+  stopMp3(); startSynth();                                     // përndryshe fallback synth
+}
+function stopMusic(){ stopSynth(); stopMp3(); }
+
+/* 🎵 Stinger MP3 me ducking të muzikës */
+function mp3StingPlay(kind){
+  initMusicFiles();
+  const s=mp3Sting[kind]; if(!mp3Ok(s)||!mp3Unlocked||!settings.music) return false;
+  if(curMp3){ fadeAudio(curMp3, MUSIC_VOL*0.25, 200); }        // 🔉 duck muzikën
+  try{ s.currentTime=0; s.volume=MUSIC_VOL+0.16; const p=s.play(); if(p&&p.catch)p.catch(()=>{}); }catch(e){ return false; }
+  s.onended=()=>{ if(curMp3&&!curMp3.paused){ fadeAudio(curMp3, MUSIC_VOL, 500); } };
+  return true;
+}
 /* --- Fanfara e fitores (bravo!) --- */
 function playWinMusic(){
+  if(mp3StingPlay('win')){ vibrate([40,60,40,60,120]); return; }
   if(settings.sfx){
     const seq=[[523.3,0],[659.3,0.14],[784.0,0.28],[1046.5,0.42],[1318.5,0.60]];
     seq.forEach(([f,w])=>{tone(f,0.38,'sine',0.09,w);tone(f/2,0.38,'sine',0.06,w)});
@@ -2212,6 +2268,7 @@ function playWinMusic(){
 }
 /* --- Muzika e humbjes (loser...) --- */
 function playLoseMusic(){
+  if(mp3StingPlay('lose')){ vibrate([80,80,80,80,200]); return; }
   if(settings.sfx){
     const seq=[[392.0,0],[349.2,0.35],[311.1,0.70],[233.1,1.05]]; // zbritje minore "wah wah"
     seq.forEach(([f,w])=>{tone(f,0.45,'sine',0.07,w)});
@@ -2224,7 +2281,10 @@ function playLoseMusic(){
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  if(id==='menuScreen'){updateTotalStars();startMusic();checkAchievements(false);handlePendingDuel();openFeaturesInit();
+  // 🎵 zgjidh track-un e muzikës sipas ekranit (duel mbulohet nga `duel`)
+  musicScr = (id==='gameScreen') ? ((mode==='endless')?'endless':'game') : 'menu';
+  startMusic();
+  if(id==='menuScreen'){updateTotalStars();checkAchievements(false);handlePendingDuel();openFeaturesInit();
     const mb=document.querySelector('.menu-btns'); if(mb){mb.classList.remove('anim');void mb.offsetWidth;mb.classList.add('anim');} // 🎬 rihap animacionin e butonave
   } // 🌙 muzika e qetë e menusë
   if(id==='settingsScreen')refreshProfileUI();
@@ -4795,8 +4855,8 @@ function finishIntro(){
     showIntroScene(); // 🚗 skena Bip shfaqet GJITHMONË (pastaj vazhdon regjistrimi/menyja)
   },2900);
 })();
-document.body.addEventListener('touchstart',()=>ctx(),{once:true});
-document.body.addEventListener('click',()=>ctx(),{once:true});
+document.body.addEventListener('touchstart',()=>{ctx();unlockMusic();},{once:true});
+document.body.addEventListener('click',()=>{ctx();unlockMusic();},{once:true});
 </script>
 </body>
 </html>
