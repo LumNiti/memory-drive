@@ -348,6 +348,9 @@ svg{display:block}
 .lv-lock{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.35);cursor:default;box-shadow:none}
 /* 🏆📋🃏🎡 Retention */
 .menu-features{display:flex;gap:10px;justify-content:center;margin-top:12px}
+.lock-tag{margin-left:auto;font-size:12px;font-weight:900;letter-spacing:.5px;opacity:.9;display:none}
+.btn.mode-locked{opacity:.55;filter:grayscale(.35)}
+.btn.mode-locked .lock-tag{display:inline-flex;align-items:center;gap:3px;color:#ffd166}
 .feat-btn{position:relative;width:50px;height:50px;border-radius:15px;background:rgba(14,12,30,.6);border:1.5px solid rgba(232,161,58,.4);font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer}
 .feat-btn:active{transform:scale(.93)}
 .feat-badge{position:absolute;top:-5px;right:-5px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:#ff4f5e;color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.4)}
@@ -677,8 +680,8 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 #coachBtn{align-self:center;padding:11px 28px;border:none;border-radius:13px;font-family:'Nunito';font-weight:900;font-size:13px;letter-spacing:1px;background:linear-gradient(180deg,var(--amber2),var(--amber));color:#1a1410;cursor:pointer}
 .hl{box-shadow:0 0 0 3px var(--amber2),0 0 22px rgba(255,209,102,.7)!important;z-index:23;position:relative}
 /* ---- Dialogu ---- */
-#quitDialog,#surePopup,#tutAsk,#premiumSheet,#lbOverlay,#secondChance,#privacyOverlay,#questsOverlay,#spinOverlay,#cardDropOv{position:absolute;inset:0;background:rgba(0,0,0,.7);z-index:20;display:none;align-items:center;justify-content:center;padding:32px}
-#quitDialog.show,#surePopup.show,#tutAsk.show,#premiumSheet.show,#lbOverlay.show,#secondChance.show,#privacyOverlay.show,#questsOverlay.show,#spinOverlay.show,#cardDropOv.show{display:flex}
+#quitDialog,#surePopup,#tutAsk,#premiumSheet,#lbOverlay,#secondChance,#privacyOverlay,#questsOverlay,#spinOverlay,#cardDropOv,#resetDialog{position:absolute;inset:0;background:rgba(0,0,0,.7);z-index:20;display:none;align-items:center;justify-content:center;padding:32px}
+#quitDialog.show,#surePopup.show,#tutAsk.show,#premiumSheet.show,#lbOverlay.show,#secondChance.show,#privacyOverlay.show,#questsOverlay.show,#spinOverlay.show,#cardDropOv.show,#resetDialog.show{display:flex}
 #quitDialog.show,#surePopup.show,#tutAsk.show,#premiumSheet.show,#lbOverlay.show,#secondChance.show{display:flex}
 .lb-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:11px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.08);margin-bottom:6px;font-weight:800;font-size:14px}
 .lb-row .lb-rank{width:26px;text-align:center;font-weight:900}
@@ -845,17 +848,17 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
     <button class="btn btn-primary" onclick="playNext()">
       <svg class="ic"><use href="#i-play"/></svg><span data-i18n="play"></span>
     </button>
-    <button class="btn btn-ghost" onclick="playTap();openDaily()">
-      <span style="font-size:17px">📅</span><span data-i18n="daily"></span>
+    <button class="btn btn-ghost" id="btnDaily" onclick="playTap();openDaily()">
+      <span style="font-size:17px">📅</span><span data-i18n="daily"></span><span class="lock-tag" id="lockDaily"></span>
     </button>
-    <button class="btn btn-ghost" onclick="playTap();openEndless()">
-      <span style="font-size:17px">♾️</span><span data-i18n="endless"></span>
+    <button class="btn btn-ghost" id="btnEndless" onclick="playTap();openEndless()">
+      <span style="font-size:17px">♾️</span><span data-i18n="endless"></span><span class="lock-tag" id="lockEndless"></span>
     </button>
-    <button class="btn btn-ghost" onclick="playTap();openDuel()">
-      <span style="font-size:17px">🆚</span><span data-i18n="duel"></span>
+    <button class="btn btn-ghost" id="btnDuel" onclick="playTap();openDuel()">
+      <span style="font-size:17px">🆚</span><span data-i18n="duel"></span><span class="lock-tag" id="lockDuel"></span>
     </button>
-    <button class="btn btn-ghost" style="border-color:rgba(255,120,180,.55);color:#ffd0e4" onclick="playTap();openLoveMap()">
-      <span style="font-size:17px">💘</span><span data-i18n="loveBtn"></span>
+    <button class="btn btn-ghost" id="btnLove" style="border-color:rgba(255,120,180,.55);color:#ffd0e4" onclick="playTap();openLoveMap()">
+      <span style="font-size:17px">💘</span><span data-i18n="loveBtn"></span><span class="lock-tag" id="lockLove"></span>
     </button>
     <button class="btn btn-ghost" onclick="playTap();renderSeasons();showScreen('seasonsScreen')">
       <svg class="ic"><use href="#i-grid"/></svg><span data-i18n="seasons"></span>
@@ -1168,6 +1171,10 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
       <span class="set-label"><svg class="ic"><use href="#i-lock"/></svg><span data-i18n="privacyLbl"></span></span>
       <svg class="ic" style="color:var(--amber)"><use href="#i-next"/></svg>
     </div>
+    <div class="set-row" style="cursor:pointer" onclick="playTap();document.getElementById('resetDialog').classList.add('show')">
+      <span class="set-label"><span style="font-size:16px">🗑️</span><span data-i18n="resetLbl" style="color:#ff8a8a"></span></span>
+      <svg class="ic" style="color:#ff6b6b"><use href="#i-next"/></svg>
+    </div>
     <button class="btn btn-primary" style="width:100%;margin-top:22px" onclick="playTap();showScreen('menuScreen')">
       <svg class="ic"><use href="#i-check"/></svg><span data-i18n="close"></span>
     </button>
@@ -1436,6 +1443,17 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
   </div>
 </div>
 
+<div id="resetDialog">
+  <div class="dialog-box">
+    <h3 data-i18n="resetTitle"></h3>
+    <p data-i18n="resetMsg"></p>
+    <div class="dialog-btns">
+      <button class="btn btn-ghost" onclick="playTap();document.getElementById('resetDialog').classList.remove('show')" data-i18n="resetNo"></button>
+      <button class="btn btn-danger" onclick="playTap();doResetAll()" data-i18n="resetYes"></button>
+    </div>
+  </div>
+</div>
+
 <script>
 /* ================= PËRKTHIMET ================= */
 const I18N={
@@ -1449,7 +1467,7 @@ const I18N={
     tutBt:'Loja Do të Të Sfidojë 😏', tutBd:'Ndonjëherë, para kartës së dytë, loja të pyet: "A je i sigurt?" Thua po dhe e qëllon = +2 karburant. Thua po dhe gabon = e humb nivelin menjëherë! Shumë rrezik? Shtyp NDËRRO dhe tërhiqu pa dënim.',
     howTo:'Si luhet',
     privacyLbl:'Politika e Privatësisë',
-    daily:'DITORE', endless:'PAFUND',
+    daily:'DITORE', endless:'PAFUND', modeLocked:'🔒 Hapet në Level {n}',
     dailySub:'E njëjta tabelë për të gjithë sot — garë e pastër shpejtësie!',
     dailyTop:'TOP 20 SOT', dailyPlay:'LUAJ SFIDËN', dailyDoneToday:'E kryer sot!', yourTime:'Koha jote', nextIn:'Sfida tjetër pas',
     dailyDoneT:'SFIDA U KRYE! 📅', streakLbl:'Seri', backDaily:'← Ditore', dailyFailT:'Mbaroi karburanti', dailyFailD:'Nuk e përfundove sot. Kthehu nesër për një tabelë të re! 🔥', dailyNoScores:'Ende pa rezultate — bëhu i pari! 🏁',
@@ -1500,6 +1518,7 @@ const I18N={
     nextLevel:'NIVELI TJETËR', playAgain:'LUAJ PËRSËRI', tryAgain:'PROVO PËRSËRI', menu:'MENYJA',
     quitTitle:'Dëshiron të dalësh?', quitMsg:'Progresi i këtij niveli do të humbasë.',
     quitNo:'VAZHDO', quitYes:'DIL',
+    resetLbl:'Fillo nga e para', resetTitle:'Të fillosh nga zero?', resetMsg:'Do të fshihet KREJT: levelet, monedhat, kupat, koleksioni — çdo gjë. S\'kthehet mbrapa.', resetNo:'ANULO', resetYes:'FSHIJ ÇDO GJË',
     stars:'yje', levelsLbl:'nivele', allDone:'I përfundove të 50 nivelet! Kampion! 🏆',
     s1:'Garazhi', s2:'Qyteti', s3:'Autostrada', s4:'Nata', s5:'Pista',
     store:'DYQANI', best:'Rekordi', scoreLbl:'Pikët', newBest:'REKORD I RI PIKËSH!',
@@ -1549,7 +1568,7 @@ const I18N={
     tutBt:'It Will Test You 😏', tutBd:'Sometimes, right before your second card, the game asks: "Are you sure?" Say yes and match = +2 fuel. Say yes and miss = you lose the level instantly! Too risky? Tap CHANGE and back out safely.',
     howTo:'How to play',
     privacyLbl:'Privacy Policy',
-    daily:'DAILY', endless:'ENDLESS',
+    daily:'DAILY', endless:'ENDLESS', modeLocked:'🔒 Unlocks at Level {n}',
     dailySub:'Same board for everyone today — a pure speed race!',
     dailyTop:"TODAY'S TOP 20", dailyPlay:'PLAY CHALLENGE', dailyDoneToday:'Done for today!', yourTime:'Your time', nextIn:'Next challenge in',
     dailyDoneT:'CHALLENGE DONE! 📅', streakLbl:'Streak', backDaily:'← Daily', dailyFailT:'Out of fuel', dailyFailD:"You didn't finish today. Come back tomorrow for a new board! 🔥", dailyNoScores:'No scores yet — be the first! 🏁',
@@ -1600,6 +1619,7 @@ const I18N={
     nextLevel:'NEXT LEVEL', playAgain:'PLAY AGAIN', tryAgain:'TRY AGAIN', menu:'MENU',
     quitTitle:'Quit this level?', quitMsg:'Your progress in this level will be lost.',
     quitNo:'KEEP PLAYING', quitYes:'QUIT',
+    resetLbl:'Start from scratch', resetTitle:'Start from zero?', resetMsg:'This erases EVERYTHING: levels, coins, trophies, collection — all of it. No undo.', resetNo:'CANCEL', resetYes:'ERASE EVERYTHING',
     stars:'stars', levelsLbl:'levels', allDone:'You beat all 50 levels! Champion! 🏆',
     s1:'The Garage', s2:'The City', s3:'The Highway', s4:'The Night', s5:'The Racetrack',
     store:'STORE', best:'Best', scoreLbl:'Score', newBest:'NEW HIGH SCORE!',
@@ -1649,7 +1669,7 @@ const I18N={
     tutBt:'Igra Te Bo Preizkusila 😏', tutBd:'Včasih te igra tik pred drugo karto vpraša: "Si prepričan?" Rečeš da in zadeneš = +2 goriva. Rečeš da in zgrešiš = takoj izgubiš stopnjo! Preveč tvegano? Pritisni ZAMENJAJ in varno odstopi.',
     howTo:'Kako igrati',
     privacyLbl:'Politika zasebnosti',
-    daily:'DNEVNI', endless:'NESKONČNO',
+    daily:'DNEVNI', endless:'NESKONČNO', modeLocked:'🔒 Odklene se na ravni {n}',
     dailySub:'Danes ista plošča za vse — čista dirka hitrosti!',
     dailyTop:'DANAŠNJIH TOP 20', dailyPlay:'IGRAJ IZZIV', dailyDoneToday:'Danes končano!', yourTime:'Tvoj čas', nextIn:'Naslednji izziv čez',
     dailyDoneT:'IZZIV KONČAN! 📅', streakLbl:'Niz', backDaily:'← Dnevni', dailyFailT:'Zmanjkalo goriva', dailyFailD:'Danes nisi končal. Vrni se jutri za novo ploščo! 🔥', dailyNoScores:'Še ni rezultatov — bodi prvi! 🏁',
@@ -1700,6 +1720,7 @@ const I18N={
     nextLevel:'NASLEDNJA', playAgain:'IGRAJ ZNOVA', tryAgain:'POSKUSI ZNOVA', menu:'MENI',
     quitTitle:'Želiš zapustiti stopnjo?', quitMsg:'Napredek te stopnje bo izgubljen.',
     quitNo:'NADALJUJ', quitYes:'IZHOD',
+    resetLbl:'Začni znova', resetTitle:'Začeti iz nič?', resetMsg:'To izbriše VSE: stopnje, kovance, pokale, zbirko — vse. Ni vrnitve.', resetNo:'PREKLIČI', resetYes:'IZBRIŠI VSE',
     stars:'zvezdic', levelsLbl:'stopenj', allDone:'Premagal si vseh 50 stopenj! Prvak! 🏆',
     s1:'Garaža', s2:'Mesto', s3:'Avtocesta', s4:'Noč', s5:'Dirkališče',
     store:'TRGOVINA', best:'Rekord', scoreLbl:'Točke', newBest:'NOV REKORD!',
@@ -1828,6 +1849,24 @@ function updateTotalStars(){
   {const sp=document.getElementById('menuStreak'); if(sp){ syncStreak(); sp.style.display=streak>0?'':'none'; sp.textContent=`🔥 ${streak}`; }}
 }
 
+/* 🔒 ---- Kyçja e modeve sipas progresit (levele të kaluara) ---- */
+const MODE_UNLOCK={daily:4,endless:7,duel:10,love:14};
+function levelsDone(){return Object.keys(progress).filter(k=>progress[k]>0).length}
+function modeReq(m){const need=MODE_UNLOCK[m]||0;return levelsDone()>=need?0:need}
+function modeLocked(m){
+  const need=modeReq(m);
+  if(need){toast(t('modeLocked').replace('{n}',need));vibrate(20);try{sfx(200,0.16,'sine',0.05)}catch(e){}return true;}
+  return false;
+}
+function updateModeLocks(){
+  [['daily','btnDaily','lockDaily'],['endless','btnEndless','lockEndless'],['duel','btnDuel','lockDuel'],['love','btnLove','lockLove']].forEach(function(a){
+    const need=modeReq(a[0]),b=document.getElementById(a[1]),l=document.getElementById(a[2]);
+    if(!b||!l)return;
+    if(need){b.classList.add('mode-locked');l.textContent='🔒 Lv '+need;}
+    else{b.classList.remove('mode-locked');l.textContent='';}
+  });
+}
+
 /* ---- Ekrani i sezoneve ---- */
 function renderSeasons(){
   const list=document.getElementById('seasonList');
@@ -1905,6 +1944,13 @@ async function saveData(){
   try{
     await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,xp,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,introSceneSeen,streak,streakLast,dailyDoneDate,dailyBestMs,endlessBestWave,achievements,goldPairsTotal,loveLevel,loveStars,leagueTier,leagueWeek,leaguePoints,questDate,questProg,questClaimed,questBonusClaimed,album,albumClaimed,spinDate,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang}}));
   }catch(e){}
+}
+/* 🗑️ Reset i plotë manual — fshin krejt progresin dhe fillon nga e para */
+async function doResetAll(){
+  try{ document.getElementById('resetDialog').classList.remove('show'); }catch(e){}
+  try{ for(const k of ['mm-save-v5','mm-save-v4','mm-save-v3','mm-reset']){ try{await window.storage.delete(k);}catch(e){} } }catch(e){}
+  try{ localStorage.clear(); }catch(e){}
+  try{ location.reload(); }catch(e){ location.href=location.pathname; }
 }
 const RESET_TOKEN='reset-2026-07-05'; // 🔄 ndrysho këtë vlerë për një reset të ri një-herësh
 async function loadData(){
@@ -2201,7 +2247,7 @@ function startSynth(){
 function stopSynth(){if(musicTimer){clearInterval(musicTimer);musicTimer=null}musicMode=null;}
 
 /* ===== 🎵 MUZIKË MP3 (moderne) me fallback te synth-i ===== */
-const MUSIC_FILES={menu:'music-menu.mp3',game:'music-game.mp3',duel:'music-duel.mp3',endless:'music-endless.mp3'};
+const MUSIC_FILES={menu:'music-menu.mp3',game:'music-game.mp3',duel:'music-duel.mp3',endless:'music-endless.mp3',love:'music-love.mp3'};
 const STING_FILES={win:'sfx-win.mp3',lose:'sfx-lose.mp3'};
 const MUSIC_VOL=0.38;                 // 38% që të mos mbulojë SFX-të
 let mp3={}, mp3Sting={}, mp3Unlocked=false, curMp3=null;
@@ -2282,9 +2328,9 @@ function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
   // 🎵 zgjidh track-un e muzikës sipas ekranit (duel mbulohet nga `duel`)
-  musicScr = (id==='gameScreen') ? ((mode==='endless')?'endless':'game') : 'menu';
+  musicScr = (id==='gameScreen') ? ((mode==='endless')?'endless':(mode==='love')?'love':'game') : ((id==='loveMapScreen')?'love':'menu');
   startMusic();
-  if(id==='menuScreen'){updateTotalStars();checkAchievements(false);handlePendingDuel();openFeaturesInit();
+  if(id==='menuScreen'){updateTotalStars();updateModeLocks();checkAchievements(false);handlePendingDuel();openFeaturesInit();
     const mb=document.querySelector('.menu-btns'); if(mb){mb.classList.remove('anim');void mb.offsetWidth;mb.classList.add('anim');} // 🎬 rihap animacionin e butonave
   } // 🌙 muzika e qetë e menusë
   if(id==='settingsScreen')refreshProfileUI();
@@ -3143,6 +3189,7 @@ function mulberry32(a){return function(){a|=0;a=a+0x6D2B79F5|0;var t=Math.imul(a
 function seededShuffle(arr,rnd){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor(rnd()*(i+1));[a[i],a[j]]=[a[j],a[i]]}return a}
 
 function openDuel(){
+  if(modeLocked('duel'))return;
   if(coins<50){toast(t('notEnoughDuel'));return}
   document.getElementById('duelHome').style.display='flex';
   document.getElementById('duelWait').style.display='none';
@@ -4020,6 +4067,7 @@ function hideModeResult(){document.getElementById('modeOverlay').classList.remov
 /* ========== 📅 DAILY CHALLENGE ========== */
 let dailyCdTimer=null;
 function openDaily(){
+  if(modeLocked('daily'))return;
   mode='campaign';
   syncStreak();
   document.getElementById('dailyStreakPill').textContent='🔥 '+streak;
@@ -4134,6 +4182,7 @@ async function loadDailyLeaderboard(){
 /* ========== ♾️ ENDLESS (SURVIVAL) ========== */
 let endlessWave=1,endlessPairs=0,endlessCoins=0;
 function openEndless(){
+  if(modeLocked('endless'))return;
   mode='campaign';
   document.getElementById('endlessBestBox').innerHTML=`${t('bestWaveLbl')}: <b>${endlessBestWave||0}</b> 🌊`;
   showScreen('endlessScreen');
@@ -4373,7 +4422,7 @@ function lightningStrike(){
 /* ============ 💘 LOVE MATCH (lojë me zemra: kurthe & rrena dashurie) ============ */
 const LOVE_POOL=['❤️','🧡','💛','💚','💙','💜','💗','💖','🌹','😍','💐','🥰','😘','💌','🫶','💞','💓','🌷'];
 /* 💘 Harta e niveleve (si Candy Crush Saga) */
-function openLoveMap(){ mode='campaign'; renderLoveMap(); showScreen('loveMapScreen'); }
+function openLoveMap(){ if(modeLocked('love'))return; mode='campaign'; renderLoveMap(); showScreen('loveMapScreen'); }
 function renderLoveMap(){
   const el=document.getElementById('loveMapLv'); if(el)el.textContent='Lv '+loveLevel;
   const map=document.getElementById('loveMap'); if(!map)return;
