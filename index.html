@@ -260,6 +260,26 @@ svg{display:block}
 .card.matched{animation:matchPulse .5s ease both}
 .card.matched .card-inner{opacity:.4}
 @keyframes matchPulse{30%{transform:scale(1.12)}100%{transform:scale(1)}}
+/* 🧊 ICE · 🔗 CHAIN · ⚡ LIGHTNING (mekanika kartash stil Candy Crush) */
+.card .ice-ov,.card .chain-ov{position:absolute;inset:0;z-index:3;border-radius:12px;display:flex;align-items:center;justify-content:center;pointer-events:none;overflow:hidden}
+.ice-ov{background:linear-gradient(150deg,rgba(180,230,255,.72),rgba(120,190,240,.62));border:2px solid rgba(224,246,255,.85);box-shadow:inset 0 0 18px rgba(255,255,255,.6)}
+.ice-ov::before{content:'';position:absolute;inset:0;background:linear-gradient(115deg,transparent 42%,rgba(255,255,255,.7) 46%,transparent 50%),linear-gradient(58deg,transparent 55%,rgba(255,255,255,.45) 58%,transparent 61%);opacity:.85}
+.ice-ov .ice-x{font-size:150%;z-index:1;filter:drop-shadow(0 1px 2px rgba(0,60,120,.5))}
+.ice-ov.ice2{background:linear-gradient(150deg,rgba(150,215,255,.9),rgba(88,168,228,.82));border-width:3px;box-shadow:inset 0 0 24px rgba(255,255,255,.75)}
+.card[data-ice]{cursor:pointer}
+@keyframes iceCrack{0%{transform:scale(1)}30%{transform:scale(1.07) rotate(-2deg)}60%{transform:scale(.97) rotate(1.5deg)}100%{transform:scale(1)}}
+.ice-ov.cracking{animation:iceCrack .42s ease}
+.ice-ov.cracking::after{content:'';position:absolute;inset:0;background:linear-gradient(120deg,transparent 46%,rgba(255,255,255,.95) 48%,transparent 52%),linear-gradient(200deg,transparent 44%,rgba(255,255,255,.85) 47%,transparent 51%),linear-gradient(30deg,transparent 60%,rgba(255,255,255,.8) 63%,transparent 66%);mix-blend-mode:screen}
+.ice-shard{position:fixed;pointer-events:none;z-index:59;font-size:13px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.3))}
+.chain-ov{background:rgba(18,14,28,.5);border:2px solid rgba(178,178,190,.6);color:#eaeaf0;background-image:repeating-linear-gradient(45deg,rgba(150,150,162,.38) 0 6px,transparent 6px 15px)}
+.chain-ov .chain-lock{font-size:130%;filter:drop-shadow(0 1px 2px rgba(0,0,0,.5))}
+.chain-ov .chain-n{position:absolute;top:3px;right:4px;font-size:11px;font-weight:900;color:#fff;background:rgba(0,0,0,.6);border-radius:8px;padding:0 5px;line-height:16px}
+@keyframes chainTick{0%{transform:scale(1)}40%{transform:scale(1.35);color:#ffd166}100%{transform:scale(1)}}
+.chain-ov.ticking .chain-n{animation:chainTick .4s ease}
+@keyframes chainBreak{0%{opacity:1;transform:scale(1) rotate(0)}100%{opacity:0;transform:scale(1.45) rotate(8deg)}}
+.chain-ov.breaking{animation:chainBreak .45s ease forwards}
+.card.lightcard .card-front{background:linear-gradient(160deg,#0a2a6a,#1e5aff);border-color:#7fd0ff;box-shadow:0 0 16px rgba(90,160,255,.7);color:#fff;text-shadow:0 0 8px rgba(255,255,255,.6)}
+.card.lightcard .card-front::after{content:'⚡';position:absolute;top:2px;right:5px;font-size:13px;animation:blink 1s ease-in-out infinite}
 .card.shake{animation:shake .4s ease}
 @keyframes shake{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-4px)}}
 
@@ -287,6 +307,22 @@ svg{display:block}
 /* ---- Toast, thesare, grimca ---- */
 .toast{position:fixed;top:13%;left:50%;transform:translateX(-50%) scale(.8);background:rgba(16,14,34,.94);border:1.5px solid var(--amber);color:#fff;font-weight:900;padding:12px 22px;border-radius:18px;z-index:40;opacity:0;pointer-events:none;transition:all .3s;letter-spacing:.5px;font-size:15px;text-align:center}
 .toast.show{opacity:1;transform:translateX(-50%) scale(1)}
+/* 💬 Mesazhe qesharake/inspiruese që dalin gjatë lojës (të hutojnë pak) */
+.funfloat{position:fixed;left:50%;top:22%;transform:translateX(-50%) translateY(12px);z-index:45;pointer-events:none;background:rgba(16,14,34,.9);border:1.5px solid rgba(255,255,255,.22);color:#fff;font-weight:800;font-size:13px;padding:8px 14px;border-radius:16px;opacity:0;max-width:80vw;text-align:center;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.funfloat.show{animation:funFloat 2.6s ease-out forwards}
+@keyframes funFloat{0%{opacity:0;transform:translateX(-50%) translateY(14px) scale(.9)}12%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}80%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-18px)}}
+/* 💘 Harta e niveleve Love Match (stil Candy Crush Saga) */
+.love-map{position:relative;width:100%;max-width:340px;margin:0 auto;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;align-items:center;padding:24px 0 60px}
+.love-map::before{content:'';position:absolute;top:10px;bottom:10px;left:50%;width:0;border-left:4px dashed rgba(255,140,190,.35);transform:translateX(-50%);z-index:0}
+.lv-node{position:relative;z-index:1;width:74px;height:74px;margin:12px 0;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;cursor:pointer;border:3px solid;transition:transform .15s}
+.lv-node:active{transform:scale(.94)}
+.lv-node .lv-num{font-size:19px;line-height:1}
+.lv-node .lv-stars{font-size:10px;margin-top:2px;letter-spacing:-1px}
+.lv-done{background:linear-gradient(160deg,#ff7ab0,#ff4f8f);border-color:#ffd0e4;color:#fff;box-shadow:0 4px 14px rgba(255,90,150,.4)}
+.lv-cur{background:linear-gradient(160deg,#fff0f6,#ffc0dd);border-color:#ff4f8f;color:#a11450;animation:lvPulse 1.2s ease-in-out infinite}
+.lv-cur .lv-stars{color:#ff4f8f;font-size:9px;letter-spacing:0}
+@keyframes lvPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,79,143,.5)}50%{box-shadow:0 0 0 12px rgba(255,79,143,0)}}
+.lv-lock{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.35);cursor:default;box-shadow:none}
 .pt{position:fixed;width:7px;height:7px;border-radius:50%;pointer-events:none;z-index:50;animation:ptFly .55s ease-out both}
 @keyframes ptFly{to{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
 .card-front.gold{background:linear-gradient(160deg,#fff6d8,#ffd97a);border-color:#ffb800;box-shadow:0 0 16px rgba(255,190,50,.55)}
@@ -369,6 +405,9 @@ body[data-skin="shark"] .card-back-face{background:linear-gradient(160deg,#05202
 body[data-skin="shark"] .card-back-face::after{content:'🦈'}
 body[data-skin="galaxy"] .card-back-face{background:linear-gradient(160deg,#0a061e,#2a1050,#0a061e);border-color:#a06bff;box-shadow:0 0 16px rgba(160,107,255,.45)}
 body[data-skin="galaxy"] .card-back-face::after{content:'🌌'}
+body[data-skin="hearts"] .card-back-face{background:linear-gradient(160deg,#4a0820,#a11450);border-color:#ff8fc0;color:#ffd6e8;box-shadow:0 0 14px rgba(255,120,180,.45)}
+body[data-skin="hearts"] .card-back-face::after{content:'💕'}
+body[data-skin="hearts"] .card-front{background:linear-gradient(180deg,#fff0f6,#ffd9ea);border-color:#ff6fae}
 /* ---- Sfonde të reja ---- */
 body[data-bg="lava"]{background:radial-gradient(ellipse 90% 55% at 50% 92%, rgba(255,90,20,.35), transparent 60%),linear-gradient(180deg,#1a0806 0%,#3d0f08 40%,#7a1f0c 70%,#c24016 88%,#ff7a2a 100%)}
 body[data-bg="aurora"]{background:radial-gradient(ellipse 80% 50% at 30% 10%, rgba(60,240,160,.22), transparent 60%),radial-gradient(ellipse 70% 50% at 80% 20%, rgba(160,110,255,.20), transparent 60%),linear-gradient(170deg,#04121f 0%,#08243a 45%,#0b3050 75%,#061826 100%)}
@@ -392,12 +431,13 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 .pc-stat b{display:block;font-size:16px;font-weight:900;color:#fff}
 .pc-stat span{font-size:9.5px;font-weight:700;color:rgba(255,255,255,.55)}
 /* ---- Flash i shpërthimit të bombës ---- */
-#flash{position:fixed;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:60}
-#flash.on{animation:flashPop .55s ease-out}
-@keyframes flashPop{0%{opacity:0}7%{opacity:.95}26%{opacity:.5}55%{opacity:.2}100%{opacity:0}}
-/* 💣 Flash i bombës: i bardhë plot ~2s që s'i sheh letrat */
-#flash.bombwhite{animation:bombWhite 2s ease-out}
-@keyframes bombWhite{0%{opacity:0}5%{opacity:1}62%{opacity:1}100%{opacity:0}}
+#flash{position:fixed;inset:0;background:radial-gradient(circle at 50% 44%,#fff,#eaf2ff 70%);opacity:0;pointer-events:none;z-index:60}
+#flash.on{animation:flashPop .5s ease-out}
+/* ⚡ Flash stil CS — më pak i bardhë */
+@keyframes flashPop{0%{opacity:0}8%{opacity:.5}30%{opacity:.24}60%{opacity:.1}100%{opacity:0}}
+/* 💣 Flash i bombës — më i butë, jo krejt i bardhë */
+#flash.bombwhite{animation:bombWhite 1.6s ease-out}
+@keyframes bombWhite{0%{opacity:0}6%{opacity:.62}55%{opacity:.5}100%{opacity:0}}
 .board-shake{animation:boardShake .5s cubic-bezier(.36,.07,.19,.97)}
 @keyframes boardShake{10%,90%{transform:translateX(-3px)}20%,80%{transform:translateX(5px)}30%,50%,70%{transform:translateX(-8px)}40%,60%{transform:translateX(8px)}}
 /* ---- Folderat e dyqanit ---- */
@@ -425,6 +465,21 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 /* Shpërndarja e kartave (deal-in) */
 @keyframes dealIn{0%{opacity:0;transform:translateY(-64px) scale(.4) rotate(-14deg);filter:brightness(2)}55%{opacity:1;filter:brightness(1.35)}100%{opacity:1;transform:translateY(0) scale(1) rotate(0);filter:brightness(1)}}
 .card.dealIn{animation:dealIn .6s cubic-bezier(.2,1.35,.35,1) both}
+/* 🎴 Stile hyrëse të ndryshme për çdo level */
+@keyframes dealFlip{0%{opacity:0;transform:perspective(600px) rotateY(90deg) scale(.8)}60%{opacity:1}100%{opacity:1;transform:perspective(600px) rotateY(0) scale(1)}}
+.card.dealFlip{animation:dealFlip .55s cubic-bezier(.2,1.2,.35,1) both}
+@keyframes dealSlideL{0%{opacity:0;transform:translateX(-120px) rotate(-8deg)}100%{opacity:1;transform:translateX(0) rotate(0)}}
+.card.dealSlideL{animation:dealSlideL .5s cubic-bezier(.2,1.3,.35,1) both}
+@keyframes dealSlideR{0%{opacity:0;transform:translateX(120px) rotate(8deg)}100%{opacity:1;transform:translateX(0) rotate(0)}}
+.card.dealSlideR{animation:dealSlideR .5s cubic-bezier(.2,1.3,.35,1) both}
+@keyframes dealZoom{0%{opacity:0;transform:scale(0) rotate(180deg)}70%{opacity:1}100%{opacity:1;transform:scale(1) rotate(0)}}
+.card.dealZoom{animation:dealZoom .55s cubic-bezier(.2,1.4,.35,1) both}
+@keyframes dealDrop{0%{opacity:0;transform:translateY(-140px)}70%{opacity:1;transform:translateY(10px)}100%{opacity:1;transform:translateY(0)}}
+.card.dealDrop{animation:dealDrop .5s cubic-bezier(.3,1.5,.4,1) both}
+@keyframes dealRise{0%{opacity:0;transform:translateY(120px) scale(.7)}100%{opacity:1;transform:translateY(0) scale(1)}}
+.card.dealRise{animation:dealRise .5s cubic-bezier(.2,1.3,.35,1) both}
+@keyframes dealSwirl{0%{opacity:0;transform:scale(.3) rotate(-260deg) translateY(-30px)}100%{opacity:1;transform:scale(1) rotate(0) translateY(0)}}
+.card.dealSwirl{animation:dealSwirl .6s cubic-bezier(.2,1.25,.35,1) both}
 /* ✨ Festa EXCELLENT (3 yje) */
 .excellent-banner{position:fixed;left:50%;top:30%;transform:translateX(-50%);z-index:60;pointer-events:none;font-size:34px;font-weight:900;color:#ffd166;text-shadow:0 0 18px rgba(255,180,40,.9),0 3px 10px rgba(0,0,0,.5);white-space:nowrap;animation:excBanner 1.8s cubic-bezier(.2,1.4,.3,1) both}
 @keyframes excBanner{0%{transform:translateX(-50%) scale(.3) rotate(-8deg);opacity:0}15%{transform:translateX(-50%) scale(1.3) rotate(5deg);opacity:1}40%{transform:translateX(-50%) scale(1) rotate(0);opacity:1}80%{opacity:1}100%{transform:translateX(-50%) scale(1.1) translateY(-34px);opacity:0}}
@@ -556,7 +611,7 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 #coachBtn{align-self:center;padding:11px 28px;border:none;border-radius:13px;font-family:'Nunito';font-weight:900;font-size:13px;letter-spacing:1px;background:linear-gradient(180deg,var(--amber2),var(--amber));color:#1a1410;cursor:pointer}
 .hl{box-shadow:0 0 0 3px var(--amber2),0 0 22px rgba(255,209,102,.7)!important;z-index:23;position:relative}
 /* ---- Dialogu ---- */
-#quitDialog,#surePopup,#tutAsk,#premiumSheet,#lbOverlay,#secondChance{position:absolute;inset:0;background:rgba(0,0,0,.7);z-index:20;display:none;align-items:center;justify-content:center;padding:32px}
+#quitDialog,#surePopup,#tutAsk,#premiumSheet,#lbOverlay,#secondChance,#privacyOverlay{position:absolute;inset:0;background:rgba(0,0,0,.7);z-index:20;display:none;align-items:center;justify-content:center;padding:32px}
 #quitDialog.show,#surePopup.show,#tutAsk.show,#premiumSheet.show,#lbOverlay.show,#secondChance.show{display:flex}
 .lb-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:11px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.08);margin-bottom:6px;font-weight:800;font-size:14px}
 .lb-row .lb-rank{width:26px;text-align:center;font-weight:900}
@@ -726,6 +781,9 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
     <button class="btn btn-ghost" onclick="playTap();openDuel()">
       <span style="font-size:17px">🆚</span><span data-i18n="duel"></span>
     </button>
+    <button class="btn btn-ghost" style="border-color:rgba(255,120,180,.55);color:#ffd0e4" onclick="playTap();openLoveMap()">
+      <span style="font-size:17px">💘</span><span data-i18n="loveBtn"></span>
+    </button>
     <button class="btn btn-ghost" onclick="playTap();renderSeasons();showScreen('seasonsScreen')">
       <svg class="ic"><use href="#i-grid"/></svg><span data-i18n="seasons"></span>
     </button>
@@ -773,6 +831,16 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
       <span style="font-size:16px">🏆</span><span data-i18n="endlessBoard"></span>
     </button>
   </div>
+</div>
+
+<!-- 💘 HARTA E LOVE MATCH (si Candy Crush Saga) -->
+<div class="screen" id="loveMapScreen">
+  <div class="page-head">
+    <button class="hud-btn" onclick="playTap();showScreen('menuScreen')"><svg class="ic"><use href="#i-back"/></svg></button>
+    <div class="page-title">💘 <span data-i18n="loveBtn"></span></div>
+    <div class="coin-pill" id="loveMapLv">Lv 1</div>
+  </div>
+  <div class="love-map" id="loveMap"></div>
 </div>
 
 <!-- SEZONET -->
@@ -832,6 +900,9 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
     </button>
     <button class="btn btn-ghost" style="width:100%" onclick="playTap();openLeaderboard()">
       <span style="font-size:16px">🏆</span><span>Leaderboard</span>
+    </button>
+    <button class="btn btn-ghost" style="width:100%;border-color:rgba(255,120,180,.6);color:#ffd0e4" onclick="playTap();openLoveMap()">
+      <span style="font-size:16px">💘</span><span data-i18n="loveBtn"></span>
     </button>
     <div class="store-note" data-i18n="duelNote"></div>
   </div>
@@ -910,6 +981,11 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
         <div class="out" style="background:rgba(155,107,255,.12);border:1.5px solid rgba(155,107,255,.5);color:#C9A8FF"><span class="big">🔀</span><span data-i18n="shufLbl"></span><small data-i18n="shufSub"></small></div>
         <div class="out" style="background:rgba(58,198,232,.12);border:1.5px solid rgba(58,198,232,.5);color:#8FDFFF"><span class="big">👁</span><span data-i18n="peekLbl"></span><small data-i18n="peekSub"></small></div>
       </div>
+      <div class="split">
+        <div class="out" style="background:rgba(120,190,240,.14);border:1.5px solid rgba(170,225,255,.55);color:#CDECFF"><span class="big">🧊</span><span data-i18n="iceLbl"></span><small data-i18n="iceSub"></small></div>
+        <div class="out" style="background:rgba(150,150,162,.14);border:1.5px solid rgba(185,185,196,.55);color:#e2e2ea"><span class="big">🔗</span><span data-i18n="chainLbl"></span><small data-i18n="chainSub"></small></div>
+        <div class="out" style="background:rgba(90,160,255,.16);border:1.5px solid rgba(127,208,255,.6);color:#c6e2ff"><span class="big">⚡</span><span data-i18n="lightLbl"></span><small data-i18n="lightSub"></small></div>
+      </div>
       <div class="help-copy" style="margin-top:16px" data-i18n="adFuelNote"></div>
     </div>
 
@@ -987,10 +1063,10 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
       <span class="set-label"><span style="font-size:17px">❓</span><span data-i18n="howTo"></span></span>
       <svg class="ic" style="color:var(--amber)"><use href="#i-next"/></svg>
     </div>
-    <a class="set-row" href="https://lumniti.github.io/memory-drive/privacy.html" target="_blank" rel="noopener" style="cursor:pointer;text-decoration:none;color:inherit" onclick="playTap()">
-      <span class="set-label"><span style="font-size:17px">🔒</span><span data-i18n="privacyLbl"></span></span>
+    <div class="set-row" style="cursor:pointer" onclick="playTap();openPrivacy()">
+      <span class="set-label"><svg class="ic"><use href="#i-lock"/></svg><span data-i18n="privacyLbl"></span></span>
       <svg class="ic" style="color:var(--amber)"><use href="#i-next"/></svg>
-    </a>
+    </div>
     <button class="btn btn-primary" style="width:100%;margin-top:22px" onclick="playTap();showScreen('menuScreen')">
       <svg class="ic"><use href="#i-check"/></svg><span data-i18n="close"></span>
     </button>
@@ -1070,6 +1146,7 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 </div>
 
 <div class="toast" id="toast"></div>
+<div class="funfloat" id="funFloat"></div>
 <div class="ach-toast" id="achToast"><div class="at-em">🏅</div><div class="at-t" data-i18n="achToastT"></div><div class="at-n" id="achToastName"></div></div>
 
 <!-- A JE I SIGURT? (gënjeshtra 😏) -->
@@ -1085,6 +1162,14 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 </div>
 
 <div id="countOverlay"><div class="count-num">3</div></div>
+
+<!-- 🎬 INTRO SEZONI -->
+<div class="overlay" id="seasonIntro">
+  <div class="big-emoji" id="siEmoji" style="animation:wobble 1.6s ease-in-out infinite alternate">🔧</div>
+  <div class="ov-title win" id="siTitle" style="font-size:22px;letter-spacing:2px"></div>
+  <div class="ov-stats" id="siText" style="max-width:320px"></div>
+  <button class="btn btn-primary" style="min-width:160px" onclick="closeSeasonIntro()">GO 🏁</button>
+</div>
 
 <!-- REZULTATI I DUELIT -->
 <div class="overlay" id="duelResult">
@@ -1113,6 +1198,35 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
     </div>
     <div id="lbList" style="max-height:48vh;overflow-y:auto;-webkit-overflow-scrolling:touch;text-align:left"></div>
     <button class="btn btn-ghost" style="width:100%;margin-top:12px" onclick="playTap();document.getElementById('lbOverlay').classList.remove('show')">Close</button>
+  </div>
+</div>
+
+<!-- 🔒 PRIVACY POLICY (brenda aplikacionit) -->
+<div id="privacyOverlay">
+  <div class="dialog-box" style="max-width:360px;width:calc(100% - 32px);max-height:84vh;display:flex;flex-direction:column">
+    <div style="font-size:34px;margin-bottom:2px"><svg class="ic" style="width:34px;height:34px;color:var(--amber2)"><use href="#i-lock"/></svg></div>
+    <h3 data-i18n="privacyLbl"></h3>
+    <p style="font-size:10px;color:rgba(255,255,255,.45);margin-top:2px">Memory Drive · 🏁</p>
+    <div id="privacyBody" style="overflow-y:auto;-webkit-overflow-scrolling:touch;text-align:left;font-size:12.5px;line-height:1.55;color:#d9d7ef;margin:12px 0;padding-right:6px">
+      <p class="date" style="font-size:10px;color:rgba(255,255,255,.45)">Last updated: July 5, 2026</p>
+      <p>Memory Drive is a memory card-matching game by Lumi. Short version: <b>we collect as little as possible, and nothing that identifies you personally.</b></p>
+      <p style="font-weight:900;color:var(--amber2);margin-top:10px">1. Data you provide</p>
+      <p>Only a self-chosen <b>nickname</b> and <b>avatar emoji</b>. Please don't use your real full name. We never ask for email, phone, real name, address or photos.</p>
+      <p style="font-weight:900;color:var(--amber2);margin-top:10px">2. On your device</p>
+      <p>Your progress (levels, stars, coins, settings, achievements, purchases) is stored locally on your device. We cannot see it. Delete the app or clear data to remove it.</p>
+      <p style="font-weight:900;color:var(--amber2);margin-top:10px">3. Online features</p>
+      <p>Online duels, daily challenges and leaderboards send only your nickname, avatar and game results to our server (Cloudflare Workers). Duel rooms auto-delete within 15 minutes. If you never play online, nothing is sent.</p>
+      <p style="font-weight:900;color:var(--amber2);margin-top:10px">4. Purchases</p>
+      <p>In-app purchases (coins, PRO) are handled entirely by Apple. We never see or store your payment details.</p>
+      <p style="font-weight:900;color:var(--amber2);margin-top:10px">5. What we do NOT do</p>
+      <p>No ads, no trackers, no analytics, no fingerprinting, no selling/sharing data, no accounts or passwords, no access to contacts, photos, location or microphone.</p>
+      <p style="font-weight:900;color:var(--amber2);margin-top:10px">6. Children</p>
+      <p>Suitable for all ages. Online nicknames are visible to opponents, so advise children to use a made-up name.</p>
+      <p style="font-weight:900;color:var(--amber2);margin-top:10px">7. Deletion &amp; contact</p>
+      <p>Local data: delete the app. Leaderboard entry: email us your nickname and we'll delete it. Contact: <b>hellostorelumi@gmail.com</b>.</p>
+      <p style="margin-top:12px;font-size:11px;color:rgba(255,255,255,.5)">🇦🇱 Shkurt në shqip: loja ruan vetëm nofkën dhe avatarin që i zgjedh vetë; progresi ruhet në pajisjen tënde; online dërgohen vetëm rezultatet e lojës; pa reklama, pa gjurmues, pa shitje të dhënash. Kontakt: hellostorelumi@gmail.com</p>
+    </div>
+    <button class="btn btn-ghost" style="width:100%" onclick="playTap();closePrivacy()"><span data-i18n="close"></span></button>
   </div>
 </div>
 
@@ -1229,6 +1343,7 @@ const I18N={
     comingSoon:'SË SHPEJTI', shufMsg:'🔀 PËRZIERJE! Kartat u ngatërruan!', peekMsg:'👁 SHIKIM! Mbaji mend shpejt!',
     swapWarn:'🌀 Gabove — dy karta ndërruan vendet!',
     shufLbl:'ÇIFTI PËRZIERËS', peekLbl:'ÇIFTI SHIKUES', shufSub:'I NGATËRRON KARTAT', peekSub:'TREGON GJITHÇKA',
+    iceLbl:'AKULL', iceSub:'PREKE PËR TA ÇARË', chainLbl:'ME ZINXHIRË', chainSub:'BËJ 2 ÇIFTE PËR TA HAPUR', lightLbl:'VETËTIMË', lightSub:'ÇIFT FALAS',
     secProfile:'PROFILI ONLINE', usernameLbl:'Emri i lojtarit', avatarLbl:'Avatari', rankLbl:'Rangu', winsLbl:'fitore',
     premiumLbl:'Memory Drive PRO', proActive:'PRO AKTIV',
     proOnly:'👑 Avatarët PRO hapen me Premium!', proWelcome:'👑 Mirë se erdhe në PRO! +500 🪙',
@@ -1276,7 +1391,14 @@ const I18N={
     duelNote:'Online demo — dhomat sinkronizohen mes lojtarëve të kësaj loje', cancel:'ANULO',
     waitOpp:'Duke pritur kundërshtarin të mbarojë...', go:'GO!',
     seasonDoneMsg:'SEZONI U PËRFUNDUA!', improveHint:'Përsërite nivelin me më pak lëvizje për më shumë yje!',
-    goldMsg:'✨ ÇIFT I ARTË! +3 ⛽ +20 🪙', bombMsg:'💥 BUM! -2 ⛽'
+    goldMsg:'✨ ÇIFT I ARTË! +3 ⛽ +20 🪙', bombMsg:'💥 BUM! -2 ⛽',
+    lightMsg:'⚡ VETËTIMË! Çift falas!', chainMsg:'🔗 E kyçur! Bëj edhe {n} çifte',
+    loveBtn:'Love Match', loveGold:'💝 LETËR DASHURIE! +3 ⛽', loveBomb:'💔 ZEMËRTHYERJE! -3 ⛽', loveLight:'💘 CUPIDI! Çift falas!', loveBetray:'🗡️ TRADHTI! Kartat u përzien −1 ⛽',
+    funMsgs:['Ti je legjendë! 💪','Fokus… ose jo 😜','Besoja kujtesës 🧠','Mos u huto tani 👀','Shpirt, ki durim ✨','Shumë lehtë për ty 😏','Vazhdo kështu, kampion 🏁','Një çift larg lavdisë 🌟'],
+    funLove:['Dashuria kërkon durim… ti jo 😏','Ia vlen pritja 💕','Ndiq zemrën 💘','Mos e prish serinë e dashurisë 💞','Kujdes nga tradhtia 🗡️'],
+    loveComboLbl:'Combo dashurie', loveWinT:'💘 DASHURI E VËRTETË!', loveLoseT:'💔 U THYE ZEMRA', loveLoseD:'Mbaroi dashuria… provo prapë, zemra nuk dorëzohet! 💕',
+    loveSure:['💕 A je i sigurt që është AJO/AI?','😍 Zemra po të rreh… beso?','💘 Kjo është dashuri e vërtetë?','🌹 Rrezikon gjithçka për këtë?','💌 A po të gënjen zemra?'],
+    loveSureHint:'✔ = +2 ⛽ · ✘ = 💔', loveShareTxt:'💘 E gjeta dashurinë te Memory Drive! Provo edhe ti: {URL}', loveMapBtn:'Harta'
   },
   en:{
     subtitle:'MATCH • REMEMBER • WIN',
@@ -1316,6 +1438,7 @@ const I18N={
     comingSoon:'COMING SOON', shufMsg:'🔀 SHUFFLE! Cards mixed up!', peekMsg:'👁 PEEK! Memorize fast!',
     swapWarn:'🌀 You missed — two cards swapped places!',
     shufLbl:'SHUFFLE PAIR', peekLbl:'PEEK PAIR', shufSub:'MIXES ALL CARDS', peekSub:'REVEALS EVERYTHING',
+    iceLbl:'ICE', iceSub:'TAP TO CRACK', chainLbl:'CHAINED', chainSub:'MATCH 2 TO UNLOCK', lightLbl:'LIGHTNING', lightSub:'FREE PAIR',
     secProfile:'ONLINE PROFILE', usernameLbl:'Username', avatarLbl:'Avatar', rankLbl:'Rank', winsLbl:'wins',
     premiumLbl:'Memory Drive PRO', proActive:'PRO ACTIVE',
     proOnly:'👑 PRO avatars unlock with Premium!', proWelcome:'👑 Welcome to PRO! +500 🪙',
@@ -1363,7 +1486,14 @@ const I18N={
     duelNote:'🌐 Live online — play with friends anywhere in real time', cancel:'CANCEL',
     waitOpp:'Waiting for opponent to finish...', go:'GO!',
     seasonDoneMsg:'SEASON COMPLETE!', improveHint:'Replay the level with fewer moves to earn more stars!',
-    goldMsg:'✨ GOLDEN PAIR! +3 ⛽ +8 🪙', bombMsg:'💥 BOOM! -2 ⛽'
+    goldMsg:'✨ GOLDEN PAIR! +3 ⛽ +8 🪙', bombMsg:'💥 BOOM! -2 ⛽',
+    lightMsg:'⚡ LIGHTNING! Free pair!', chainMsg:'🔗 Locked! Match {n} more',
+    loveBtn:'Love Match', loveGold:'💝 LOVE LETTER! +3 ⛽', loveBomb:'💔 HEARTBREAK! -3 ⛽', loveLight:'💘 CUPID! Free pair!', loveBetray:'🗡️ BETRAYAL! Cards scrambled −1 ⛽',
+    funMsgs:["You're a legend! 💪","Focus… or don't 😜","Trust your memory 🧠","Don't get distracted 👀","Patience pays ✨","Too easy for you 😏","Keep it up, champ 🏁","One pair from glory 🌟"],
+    funLove:["Love takes patience… you don't 😏","They're worth the wait 💕","Follow your heart 💘","Don't break the love streak 💞","Beware betrayal 🗡️"],
+    loveComboLbl:'Love combo', loveWinT:'💘 TRUE LOVE!', loveLoseT:'💔 HEARTBROKEN', loveLoseD:'Love ran out… try again, the heart never gives up! 💕',
+    loveSure:["💕 Are you sure it's THE ONE?","😍 Your heart races… trust it?","💘 Is this true love?","🌹 Risk it all for this one?","💌 Is your heart lying to you?"],
+    loveSureHint:'✔ = +2 ⛽ · ✘ = 💔', loveShareTxt:'💘 I found love in Memory Drive! You try too: {URL}', loveMapBtn:'Map'
   },
   sl:{
     subtitle:'POVEŽI • POMNI • ZMAGAJ',
@@ -1403,6 +1533,7 @@ const I18N={
     comingSoon:'KMALU', shufMsg:'🔀 MEŠANJE! Karte premešane!', peekMsg:'👁 POGLED! Hitro si zapomni!',
     swapWarn:'🌀 Zgrešil si — dve karti sta zamenjali mesti!',
     shufLbl:'PAR MEŠANJA', peekLbl:'PAR POGLEDA', shufSub:'PREMEŠA KARTE', peekSub:'POKAŽE VSE',
+    iceLbl:'LED', iceSub:'TAPNI ZA RAZBITJE', chainLbl:'VERIGE', chainSub:'POVEŽI 2 ZA ODKLEP', lightLbl:'STRELA', lightSub:'BREZPLAČEN PAR',
     secProfile:'SPLETNI PROFIL', usernameLbl:'Uporabniško ime', avatarLbl:'Avatar', rankLbl:'Rang', winsLbl:'zmag',
     premiumLbl:'Memory Drive PRO', proActive:'PRO AKTIVEN',
     proOnly:'👑 PRO avatarji se odklenejo s Premium!', proWelcome:'👑 Dobrodošel v PRO! +500 🪙',
@@ -1450,7 +1581,14 @@ const I18N={
     duelNote:'Spletni demo — sobe se sinhronizirajo med igralci te igre', cancel:'PREKLIČI',
     waitOpp:'Čakam, da nasprotnik konča...', go:'GO!',
     seasonDoneMsg:'SEZONA KONČANA!', improveHint:'Ponovi stopnjo z manj potezami za več zvezdic!',
-    goldMsg:'✨ ZLATI PAR! +3 ⛽ +20 🪙', bombMsg:'💥 BUM! -2 ⛽'
+    goldMsg:'✨ ZLATI PAR! +3 ⛽ +20 🪙', bombMsg:'💥 BUM! -2 ⛽',
+    lightMsg:'⚡ STRELA! Brezplačen par!', chainMsg:'🔗 Zaklenjeno! Poveži še {n}',
+    loveBtn:'Love Match', loveGold:'💝 LJUBEZENSKO PISMO! +3 ⛽', loveBomb:'💔 ZLOMLJENO SRCE! -3 ⛽', loveLight:'💘 KUPID! Brezplačen par!', loveBetray:'🗡️ IZDAJA! Karte premešane −1 ⛽',
+    funMsgs:['Legenda si! 💪','Osredotoči se… ali pa ne 😜','Zaupaj spominu 🧠','Ne dovoli, da te zmoti 👀','Potrpljenje se izplača ✨','Zate prelahko 😏','Kar tako naprej, prvak 🏁','En par do slave 🌟'],
+    funLove:['Ljubezen terja potrpljenje… ti ne 😏','Vredno je čakanja 💕','Sledi srcu 💘','Ne prekini niza ljubezni 💞','Pazi na izdajo 🗡️'],
+    loveComboLbl:'Ljubezenski combo', loveWinT:'💘 PRAVA LJUBEZEN!', loveLoseT:'💔 STRTO SRCE', loveLoseD:'Ljubezni je zmanjkalo… poskusi znova, srce nikoli ne obupa! 💕',
+    loveSure:['💕 Si prepričan, da je PRAVI/-A?','😍 Srce ti razbija… mu zaupaš?','💘 Je to prava ljubezen?','🌹 Tvegaš vse za tega?','💌 Ti srce laže?'],
+    loveSureHint:'✔ = +2 ⛽ · ✘ = 💔', loveShareTxt:'💘 Našel sem ljubezen v Memory Drive! Poskusi še ti: {URL}', loveMapBtn:'Zemljevid'
   }
 };
 function t(key){return (I18N[settings.lang]||I18N.sq)[key]||key}
@@ -1477,9 +1615,10 @@ const TOTAL=50, PER_SEASON=10;
 
 function levelParams(g){
   const season=Math.floor(g/PER_SEASON);
-  const pairs=Math.min(3+Math.floor(g/5),12);
-  // Karburanti bëhet gjithnjë e më i pakët: S1 pak zor → S3+ shumë zor
-  const factor=[2.8,2.55,2.3,2.1,1.9][season];
+  // 🔥 Më e zorshme: çifte rriten më shpejt (fillon 4, +1 çdo 4 nivele)
+  const pairs=Math.min(4+Math.floor(g/4),12);
+  // Karburanti bëhet gjithnjë e më i pakët sezon pas sezoni (më i shtrënguar)
+  const factor=[2.5,2.3,2.1,1.95,1.8][season];
   const maxMoves=Math.max(pairs+1, Math.ceil(pairs*factor));
   const cols=pairs<=3?3:4;
   return {season,pairs,maxMoves,cols};
@@ -1615,7 +1754,7 @@ function playNext(){playTap();startMusic();startLevel(nextPlayable())}
 /* ================= RUAJTJA ================= */
 async function saveData(){
   try{
-    await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,xp,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,introSceneSeen,streak,streakLast,dailyDoneDate,dailyBestMs,endlessBestWave,achievements,goldPairsTotal,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang}}));
+    await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,xp,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,introSceneSeen,streak,streakLast,dailyDoneDate,dailyBestMs,endlessBestWave,achievements,goldPairsTotal,loveLevel,loveStars,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang}}));
   }catch(e){}
 }
 const RESET_TOKEN='reset-2026-07-05'; // 🔄 ndrysho këtë vlerë për një reset të ri një-herësh
@@ -1648,6 +1787,8 @@ async function loadData(){
       endlessBestWave=d.endlessBestWave||0;
       achievements=Array.isArray(d.achievements)?d.achievements:[];
       goldPairsTotal=d.goldPairsTotal||0;
+      loveLevel=d.loveLevel||1;
+      loveStars=(d.loveStars&&typeof d.loveStars==='object')?d.loveStars:{};
       // XP: nëse mungon (lojtarë të vjetër), llogaritet nga yjet + fitoret
       xp=(d.xp!=null)?d.xp:(Object.values(progress).reduce((a,b)=>a+(b||0),0)*40+duelWins*40);
       if(d.settings){
@@ -1937,6 +2078,7 @@ function hideOverlays(){
   document.getElementById('loseOverlay').classList.remove('show');
   document.getElementById('duelResult').classList.remove('show');
   {const mo=document.getElementById('modeOverlay');if(mo)mo.classList.remove('show');}
+  {const si=document.getElementById('seasonIntro');if(si)si.classList.remove('show');}
   document.getElementById('countOverlay').classList.remove('show');
   document.getElementById('confettiHolder').innerHTML='';
 }
@@ -1969,13 +2111,22 @@ function toggleSet(key,el){
 
 /* ================= LOJA ================= */
 let deck=[],firstCard=null,lock=false,moves=0,pairsFound=0,seconds=0,timerInt=null,trapTimer=null,swapNotified=false,params=null,fuelBonus=0,goldSymCur=null,bombSymCur=null,shufSymCur=null,peekSymCur=null,sureShown=false;
+let lightSymCur=null, cardMeta=[]; // ⚡ çifti vetëtimë + meta për 🧊/🔗 çdo kartë
 let combo=0,maxCombo=0,comboCoins=0;
 let shufLock=false,freezeUntil=0,secondChanceUsed=false; // 🛟 Second Chance (PRO)
 let bombHitThisGame=false,lastWinStars=0; // 🏅 për medaljet
+let excellentStreak=0, pendingRevealBonus=false; // ⚡ 2× Excellent → shpërblim
+let loveLevel=1; // 💘 niveli më i lartë i zhbllokuar në Love Match
+let loveStars={}; // {level: yje 1-3}
+let loveCurrent=1; // niveli që po luhet aktualisht
+/* 🎴 Stile hyrëse të kartave — ndryshojnë çdo level */
+const DEAL_STYLES=['dealIn','dealFlip','dealSlideL','dealSlideR','dealZoom','dealDrop','dealRise','dealSwirl'];
+let dealStyleIx=0;
+function curDeal(){const n=DEAL_STYLES.length;return DEAL_STYLES[((dealStyleIx%n)+n)%n];}
 const BOOST={peek:15,fuel:10,freeze:12,lock:12};
 
 function startLevel(g){
-  mode='campaign'; bombHitThisGame=false; // 🆕 kthe mode-in në fushatë
+  mode='campaign'; bombHitThisGame=false; dealStyleIx=g; // 🆕 mode + stil kartash sipas levelit
   startMusic();hideOverlays();
   document.getElementById('quitDialog').classList.remove('show');
   {const rb=document.getElementById('refreshBtn');if(rb)rb.style.display='';} // refresh vetëm në fushatë/offline
@@ -1996,13 +2147,15 @@ function startLevel(g){
   // S1: vetëm i arti · S2: +bomba · S3: +përzierësi +ndërrimi pas gabimit
   // S4: +shikuesi +ndërrime të heshtura çdo 18s · S5: gjithçka, çdo 12s, bomba -3
   goldSymCur=chosen[0];
-  bombSymCur=(params.season>=1&&params.pairs>=4)?chosen[1]:null;
-  shufSymCur=(params.season>=2&&params.pairs>=6)?chosen[2]:null;
-  peekSymCur=(params.season>=3&&params.pairs>=8)?chosen[3]:null;
+  // 🔥 Grackat fillojnë më herët (më e zorshme)
+  bombSymCur=(g>=2&&params.pairs>=5)?chosen[1]:null;
+  shufSymCur=(params.season>=1&&params.pairs>=6)?chosen[2]:null;
+  peekSymCur=(params.season>=2&&params.pairs>=8)?chosen[3]:null;
+  pickLightSym(chosen); decorateBoard(null); // ⚡🧊🔗 mekanikat e reja
   swapNotified=false;
   if(trapTimer){clearInterval(trapTimer);trapTimer=null}
-  if(params.season>=3){
-    const iv=params.season>=4?12000:18000;
+  if(params.season>=2){
+    const iv=params.season>=4?10000:params.season>=3?14000:18000;
     trapTimer=setInterval(()=>{if(!lock&&!document.getElementById('winOverlay').classList.contains('show'))swapTwo(false)},iv);
   }
   firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;combo=0;maxCombo=0;comboCoins=0;shufLock=false;freezeUntil=0;secondChanceUsed=false;
@@ -2017,13 +2170,14 @@ function startLevel(g){
   board.innerHTML='';
   deck.forEach((sym,i)=>{
     const c=document.createElement('div');
-    c.className='card dealIn';c.dataset.sym=sym;
+    c.className='card '+curDeal();c.dataset.sym=sym;
     c.style.animationDelay=(i*0.045)+'s';
     c.innerHTML=`<div class="card-inner">
       <div class="card-face card-back-face"><svg class="ic" style="width:44%;height:44%;stroke-width:1.8"><use href="#i-wheel"/></svg></div>
-      <div class="card-face card-front${sym===goldSymCur?' gold':sym===bombSymCur?' bomb':sym===shufSymCur?' shuf':sym===peekSymCur?' peek':''}">${sym}</div>
+      <div class="card-face card-front${sym===goldSymCur?' gold':sym===bombSymCur?' bomb':sym===shufSymCur?' shuf':sym===peekSymCur?' peek':''}">${faceSym(sym)}</div>
     </div>`;
     c.addEventListener('click',()=>chooseCard(c));
+    applyCardDecor(c,i);
     board.appendChild(c);
   });
   // ⚡ shkreptimë e lehtë kur shpërndahen kartat
@@ -2038,6 +2192,10 @@ function startLevel(g){
   timerInt=setInterval(()=>{if(Date.now()<freezeUntil)return;seconds++;updateHud()},1000);
   startAmbient();
   showScreen('gameScreen');
+  // 🎬 Intro sezoni — kur hyn te niveli i parë i një sezoni (një herë për seancë)
+  if(g%PER_SEASON===0 && !seasonIntroSeen[params.season]){ seasonIntroSeen[params.season]=true; setTimeout(()=>showSeasonIntro(params.season),260); }
+  // ⚡ Shpërblim 2× Excellent — vetëtimë + shikim i shpejtë
+  if(pendingRevealBonus){ pendingRevealBonus=false; setTimeout(revealBonusFX,800); }
 }
 function stopTimer(){if(timerInt){clearInterval(timerInt);timerInt=null}if(trapTimer){clearInterval(trapTimer);trapTimer=null}}
 
@@ -2067,6 +2225,10 @@ function updateHud(){
 
 function chooseCard(c){
   if(lock||c.classList.contains('flipped')||c.classList.contains('matched'))return;
+  // 🧊 Akull: prekja çan akullin (pa karburant, pa kthim)
+  if(c.dataset.ice){ crackIce(c); return; }
+  // 🔗 Zinxhirë: e kyçur derisa numëruesi arrin 0
+  if(c.dataset.chain){ jiggleChain(c); return; }
 
   // Karta e parë — hapet normalisht
   if(!firstCard){
@@ -2079,7 +2241,7 @@ function chooseCard(c){
 
   // KARTA E DYTË — ndonjëherë del BASTI 😏 (para se të hapet!)
   if(tut&&tut.forceSure){tut.forceSure=false;showSurePopup(c);return}
-  if(!duel&&!tut&&!sureShown&&Math.random()<0.16){showSurePopup(c);return}
+  if(!duel&&!tut&&!sureShown&&Math.random()<(mode==='love'?0.3:0.16)){showSurePopup(c);return} // 💘 rrena më shpesh në Love
   flipSecond(c,false);
 }
 
@@ -2105,6 +2267,7 @@ function flipSecond(c,gamble){
   playFlip();
   c.classList.add('flipped');
   moves++;updateHud();
+  if(!tut && Math.random()<0.14) setTimeout(showFunMsg,220); // 💬 tekst qesharak/hutues herë pas here
   const a=firstCard;firstCard=null;
 
   if(a.dataset.sym===c.dataset.sym){
@@ -2113,24 +2276,29 @@ function flipSecond(c,gamble){
       a.classList.add('matched');c.classList.add('matched');
       playMatch();pairsFound++;
       if(mode==='endless'&&!duel)endlessPairScored(); // ♾️ 5🪙/çift (max 100/seancë)
+      tickChains(); // 🔗 çdo përputhje ul numëruesit e zinxhirëve
       cardSparkle(a);cardSparkle(c);
       // 🔥 Combo: çifte radhazi pa gabim → shpërblim + efekte
       combo++; if(combo>maxCombo)maxCombo=combo;
       if(combo>=2){ comboReward(combo, c); }
+      // 😏 Kur je i fortë (combo i lartë) → tallje + përzierje aty për aty
+      if(mode==='campaign'&&!duel&&!tut&&combo>=3&&pairsFound<params.pairs-1&&Math.random()<0.3){ setTimeout(skillTaunt,140); }
       // Basti fitoi! +2 karburant
       if(gamble){fuelBonus+=2;toast(t('gambleWin'));sfx(880,0.28,'sine',0.07);vibrate([30,40,60]);if(tut)tutAfterSure();else unlockAch('sureWin')}
       // Efektet surprizë
       const sym=a.dataset.sym;
-      if(sym===goldSymCur){fuelBonus+=3;if(mode==='campaign')coins+=3;goldPairsTotal++;toast(t('goldMsg'));sfx(1046,0.3,'sine',0.08);saveData();checkAchievements(false);screenBurst(window.innerWidth/2,window.innerHeight*0.44,['#ffd166','#fff','#ffe08a'],16,true,false)}
+      if(sym===goldSymCur){fuelBonus+=3;if(mode==='campaign')coins+=3;goldPairsTotal++;toast(mode==='love'?t('loveGold'):t('goldMsg'));sfx(1046,0.3,'sine',0.08);saveData();checkAchievements(false);screenBurst(window.innerWidth/2,window.innerHeight*0.44,mode==='love'?['#ff8fc0','#fff','#ffd0e4']:['#ffd166','#fff','#ffe08a'],16,true,false)}
       else if(sym===bombSymCur){
         if(duel){duelStats.bh++;if(duel.startTs)duel.startTs-=5000;toast('💣 Bomb! −5s');bombFX();shuffleRemaining();updateHud();}
-        else{bombHitThisGame=true;const bx=(mode==='endless')?2:(params.season>=4?4:params.season>=2?3:2);fuelBonus-=bx;toast('💥 '+t('bombMsg').replace('2',String(bx)));bombFX();bombRevealAll();if(mode==='campaign'&&params.season>=3&&pairsFound<params.pairs)swapTwo(true)}
+        else{bombHitThisGame=true;const bx=(mode==='endless')?2:(mode==='love')?3:(params.season>=4?4:params.season>=2?3:2);fuelBonus-=bx;toast(mode==='love'?t('loveBomb'):('💥 '+t('bombMsg').replace('2',String(bx))));bombFX();bombRevealAll();if(mode==='campaign'&&params.season>=3&&pairsFound<params.pairs)swapTwo(true)}
       }
-      else if(sym===shufSymCur){if(duel)duelStats.th++;toast(t('shufMsg'));sfx(300,0.22,'sine',0.07);shuffleRemaining()}
+      else if(sym===shufSymCur){if(duel)duelStats.th++;if(mode==='love'){toast(t('loveBetray'));fuelBonus-=1;}else toast(t('shufMsg'));sfx(300,0.22,'sine',0.07);shuffleRemaining()}
       else if(sym===peekSymCur){if(duel)duelStats.th++;toast(t('peekMsg'));sfx(1200,0.28,'sine',0.06);setTimeout(peekAll,80)}
+      else if(sym===lightSymCur){ if(pairsFound<params.pairs) setTimeout(lightningStrike,220); } // ⚡ çift falas
       if(tut)tutOnMatch();
       updateHud();lock=false;
       if(pairsFound===params.pairs){ onAllPairs(); }
+      else if(sym===lightSymCur){ /* ⚡ lightningStrike do ta trajtojë vazhdimin */ }
       else if(!duel&&!tut&&mode==='campaign'&&pairsFound===params.pairs-1){ autoFinishJoke(); } // 🃏 2 karta → hapen vetë me shaka (vetëm fushatë)
       else if(!duel&&!tut&&fuelLeft()<=0){ onFuelOut(); }
     },350);
@@ -2146,7 +2314,8 @@ function flipSecond(c,gamble){
           if(tut){
             a.classList.remove('flipped','shake');c.classList.remove('flipped','shake');
             lock=false;tutAfterSure();
-          }else levelLost(true);
+          }else if(mode==='love'){loveLost();}
+          else levelLost(true);
         },500);
       },520);
       return;
@@ -2233,6 +2402,8 @@ function levelWon(){
   let newHS=false;
   if(score>highScore){highScore=score;newHS=true}
   lastWinStars=earned;
+  // ⚡ 2× Excellent radhazi → shpërblim në nivelin tjetër
+  if(earned===3){ excellentStreak++; if(excellentStreak>=2)pendingRevealBonus=true; } else { excellentStreak=0; }
   saveData();
   if(bombHitThisGame)unlockAch('bombSurvive'); // 🏅 mbijetove bombën & fitove
   checkAchievements(false);
@@ -2257,7 +2428,8 @@ function levelWon(){
   const seasonIdx=params.season;
   if(currentLevel%PER_SEASON===PER_SEASON-1&&seasonDone(seasonIdx)){
     document.getElementById('winStats').innerHTML+=
-      `<br><b style="color:var(--amber2)">${SEASONS[seasonIdx].emoji} ${t('seasonDoneMsg')} ${seasonStars(seasonIdx)}/30 ⭐</b>`;
+      `<br><b style="color:var(--amber2)">${SEASONS[seasonIdx].emoji} ${t('seasonDoneMsg')} ${seasonStars(seasonIdx)}/30 ⭐</b>`+
+      `<br><span style="font-size:12px;color:rgba(255,255,255,.75);font-weight:800">${SEASON_JOKES[seasonIdx]||''}</span>`; // 😄 shaka fundi i sezonit
   }
   const nextBtn=document.getElementById('nextLevelBtn');
   if(currentLevel<TOTAL-1){nextBtn.style.display='flex'}
@@ -2338,7 +2510,8 @@ const SKINS=[
   {id:'skull',  label:'Skull',    price:1500,em:'💀'},
   {id:'royal',  label:'Royal',    price:4000,em:'👑'},
   {id:'shark',  label:'Shark',    price:1800,em:'🦈'},
-  {id:'galaxy', label:'Galaxy',   price:4000,em:'🌌'}
+  {id:'galaxy', label:'Galaxy',   price:4000,em:'🌌'},
+  {id:'hearts', label:'Hearts 💕',price:1200,em:'💕'}   // 💞 kartat me emoji zemrash
 ];
 const BGS=[
   {id:'midnight',name:'bgMid',   price:0,   em:'🌌'},
@@ -2492,9 +2665,9 @@ function toast(msg){
 let pendingCard=null;
 function showSurePopup(c){
   sureShown=true;pendingCard=c;
-  const arr=t('sure');
+  const arr=(mode==='love')?t('loveSure'):t('sure');
   document.getElementById('sureMsg').textContent=arr[Math.floor(Math.random()*arr.length)];
-  document.getElementById('sureHint').textContent=t('sureHint');
+  document.getElementById('sureHint').textContent=(mode==='love')?t('loveSureHint'):t('sureHint');
   document.getElementById('sureFlipBtn').textContent=t('sureFlip');
   document.getElementById('sureChangeBtn').textContent=t('sureChange');
   document.getElementById('surePopup').classList.add('show');
@@ -2890,6 +3063,7 @@ function startDuelBoard(){
   const rnd=mulberry32(duel.seed + duel.round*7919);   // seed per raund → i njëjtë për të dy
   const se=SEASONS[(duel.seed+duel.round)%5];
   document.documentElement.style.setProperty('--season',se.color);
+  dealStyleIx=duel.seed+duel.round;               // stil kartash ndryshon çdo raund
   params={pairs:rdCfg.pairs,cols:rdCfg.cols,maxMoves:9999,season:(duel.seed+duel.round)%5};
   fuelBonus=0;goldSymCur=null;sureShown=true;
   // statistikat mbahen ndër raunde; rivendosen vetëm në raundin e parë
@@ -2902,6 +3076,7 @@ function startDuelBoard(){
   bombSymCur = chosen.length>=2 ? chosen[1] : null;
   shufSymCur = chosen.length>=3 ? chosen[2] : null;
   peekSymCur = chosen.length>=4 ? chosen[3] : null;
+  pickLightSym(chosen); decorateBoard(mulberry32(duel.seed+duel.round*7919+9973)); // ⚡🧊🔗 identike te të dy (seed)
   firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;combo=0;maxCombo=0;comboCoins=0;shufLock=false;freezeUntil=0;secondChanceUsed=false;swapNotified=false;
 
   const board=document.getElementById('board');
@@ -2910,13 +3085,14 @@ function startDuelBoard(){
   board.innerHTML='';
   deck.forEach((sym,i)=>{
     const c=document.createElement('div');
-    c.className='card dealIn';c.dataset.sym=sym;
+    c.className='card '+curDeal();c.dataset.sym=sym;
     c.style.animationDelay=(i*0.06)+'s';   // shpërndarje një-nga-një më e dukshme
     c.innerHTML=`<div class="card-inner">
       <div class="card-face card-back-face"><svg class="ic" style="width:44%;height:44%;stroke-width:1.8"><use href="#i-wheel"/></svg></div>
-      <div class="card-face card-front">${sym}</div>
+      <div class="card-face card-front">${faceSym(sym)}</div>
     </div>`;
     c.addEventListener('click',()=>chooseCard(c));
+    applyCardDecor(c,i);
     board.appendChild(c);
   });
   dealSparkles(); // 🎇 efekte kartash sipas levelit/sezonit
@@ -3291,7 +3467,7 @@ function shuffleRemaining(){
   rest.forEach((c,i)=>{
     c.dataset.sym=syms[i];
     const f=c.querySelector('.card-front');
-    f.textContent=syms[i];
+    f.textContent=faceSym(syms[i]);
     f.className=frontClass(syms[i]);
     c.classList.add('spinX');
     setTimeout(()=>c.classList.remove('spinX'),650);
@@ -3324,7 +3500,7 @@ function swapTwo(animated){
   a.dataset.sym=b.dataset.sym;b.dataset.sym=tmp;
   [a,b].forEach(c=>{
     const f=c.querySelector('.card-front');
-    f.textContent=c.dataset.sym;
+    f.textContent=faceSym(c.dataset.sym);
     f.className=frontClass(c.dataset.sym);
     if(animated){c.classList.add('wiggle');setTimeout(()=>c.classList.remove('wiggle'),500)}
   });
@@ -3375,13 +3551,14 @@ function startTutorial(){
   board.innerHTML='';
   deck.forEach((sym,i)=>{
     const c=document.createElement('div');
-    c.className='card dealIn';c.dataset.sym=sym;
+    c.className='card '+curDeal();c.dataset.sym=sym;
     c.style.animationDelay=(i*0.04)+'s';
     c.innerHTML=`<div class="card-inner">
       <div class="card-face card-back-face"><svg class="ic" style="width:44%;height:44%;stroke-width:1.8"><use href="#i-wheel"/></svg></div>
-      <div class="card-face card-front">${sym}</div>
+      <div class="card-face card-front">${faceSym(sym)}</div>
     </div>`;
     c.addEventListener('click',()=>chooseCard(c));
+    applyCardDecor(c,i);
     board.appendChild(c);
   });
   document.getElementById('oppBar').style.display='none';
@@ -3552,11 +3729,12 @@ function renderModeBoard(){
   board.innerHTML='';
   deck.forEach((sym,i)=>{
     const c=document.createElement('div');
-    c.className='card dealIn';c.dataset.sym=sym;c.style.animationDelay=(i*0.045)+'s';
+    c.className='card '+curDeal();c.dataset.sym=sym;c.style.animationDelay=(i*0.045)+'s';
     c.innerHTML=`<div class="card-inner">
       <div class="card-face card-back-face"><svg class="ic" style="width:44%;height:44%;stroke-width:1.8"><use href="#i-wheel"/></svg></div>
-      <div class="card-face card-front${sym===goldSymCur?' gold':sym===bombSymCur?' bomb':''}">${sym}</div></div>`;
+      <div class="card-face card-front${sym===goldSymCur?' gold':sym===bombSymCur?' bomb':''}">${faceSym(sym)}</div></div>`;
     c.addEventListener('click',()=>chooseCard(c));
+    applyCardDecor(c,i);
     board.appendChild(c);
   });
   setTimeout(()=>{try{screenBurst(window.innerWidth/2,window.innerHeight*0.5,['#fff','#ffd166','#2de2ff'],8,false,false);}catch(e){}},deck.length*45+120);
@@ -3575,11 +3753,13 @@ function onAllPairs(){
   if(tut){tutAllPairs();return;}
   if(mode==='daily'){dailyWon();return;}
   if(mode==='endless'){endlessWaveDone();return;}
+  if(mode==='love'){loveWon();return;}
   levelWon();
 }
 function onFuelOut(){
   if(mode==='daily'){dailyLost();return;}
   if(mode==='endless'){endlessOver();return;}
+  if(mode==='love'){loveLost();return;}
   handleFuelOut();
 }
 
@@ -3642,11 +3822,13 @@ function startDaily(){
   mode='daily'; duel=null; tut=null;
   startMusic(); hideOverlays();
   const seed=parseInt(utcDateKey(),10);           // 🎲 e njëjta tabelë për të gjithë sot
+  dealStyleIx=seed;                                // stil kartash i ditës
   const rnd=mulberry32(seed);
   const chosen=seededShuffle(DAILY_POOL,rnd).slice(0,8);
   deck=seededShuffle([...chosen,...chosen],rnd);
-  params={season:0,pairs:8,cols:4,maxMoves:20};   // ⛽ karburant fiks 20, pa gracka
+  params={season:0,pairs:8,cols:4,maxMoves:20};   // ⛽ karburant fiks 20
   fuelBonus=0; goldSymCur=null;bombSymCur=null;shufSymCur=null;peekSymCur=null;
+  pickLightSym(chosen); decorateBoard(mulberry32(seed+4242)); // 🧊 akull i njëjtë për të gjithë sot
   firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;combo=0;maxCombo=0;comboCoins=0;shufLock=false;freezeUntil=0;secondChanceUsed=false;sureShown=true;bombHitThisGame=false;
   document.documentElement.style.setProperty('--season',SEASONS[0].color);
   document.getElementById('levelBadge').innerHTML=`<div class="profile-chip"><span class="pav">${avatar}</span><b>${myName()}</b></div><div class="level-chip">📅 ${t('daily')}</div>`;
@@ -3735,6 +3917,7 @@ function startEndless(){
 function buildEndlessWave(){
   const pairs=Math.min(3+endlessWave,12);          // vala1=4, +1/valë, max 12
   params.pairs=pairs; params.cols=pairs<=3?3:4;
+  dealStyleIx=endlessWave+2;                        // stil kartash ndryshon çdo valë
   pairsFound=0; firstCard=null; lock=false;
   if(endlessWave>endlessBestWave)endlessBestWave=endlessWave; // vala më e lartë e ARRITUR
   const POOL=[...new Set([].concat(...SEASONS.map(s=>s.symbols)))];
@@ -3743,6 +3926,7 @@ function buildEndlessWave(){
   goldSymCur=endlessWave>=3?chosen[0]:null;        // ✨ i arti nga vala 3
   bombSymCur=endlessWave>=5?chosen[chosen.length-1]:null; // 💥 bomba nga vala 5
   shufSymCur=null;peekSymCur=null;
+  pickLightSym(chosen); decorateBoard(null);       // ⚡🧊🔗 nga vala 4+
   document.getElementById('levelBadge').innerHTML=`<div class="profile-chip"><span class="pav">${avatar}</span><b>${myName()}</b></div><div class="level-chip">♾️ ${t('waveLbl')} ${endlessWave}</div>`;
   renderModeBoard(); updateHud();
 }
@@ -3816,6 +4000,274 @@ async function autoJoinDuel(code){
   const inp=document.getElementById('duelCodeInput'); if(inp)inp.value=code;
   joinWithCode();
 }
+
+/* 💞 Tema HEARTS — kartat shfaqen me emoji zemrash (vetëm pamje; përputhja mbetet te dataset.sym) */
+const HEART_SYMS=['❤️','🧡','💛','💚','💙','💜','🖤','🤍','🤎','💗','💖','💘','💝','💞','💓','💕','💟','❣️'];
+function faceSym(s){
+  if(mode==='love') return s;        // 💘 Love Match: deck-u është tashmë me zemra
+  if(curSkin!=='hearts') return s;   // 💞 Hearts skin: rimapo simbolet në zemra
+  let k=0; const map={};
+  for(const d of deck){ if(!(d in map)){ map[d]=HEART_SYMS[k%HEART_SYMS.length]; k++; } }
+  return map[s]||s;
+}
+
+/* ============ 🧊 ICE · 🔗 CHAIN · ⚡ LIGHTNING (mekanika kartash) ============ */
+function shuffleArrRnd(arr,rnd){const a=[...arr];for(let i=a.length-1;i>0;i--){const j=Math.floor((rnd?rnd():Math.random())*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a;}
+function effSeasonForDecor(){
+  if(mode==='love') return 3;                                    // 💘 love: akull + zinxhirë
+  if(mode==='daily') return 2;                                   // daily: vetëm akull (i njëjtë për të gjithë)
+  if(mode==='endless') return endlessWave>=8?4:endlessWave>=6?3:endlessWave>=4?2:0;
+  return (params&&params.season)||0;
+}
+function pickLightSym(chosen){                                    // ⚡ çifti vetëtimë (si i arti)
+  const s=effSeasonForDecor();
+  lightSymCur=(!tut && s>=3 && chosen.length>=5)?chosen[4]:null;
+}
+function decorateBoard(rnd){                                      // vendos akull/zinxhirë (rnd → identik në duel/daily)
+  cardMeta = deck.map(sym=>({ice:0,chain:0,light:sym===lightSymCur}));
+  if(tut) return;
+  const s=effSeasonForDecor();
+  const specials=new Set([goldSymCur,bombSymCur,shufSymCur,peekSymCur,lightSymCur].filter(Boolean));
+  const normalIdx=[]; deck.forEach((sym,i)=>{ if(!specials.has(sym)) normalIdx.push(i); });
+  const order=shuffleArrRnd(normalIdx,rnd);
+  let ptr=0;
+  // 🧊 ICE
+  let iceN=0, doubleN=0;
+  if(s>=4)iceN=4; else if(s>=2)iceN=2;
+  if(s>=5)doubleN=2;
+  for(let k=0;k<iceN && ptr<order.length;k++){ cardMeta[order[ptr++]].ice=(k<doubleN)?2:1; }
+  // 🔗 CHAIN — kurrë të dy kartat e të njëjtit çift
+  let chainN=0;
+  if(s>=3){ chainN=(s>=5?2:1); if((rnd?rnd():Math.random())<0.4)chainN++; }
+  const usedSyms=new Set();
+  for(let k=0;k<chainN;k++){
+    let placed=false;
+    for(let t=ptr;t<order.length;t++){
+      const idx=order[t], sym=deck[idx];
+      if(cardMeta[idx].ice===0 && !usedSyms.has(sym)){
+        cardMeta[idx].chain=2; usedSyms.add(sym);
+        [order[t],order[ptr]]=[order[ptr],order[t]]; ptr++; placed=true; break;
+      }
+    }
+    if(!placed) break;
+  }
+}
+function applyCardDecor(c,i){
+  if(tut) return;
+  const m=cardMeta[i]; if(!m) return;
+  if(m.light) c.classList.add('lightcard');
+  if(m.ice>0){ c.dataset.ice=m.ice; const ov=document.createElement('div'); ov.className='ice-ov'+(m.ice>=2?' ice2':''); ov.innerHTML='<span class="ice-x">❄️</span>'; c.appendChild(ov); }
+  if(m.chain>0){ c.dataset.chain=m.chain; const ov=document.createElement('div'); ov.className='chain-ov'; ov.innerHTML='<span class="chain-lock">🔗</span><span class="chain-n">'+m.chain+'</span>'; c.appendChild(ov); }
+}
+/* 🧊 Çarja — pa karburant, pa kthim */
+function crackIce(c){
+  let n=+c.dataset.ice; if(n<=0) return;
+  const ov=c.querySelector('.ice-ov');
+  if(settings.sfx)try{sfx(2200,0.06,'square',0.03);setTimeout(()=>sfx(1600,0.05,'square',0.025),40)}catch(e){}
+  vibrate(10);
+  if(ov){ov.classList.remove('cracking');void ov.offsetWidth;ov.classList.add('cracking');}
+  spawnShards(c,['❄️','🔷','💠','◽']);
+  n--; c.dataset.ice=n;
+  if(n<=0){ if(ov){ov.style.transition='opacity .3s, transform .3s';ov.style.opacity='0';ov.style.transform='scale(1.15)';setTimeout(()=>ov.remove(),320);} c.removeAttribute('data-ice'); c.classList.remove('flipped'); /* 🧊 vetëm akulli thyhet — karta MBETET e mbyllur */ }
+  else if(ov){ ov.classList.remove('ice2'); }
+}
+function spawnShards(c,ems){
+  const r=c.getBoundingClientRect(), cx=r.left+r.width/2, cy=r.top+r.height/2;
+  for(let i=0;i<6;i++){ const s=document.createElement('div'); s.className='ice-shard'; s.textContent=ems[i%ems.length];
+    s.style.left=cx+'px'; s.style.top=cy+'px'; document.body.appendChild(s);
+    const ang=Math.random()*Math.PI*2, dist=20+Math.random()*46;
+    s.animate([{transform:'translate(-50%,-50%) scale(1)',opacity:1},{transform:`translate(calc(-50% + ${Math.cos(ang)*dist}px),calc(-50% + ${Math.sin(ang)*dist+28}px)) scale(.4) rotate(${(Math.random()*360)|0}deg)`,opacity:0}],{duration:540+Math.random()*260,easing:'ease-out'});
+    setTimeout(()=>s.remove(),840);
+  }
+}
+/* 🔗 Zbrit numëruesit e zinxhirëve pas çdo përputhjeje */
+function tickChains(){
+  document.querySelectorAll('#board .card[data-chain]').forEach(cc=>{
+    let n=+cc.dataset.chain; if(n<=0) return;
+    n--; cc.dataset.chain=n;
+    const ov=cc.querySelector('.chain-ov'); if(!ov) return;
+    const nn=ov.querySelector('.chain-n'); if(nn)nn.textContent=n;
+    ov.classList.remove('ticking');void ov.offsetWidth;ov.classList.add('ticking');
+    if(n<=0) unchainCard(cc);
+  });
+}
+function unchainCard(cc){
+  const ov=cc.querySelector('.chain-ov'); cc.removeAttribute('data-chain');
+  if(settings.sfx)try{sfx(340,0.16,'sawtooth',0.06);setTimeout(()=>sfx(180,0.2,'sawtooth',0.05),90)}catch(e){}
+  vibrate([20,30,20]);
+  spawnShards(cc,['🔗','⛓️','✨']);
+  if(ov){ov.classList.add('breaking');setTimeout(()=>ov.remove(),460);}
+}
+function jiggleChain(c){
+  c.classList.remove('shake');void c.offsetWidth;c.classList.add('shake');setTimeout(()=>c.classList.remove('shake'),450);
+  if(settings.sfx)try{sfx(160,0.12,'sawtooth',0.04)}catch(e){}
+  toast(t('chainMsg').replace('{n}',c.dataset.chain));
+}
+/* ⚡ Godet një çift të rastësishëm të mbetur dhe e përputh FALAS */
+function lightningStrike(){
+  const f=document.getElementById('flash'); if(f){f.classList.remove('on');void f.offsetWidth;f.classList.add('on');}
+  try{drawLightning(window.innerWidth/2,window.innerHeight*0.4);drawLightning(window.innerWidth*0.28,window.innerHeight*0.55);}catch(e){}
+  if(settings.sfx)try{sfx(1400,0.18,'sawtooth',0.06);setTimeout(()=>sfx(900,0.22,'sawtooth',0.05),80)}catch(e){}
+  toast(mode==='love'?t('loveLight'):t('lightMsg'));
+  const avail={};
+  [...document.querySelectorAll('#board .card')].forEach(c=>{
+    if(c.classList.contains('matched')||c.classList.contains('flipped'))return;
+    if(c.dataset.ice||c.dataset.chain)return;                     // s'godet karta të bllokuara
+    const s=c.dataset.sym; (avail[s]=avail[s]||[]).push(c);
+  });
+  const pairSym=Object.keys(avail).find(s=>avail[s].length>=2);
+  if(!pairSym) return;
+  const a=avail[pairSym][0], b=avail[pairSym][1];
+  lock=true;
+  setTimeout(()=>{
+    a.classList.add('flipped');b.classList.add('flipped');playFlip();
+    setTimeout(()=>{
+      a.classList.add('matched');b.classList.add('matched');playMatch();
+      cardSparkle(a);cardSparkle(b);
+      pairsFound++; if(mode==='endless'&&!duel)endlessPairScored();
+      tickChains(); updateHud(); lock=false;
+      if(pairsFound===params.pairs){ onAllPairs(); }
+      else if(!duel&&!tut&&mode==='campaign'&&pairsFound===params.pairs-1){ autoFinishJoke(); }
+    },380);
+  },260);
+}
+
+/* ============ 💘 LOVE MATCH (lojë me zemra: kurthe & rrena dashurie) ============ */
+const LOVE_POOL=['❤️','🧡','💛','💚','💙','💜','💗','💖','🌹','😍','💐','🥰','😘','💌','🫶','💞','💓','🌷'];
+/* 💘 Harta e niveleve (si Candy Crush Saga) */
+function openLoveMap(){ mode='campaign'; renderLoveMap(); showScreen('loveMapScreen'); }
+function renderLoveMap(){
+  const el=document.getElementById('loveMapLv'); if(el)el.textContent='Lv '+loveLevel;
+  const map=document.getElementById('loveMap'); if(!map)return;
+  const maxShown=loveLevel+4;
+  let html='';
+  for(let lv=1;lv<=maxShown;lv++){
+    const cur=lv===loveLevel, locked=lv>loveLevel, done=lv<loveLevel;
+    const st=loveStars[lv]||0;
+    const cls=locked?'lv-lock':cur?'lv-cur':'lv-done';
+    const off=(lv%2===0)?58:-58;
+    const inner = locked ? '🔒' : lv;
+    const stars = done ? ('★'.repeat(st)+'☆'.repeat(3-st)) : (cur?'PLAY':'');
+    const onclick = locked ? '' : `onclick="playTap();startLove(${lv})"`;
+    html+=`<div class="lv-node ${cls}" style="transform:translateX(${off}px)" ${onclick}><span class="lv-num">${inner}</span><span class="lv-stars">${stars}</span></div>`;
+  }
+  map.innerHTML=html;
+  requestAnimationFrame(()=>{const c=map.querySelector('.lv-cur'); if(c)c.scrollIntoView({block:'center'});});
+}
+function startLove(lv){
+  loveCurrent = lv || loveLevel;
+  mode='love'; duel=null; tut=null;
+  startMusic(); hideOverlays();
+  // 💘 Nivelet rriten si Candy Crush: më shumë çifte + karburant më i shtrënguar
+  const pairs=Math.min(6+Math.floor(loveCurrent/2),12);
+  const specials=['💝','💔','💘','🗡️'];                   // 💝 letër · 💔 thyerje · 💘 Cupid · 🗡️ tradhti
+  const base=shuffleArrRnd(LOVE_POOL).slice(0,pairs-specials.length);
+  const chosen=[...base,...specials];
+  deck=shuffleArrRnd([...chosen,...chosen]);
+  const fuel=Math.max(pairs+5, 32-loveCurrent);
+  params={season:2,pairs,cols:4,maxMoves:fuel};
+  fuelBonus=0;
+  goldSymCur='💝'; bombSymCur='💔'; shufSymCur='🗡️'; peekSymCur=null; lightSymCur='💘';
+  firstCard=null;lock=false;moves=0;pairsFound=0;seconds=0;combo=0;maxCombo=0;comboCoins=0;shufLock=false;freezeUntil=0;secondChanceUsed=false;sureShown=false;bombHitThisGame=false;
+  decorateBoard(null);                                   // 🧊/🔗 gracka shtesë
+  document.documentElement.style.setProperty('--season','#ff5c9a');
+  document.getElementById('levelBadge').innerHTML=`<div class="profile-chip"><span class="pav">${avatar}</span><b>${myName()}</b></div><div class="level-chip">💘 ${t('loveBtn')} · Lv ${loveCurrent}</div>`;
+  updateHud(); renderModeBoard(); modeHudReset();
+  stopTimer(); timerInt=setInterval(()=>{if(Date.now()<freezeUntil)return;seconds++;updateHud()},1000);
+  startAmbient(); showScreen('gameScreen');
+}
+function loveWon(){
+  stopTimer(); playWinMusic();
+  const lv=loveCurrent;
+  const ms=seconds*1000, stars=starsFor(params.pairs,moves), reward=30+maxCombo*5+lv*5;
+  coins+=reward; addXP(30);
+  loveStars[lv]=Math.max(loveStars[lv]||0, stars);       // ⭐ ruaj yjet e nivelit
+  if(lv===loveLevel) loveLevel++;                        // 💘 zhblloko nivelin tjetër vetëm në frontierë
+  saveData();
+  try{celebrateExcellent();}catch(e){try{spawnConfetti();}catch(e2){}}
+  const starRow='⭐'.repeat(stars)+'☆'.repeat(3-stars);
+  const nextLv=lv+1;
+  const buttons=[
+    {label:'📤 '+t('shareBtn'),cls:'btn-ghost',fn:()=>shareText(t('loveShareTxt').replace('{URL}',BASE_URL))}
+  ];
+  if(nextLv<=loveLevel) buttons.push({label:'💘 Level '+nextLv,cls:'btn-primary',fn:()=>{hideModeResult();startLove(nextLv);}});
+  buttons.push({label:'🗺️ '+t('loveMapBtn'),cls:'btn-ghost',fn:()=>{hideModeResult();openLoveMap();}});
+  buttons.push({label:t('menu'),cls:'btn-ghost',fn:()=>{hideModeResult();mode='campaign';showScreen('menuScreen');}});
+  showModeResult({
+    emoji:'💘', cls:'win', title:t('loveWinT'),
+    stats:`💘 Level ${lv} — <b style="color:#ffd166;letter-spacing:2px">${starRow}</b><br>${t('time')}: <b>${fmtMs(ms)}</b> &nbsp;•&nbsp; 💞 ${maxCombo}x &nbsp;•&nbsp; +${reward} 🪙`,
+    buttons
+  });
+}
+function loveLost(){
+  stopTimer(); lock=true; playLoseMusic();
+  setTimeout(()=>showModeResult({
+    emoji:'💔', cls:'lose', title:t('loveLoseT'), stats:t('loveLoseD'),
+    buttons:[
+      {label:'💘 '+t('endlessAgain'),cls:'btn-primary',fn:()=>{hideModeResult();startLove(loveCurrent);}},
+      {label:'🗺️ '+t('loveMapBtn'),cls:'btn-ghost',fn:()=>{hideModeResult();openLoveMap();}},
+      {label:t('menu'),cls:'btn-ghost',fn:()=>{hideModeResult();mode='campaign';showScreen('menuScreen');}}
+    ]
+  }),450);
+}
+
+/* 💬 Mesazh qesharak/inspirues gjatë lojës — pak "hutim" në të gjitha modalitetet */
+function showFunMsg(){
+  const gs=document.getElementById('gameScreen'); if(!gs||!gs.classList.contains('active'))return;
+  if(document.getElementById('winOverlay').classList.contains('show'))return;
+  const el=document.getElementById('funFloat'); if(!el)return;
+  const base=t('funMsgs')||[]; const pool=(mode==='love')?(t('funLove')||[]).concat(base):base;
+  if(!pool.length)return;
+  el.textContent=pool[Math.floor(Math.random()*pool.length)];
+  el.classList.remove('show');void el.offsetWidth;el.classList.add('show');
+}
+
+/* 😏 Tallje + përzierje kur lojtari është shumë i fortë */
+const SKILL_TAUNTS=['😏 Too good — shuffle!','🌀 Mixing your cards!','😈 Getting spicy!','🔀 Not so fast, champ!','🧠 Prove it again!','🎭 Plot twist!'];
+function skillTaunt(){
+  if(lock&&document.getElementById('winOverlay').classList.contains('show'))return;
+  toast(SKILL_TAUNTS[Math.floor(Math.random()*SKILL_TAUNTS.length)]);
+  if(settings.sfx)try{sfx(300,0.2,'sawtooth',0.06)}catch(e){}
+  try{drawLightning(window.innerWidth/2,window.innerHeight*0.4);}catch(e){}
+  try{shuffleRemaining();}catch(e){}
+}
+/* ⚡ Shpërblim kur bën 2 Excellent radhazi — vetëtimë + shikim i shpejtë (stil Candy Crush) */
+function revealBonusFX(){
+  toast('⚡ 2× EXCELLENT — free peek!');
+  try{drawLightning(window.innerWidth/2,window.innerHeight*0.4);}catch(e){}
+  try{drawLightning(window.innerWidth*0.3,window.innerHeight*0.5);}catch(e){}
+  if(settings.sfx)try{sfx(1200,0.3,'sine',0.07);setTimeout(()=>sfx(1600,0.25,'sine',0.06),120)}catch(e){}
+  try{peekAll();}catch(e){}
+}
+/* 🎬 Intro & fund sezoni */
+const seasonIntroSeen={};
+const SEASON_INTROS=[
+  {em:'🔧',t:'SEASON 1 · GARAGE',d:'Fresh tires, full tank. Let\'s warm up the engine! 🏁'},
+  {em:'🚦',t:'SEASON 2 · CITY RUSH',d:'Traffic, lights, chaos. Keep your eyes sharp! 🚕'},
+  {em:'🌄',t:'SEASON 3 · OPEN ROAD',d:'Mountains ahead. Fuel is tight — drive smart. ⛽'},
+  {em:'🌙',t:'SEASON 4 · NIGHT DRIVE',d:'Headlights on. The cards like to move in the dark… 👀'},
+  {em:'🏆',t:'SEASON 5 · CHAMPIONSHIP',d:'Final laps. Bombs, traps, glory. Show them who\'s boss! 🔥'}
+];
+const SEASON_JOKES=[
+  '🔧 Season 1 done! Bip: "You didn\'t even scratch the paint. Respect."',
+  '🚦 Season 2 cleared! Even the traffic lights turned green for you. 🟢',
+  '🌄 Season 3 conquered! The mountain called — it wants a rematch. ⛰️',
+  '🌙 Season 4 survived! The cards moved… you moved faster. 👻',
+  '🏆 Season 5 CHAMPION! Bip is crying happy oil tears. 🛢️😭'
+];
+function showSeasonIntro(s){
+  const info=SEASON_INTROS[s]; if(!info)return;
+  document.getElementById('siEmoji').textContent=info.em;
+  document.getElementById('siTitle').textContent=info.t;
+  document.getElementById('siText').textContent=info.d;
+  document.getElementById('seasonIntro').classList.add('show');
+  if(settings.sfx)try{sfx(523,0.18,'sine',0.05);setTimeout(()=>sfx(784,0.22,'sine',0.05),140)}catch(e){}
+}
+function closeSeasonIntro(){ playTap(); document.getElementById('seasonIntro').classList.remove('show'); }
+
+/* 🔒 Privacy Policy — hapet brenda aplikacionit (WKWebView s'hap target=_blank) */
+function openPrivacy(){ document.getElementById('privacyOverlay').style.display='flex'; }
+function closePrivacy(){ document.getElementById('privacyOverlay').style.display='none'; }
 
 /* ================= 🚗 SKENA HYRËSE (Bip) ================= */
 const INTRO_LINES={
