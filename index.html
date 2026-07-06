@@ -345,6 +345,49 @@ svg{display:block}
 .lv-cur .lv-stars{color:#ff4f8f;font-size:9px;letter-spacing:0}
 @keyframes lvPulse{0%,100%{box-shadow:0 0 0 0 rgba(255,79,143,.5)}50%{box-shadow:0 0 0 12px rgba(255,79,143,0)}}
 .lv-lock{background:rgba(255,255,255,.05);border-color:rgba(255,255,255,.14);color:rgba(255,255,255,.35);cursor:default;box-shadow:none}
+/* 🏆📋🃏🎡 Retention */
+.menu-features{display:flex;gap:10px;justify-content:center;margin-top:12px}
+.feat-btn{position:relative;width:50px;height:50px;border-radius:15px;background:rgba(14,12,30,.6);border:1.5px solid rgba(232,161,58,.4);font-size:22px;display:flex;align-items:center;justify-content:center;cursor:pointer}
+.feat-btn:active{transform:scale(.93)}
+.feat-badge{position:absolute;top:-5px;right:-5px;min-width:18px;height:18px;padding:0 4px;border-radius:9px;background:#ff4f5e;color:#fff;font-size:11px;font-weight:900;display:flex;align-items:center;justify-content:center;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+.feat-badge.dot{min-width:12px;width:12px;height:12px;padding:0;top:-3px;right:-3px}
+.league-wrap,.album-wrap{display:flex;flex-direction:column;align-items:center;gap:10px;width:100%;max-width:360px;margin:0 auto;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:6px 14px 40px}
+.league-badge{font-size:64px;filter:drop-shadow(0 6px 16px rgba(0,0,0,.4));animation:wobble 2s ease-in-out infinite alternate}
+.league-tier{font-weight:900;font-size:22px;letter-spacing:2px;background:linear-gradient(90deg,var(--amber2),var(--amber));-webkit-background-clip:text;background-clip:text;color:transparent}
+.league-pts{font-weight:800;color:#fff}
+.league-cd{font-size:12px;color:var(--amber2);font-weight:800}
+.league-promo{font-size:11px;color:rgba(255,255,255,.6);text-align:center;max-width:300px}
+.league-h,.daily-lb-h{font-size:12px;font-weight:900;letter-spacing:2px;color:rgba(255,255,255,.5);margin-top:8px}
+.quest-row{display:flex;align-items:center;gap:10px;padding:8px 4px;border-bottom:1px solid rgba(255,255,255,.07)}
+.quest-row.q-off{opacity:.5}
+.q-ic{font-size:22px;width:30px;text-align:center}
+.q-mid{flex:1}
+.q-desc{font-size:12.5px;font-weight:800;color:#fff}
+.q-bar{height:6px;background:rgba(255,255,255,.1);border-radius:4px;margin-top:4px;overflow:hidden}
+.q-fill{height:100%;background:linear-gradient(90deg,var(--amber2),var(--amber));border-radius:4px;transition:width .4s}
+.q-prog{font-size:11px;font-weight:800;color:rgba(255,255,255,.6)}
+.q-claim{background:linear-gradient(180deg,var(--amber2),var(--amber));color:#1a1410;border:none;border-radius:10px;padding:6px 10px;font-weight:900;font-size:11px;cursor:pointer;animation:playGlow 1.6s ease-in-out infinite}
+.q-claimed{color:#3ef0a0;font-size:18px;font-weight:900}
+.q-bonus{text-align:center;font-size:12px;font-weight:800;color:var(--amber2);margin-top:10px}
+.album-pg-title{width:100%;font-weight:900;font-size:13px;letter-spacing:1px;color:var(--amber2);margin:12px 0 4px;text-align:left}
+.album-page{display:grid;grid-template-columns:repeat(5,1fr);gap:8px;width:100%}
+.acard{aspect-ratio:.78;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:26px;background:rgba(255,255,255,.05);border:2px solid;position:relative}
+.acard.locked{filter:grayscale(1);opacity:.5;font-size:20px;color:rgba(255,255,255,.35)}
+.acard.r2:not(.locked){box-shadow:0 0 12px rgba(160,107,255,.4)}
+.acard.r3:not(.locked){box-shadow:0 0 14px rgba(255,209,102,.5)}
+.acard-n{position:absolute;bottom:2px;right:4px;font-size:10px;font-weight:900;color:#fff;background:rgba(0,0,0,.6);border-radius:7px;padding:0 4px}
+.spin-holder{position:relative;width:220px;height:220px;margin:6px auto 0}
+.spin-wheel2{position:absolute;inset:0;border-radius:50%;background:conic-gradient(#e8a13a 0 45deg,#3ac6e8 45deg 90deg,#7ed957 90deg 135deg,#ff5c5c 135deg 180deg,#9b6bff 180deg 225deg,#ffd166 225deg 270deg,#3ef0a0 270deg 315deg,#ff8fc0 315deg 360deg);border:5px solid #fff2;box-shadow:0 8px 24px rgba(0,0,0,.5)}
+.spin-seg{position:absolute;inset:0;display:flex;justify-content:center;padding-top:14px}
+.spin-seg span{font-size:12px;font-weight:900;color:#1a1410;text-shadow:0 1px 1px rgba(255,255,255,.4)}
+.spin-hub{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);font-size:30px;background:#161430;width:52px;height:52px;border-radius:50%;display:flex;align-items:center;justify-content:center;border:3px solid var(--amber);z-index:2}
+.spin-ptr{position:absolute;top:-10px;left:50%;transform:translateX(-50%);font-size:26px;color:var(--amber2);z-index:3;filter:drop-shadow(0 2px 3px rgba(0,0,0,.5))}
+.cd-card{font-size:90px;width:130px;height:170px;margin:0 auto;border-radius:18px;border:4px solid #fff;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#1a1430,#2a1e48);box-shadow:0 12px 40px rgba(0,0,0,.6);animation:cdFlip .7s cubic-bezier(.2,1.3,.35,1) both}
+@keyframes cdFlip{0%{transform:rotateY(90deg) scale(.6);opacity:0}100%{transform:rotateY(0) scale(1);opacity:1}}
+.cd-rar{font-weight:900;letter-spacing:2px;font-size:15px;margin-top:12px}
+.cd-dup{font-weight:800;font-size:13px;color:#fff;margin-top:4px}
+.cd-shine{position:absolute;top:24%;left:50%;transform:translateX(-50%);width:180px;height:180px;background:radial-gradient(circle,rgba(255,255,255,.5),transparent 65%);pointer-events:none;animation:cdShine 1.4s ease-out infinite}
+@keyframes cdShine{0%,100%{opacity:.3;transform:translateX(-50%) scale(.9)}50%{opacity:.7;transform:translateX(-50%) scale(1.1)}}
 .pt{position:fixed;width:7px;height:7px;border-radius:50%;pointer-events:none;z-index:50;animation:ptFly .55s ease-out both}
 @keyframes ptFly{to{transform:translate(var(--dx),var(--dy)) scale(0);opacity:0}}
 .card-front.gold{background:linear-gradient(160deg,#fff6d8,#ffd97a);border-color:#ffb800;box-shadow:0 0 16px rgba(255,190,50,.55)}
@@ -633,7 +676,8 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 #coachBtn{align-self:center;padding:11px 28px;border:none;border-radius:13px;font-family:'Nunito';font-weight:900;font-size:13px;letter-spacing:1px;background:linear-gradient(180deg,var(--amber2),var(--amber));color:#1a1410;cursor:pointer}
 .hl{box-shadow:0 0 0 3px var(--amber2),0 0 22px rgba(255,209,102,.7)!important;z-index:23;position:relative}
 /* ---- Dialogu ---- */
-#quitDialog,#surePopup,#tutAsk,#premiumSheet,#lbOverlay,#secondChance,#privacyOverlay{position:absolute;inset:0;background:rgba(0,0,0,.7);z-index:20;display:none;align-items:center;justify-content:center;padding:32px}
+#quitDialog,#surePopup,#tutAsk,#premiumSheet,#lbOverlay,#secondChance,#privacyOverlay,#questsOverlay,#spinOverlay,#cardDropOv{position:absolute;inset:0;background:rgba(0,0,0,.7);z-index:20;display:none;align-items:center;justify-content:center;padding:32px}
+#quitDialog.show,#surePopup.show,#tutAsk.show,#premiumSheet.show,#lbOverlay.show,#secondChance.show,#privacyOverlay.show,#questsOverlay.show,#spinOverlay.show,#cardDropOv.show{display:flex}
 #quitDialog.show,#surePopup.show,#tutAsk.show,#premiumSheet.show,#lbOverlay.show,#secondChance.show{display:flex}
 .lb-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:11px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.08);margin-bottom:6px;font-weight:800;font-size:14px}
 .lb-row .lb-rank{width:26px;text-align:center;font-weight:900}
@@ -790,6 +834,12 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
     <div class="coin-pill" id="menuProfile" style="border:1.5px solid rgba(232,161,58,.5)">🚗</div>
     <button class="coin-pill" id="menuPro" onclick="playTap();openPremiumSheet()" style="border:1.5px solid rgba(232,161,58,.5);color:#fff;cursor:pointer">👑 PRO</button>
   </div>
+  <div class="menu-features">
+    <button class="feat-btn" onclick="playTap();openLeague()"><span>🏆</span></button>
+    <button class="feat-btn" onclick="playTap();openQuests()"><span>📋</span><span class="feat-badge" id="badgeQuests" style="display:none">0</span></button>
+    <button class="feat-btn" onclick="playTap();openAlbum()"><span>🃏</span></button>
+    <button class="feat-btn" onclick="playTap();openSpin()"><span>🎡</span><span class="feat-badge dot" id="badgeSpin" style="display:none"></span></button>
+  </div>
   <div class="menu-btns">
     <button class="btn btn-primary" onclick="playNext()">
       <svg class="ic"><use href="#i-play"/></svg><span data-i18n="play"></span>
@@ -863,6 +913,34 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
     <div class="coin-pill" id="loveMapLv">Lv 1</div>
   </div>
   <div class="love-map" id="loveMap"></div>
+</div>
+
+<!-- 🏆 LIGA JAVORE -->
+<div class="screen" id="leagueScreen">
+  <div class="page-head">
+    <button class="hud-btn" onclick="playTap();showScreen('menuScreen')"><svg class="ic"><use href="#i-back"/></svg></button>
+    <div class="page-title">🏆 <span data-i18n="leagueBtn"></span></div>
+    <div style="width:42px"></div>
+  </div>
+  <div class="league-wrap">
+    <div class="league-badge" id="leagueEmblem">🥉</div>
+    <div class="league-tier" id="leagueTierName">Bronze</div>
+    <div class="league-pts" id="leaguePts">0 pts</div>
+    <div class="league-cd" id="leagueCountdown"></div>
+    <div class="league-promo" id="leaguePromoInfo"></div>
+    <div class="league-h" data-i18n="leagueTop"></div>
+    <div id="leagueList" class="daily-lb"></div>
+  </div>
+</div>
+
+<!-- 🃏 ALBUMI -->
+<div class="screen" id="albumScreen">
+  <div class="page-head">
+    <button class="hud-btn" onclick="playTap();showScreen('menuScreen')"><svg class="ic"><use href="#i-back"/></svg></button>
+    <div class="page-title">🃏 <span data-i18n="albumBtn"></span></div>
+    <div class="coin-pill" id="albumCount">0/40</div>
+  </div>
+  <div class="album-wrap"><div id="albumGrid"></div></div>
 </div>
 
 <!-- SEZONET -->
@@ -1252,6 +1330,39 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
   </div>
 </div>
 
+<!-- 📋 DAILY QUESTS -->
+<div id="questsOverlay">
+  <div class="dialog-box" style="max-width:340px;width:calc(100% - 32px)">
+    <div style="font-size:34px">📋</div>
+    <h3 data-i18n="questsTitle"></h3>
+    <p style="font-size:10px;color:rgba(255,255,255,.45);margin-bottom:8px" data-i18n="questsSub"></p>
+    <div id="questList" style="text-align:left;width:100%;margin:6px 0"></div>
+    <button class="btn btn-ghost" style="width:100%;margin-top:8px" onclick="playTap();document.getElementById('questsOverlay').classList.remove('show')"><span data-i18n="close"></span></button>
+  </div>
+</div>
+
+<!-- 🎡 RROTA E FATIT -->
+<div id="spinOverlay">
+  <div class="dialog-box" style="max-width:320px">
+    <h3 style="margin-bottom:4px">🎡 <span data-i18n="spinTitle"></span></h3>
+    <p style="font-size:10px;color:rgba(255,255,255,.45);margin-bottom:10px" data-i18n="spinSub"></p>
+    <div class="spin-holder"><div class="spin-wheel2" id="spinWheel"></div><div class="spin-ptr">▼</div></div>
+    <button class="btn btn-primary" id="spinBtn" style="width:100%;margin-top:14px" onclick="doSpin()">🎡 SPIN</button>
+    <button class="btn btn-ghost" style="width:100%;margin-top:8px" onclick="playTap();document.getElementById('spinOverlay').classList.remove('show')"><span data-i18n="close"></span></button>
+  </div>
+</div>
+
+<!-- 🃏 KARTË E RE (drop) -->
+<div id="cardDropOv">
+  <div style="text-align:center">
+    <div class="cd-shine"></div>
+    <div class="cd-card" id="cdCard">🚗</div>
+    <div class="cd-rar" id="cdRar">Common</div>
+    <div class="cd-dup" id="cdDup"></div>
+    <button class="btn btn-primary" style="min-width:150px;margin-top:16px" onclick="playTap();document.getElementById('cardDropOv').classList.remove('show')">OK 👍</button>
+  </div>
+</div>
+
 <!-- PREMIUM SHEET -->
 <div id="premiumSheet">
   <div class="dialog-box" style="max-width:320px">
@@ -1420,7 +1531,12 @@ const I18N={
     funLove:['Dashuria kërkon durim… ti jo 😏','Ia vlen pritja 💕','Ndiq zemrën 💘','Mos e prish serinë e dashurisë 💞','Kujdes nga tradhtia 🗡️'],
     loveComboLbl:'Combo dashurie', loveWinT:'💘 DASHURI E VËRTETË!', loveLoseT:'💔 U THYE ZEMRA', loveLoseD:'Mbaroi dashuria… provo prapë, zemra nuk dorëzohet! 💕',
     loveSure:['💕 A je i sigurt që është AJO/AI?','😍 Zemra po të rreh… beso?','💘 Kjo është dashuri e vërtetë?','🌹 Rrezikon gjithçka për këtë?','💌 A po të gënjen zemra?'],
-    loveSureHint:'✔ = +2 ⛽ · ✘ = 💔', loveShareTxt:'💘 E gjeta dashurinë te Memory Drive! Provo edhe ti: {URL}', loveMapBtn:'Harta', needName:'✍️ Shkruaj emrin tënd së pari!'
+    loveSureHint:'✔ = +2 ⛽ · ✘ = 💔', loveShareTxt:'💘 E gjeta dashurinë te Memory Drive! Provo edhe ti: {URL}', loveMapBtn:'Harta', needName:'✍️ Shkruaj emrin tënd së pari!',
+    leagueBtn:'Liga', leaguePts:'pikë', endsIn:'Mbaron pas', leaguePromoHint:'Top 5 → ngjitje +{r}🪙', leagueMax:'Niveli maksimal 👑', leagueTop:'RENDITJA E JAVËS', leagueEmpty:'Ende pa pikë — luaj për të hyrë! 🏁', leagueEnded:'Java mbaroi! 🏆', leagueUp:'U ngjite në {t}!', leagueDown:'Zbrite në {t}', leagueStay:'Qëndrove te {t}',
+    questsTitle:'DETYRAT DITORE', questsSub:'Resetohen në mesnatë UTC', questAllDone:'Të gjitha detyrat!', questBonus:'Kry të treja për +150🪙 +50 XP', questBonusDone:'Bonusi u mor!',
+    q_winLevels:'Fito {x} nivele', q_doMatches:'Bëj {x} përputhje', q_winDuel:'Fito një duel', q_playDaily:'Luaj sfidën ditore', q_usePowerup:'Përdor një ndihmës', q_findGold:'Gjej {x} çifte të artë', q_endlessWave:'Arri valën {x} në Pafund', q_perfectLevel:'Fito një nivel me 3⭐',
+    albumBtn:'Albumi', pgGarage:'Garazhi Klasik', pgCrew:'Skuadra', pgSeasons:'Sezonet', pgLegends:'Legjendat', pageDone:'Faqja u plotësua!', exclSkin:'Stil ekskluziv!', exclAvatar:'Avatar ekskluziv!', rar_0:'E Zakonshme', rar_1:'E Rrallë', rar_2:'Epike', rar_3:'Legjendare', duplicate:'Dublikatë', newCard:'Kartë e re!',
+    spinTitle:'RROTA E FATIT', spinSub:'1 rrotullim falas në ditë', spinBtn:'RROTULLO', spinDone:'Kthehu nesër 😅', spinNext:'nesër'
   },
   en:{
     subtitle:'MATCH • REMEMBER • WIN',
@@ -1515,7 +1631,12 @@ const I18N={
     funLove:["Love takes patience… you don't 😏","They're worth the wait 💕","Follow your heart 💘","Don't break the love streak 💞","Beware betrayal 🗡️"],
     loveComboLbl:'Love combo', loveWinT:'💘 TRUE LOVE!', loveLoseT:'💔 HEARTBROKEN', loveLoseD:'Love ran out… try again, the heart never gives up! 💕',
     loveSure:["💕 Are you sure it's THE ONE?","😍 Your heart races… trust it?","💘 Is this true love?","🌹 Risk it all for this one?","💌 Is your heart lying to you?"],
-    loveSureHint:'✔ = +2 ⛽ · ✘ = 💔', loveShareTxt:'💘 I found love in Memory Drive! You try too: {URL}', loveMapBtn:'Map', needName:'✍️ Enter your name first!'
+    loveSureHint:'✔ = +2 ⛽ · ✘ = 💔', loveShareTxt:'💘 I found love in Memory Drive! You try too: {URL}', loveMapBtn:'Map', needName:'✍️ Enter your name first!',
+    leagueBtn:'League', leaguePts:'pts', endsIn:'Ends in', leaguePromoHint:'Top 5 → promote +{r}🪙', leagueMax:'Max tier 👑', leagueTop:"THIS WEEK'S RANKING", leagueEmpty:'No points yet — play to join! 🏁', leagueEnded:'Week ended! 🏆', leagueUp:'Promoted to {t}!', leagueDown:'Dropped to {t}', leagueStay:'Held {t}',
+    questsTitle:'DAILY QUESTS', questsSub:'Reset at midnight UTC', questAllDone:'All quests done!', questBonus:'Do all 3 for +150🪙 +50 XP', questBonusDone:'Bonus claimed!',
+    q_winLevels:'Win {x} levels', q_doMatches:'Make {x} matches', q_winDuel:'Win a duel', q_playDaily:'Play the daily challenge', q_usePowerup:'Use a power-up', q_findGold:'Find {x} golden pairs', q_endlessWave:'Reach wave {x} in Endless', q_perfectLevel:'Win a level with 3⭐',
+    albumBtn:'Album', pgGarage:'Garage Classics', pgCrew:'The Crew', pgSeasons:'Seasons', pgLegends:'Legends', pageDone:'Page complete!', exclSkin:'Exclusive skin!', exclAvatar:'Exclusive avatar!', rar_0:'Common', rar_1:'Rare', rar_2:'Epic', rar_3:'Legendary', duplicate:'Duplicate', newCard:'New card!',
+    spinTitle:'WHEEL OF FORTUNE', spinSub:'1 free spin per day', spinBtn:'SPIN', spinDone:'Come back tomorrow 😅', spinNext:'tomorrow'
   },
   sl:{
     subtitle:'POVEŽI • POMNI • ZMAGAJ',
@@ -1610,7 +1731,12 @@ const I18N={
     funLove:['Ljubezen terja potrpljenje… ti ne 😏','Vredno je čakanja 💕','Sledi srcu 💘','Ne prekini niza ljubezni 💞','Pazi na izdajo 🗡️'],
     loveComboLbl:'Ljubezenski combo', loveWinT:'💘 PRAVA LJUBEZEN!', loveLoseT:'💔 STRTO SRCE', loveLoseD:'Ljubezni je zmanjkalo… poskusi znova, srce nikoli ne obupa! 💕',
     loveSure:['💕 Si prepričan, da je PRAVI/-A?','😍 Srce ti razbija… mu zaupaš?','💘 Je to prava ljubezen?','🌹 Tvegaš vse za tega?','💌 Ti srce laže?'],
-    loveSureHint:'✔ = +2 ⛽ · ✘ = 💔', loveShareTxt:'💘 Našel sem ljubezen v Memory Drive! Poskusi še ti: {URL}', loveMapBtn:'Zemljevid', needName:'✍️ Najprej vnesi ime!'
+    loveSureHint:'✔ = +2 ⛽ · ✘ = 💔', loveShareTxt:'💘 Našel sem ljubezen v Memory Drive! Poskusi še ti: {URL}', loveMapBtn:'Zemljevid', needName:'✍️ Najprej vnesi ime!',
+    leagueBtn:'Liga', leaguePts:'tč', endsIn:'Konec čez', leaguePromoHint:'Top 5 → napredovanje +{r}🪙', leagueMax:'Najvišja stopnja 👑', leagueTop:'LESTVICA TEDNA', leagueEmpty:'Še ni točk — igraj za vstop! 🏁', leagueEnded:'Teden je končan! 🏆', leagueUp:'Napredoval v {t}!', leagueDown:'Padel v {t}', leagueStay:'Obdržal {t}',
+    questsTitle:'DNEVNE NALOGE', questsSub:'Ponastavitev opolnoči UTC', questAllDone:'Vse naloge!', questBonus:'Opravi vse 3 za +150🪙 +50 XP', questBonusDone:'Bonus prevzet!',
+    q_winLevels:'Zmagaj {x} stopenj', q_doMatches:'Naredi {x} povezav', q_winDuel:'Zmagaj dvoboj', q_playDaily:'Igraj dnevni izziv', q_usePowerup:'Uporabi pripomoček', q_findGold:'Najdi {x} zlatih parov', q_endlessWave:'Doseži val {x} v Neskončnem', q_perfectLevel:'Zmagaj stopnjo s 3⭐',
+    albumBtn:'Album', pgGarage:'Garažne klasike', pgCrew:'Ekipa', pgSeasons:'Letni časi', pgLegends:'Legende', pageDone:'Stran dokončana!', exclSkin:'Ekskluziven videz!', exclAvatar:'Ekskluziven avatar!', rar_0:'Navadna', rar_1:'Redka', rar_2:'Epska', rar_3:'Legendarna', duplicate:'Dvojnik', newCard:'Nova karta!',
+    spinTitle:'KOLO SREČE', spinSub:'1 brezplačen vrtljaj na dan', spinBtn:'ZAVRTI', spinDone:'Vrni se jutri 😅', spinNext:'jutri'
   }
 };
 function t(key){return (I18N[settings.lang]||I18N.sq)[key]||key}
@@ -1776,7 +1902,7 @@ function playNext(){playTap();startMusic();startLevel(nextPlayable())}
 /* ================= RUAJTJA ================= */
 async function saveData(){
   try{
-    await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,xp,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,introSceneSeen,streak,streakLast,dailyDoneDate,dailyBestMs,endlessBestWave,achievements,goldPairsTotal,loveLevel,loveStars,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang}}));
+    await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,xp,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,introSceneSeen,streak,streakLast,dailyDoneDate,dailyBestMs,endlessBestWave,achievements,goldPairsTotal,loveLevel,loveStars,leagueTier,leagueWeek,leaguePoints,questDate,questProg,questClaimed,questBonusClaimed,album,albumClaimed,spinDate,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang}}));
   }catch(e){}
 }
 const RESET_TOKEN='reset-2026-07-05'; // 🔄 ndrysho këtë vlerë për një reset të ri një-herësh
@@ -1811,6 +1937,11 @@ async function loadData(){
       goldPairsTotal=d.goldPairsTotal||0;
       loveLevel=d.loveLevel||1;
       loveStars=(d.loveStars&&typeof d.loveStars==='object')?d.loveStars:{};
+      leagueTier=d.leagueTier||0; leagueWeek=d.leagueWeek||''; leaguePoints=d.leaguePoints||0;
+      questDate=d.questDate||''; questProg=Array.isArray(d.questProg)?d.questProg:[0,0,0];
+      questClaimed=Array.isArray(d.questClaimed)?d.questClaimed:[false,false,false]; questBonusClaimed=!!d.questBonusClaimed;
+      album=(d.album&&typeof d.album==='object')?d.album:{}; albumClaimed=Array.isArray(d.albumClaimed)?d.albumClaimed:[];
+      spinDate=d.spinDate||'';
       // XP: nëse mungon (lojtarë të vjetër), llogaritet nga yjet + fitoret
       xp=(d.xp!=null)?d.xp:(Object.values(progress).reduce((a,b)=>a+(b||0),0)*40+duelWins*40);
       if(d.settings){
@@ -2092,7 +2223,7 @@ function playLoseMusic(){
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  if(id==='menuScreen'){updateTotalStars();startMusic();checkAchievements(false);handlePendingDuel();
+  if(id==='menuScreen'){updateTotalStars();startMusic();checkAchievements(false);handlePendingDuel();openFeaturesInit();
     const mb=document.querySelector('.menu-btns'); if(mb){mb.classList.remove('anim');void mb.offsetWidth;mb.classList.add('anim');} // 🎬 rihap animacionin e butonave
   } // 🌙 muzika e qetë e menusë
   if(id==='settingsScreen')refreshProfileUI();
@@ -2143,6 +2274,12 @@ let excellentStreak=0, pendingRevealBonus=false; // ⚡ 2× Excellent → shpër
 let loveLevel=1; // 💘 niveli më i lartë i zhbllokuar në Love Match
 let loveStars={}; // {level: yje 1-3}
 let loveCurrent=1; // niveli që po luhet aktualisht
+/* 🏆 Liga · 📋 Quests · 🃏 Album · 🎡 Spin */
+let leagueTier=0, leagueWeek='', leaguePoints=0;        // 0=Bronze..4=Legend
+let questDate='', questProg=[0,0,0], questClaimed=[false,false,false], questBonusClaimed=false;
+let album={}, albumClaimed=[];                          // {cardId:count}, [rewardIds]
+let spinDate='';                                        // data e spin-it të fundit falas
+let pendingLeaguePromo=null;                            // {dir, tier} për ekranin e fundjavës
 /* 🎴 Stile hyrëse të kartave — ndryshojnë çdo level */
 const DEAL_STYLES=['dealIn','dealFlip','dealSlideL','dealSlideR','dealZoom','dealDrop','dealRise','dealSwirl'];
 let dealStyleIx=0;
@@ -2301,6 +2438,7 @@ function flipSecond(c,gamble){
       playMatch();pairsFound++;
       if(!duel)fuelBonus++; // ⛽ çifti i saktë NUK harxhon naftë — vetëm gabimi e harxhon
       if(mode==='endless'&&!duel)endlessPairScored(); // ♾️ 5🪙/çift (max 100/seancë)
+      questProgress('doMatches',1); // 📋 detyra e përputhjeve
       tickChains(); // 🔗 çdo përputhje ul numëruesit e zinxhirëve
       cardSparkle(a);cardSparkle(c);
       // 🔥 Combo: çifte radhazi pa gabim → shpërblim + efekte
@@ -2312,7 +2450,7 @@ function flipSecond(c,gamble){
       if(gamble){fuelBonus+=2;toast(t('gambleWin'));sfx(880,0.28,'sine',0.07);vibrate([30,40,60]);if(tut)tutAfterSure();else unlockAch('sureWin')}
       // Efektet surprizë
       const sym=a.dataset.sym;
-      if(sym===goldSymCur){fuelBonus+=3;if(mode==='campaign')coins+=3;goldPairsTotal++;toast(mode==='love'?t('loveGold'):t('goldMsg'));sfx(1046,0.3,'sine',0.08);saveData();checkAchievements(false);screenBurst(window.innerWidth/2,window.innerHeight*0.44,mode==='love'?['#ff8fc0','#fff','#ffd0e4']:['#ffd166','#fff','#ffe08a'],16,true,false)}
+      if(sym===goldSymCur){fuelBonus+=3;if(mode==='campaign')coins+=3;goldPairsTotal++;questProgress('findGold',1);toast(mode==='love'?t('loveGold'):t('goldMsg'));sfx(1046,0.3,'sine',0.08);saveData();checkAchievements(false);screenBurst(window.innerWidth/2,window.innerHeight*0.44,mode==='love'?['#ff8fc0','#fff','#ffd0e4']:['#ffd166','#fff','#ffe08a'],16,true,false)}
       else if(sym===bombSymCur){
         if(duel){duelStats.bh++;if(duel.startTs)duel.startTs-=5000;toast('💣 Bomb! −5s');bombFX();shuffleRemaining();updateHud();}
         else{bombHitThisGame=true;const bx=(mode==='endless')?2:(mode==='love')?3:(params.season>=4?4:params.season>=2?3:2);fuelBonus-=bx;toast(mode==='love'?t('loveBomb'):('💥 '+t('bombMsg').replace('2',String(bx))));bombFX();bombRevealAll();if(mode==='campaign'&&params.season>=3&&pairsFound<params.pairs)swapTwo(true)}
@@ -2432,6 +2570,10 @@ function levelWon(){
   saveData();
   if(bombHitThisGame)unlockAch('bombSurvive'); // 🏅 mbijetove bombën & fitove
   checkAchievements(false);
+  // 🏆📋🃏 retention
+  addLeaguePoints(10+(earned===3?5:0));
+  questProgress('winLevels',1); if(earned===3)questProgress('perfectLevel',1);
+  dropCardChance();
   if(earned===3) celebrateExcellent();   // ✨ festë e madhe për 3 yje
   else { try{spawnConfetti();}catch(e){} for(let i=0;i<3;i++){setTimeout(()=>{try{screenBurst(window.innerWidth*(0.3+Math.random()*0.4),window.innerHeight*(0.3+Math.random()*0.3),['#ffd166','#7fd8ff','#fff'],12,false,true);}catch(e){}},i*180);} } // festë kur kryen
 
@@ -3363,7 +3505,8 @@ function finishDecide(timeout){
   else if(outcome==='draw'){coins+=(duel&&duel.bet)||50}
   else playLoseMusic();
   saveData();
-  if(outcome==='win')checkAchievements(false); // 🏅 duel1/duel10/duel25
+  if(outcome==='win'){checkAchievements(false); addLeaguePoints(40); questProgress('winDuel',1); dropCardChance();} // 🏅🏆📋🃏
+  else if(outcome==='lose'){addLeaguePoints(10);}
   showDuelResult(outcome,false);
   if(duel.role==='h'){
     sDel('duel:'+duel.code);sDel('duel:'+duel.code+':join');
@@ -3513,7 +3656,7 @@ function updateBoosterBar(){
 }
 function boostPay(cost){
   if(coins<cost){toast('❌ Not enough coins');sfx(200,0.15,'sine',0.05);return false}
-  coins-=cost;saveData();updateHud();updateBoosterBar();vibrate(18);return true;
+  coins-=cost;saveData();updateHud();updateBoosterBar();vibrate(18);questProgress('usePowerup',1);return true;
 }
 function boostPeek(){ if(lock||duel)return; if(!boostPay(BOOST.peek))return; toast('👁️ Peek!'); sfx(1200,0.2,'sine',0.06); peekAll(); }
 function boostFuel(){ if(duel)return; if(!boostPay(BOOST.fuel))return; fuelBonus+=3; toast('⛽ +3 fuel'); sfx(720,0.16,'sine',0.06); updateHud(); }
@@ -3886,6 +4029,7 @@ function dailyWon(){
   saveData();
   submitDailyScore(ms);
   checkAchievements(false);
+  addLeaguePoints(30); questProgress('playDaily',1); dropCardChance(); // 🏆📋🃏
   try{celebrateExcellent();}catch(e){try{spawnConfetti();}catch(e2){}}
   showModeResult({
     emoji:'📅', cls:'win', title:t('dailyDoneT'),
@@ -3967,6 +4111,7 @@ function endlessPairScored(){
   if(endlessCoins<100){const add=Math.min(5,100-endlessCoins);coins+=add;endlessCoins+=add;} // 5🪙/çift, max 100
 }
 function endlessWaveDone(){
+  addLeaguePoints(3); questProgress('endlessWave',endlessWave); // 🏆📋 çdo valë
   params.maxMoves+=4;                               // +4 ⛽ për valë të kryer
   toast(`${t('waveLbl')} ${endlessWave} ✓  +4 ⛽`);
   if(settings.sfx)try{sfx(880,0.25,'sine',0.07);setTimeout(()=>sfx(1174,0.3,'sine',0.06),110)}catch(e){}
@@ -4300,6 +4445,259 @@ function closeSeasonIntro(){ playTap(); document.getElementById('seasonIntro').c
 /* 🔒 Privacy Policy — hapet brenda aplikacionit (WKWebView s'hap target=_blank) */
 function openPrivacy(){ document.getElementById('privacyOverlay').style.display='flex'; }
 function closePrivacy(){ document.getElementById('privacyOverlay').style.display='none'; }
+
+/* ============================================================
+   🏆 LIGA JAVORE · 📋 DAILY QUESTS · 🃏 ALBUM · 🎡 SPIN
+   ============================================================ */
+function isoWeekKey(dd){
+  const d=dd?new Date(dd):new Date();
+  const dt=new Date(Date.UTC(d.getUTCFullYear(),d.getUTCMonth(),d.getUTCDate()));
+  const day=(dt.getUTCDay()+6)%7; dt.setUTCDate(dt.getUTCDate()-day+3);
+  const firstThu=new Date(Date.UTC(dt.getUTCFullYear(),0,4));
+  const week=1+Math.round(((dt-firstThu)/86400000-3+((firstThu.getUTCDay()+6)%7))/7);
+  return dt.getUTCFullYear()+'-W'+String(week).padStart(2,'0');
+}
+function msToWeekEnd(){
+  const now=new Date(); const day=(now.getUTCDay()+6)%7;
+  const end=new Date(Date.UTC(now.getUTCFullYear(),now.getUTCMonth(),now.getUTCDate()+(6-day)+1,0,0,0));
+  return end-now;
+}
+function fmtDHM(ms){const s=Math.max(0,Math.floor(ms/1000));const d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60);return (d>0?d+'d ':'')+h+'h '+m+'m';}
+
+/* ---------- 🏆 LEAGUE ---------- */
+const TIER_NAMES=['Bronze','Silver','Gold','Diamond','Legend'];
+const TIER_EM=['🥉','🥈','🥇','💎','👑'];
+const PROMO_REWARD=[200,400,800,1500];
+function leagueKey(week){return 'duel:league:'+(week||isoWeekKey());}
+async function pushLeague(){
+  try{const k=leagueKey(leagueWeek||isoWeekKey());const b=(await sGet(k))||{};b[myId]={name:myName(),av:avatar,pts:leaguePoints,tier:leagueTier};await sSet(k,b);}catch(e){}
+}
+function addLeaguePoints(n){
+  if(n<=0)return;
+  if(!leagueWeek)leagueWeek=isoWeekKey();
+  leaguePoints+=n; saveData(); pushLeague();
+}
+async function processWeeklyRollover(){
+  const wk=isoWeekKey();
+  if(leagueWeek===wk) return;
+  if(leagueWeek && leaguePoints>0){ await processLeagueEnd(leagueWeek); }
+  leagueWeek=wk; leaguePoints=0; saveData();
+  if(pendingLeaguePromo) showLeaguePromo();
+}
+async function processLeagueEnd(prevWeek){
+  let rank=999;
+  try{
+    const b=(await sGet(leagueKey(prevWeek)))||{};
+    const rows=Object.entries(b).map(([id,v])=>({id,pts:(v&&v.pts)||0})).sort((a,b)=>b.pts-a.pts);
+    const idx=rows.findIndex(r=>r.id===myId); rank=idx>=0?idx+1:rows.length+1;
+  }catch(e){}
+  if(rank<=5 && leagueTier<4){ const rw=PROMO_REWARD[leagueTier]||0; leagueTier++; coins+=rw; pendingLeaguePromo={dir:1,tier:leagueTier,reward:rw}; }
+  else if(rank>=16 && leagueTier>0){ leagueTier--; pendingLeaguePromo={dir:-1,tier:leagueTier}; }
+  else { pendingLeaguePromo={dir:0,tier:leagueTier}; }
+  saveData();
+}
+async function openLeague(){
+  const list=document.getElementById('leagueList');
+  document.getElementById('leagueEmblem').textContent=TIER_EM[leagueTier];
+  document.getElementById('leagueTierName').textContent=TIER_NAMES[leagueTier];
+  document.getElementById('leaguePts').textContent=leaguePoints+' '+t('leaguePts');
+  document.getElementById('leagueCountdown').textContent=t('endsIn')+' '+fmtDHM(msToWeekEnd());
+  document.getElementById('leaguePromoInfo').textContent = leagueTier<4 ? (t('leaguePromoHint').replace('{r}',PROMO_REWARD[leagueTier])) : t('leagueMax');
+  list.innerHTML='<div style="text-align:center;color:rgba(255,255,255,.45);font-size:12px;padding:10px">Loading…</div>';
+  showScreen('leagueScreen');
+  let b={}; try{b=(await sGet(leagueKey(leagueWeek||isoWeekKey())))||{};}catch(e){}
+  const me=myName(); if(leaguePoints>0 && (!b[myId]||b[myId].pts<leaguePoints))b[myId]={name:me,av:avatar,pts:leaguePoints,tier:leagueTier};
+  const rows=Object.entries(b).map(([id,v])=>({id,...v})).filter(v=>v&&v.pts>0).sort((a,b)=>b.pts-a.pts);
+  const myIdx=rows.findIndex(r=>r.id===myId);
+  const medal=i=>i===0?'🥇':i===1?'🥈':i===2?'🥉':(i+1)+'.';
+  let html=rows.slice(0,20).map((r,i)=>`<div class="lb-row${r.id===myId?' me':''}"><span class="lb-rank">${medal(i)}</span><span class="lb-name">${r.av||''} ${r.name||'Racer'}</span><span class="lb-wins">${r.pts} pts</span></div>`).join('');
+  if(myIdx>=20)html+=`<div class="lb-row me" style="margin-top:6px"><span class="lb-rank">${myIdx+1}.</span><span class="lb-name">${avatar} ${me}</span><span class="lb-wins">${leaguePoints} pts</span></div>`;
+  if(!rows.length)html='<div style="text-align:center;color:rgba(255,255,255,.45);font-size:12px;padding:12px">'+t('leagueEmpty')+'</div>';
+  list.innerHTML=html;
+}
+function showLeaguePromo(){
+  const p=pendingLeaguePromo; if(!p)return; pendingLeaguePromo=null;
+  const em=p.dir>0?'⬆️':p.dir<0?'⬇️':'🏁';
+  const title=p.dir>0?t('leagueUp').replace('{t}',TIER_NAMES[p.tier]):p.dir<0?t('leagueDown').replace('{t}',TIER_NAMES[p.tier]):t('leagueStay');
+  showModeResult({emoji:TIER_EM[p.tier]+em, cls:p.dir>=0?'win':'lose', title:t('leagueEnded'),
+    stats:`${title}${p.reward?('<br>+'+p.reward+' 🪙'):''}`,
+    buttons:[{label:'🏆 '+t('leagueBtn'),cls:'btn-primary',fn:()=>{hideModeResult();openLeague();}},{label:t('menu'),cls:'btn-ghost',fn:()=>{hideModeResult();showScreen('menuScreen');}}]});
+  if(p.dir>0){try{spawnConfetti();}catch(e){}}
+}
+
+/* ---------- 📋 DAILY QUESTS ---------- */
+const QUEST_POOL=[
+  {id:'winLevels',mode:'count',rng:r=>2+Math.floor(r()*2),ic:'🏁'},
+  {id:'doMatches',mode:'count',rng:r=>15+Math.floor(r()*11),ic:'🃏'},
+  {id:'winDuel',mode:'count',rng:r=>1,ic:'🆚'},
+  {id:'playDaily',mode:'count',rng:r=>1,ic:'📅'},
+  {id:'usePowerup',mode:'count',rng:r=>1,ic:'🎒'},
+  {id:'findGold',mode:'count',rng:r=>1+Math.floor(r()*2),ic:'✨'},
+  {id:'endlessWave',mode:'reach',rng:r=>3+Math.floor(r()*3),ic:'♾️'},
+  {id:'perfectLevel',mode:'count',rng:r=>1,ic:'⭐'}
+];
+const QUEST_REWARD=[40,60,80];
+let todaysQuests=[];
+function genQuests(){
+  const seed=parseInt(utcDateKey(),10); const r=mulberry32(seed);
+  const idxs=seededShuffle(QUEST_POOL.map((_,i)=>i),r).slice(0,3);
+  todaysQuests=idxs.map(i=>{const q=QUEST_POOL[i];return {id:q.id,mode:q.mode,ic:q.ic,goal:q.rng(r)};});
+}
+function checkQuestDate(){
+  const today=utcDateKey();
+  if(questDate!==today){ questDate=today; questProg=[0,0,0]; questClaimed=[false,false,false]; questBonusClaimed=false; genQuests(); saveData(); }
+  else if(!todaysQuests.length){ genQuests(); }
+}
+function questProgress(type,amount){
+  checkQuestDate();
+  let changed=false;
+  todaysQuests.forEach((q,i)=>{
+    if(q.id!==type||questClaimed[i])return;
+    if(q.mode==='reach'){ if(amount>questProg[i]){questProg[i]=Math.min(amount,q.goal);changed=true;} }
+    else { if(questProg[i]<q.goal){questProg[i]=Math.min(q.goal,questProg[i]+(amount||1));changed=true;} }
+  });
+  if(changed){ saveData(); updateFeatureBadges(); }
+}
+function questClaimable(){ return todaysQuests.some((q,i)=>!questClaimed[i]&&questProg[i]>=q.goal); }
+function claimQuest(i){
+  const q=todaysQuests[i]; if(!q||questClaimed[i]||questProg[i]<q.goal)return;
+  questClaimed[i]=true; coins+=QUEST_REWARD[i]; playTap();
+  if(settings.sfx)try{sfx(880,0.15,'sine',0.06);setTimeout(()=>sfx(1174,0.18,'sine',0.05),90)}catch(e){}
+  if(questClaimed.every(Boolean)&&!questBonusClaimed){ questBonusClaimed=true; coins+=150; addXP(50); toast('📋 '+t('questAllDone')+' +150 🪙 +50 XP'); }
+  saveData(); renderQuests(); updateFeatureBadges();
+}
+function renderQuests(){
+  checkQuestDate();
+  const wrap=document.getElementById('questList'); if(!wrap)return;
+  wrap.innerHTML=todaysQuests.map((q,i)=>{
+    const done=questProg[i]>=q.goal, claimed=questClaimed[i];
+    const pct=Math.min(100,Math.round(questProg[i]/q.goal*100));
+    const desc=t('q_'+q.id).replace('{x}',q.goal);
+    const btn=claimed?`<span class="q-claimed">✓</span>`:done?`<button class="q-claim" onclick="claimQuest(${i})">CLAIM +${QUEST_REWARD[i]}🪙</button>`:`<span class="q-prog">${questProg[i]}/${q.goal}</span>`;
+    return `<div class="quest-row${claimed?' q-off':''}"><div class="q-ic">${q.ic}</div><div class="q-mid"><div class="q-desc">${desc}</div><div class="q-bar"><div class="q-fill" style="width:${claimed?100:pct}%"></div></div></div>${btn}</div>`;
+  }).join('')+`<div class="q-bonus">${questBonusClaimed?'✅ '+t('questBonusDone'):'🎁 '+t('questBonus')}</div>`;
+}
+function openQuests(){ renderQuests(); document.getElementById('questsOverlay').classList.add('show'); }
+
+/* ---------- 🃏 ALBUM ---------- */
+const ALBUM_PAGES=[
+  {name:'pgGarage', cards:['🚗','🚙','🚕','🚓','🚑','🚒','🚐','🛻','🏎️','🚌']},
+  {name:'pgCrew',   cards:['😎','🥷','🤖','👽','🐉','🦁','🦈','🐺','😈','👑']},
+  {name:'pgSeasons',cards:['🌅','🌲','🌊','🌋','🌌','🏜️','🌠','🌉','⛰️','🌙']},
+  {name:'pgLegends',cards:['🏆','🥇','⚡','💎','🔥','⭐','🎖️','💫','🚨','🧨']}
+];
+// rariteti: index brenda faqes → common(0-5), rare(6-8), epic(9 faqe0-2), legendary(9 faqe3)
+function cardRarity(pi,ci){
+  if(ci<=5)return 0; // common
+  if(ci<=8)return 1; // rare
+  return pi===3?3:2; // epic / legendary
+}
+const RAR_NAMES=['Common','Rare','Epic','Legendary'];
+const RAR_COIN=[10,25,60,150];
+const RAR_COL=['#8a8f9a','#4aa3ff','#a06bff','#ffd166'];
+function cardId(pi,ci){return pi+'-'+ci;}
+function albumOwnedCount(){let n=0;ALBUM_PAGES.forEach((p,pi)=>p.cards.forEach((_,ci)=>{if(album[cardId(pi,ci)])n++;}));return n;}
+function pageComplete(pi){return ALBUM_PAGES[pi].cards.every((_,ci)=>album[cardId(pi,ci)]);}
+function dropCardChance(){ if(Math.random()<0.35) setTimeout(dropCard,700); }
+function dropCard(){
+  const rr=Math.random(); const rar=rr<0.02?3:rr<0.10?2:rr<0.40?1:0;
+  const pool=[]; ALBUM_PAGES.forEach((p,pi)=>p.cards.forEach((em,ci)=>{if(cardRarity(pi,ci)===rar)pool.push({pi,ci,em});}));
+  if(!pool.length)return;
+  const pick=pool[Math.floor(Math.random()*pool.length)]; const id=cardId(pick.pi,pick.ci);
+  const dup=!!album[id]; album[id]=(album[id]||0)+1;
+  let coinsGot=0; if(dup){coinsGot=RAR_COIN[rar];coins+=coinsGot;}
+  saveData();
+  checkAlbumRewards();
+  showCardDrop(pick.em,rar,dup,coinsGot);
+  updateFeatureBadges();
+}
+function checkAlbumRewards(){
+  ALBUM_PAGES.forEach((p,pi)=>{ if(pageComplete(pi)&&!albumClaimed.includes('pg'+pi)){ albumClaimed.push('pg'+pi);
+    const rw=[300,500,0,0][pi]; if(rw)coins+=rw;
+    if(pi===2)toast('🃏 '+t('pageDone')+' 🎨 '+t('exclSkin'));
+    else if(pi===3){premium?0:0; toast('🃏 '+t('pageDone')+' 🏎️ '+t('exclAvatar')); if(!owned.includes('galaxy'))owned.push('galaxy');}
+    else toast('🃏 '+t('pageDone')+' +'+rw+' 🪙');
+    saveData();
+  }});
+  if(albumOwnedCount()>=40 && !albumClaimed.includes('full')){ albumClaimed.push('full'); coins+=2000; toast('👑 COLLECTOR! +2000 🪙'); saveData(); }
+}
+function showCardDrop(em,rar,dup,coinsGot){
+  const ov=document.getElementById('cardDropOv'); if(!ov)return;
+  document.getElementById('cdCard').textContent=em;
+  document.getElementById('cdCard').style.borderColor=RAR_COL[rar];
+  document.getElementById('cdRar').textContent=t('rar_'+rar); document.getElementById('cdRar').style.color=RAR_COL[rar];
+  document.getElementById('cdDup').textContent=dup?('🔁 '+t('duplicate')+' +'+coinsGot+' 🪙'):('✨ '+t('newCard'));
+  ov.classList.add('show');
+  if(settings.sfx)try{sfx(660,0.12,'sine',0.05);setTimeout(()=>sfx(990,0.16,'sine',0.05),110);if(rar>=2)setTimeout(()=>sfx(1320,0.2,'sine',0.05),220)}catch(e){}
+  if(rar>=2){try{spawnConfetti();}catch(e){}}
+}
+function renderAlbum(){
+  const el=document.getElementById('albumCount'); if(el)el.textContent=albumOwnedCount()+'/40';
+  const grid=document.getElementById('albumGrid'); if(!grid)return;
+  let html='';
+  ALBUM_PAGES.forEach((p,pi)=>{
+    html+=`<div class="album-pg-title">${t(p.name)} ${pageComplete(pi)?'✅':''}</div><div class="album-page">`;
+    p.cards.forEach((em,ci)=>{ const owned=!!album[cardId(pi,ci)]; const rar=cardRarity(pi,ci); const cnt=album[cardId(pi,ci)]||0;
+      html+=`<div class="acard r${rar}${owned?'':' locked'}" style="border-color:${owned?RAR_COL[rar]:'rgba(255,255,255,.12)'}">${owned?em:'❓'}${cnt>1?`<span class="acard-n">${cnt}</span>`:''}</div>`;
+    });
+    html+='</div>';
+  });
+  grid.innerHTML=html;
+}
+function openAlbum(){ renderAlbum(); showScreen('albumScreen'); }
+
+/* ---------- 🎡 SPIN ---------- */
+const SPIN_FIELDS=[
+  {t:'30🪙',a:()=>{coins+=30;}},
+  {t:'50🪙',a:()=>{coins+=50;}},
+  {t:'100🪙',a:()=>{coins+=100;}},
+  {t:'+3⛽',a:()=>{fuelPacks++;}},
+  {t:'🎁',a:()=>{dropCard();}},
+  {t:'250🪙',a:()=>{coins+=250;}},
+  {t:'⚡',a:()=>{fuelPacks++;coins+=20;}},
+  {t:'😅',a:()=>{}}
+];
+function canSpin(){ return spinDate!==utcDateKey(); }
+let spinning=false;
+function openSpin(){ renderSpin(); document.getElementById('spinOverlay').classList.add('show'); }
+function renderSpin(){
+  const wheel=document.getElementById('spinWheel'); if(!wheel)return;
+  wheel.innerHTML=SPIN_FIELDS.map((f,i)=>`<div class="spin-seg" style="transform:rotate(${i*45}deg)"><span style="transform:rotate(22.5deg)">${f.t}</span></div>`).join('')+'<div class="spin-hub">🎡</div>';
+  const btn=document.getElementById('spinBtn');
+  if(btn){ btn.disabled=!canSpin(); btn.textContent=canSpin()?('🎡 '+t('spinBtn')):t('spinDone'); }
+  wheel.style.transform='rotate(0deg)';
+}
+function doSpin(){
+  if(spinning||!canSpin())return; spinning=true;
+  const idx=Math.floor(Math.random()*8);
+  const turns=5+Math.floor(Math.random()*3);
+  const target=turns*360 + (360 - idx*45) - 22.5;
+  const wheel=document.getElementById('spinWheel');
+  wheel.style.transition='transform 3.4s cubic-bezier(.15,.6,.2,1)';
+  wheel.style.transform='rotate('+target+'deg)';
+  if(settings.sfx)try{let bt=0;const iv=setInterval(()=>{sfx(500+Math.random()*300,0.03,'square',0.02);if(++bt>26)clearInterval(iv);},110);}catch(e){}
+  spinDate=utcDateKey(); saveData();
+  setTimeout(()=>{
+    spinning=false;
+    SPIN_FIELDS[idx].a(); saveData();
+    const big=idx===5||idx===2;
+    toast('🎡 '+SPIN_FIELDS[idx].t+(idx===7?' — '+t('spinNext'):''));
+    if(big){try{spawnConfetti();}catch(e){}}
+    if(settings.sfx&&idx!==7)try{sfx(880,0.18,'sine',0.06)}catch(e){}
+    const btn=document.getElementById('spinBtn'); if(btn){btn.disabled=true;btn.textContent=t('spinDone');}
+    updateFeatureBadges();
+  },3500);
+}
+
+/* ---------- Badge-t te menyja ---------- */
+function updateFeatureBadges(){
+  const set=(id,show,txt)=>{const b=document.getElementById(id);if(b){b.style.display=show?'flex':'none';if(txt!=null)b.textContent=txt;}};
+  checkQuestDate();
+  const qn=todaysQuests.filter((q,i)=>!questClaimed[i]&&questProg[i]>=q.goal).length;
+  set('badgeQuests',qn>0,qn);
+  set('badgeSpin',canSpin(),'');
+}
+function openFeaturesInit(){ checkQuestDate(); processWeeklyRollover(); updateFeatureBadges(); }
 
 /* ================= 🚗 SKENA HYRËSE (Bip) ================= */
 const INTRO_LINES={
