@@ -312,7 +312,9 @@ svg{display:block}
 .funfloat.show{animation:funFloat 2.6s ease-out forwards}
 @keyframes funFloat{0%{opacity:0;transform:translateX(-50%) translateY(14px) scale(.9)}12%{opacity:1;transform:translateX(-50%) translateY(0) scale(1)}80%{opacity:1}100%{opacity:0;transform:translateX(-50%) translateY(-18px)}}
 /* 💘 Harta e niveleve Love Match (stil Candy Crush Saga) */
-.love-map{position:relative;width:100%;max-width:340px;margin:0 auto;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;align-items:center;padding:24px 0 60px}
+#loveMapScreen{justify-content:flex-start}
+#loveMapScreen .page-head{margin-top:max(24px,calc(env(safe-area-inset-top) + 14px))} /* back pak më poshtë (nën notch) */
+.love-map{position:relative;width:100%;max-width:340px;margin:0 auto;flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;display:flex;flex-direction:column;align-items:center;padding:34px 0 60px}
 .love-map::before{content:'';position:absolute;top:10px;bottom:10px;left:50%;width:0;border-left:4px dashed rgba(255,140,190,.35);transform:translateX(-50%);z-index:0}
 .lv-node{position:relative;z-index:1;width:74px;height:74px;margin:12px 0;border-radius:50%;display:flex;flex-direction:column;align-items:center;justify-content:center;font-weight:900;cursor:pointer;border:3px solid;transition:transform .15s}
 .lv-node:active{transform:scale(.94)}
@@ -2225,10 +2227,10 @@ function updateHud(){
 
 function chooseCard(c){
   if(lock||c.classList.contains('flipped')||c.classList.contains('matched'))return;
-  // 🧊 Akull: prekja çan akullin (pa karburant, pa kthim)
-  if(c.dataset.ice){ crackIce(c); return; }
-  // 🔗 Zinxhirë: e kyçur derisa numëruesi arrin 0
-  if(c.dataset.chain){ jiggleChain(c); return; }
+  // 🧊 Akull: prekja çan akullin (pa karburant, pa kthim) — mbyll kartën e hapur
+  if(c.dataset.ice){ if(firstCard){firstCard.classList.remove('flipped');firstCard=null;} crackIce(c); return; }
+  // 🔗 Zinxhirë: e kyçur derisa numëruesi arrin 0 — mbyll kartën e hapur
+  if(c.dataset.chain){ if(firstCard){firstCard.classList.remove('flipped');firstCard=null;} jiggleChain(c); return; }
 
   // Karta e parë — hapet normalisht
   if(!firstCard){
@@ -2275,6 +2277,7 @@ function flipSecond(c,gamble){
     setTimeout(()=>{
       a.classList.add('matched');c.classList.add('matched');
       playMatch();pairsFound++;
+      if(!duel)fuelBonus++; // ⛽ çifti i saktë NUK harxhon naftë — vetëm gabimi e harxhon
       if(mode==='endless'&&!duel)endlessPairScored(); // ♾️ 5🪙/çift (max 100/seancë)
       tickChains(); // 🔗 çdo përputhje ul numëruesit e zinxhirëve
       cardSparkle(a);cardSparkle(c);
