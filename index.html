@@ -280,7 +280,8 @@ svg{display:block}
 .chain-ov.breaking{animation:chainBreak .45s ease forwards}
 .card.lightcard .card-front{background:linear-gradient(160deg,#0a2a6a,#1e5aff);border-color:#7fd0ff;box-shadow:0 0 16px rgba(90,160,255,.7);color:#fff;text-shadow:0 0 8px rgba(255,255,255,.6)}
 .card.lightcard .card-front::after{content:'⚡';position:absolute;top:2px;right:5px;font-size:13px;animation:blink 1s ease-in-out infinite}
-.card.shake{animation:shake .4s ease}
+.card.shake,#regName.shake{animation:shake .4s ease}
+#regName.shake{border-color:#ff5c5c}
 @keyframes shake{25%{transform:translateX(-5px)}50%{transform:translateX(5px)}75%{transform:translateX(-4px)}}
 
 /* ---- Overlay fitore/humbje ---- */
@@ -1400,7 +1401,7 @@ const I18N={
     funLove:['Dashuria kërkon durim… ti jo 😏','Ia vlen pritja 💕','Ndiq zemrën 💘','Mos e prish serinë e dashurisë 💞','Kujdes nga tradhtia 🗡️'],
     loveComboLbl:'Combo dashurie', loveWinT:'💘 DASHURI E VËRTETË!', loveLoseT:'💔 U THYE ZEMRA', loveLoseD:'Mbaroi dashuria… provo prapë, zemra nuk dorëzohet! 💕',
     loveSure:['💕 A je i sigurt që është AJO/AI?','😍 Zemra po të rreh… beso?','💘 Kjo është dashuri e vërtetë?','🌹 Rrezikon gjithçka për këtë?','💌 A po të gënjen zemra?'],
-    loveSureHint:'✔ = +2 ⛽ · ✘ = 💔', loveShareTxt:'💘 E gjeta dashurinë te Memory Drive! Provo edhe ti: {URL}', loveMapBtn:'Harta'
+    loveSureHint:'✔ = +2 ⛽ · ✘ = 💔', loveShareTxt:'💘 E gjeta dashurinë te Memory Drive! Provo edhe ti: {URL}', loveMapBtn:'Harta', needName:'✍️ Shkruaj emrin tënd së pari!'
   },
   en:{
     subtitle:'MATCH • REMEMBER • WIN',
@@ -1495,7 +1496,7 @@ const I18N={
     funLove:["Love takes patience… you don't 😏","They're worth the wait 💕","Follow your heart 💘","Don't break the love streak 💞","Beware betrayal 🗡️"],
     loveComboLbl:'Love combo', loveWinT:'💘 TRUE LOVE!', loveLoseT:'💔 HEARTBROKEN', loveLoseD:'Love ran out… try again, the heart never gives up! 💕',
     loveSure:["💕 Are you sure it's THE ONE?","😍 Your heart races… trust it?","💘 Is this true love?","🌹 Risk it all for this one?","💌 Is your heart lying to you?"],
-    loveSureHint:'✔ = +2 ⛽ · ✘ = 💔', loveShareTxt:'💘 I found love in Memory Drive! You try too: {URL}', loveMapBtn:'Map'
+    loveSureHint:'✔ = +2 ⛽ · ✘ = 💔', loveShareTxt:'💘 I found love in Memory Drive! You try too: {URL}', loveMapBtn:'Map', needName:'✍️ Enter your name first!'
   },
   sl:{
     subtitle:'POVEŽI • POMNI • ZMAGAJ',
@@ -1590,7 +1591,7 @@ const I18N={
     funLove:['Ljubezen terja potrpljenje… ti ne 😏','Vredno je čakanja 💕','Sledi srcu 💘','Ne prekini niza ljubezni 💞','Pazi na izdajo 🗡️'],
     loveComboLbl:'Ljubezenski combo', loveWinT:'💘 PRAVA LJUBEZEN!', loveLoseT:'💔 STRTO SRCE', loveLoseD:'Ljubezni je zmanjkalo… poskusi znova, srce nikoli ne obupa! 💕',
     loveSure:['💕 Si prepričan, da je PRAVI/-A?','😍 Srce ti razbija… mu zaupaš?','💘 Je to prava ljubezen?','🌹 Tvegaš vse za tega?','💌 Ti srce laže?'],
-    loveSureHint:'✔ = +2 ⛽ · ✘ = 💔', loveShareTxt:'💘 Našel sem ljubezen v Memory Drive! Poskusi še ti: {URL}', loveMapBtn:'Zemljevid'
+    loveSureHint:'✔ = +2 ⛽ · ✘ = 💔', loveShareTxt:'💘 Našel sem ljubezen v Memory Drive! Poskusi še ti: {URL}', loveMapBtn:'Zemljevid', needName:'✍️ Najprej vnesi ime!'
   }
 };
 function t(key){return (I18N[settings.lang]||I18N.sq)[key]||key}
@@ -2838,6 +2839,13 @@ document.getElementById('regName').addEventListener('input',e=>{
 });
 document.getElementById('regBtn').addEventListener('click',()=>{
   playTap();
+  if(!username || !username.trim()){                    // 🚫 emri i detyrueshëm
+    const inp=document.getElementById('regName');
+    if(inp){inp.classList.remove('shake');void inp.offsetWidth;inp.classList.add('shake');setTimeout(()=>inp.classList.remove('shake'),450);inp.focus();}
+    if(settings.sfx)try{sfx(200,0.15,'sine',0.05)}catch(e){}
+    toast(t('needName'));
+    return;
+  }
   registered=true;saveData();
   showScreen('menuScreen');
   if(!tutorialSeen)askTutorial();
@@ -4274,9 +4282,42 @@ function closePrivacy(){ document.getElementById('privacyOverlay').style.display
 
 /* ================= 🚗 SKENA HYRËSE (Bip) ================= */
 const INTRO_LINES={
-  en:["Oh! A driver! Finally!","I lost my keys. And my wheels. And... honestly, my memory too.","Help me match the pairs before the fuel runs out. No pressure.","(Okay... a LITTLE pressure. 💥)"],
-  sq:["O! Një shofer! Më në fund!","I humba çelësat. Edhe gomat. Dhe... sinqerisht, edhe kujtesën.","Më ndihmo t'i gjej çiftet para se të mbarojë karburanti. Pa presion.","(Mirë... PAK presion. 💥)"],
-  sl:["O! Voznik! Končno!","Izgubil sem ključe. In gume. In... iskreno, tudi spomin.","Pomagaj mi najti pare, preden zmanjka goriva. Brez pritiska.","(No... MALO pritiska. 💥)"]
+  en:[
+    "Oh! A driver! Finally! 🚗",
+    "Name's Bip. Little red car, big dreams, tiny fuel tank. ⛽",
+    "I used to be a race legend — 300 km/h, zero brakes, pure vibes. 🏎️💨",
+    "Then one foggy night I lost my keys 🔑, my spare wheels 🛞, and two headlights.",
+    "And... honestly? I lost my memory too. Don't tell the other cars. 🤫",
+    "Every card is a car part — engines 🔧, tires 🛞, sirens 🚨, trophies 🏆.",
+    "Match the pairs and I rebuild myself, piece by piece. 🧩",
+    "But watch the fuel gauge — when it hits empty, I stall. Game over. ⛽💀",
+    "Help me match the pairs before the fuel runs out. No pressure.",
+    "(Okay... a LITTLE pressure. 💥) Buckle up — LET'S DRIVE! 🏁"
+  ],
+  sq:[
+    "O! Një shofer! Më në fund! 🚗",
+    "Mua më thonë Bip. Veturë e vogël e kuqe, ëndrra të mëdha, depo e vogël. ⛽",
+    "Dikur isha legjendë garash — 300 km/h, pa frena, veç qejf. 🏎️💨",
+    "Pastaj një natë me mjegull i humba çelësat 🔑, gomat rezervë 🛞 dhe dy fenerët.",
+    "Dhe... sinqerisht? Humba edhe kujtesën. Mos ua thuaj veturave të tjera. 🤫",
+    "Çdo kartë është një pjesë vet, — motorë 🔧, goma 🛞, sirena 🚨, trofe 🏆.",
+    "Gjej çiftet dhe unë rindërtohem, copë pas cope. 🧩",
+    "Por kujdes naftën — kur mbaron, unë fikem. Loja mbaron. ⛽💀",
+    "Më ndihmo t'i gjej çiftet para se të mbarojë karburanti. Pa presion.",
+    "(Mirë... PAK presion. 💥) Lidh rripin — NISEMI! 🏁"
+  ],
+  sl:[
+    "O! Voznik! Končno! 🚗",
+    "Ime mi je Bip. Majhen rdeč avto, velike sanje, majhen rezervoar. ⛽",
+    "Nekoč sem bil dirkaška legenda — 300 km/h, brez zavor, čisti vibe. 🏎️💨",
+    "Nato sem v megleni noči izgubil ključe 🔑, rezervne gume 🛞 in dva žarometa.",
+    "In... iskreno? Izgubil sem tudi spomin. Ne povej drugim avtom. 🤫",
+    "Vsaka karta je del avta — motorji 🔧, gume 🛞, sirene 🚨, pokali 🏆.",
+    "Poveži pare in se znova sestavim, kos za kosom. 🧩",
+    "A pazi na gorivo — ko ga zmanjka, se ustavim. Konec igre. ⛽💀",
+    "Pomagaj mi najti pare, preden zmanjka goriva. Brez pritiska.",
+    "(No... MALO pritiska. 💥) Pripni se — PELJIMO! 🏁"
+  ]
 };
 let introIdx=0, introTyping=false, introTimer=null, introAutoT=null;
 function introLines(){ return INTRO_LINES[settings.lang]||INTRO_LINES.en; }
@@ -4331,8 +4372,7 @@ function finishIntro(){
   checkAchievements(true); // 🏅 backfill i heshtur për lojtarët ekzistues (pa toast/coins)
   try{ const p=new URLSearchParams(location.search).get('duel'); if(p&&/^\d{4}$/.test(p))pendingDuelCode=p; }catch(e){} // 🔗 link sfide
   setTimeout(()=>{
-    if(!introSceneSeen){ showIntroScene(); return; } // 🚗 herën e parë: skena para regjistrimit
-    afterIntroFlow();
+    showIntroScene(); // 🚗 skena Bip shfaqet GJITHMONË (pastaj vazhdon regjistrimi/menyja)
   },2900);
 })();
 document.body.addEventListener('touchstart',()=>ctx(),{once:true});
