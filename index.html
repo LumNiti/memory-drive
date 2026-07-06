@@ -169,6 +169,25 @@ svg{display:block}
 .btn-ghost{background:rgba(14,12,30,.55);color:var(--amber2);border:1.5px solid rgba(232,161,58,.5)}
 .btn-danger{background:#c0392b;color:#fff}
 .menu-btns{display:flex;flex-direction:column;gap:14px;margin-top:32px}
+/* 🎬 Hyrje me valë e butonave të menysë (rihapet çdo herë) */
+@keyframes menuBtnIn{0%{opacity:0;transform:translateY(22px) scale(.94)}60%{opacity:1}100%{opacity:1;transform:translateY(0) scale(1)}}
+.menu-btns.anim .btn{animation:menuBtnIn .5s cubic-bezier(.2,1.3,.35,1) both}
+.menu-btns.anim .btn:nth-child(1){animation-delay:.03s}
+.menu-btns.anim .btn:nth-child(2){animation-delay:.09s}
+.menu-btns.anim .btn:nth-child(3){animation-delay:.15s}
+.menu-btns.anim .btn:nth-child(4){animation-delay:.21s}
+.menu-btns.anim .btn:nth-child(5){animation-delay:.27s}
+.menu-btns.anim .btn:nth-child(6){animation-delay:.33s}
+.menu-btns.anim .btn:nth-child(7){animation-delay:.39s}
+.menu-btns.anim .btn:nth-child(8){animation-delay:.45s}
+.menu-btns.anim .btn:nth-child(9){animation-delay:.51s}
+/* ✨ Lëvizje e lehtë e vazhdueshme e ikonave brenda butonave */
+@keyframes btnIconBob{0%,100%{transform:translateY(0)}50%{transform:translateY(-2.5px)}}
+.menu-btns .btn>span:first-child,.menu-btns .btn svg.ic:first-child{animation:btnIconBob 2.4s ease-in-out infinite}
+.menu-btns .btn:nth-child(even)>span:first-child,.menu-btns .btn:nth-child(even) svg.ic:first-child{animation-delay:.6s}
+.menu-btns .btn:active{transform:scale(.96)}
+.menu-btns .btn-primary{animation:playGlow 2.6s ease-in-out infinite}
+@keyframes playGlow{0%,100%{box-shadow:0 8px 24px rgba(232,161,58,.35)}50%{box-shadow:0 8px 30px rgba(232,161,58,.6)}}
 .total-stars{display:flex;align-items:center;gap:6px;margin-top:14px;font-size:14px;font-weight:800;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5);background:rgba(14,12,30,.5);padding:7px 14px;border-radius:20px}
 .total-stars .ic{width:16px;height:16px}
 
@@ -2073,7 +2092,9 @@ function playLoseMusic(){
 function showScreen(id){
   document.querySelectorAll('.screen').forEach(s=>s.classList.remove('active'));
   document.getElementById(id).classList.add('active');
-  if(id==='menuScreen'){updateTotalStars();startMusic();checkAchievements(false);handlePendingDuel();} // 🌙 muzika e qetë e menusë
+  if(id==='menuScreen'){updateTotalStars();startMusic();checkAchievements(false);handlePendingDuel();
+    const mb=document.querySelector('.menu-btns'); if(mb){mb.classList.remove('anim');void mb.offsetWidth;mb.classList.add('anim');} // 🎬 rihap animacionin e butonave
+  } // 🌙 muzika e qetë e menusë
   if(id==='settingsScreen')refreshProfileUI();
 }
 function hideOverlays(){
