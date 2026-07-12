@@ -741,6 +741,24 @@ svg{display:block}
 .btn-mini.inuse{background:rgba(126,217,87,.18);color:#7ED957;border:1px solid rgba(126,217,87,.5)}
 .btn-mini.ap{background:#000;color:#fff;border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;gap:5px}
 .store-note{font-size:10px;color:rgba(255,255,255,.4);text-align:center;font-weight:700;margin-top:6px}
+/* 🪙 COIN PACKS — stil premium "pack" */
+.coin-packs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
+.coin-pack{position:relative;overflow:hidden;border-radius:16px;padding:14px 10px 12px;display:flex;flex-direction:column;align-items:center;gap:3px;border:1.5px solid;isolation:isolate;box-shadow:0 5px 14px rgba(0,0,0,.45),inset 0 1px 2px rgba(255,255,255,.14),inset 0 -10px 16px rgba(0,0,0,.35)}
+.coin-pack .cp-icon{font-size:38px;line-height:1;filter:drop-shadow(0 3px 6px rgba(0,0,0,.5));z-index:1}
+.coin-pack .cp-amt{font-size:22px;font-weight:900;color:#fff;text-shadow:0 2px 5px rgba(0,0,0,.6);z-index:1;line-height:1}
+.coin-pack .cp-lbl{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.65);z-index:1;margin-bottom:6px}
+.coin-pack .cp-buy{width:100%;justify-content:center;z-index:1}
+.coin-pack .cp-shine{position:absolute;top:0;left:-70%;width:55%;height:100%;z-index:0;pointer-events:none;background:linear-gradient(105deg,transparent,rgba(255,255,255,.28),transparent);transform:skewX(-18deg);animation:goldSheen 3.6s ease-in-out infinite}
+.coin-pack.cp1{border-color:#c08a54;background:linear-gradient(160deg,#3a2c1e,#201811)}
+.coin-pack.cp2{border-color:#5aa8ff;background:linear-gradient(160deg,#16324f,#0d1f33)}
+.coin-pack.cp3{border-color:#b06bff;background:linear-gradient(160deg,#341f56,#1b1030);box-shadow:0 5px 16px rgba(160,107,255,.4),inset 0 1px 2px rgba(255,255,255,.16),inset 0 -10px 16px rgba(0,0,0,.35)}
+.coin-pack.cp4{border-color:#ffd166;background:linear-gradient(160deg,#4a3410,#241905);box-shadow:0 5px 18px rgba(255,209,102,.5),inset 0 1px 2px rgba(255,240,190,.22),inset 0 -10px 16px rgba(0,0,0,.35)}
+.cp-badge{position:absolute;top:8px;right:-26px;transform:rotate(38deg);z-index:2;font-size:8px;font-weight:900;letter-spacing:.5px;color:#1a1410;padding:2px 26px;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.cp-badge.best{background:linear-gradient(90deg,#ffe9a8,#ffd166)}
+.cp-badge.pop{background:linear-gradient(90deg,#c9a8ff,#a06bff);color:#fff}
+@media (prefers-reduced-motion: reduce){.coin-pack .cp-shine{animation:none}}
+.coin-drop{position:fixed;top:-32px;z-index:80;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4));animation:coinFall linear forwards}
+@keyframes coinFall{to{transform:translateY(112vh) rotate(420deg);opacity:.15}}
 /* ---- Format e kartave (skins) ---- */
 body[data-skin="sharp"] .card-face,body[data-skin="sharp"] .dc-b,body[data-skin="sharp"] .dc-f{border-radius:3px}
 body[data-skin="pill"] .card-face,body[data-skin="pill"] .dc-b,body[data-skin="pill"] .dc-f{border-radius:28px}
@@ -799,6 +817,14 @@ body[data-bg="candy"]{background:radial-gradient(ellipse 85% 55% at 25% 15%, rgb
 body[data-bg="space"]{background:radial-gradient(ellipse 60% 40% at 70% 25%, rgba(120,90,255,.22), transparent 60%),radial-gradient(circle at 20% 80%, rgba(90,140,255,.15), transparent 55%),linear-gradient(165deg,#05060f 0%,#0a0a1e 45%,#12123a 75%,#070713 100%)}
 body[data-bg="desert"]{background:radial-gradient(ellipse 90% 50% at 50% 85%, rgba(255,200,120,.28), transparent 60%),linear-gradient(180deg,#2a1e0c 0%,#5a3f18 38%,#997028 66%,#d0a050 100%)}
 body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba(255,255,255,.06), transparent 60%),linear-gradient(165deg,#0a0a0c 0%,#161619 45%,#232328 75%,#0e0e11 100%)}
+/* 🏟️ sfonde sportive */
+body[data-bg="stadium"]{background:radial-gradient(ellipse 95% 46% at 50% 92%, rgba(70,230,130,.22), transparent 62%),radial-gradient(ellipse 70% 34% at 50% 4%, rgba(255,255,255,.10), transparent 60%),linear-gradient(180deg,#08160e 0%,#0f3220 42%,#12522c 72%,#0b3a1e 100%)}
+body[data-bg="stadium"]::after{content:'';position:fixed;left:50%;bottom:6%;width:min(70vw,300px);height:min(70vw,300px);transform:translateX(-50%);border-radius:50%;border:2px solid rgba(255,255,255,.06);pointer-events:none;z-index:0}
+body[data-bg="arena"]{background:radial-gradient(ellipse 88% 48% at 50% 88%, rgba(240,160,70,.24), transparent 60%),radial-gradient(ellipse 60% 30% at 50% 8%, rgba(255,200,120,.12), transparent 60%),linear-gradient(170deg,#1a1206 0%,#3a2a10 42%,#7a5820 72%,#a87c30 100%)}
+/* 🏀 stil karte sportiv */
+body[data-skin="basket"] .card-back-face svg{display:none}
+body[data-skin="basket"] .card-back-face::after{content:'🏀';font-size:min(11vw,40px);line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c06,#7a3a0e);border-color:#ff9a3a;box-shadow:0 0 12px rgba(255,140,42,.35)}
 /* ---- Karta e profilit ---- */
 .profile-card{background:linear-gradient(160deg,rgba(232,161,58,.14),rgba(14,12,30,.5));border:1px solid rgba(232,161,58,.35);border-radius:18px;padding:14px;margin-bottom:14px}
 .pc-top{display:flex;align-items:center;gap:12px}
@@ -828,6 +854,7 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 .store-folder{margin-top:14px;border:1px solid rgba(255,255,255,.1);border-radius:14px;overflow:hidden}
 .folder-head{display:flex;justify-content:space-between;align-items:center;padding:12px 14px;background:rgba(14,12,30,.55);cursor:pointer;font-weight:900;font-size:13px;letter-spacing:1px;color:#fff}
 .folder-chev{color:var(--amber2);font-size:14px}
+.folder-desc{font-size:9.5px;font-weight:700;letter-spacing:.2px;color:rgba(255,255,255,.42);margin-top:3px;text-transform:none}
 .folder-body{padding:6px 10px 10px}
 /* ---- Emojit e duelit (emotes) ---- */
 .emote-bar{display:none;gap:6px;justify-content:center;flex-wrap:wrap;width:100%;max-width:420px;margin:8px auto 2px}
@@ -1079,7 +1106,14 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 
 <!-- REGJISTRIMI -->
 <div class="screen" id="registerScreen">
-  <div class="panel" style="max-width:340px">
+  <div class="home-bg" aria-hidden="true">
+    <div class="hb-pitch"></div>
+    <span class="hb hb-ball" style="left:12%;top:22%;--d:34s;font-size:22px">⚽</span>
+    <span class="hb hb-ball" style="left:74%;top:30%;--d:44s;--dir:-1;font-size:18px">⚽</span>
+    <span class="hb hb-car" style="top:16%;--d:30s;font-size:26px">🏎️</span>
+    <span class="hb hb-car2" style="top:82%;--d:42s;--delay:-8s;font-size:24px">🚗</span>
+  </div>
+  <div class="panel" style="max-width:340px;position:relative;z-index:1">
     <h2>👤 <span data-i18n="regTitle"></span></h2>
     <div class="store-sub" style="text-align:center;margin-bottom:14px" data-i18n="regSub"></div>
     <input id="regName" maxlength="12" placeholder="Racer...">
@@ -1937,7 +1971,7 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='CARDS-R12';
+const BUILD_TAG='STORE-R13';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
@@ -2019,7 +2053,7 @@ const I18N={
     s1:'Garazhi', s2:'Qyteti', s3:'Autostrada', s4:'Nata', s5:'Pista',
     store:'DYQANI', best:'Rekordi', scoreLbl:'Pikët', newBest:'REKORD I RI PIKËSH!',
     buy:'BLEJ', useIt:'PËRDORE', inUse:'NË PËRDORIM', notEnough:'S\u2019ke monedha të mjaftueshme! Shko te dyqani 🪙',
-    secCoins:'MERR MONEDHA', secFuel:'KARBURANT', secSkins:'STILI I KARTAVE', secBgs:'SFONDET',
+    secCoins:'MERR MONEDHA', secFuel:'KARBURANT', secSkins:'STILI I KARTAVE', secBgs:'SFONDET', cpBest:'MË MIRË', cpPopular:'POPULLOR', bgStadium:'Stadiumi', bgArena:'Arena', skBasket:'Basketboll', skinsDesc:'Ndryshon PAMJEN e kartave në lojë', bgsDesc:'Ndryshon SFONDIN pas kartave',
     fuelBoost:'Karburant +3', fuelBoostD:'Shtohet automatikisht në nivelin tjetër',
     coinsAmt:'monedha', demoNote:'Demo — pagesa e vërtetë me Apple Pay bëhet në aplikacionin iOS',
     purchased:'U ble! 🎉', applied:'U aktivizua ✓',
@@ -2121,7 +2155,7 @@ const I18N={
     s1:'The Garage', s2:'The City', s3:'The Highway', s4:'The Night', s5:'The Racetrack',
     store:'STORE', best:'Best', scoreLbl:'Score', newBest:'NEW HIGH SCORE!',
     buy:'BUY', useIt:'USE', inUse:'IN USE', notEnough:'Not enough coins! Visit the store 🪙',
-    secCoins:'GET COINS', secFuel:'FUEL', secSkins:'CARD STYLE', secBgs:'BACKGROUNDS',
+    secCoins:'GET COINS', secFuel:'FUEL', secSkins:'CARD STYLE', secBgs:'BACKGROUNDS', cpBest:'BEST', cpPopular:'POPULAR', bgStadium:'Stadium', bgArena:'Arena', skBasket:'Basketball', skinsDesc:'Changes how your CARDS look in-game', bgsDesc:'Changes the BACKGROUND behind cards',
     fuelBoost:'Fuel +3', fuelBoostD:'Automatically added to your next level',
     coinsAmt:'coins', demoNote:'Demo — real Apple Pay payments work in the iOS app',
     purchased:'Purchased! 🎉', applied:'Applied ✓',
@@ -2223,7 +2257,7 @@ const I18N={
     s1:'Garaža', s2:'Mesto', s3:'Avtocesta', s4:'Noč', s5:'Dirkališče',
     store:'TRGOVINA', best:'Rekord', scoreLbl:'Točke', newBest:'NOV REKORD!',
     buy:'KUPI', useIt:'UPORABI', inUse:'V UPORABI', notEnough:'Premalo kovancev! Obišči trgovino 🪙',
-    secCoins:'KOVANCI', secFuel:'GORIVO', secSkins:'SLOG KART', secBgs:'OZADJA',
+    secCoins:'KOVANCI', secFuel:'GORIVO', secSkins:'SLOG KART', secBgs:'OZADJA', cpBest:'NAJBOLJŠE', cpPopular:'PRILJUBLJENO', bgStadium:'Stadion', bgArena:'Arena', skBasket:'Košarka', skinsDesc:'Spremeni VIDEZ kart v igri', bgsDesc:'Spremeni OZADJE za kartami',
     fuelBoost:'Gorivo +3', fuelBoostD:'Samodejno dodano na naslednji stopnji',
     coinsAmt:'kovancev', demoNote:'Demo — pravo plačilo z Apple Pay deluje v iOS aplikaciji',
     purchased:'Kupljeno! 🎉', applied:'Aktivirano ✓',
@@ -3540,7 +3574,8 @@ const SKINS=[
   {id:'royal',  label:'Royal',    price:4000,em:'👑'},
   {id:'shark',  label:'Shark',    price:1800,em:'🦈'},
   {id:'galaxy', label:'Galaxy',   price:4000,em:'🌌'},
-  {id:'hearts', label:'Hearts 💕',price:1200,em:'💕'}   // 💞 kartat me emoji zemrash
+  {id:'hearts', label:'Hearts 💕',price:1200,em:'💕'},   // 💞 kartat me emoji zemrash
+  {id:'basket', label:'Basketball',price:1400,em:'🏀'}    // 🏀 stil sportiv shtesë
 ];
 const BGS=[
   {id:'midnight',name:'bgMid',   price:0,   em:'🌌'},
@@ -3553,7 +3588,10 @@ const BGS=[
   {id:'candy',   name:'bgCandy', price:2200,em:'🍭'},
   {id:'space',   name:'bgSpace', price:2600,em:'🪐'},
   {id:'desert',  name:'bgDesert',price:2200,em:'🏜️'},
-  {id:'mono',    name:'bgMono',  price:3000,em:'⚫'}
+  {id:'mono',    name:'bgMono',  price:3000,em:'⚫'},
+  // 🏟️ Sfonde sportive
+  {id:'stadium', name:'bgStadium',price:2400,em:'🏟️'},
+  {id:'arena',   name:'bgArena', price:2800,em:'🏀'}
 ];
 // Çmimet sipas tiers zyrtare të App Store (€0.99 / €2.99 / €4.99 / €9.99)
 const COINPACKS=[
@@ -3576,15 +3614,21 @@ function renderStore(){
   const list=document.getElementById('storeList');
   let h='';
 
-  // Monedha (Apple Pay demo)
+  // 🪙 Monedha — paketa premium stil "pack"
   h+=`<div class="store-sec">${t('secCoins')}</div>`;
+  const cpIcon=['🪙','💰','💎','👑'], cpTier=['cp1','cp2','cp3','cp4'];
+  h+=`<div class="coin-packs">`;
   COINPACKS.forEach((cp,i)=>{
-    h+=`<div class="store-row">
-      <div class="store-em">${['🪙','💰','💎','👑'][i]}</div>
-      <div class="store-info"><div class="store-name">${cp.coins.toLocaleString()} ${t('coinsAmt')}</div></div>
-      <button class="btn-mini ap" onclick="buyCoins(${i})">&#63743; Pay &nbsp;€${cp.price}</button>
+    const badge=i===3?`<div class="cp-badge best">${t('cpBest')}</div>`:(i===2?`<div class="cp-badge pop">${t('cpPopular')}</div>`:'');
+    h+=`<div class="coin-pack ${cpTier[i]}">${badge}
+      <div class="cp-shine"></div>
+      <div class="cp-icon">${cpIcon[i]}</div>
+      <div class="cp-amt">${cp.coins.toLocaleString()}</div>
+      <div class="cp-lbl">${t('coinsAmt')}</div>
+      <button class="btn-mini ap cp-buy" onclick="buyCoins(${i})">&#63743; €${cp.price}</button>
     </div>`;
   });
+  h+=`</div>`;
   h+=`<div class="store-note">${t('demoNote')}</div>`;
 
   // Karburanti
@@ -3599,17 +3643,17 @@ function renderStore(){
   </div>`;
 
   // Stili i kartave & Sfondet — të organizuara në folder të palosshëm
-  h+=folderSection('skins','🃏 '+t('secSkins'), SKINS.map(it=>itemRow(it,'skin')).join(''), SKINS.length);
-  h+=folderSection('bgs','🖼️ '+t('secBgs'), BGS.map(it=>itemRow(it,'bg')).join(''), BGS.length);
+  h+=folderSection('skins','🃏 '+t('secSkins'), SKINS.map(it=>itemRow(it,'skin')).join(''), SKINS.length, t('skinsDesc'));
+  h+=folderSection('bgs','🖼️ '+t('secBgs'), BGS.map(it=>itemRow(it,'bg')).join(''), BGS.length, t('bgsDesc'));
 
   list.innerHTML=h;
 }
 let storeOpen={skins:false,bgs:false};
-function folderSection(id,title,inner,count){
+function folderSection(id,title,inner,count,desc){
   const open=storeOpen[id];
   return `<div class="store-folder" id="folder-${id}">
     <div class="folder-head" onclick="toggleFolder('${id}')">
-      <span>${title} &nbsp;<span style="color:rgba(255,255,255,.4);font-weight:700">(${count})</span></span>
+      <span>${title} &nbsp;<span style="color:rgba(255,255,255,.4);font-weight:700">(${count})</span>${desc?`<div class="folder-desc">${desc}</div>`:''}</span>
       <span class="folder-chev">${open?'▾':'▸'}</span>
     </div>
     <div class="folder-body" style="display:${open?'block':'none'}">${inner}</div>
@@ -3658,6 +3702,14 @@ function grantCoins(i){
   coins+=COINPACKS[i].coins;
   toast(`${t('purchased')} +${COINPACKS[i].coins.toLocaleString()} 🪙`);
   saveData();renderStore();
+  try{coinCelebrate();}catch(e){}
+  if(settings.sfx){try{ if(sfxBuf.coins)S('coins',{vol:.7}); else if(sfxBuf.gold)S('gold',{vol:.6}); else {sfx(880,0.1,'triangle',0.06);setTimeout(()=>sfx(1180,0.12,'triangle',0.06),90);} }catch(e){}}
+}
+// 🪙 Derdhje coins + shkëlqim kur blen (vetëm pamje)
+function coinCelebrate(){
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  try{const fl=document.createElement('div');fl.style.cssText='position:fixed;inset:0;z-index:79;pointer-events:none;background:radial-gradient(circle at 50% 40%,rgba(255,209,102,.28),transparent 60%)';document.body.appendChild(fl);fl.animate([{opacity:0},{opacity:1,offset:.25},{opacity:0}],{duration:700,easing:'ease-out'});setTimeout(()=>fl.remove(),720);}catch(e){}
+  for(let i=0;i<28;i++){const c=document.createElement('span');c.className='coin-drop';c.textContent=['🪙','💰','🪙','✨'][i%4];c.style.left=(6+Math.random()*88)+'vw';c.style.fontSize=(15+Math.random()*22)+'px';c.style.animationDuration=(1.1+Math.random()*1.2)+'s';c.style.animationDelay=(Math.random()*0.45)+'s';document.body.appendChild(c);setTimeout(()=>c.remove(),2700);}
 }
 function buyFuel(){
   playTap();
@@ -6448,10 +6500,10 @@ const INTRO_LINES={
     "I used to be a race legend — 300 km/h, zero brakes, pure vibes. 🏎️💨",
     "Then one foggy night I lost my keys 🔑, my spare wheels 🛞, and two headlights.",
     "And... honestly? I lost my memory too. Don't tell the other cars. 🤫",
-    "Every card is a car part — engines 🔧, tires 🛞, sirens 🚨, trophies 🏆.",
+    "Every card is a car part — engines 🔧, tires 🛞, sirens 🚨, trophies 🏆… and one lucky football ⚽.",
     "Match the pairs and I rebuild myself, piece by piece. 🧩",
     "But watch the fuel gauge — when it hits empty, I stall. Game over. ⛽💀",
-    "Help me match the pairs before the fuel runs out. No pressure.",
+    "Match the pairs like a striker on a breakaway — before the fuel runs out. ⚽🏁",
     "(Okay... a LITTLE pressure. 💥) Buckle up — LET'S DRIVE! 🏁"
   ],
   sq:[
@@ -6460,10 +6512,10 @@ const INTRO_LINES={
     "Dikur isha legjendë garash — 300 km/h, pa frena, veç qejf. 🏎️💨",
     "Pastaj një natë me mjegull i humba çelësat 🔑, gomat rezervë 🛞 dhe dy fenerët.",
     "Dhe... sinqerisht? Humba edhe kujtesën. Mos ua thuaj veturave të tjera. 🤫",
-    "Çdo kartë është një pjesë vet, — motorë 🔧, goma 🛞, sirena 🚨, trofe 🏆.",
+    "Çdo kartë është një pjesë e imja — motorë 🔧, goma 🛞, sirena 🚨, trofe 🏆… dhe një top me fat ⚽.",
     "Gjej çiftet dhe unë rindërtohem, copë pas cope. 🧩",
     "Por kujdes naftën — kur mbaron, unë fikem. Loja mbaron. ⛽💀",
-    "Më ndihmo t'i gjej çiftet para se të mbarojë karburanti. Pa presion.",
+    "Gjeji çiftet si sulmues në kundërsulm — para se të mbarojë karburanti. ⚽🏁",
     "(Mirë... PAK presion. 💥) Lidh rripin — NISEMI! 🏁"
   ],
   sl:[
@@ -6472,10 +6524,10 @@ const INTRO_LINES={
     "Nekoč sem bil dirkaška legenda — 300 km/h, brez zavor, čisti vibe. 🏎️💨",
     "Nato sem v megleni noči izgubil ključe 🔑, rezervne gume 🛞 in dva žarometa.",
     "In... iskreno? Izgubil sem tudi spomin. Ne povej drugim avtom. 🤫",
-    "Vsaka karta je del avta — motorji 🔧, gume 🛞, sirene 🚨, pokali 🏆.",
+    "Vsaka karta je del avta — motorji 🔧, gume 🛞, sirene 🚨, pokali 🏆… in ena srečna žoga ⚽.",
     "Poveži pare in se znova sestavim, kos za kosom. 🧩",
     "A pazi na gorivo — ko ga zmanjka, se ustavim. Konec igre. ⛽💀",
-    "Pomagaj mi najti pare, preden zmanjka goriva. Brez pritiska.",
+    "Poveži pare kot napadalec v protinapadu — preden zmanjka goriva. ⚽🏁",
     "(No... MALO pritiska. 💥) Pripni se — PELJIMO! 🏁"
   ]
 };
