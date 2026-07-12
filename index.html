@@ -245,7 +245,7 @@ svg{display:block}
 /* 🏠 menyja: Play e madhe + grid 2-kolonësh + rresht i poshtëm — rri e centruar, rrëshqet vetëm nëse s'nxë */
 #menuScreen.active{justify-content:safe center;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-top:calc(70px + env(safe-area-inset-top));padding-bottom:26px;scrollbar-width:none}
 #menuScreen::-webkit-scrollbar{display:none}
-.menu-play{flex-shrink:0;position:relative;overflow:hidden;font-size:19px;padding:16px;box-shadow:0 6px 20px rgba(232,161,58,.35);animation:playPulse 2.4s ease-in-out infinite}
+.menu-play{width:100%;flex-shrink:0;position:relative;overflow:hidden;font-size:19px;padding:16px;box-shadow:0 6px 20px rgba(232,161,58,.35);animation:playPulse 2.4s ease-in-out infinite}
 @keyframes playPulse{0%,100%{transform:scale(1);box-shadow:0 6px 20px rgba(232,161,58,.35)}50%{transform:scale(1.035);box-shadow:0 8px 30px rgba(255,209,102,.6)}}
 .menu-play::after{content:'';position:absolute;top:0;left:-60%;width:45%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.4),transparent);transform:skewX(-18deg);animation:playSheen 3s ease-in-out infinite}
 @keyframes playSheen{0%,100%{left:-60%}55%{left:150%}}
@@ -489,6 +489,21 @@ svg{display:block}
 .gold-best-pill{background:rgba(255,209,102,.12);border:1.5px solid rgba(255,209,102,.55);border-radius:16px;padding:8px 18px;font-weight:900;color:#ffd166;font-size:16px;box-shadow:0 0 12px rgba(255,209,102,.2);margin-top:2px}
 .gold-play-btn{width:100%;max-width:280px;background:linear-gradient(100deg,#ffd166,#e8a13a)!important;color:#3a2600!important;border:none!important;margin-top:4px;font-size:17px;box-shadow:0 6px 20px rgba(232,161,58,.4)}
 .gold-lb-h{font-size:12px;letter-spacing:2px;font-weight:900;color:#ffd166;margin-top:10px}
+/* ⚽ Zgjedhja e lojtarëve Royal */
+.gold-players-h{font-size:11px;letter-spacing:1.5px;font-weight:900;color:#ffe9a8;margin-top:6px;text-transform:uppercase}
+.gold-players{display:flex;gap:8px;overflow-x:auto;width:100%;max-width:320px;padding:4px 2px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.gold-players::-webkit-scrollbar{display:none}
+.rplayer{flex:0 0 auto;width:74px;border-radius:13px;padding:8px 4px 7px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;position:relative;
+  border:2px solid rgba(255,255,255,.12);background:radial-gradient(circle at 50% 30%,color-mix(in srgb,var(--pc,#ffd166) 22%,transparent),rgba(20,16,32,.85));transition:transform .14s,border-color .15s,box-shadow .15s}
+.rplayer:active{transform:scale(.93)}
+.rplayer .rp-em{font-size:28px;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+.rplayer .rp-name{font-size:8px;font-weight:900;letter-spacing:.2px;color:#fff;text-align:center;line-height:1.05;text-transform:uppercase;min-height:18px;display:flex;align-items:center}
+.rplayer.sel{border-color:var(--pc,#ffd166);box-shadow:0 0 0 2px var(--pc,#ffd166),0 0 16px color-mix(in srgb,var(--pc,#ffd166) 60%,transparent);transform:scale(1.04)}
+.rplayer.locked{filter:grayscale(.7);opacity:.72}
+.rplayer.locked .rp-em{filter:grayscale(1) brightness(.7)}
+.rp-lock{font-size:8px;font-weight:900;color:#ffd166;background:rgba(0,0,0,.55);border-radius:7px;padding:1px 5px;white-space:nowrap}
+.rp-tag{position:absolute;top:3px;right:5px;font-size:11px;color:var(--pc,#ffd166);font-weight:900}
+@media (prefers-reduced-motion: reduce){.rplayer{transition:none}}
 .gold-crown-big{font-size:70px;filter:drop-shadow(0 0 24px rgba(255,209,102,.6));animation:pop .8s cubic-bezier(.2,1.4,.4,1) both}
 .gold-title{font-size:30px;font-weight:900;letter-spacing:3px;background:linear-gradient(90deg,#ffe9a8,#ffd166,#e8a13a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
 @media (prefers-reduced-motion: reduce){
@@ -1967,6 +1982,8 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
     <div class="gold-title">ROYAL</div>
     <div class="gold-desc" data-i18n="goldSub"></div>
     <div class="gold-best-pill">🏆 <span data-i18n="goldBest"></span>: <b id="goldBestVal">0</b></div>
+    <div class="gold-players-h">⚽ <span data-i18n="royalPickPlayer"></span></div>
+    <div class="gold-players" id="goldPlayers"></div>
     <button class="btn btn-primary gold-play-btn" onclick="playTap();startGold()">▶ <span data-i18n="goldPlay"></span></button>
     <div class="gold-lb-h">🏆 <span data-i18n="goldLbTitle"></span></div>
     <div id="goldLbList" class="daily-lb" style="width:100%;max-width:300px"></div>
@@ -2037,7 +2054,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='MENU-R18';
+const BUILD_TAG='ROYALPLAYERS-R19';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
@@ -2142,7 +2159,7 @@ const I18N={
     seasonDoneMsg:'SEZONI U PËRFUNDUA!', improveHint:'Përsërite nivelin me më pak lëvizje për më shumë yje!',
     goldMsg:'✨ ÇIFT I ARTË! +3 ⛽ +20 🪙', bombMsg:'💥 BUM! -2 ⛽',
     lightMsg:'⚡ VETËTIMË! Çift falas!', chainMsg:'🔗 E kyçur! Bëj edhe {n} çifte',
-    goldBtn:'ROYAL', goldSub:'Modalitet i artë ekskluziv — sa çifte gjen për 60 sekonda?', goldPlay:'LUAJ ROYAL', goldBest:'Rekord', goldOverT:'👑 KOHA MBAROI!', goldPts:'pikë ari', royalPairs:'çifte', goldNewBest:'REKORD I RI!', goldLbTitle:'RENDITJA ROYAL', goldEmpty:'Bëhu i pari PRO në renditje! 👑', goldExclTitle:'ROYAL Mode është vetëm për PRO', goldTease:'Karta të arta 3D · shpërblim i lartë · renditje ekskluzive', pbGold:'👑 ROYAL Mode — loja mbretërore ekskluzive', loveBtn:'Love Match', loveGold:'💝 LETËR DASHURIE! +3 ⛽', loveBomb:'💔 ZEMËRTHYERJE! -3 ⛽', loveLight:'💘 CUPIDI! Çift falas!', loveBetray:'🗡️ TRADHTI! Kartat u përzien −1 ⛽',
+    goldBtn:'ROYAL', goldSub:'Modalitet i artë ekskluziv — sa çifte gjen për 60 sekonda?', goldPlay:'LUAJ ROYAL', goldBest:'Rekord', goldOverT:'👑 KOHA MBAROI!', goldPts:'pikë ari', royalPairs:'çifte', goldNewBest:'REKORD I RI!', royalPickPlayer:'Zgjidh lojtarin', royalUnlocked:'Lojtar i ri!', needCoins:'S\'ke mjaft monedha', unlockLv:'Zhbllokohet në Lv', fromWheel:'Nga rrota e fatit', goldLbTitle:'RENDITJA ROYAL', goldEmpty:'Bëhu i pari PRO në renditje! 👑', goldExclTitle:'ROYAL Mode është vetëm për PRO', goldTease:'Karta të arta 3D · shpërblim i lartë · renditje ekskluzive', pbGold:'👑 ROYAL Mode — loja mbretërore ekskluzive', loveBtn:'Love Match', loveGold:'💝 LETËR DASHURIE! +3 ⛽', loveBomb:'💔 ZEMËRTHYERJE! -3 ⛽', loveLight:'💘 CUPIDI! Çift falas!', loveBetray:'🗡️ TRADHTI! Kartat u përzien −1 ⛽',
     funMsgs:['Ti je legjendë! 💪','Fokus… ose jo 😜','Besoja kujtesës 🧠','Mos u huto tani 👀','Shpirt, ki durim ✨','Shumë lehtë për ty 😏','Vazhdo kështu, kampion 🏁','Një çift larg lavdisë 🌟','Truri yt është GPS 🛰️','Sot fiton ti, e ndjej 🔥','Asgjë s\'të ndal dot 🚀','Qetësi… si profesionist 🧘','Bip beson te ti 🚗','Ky nivel s\'e di me kë ka punë 😎','Sytë hapur, zemra plot 💛','Oooo sa afër ishe! 😱','Karburanti digjet, nxito! ⛽','Mos m\'i ngatërro kartat 😤','Hëëë, ku e ke mendjen? 🙃','Kjo lojë të ka inat 😂','Kujtesa jote > telefoni 📵','Edhe Bip u lodh duke pritur 🥱','Prit, ça ishte ajo lëvizje?! 🤯','Guxo! Kartat s\'kafshojnë 🦈','Një frymëmarrje… tani GJEJE 🎯'],
     funLove:['Dashuria kërkon durim… ti jo 😏','Ia vlen pritja 💕','Ndiq zemrën 💘','Mos e prish serinë e dashurisë 💞','Kujdes nga tradhtia 🗡️'],
     loveComboLbl:'Combo dashurie', loveWinT:'💘 DASHURI E VËRTETË!', loveLoseT:'💔 U THYE ZEMRA', loveLoseD:'Mbaroi dashuria… provo prapë, zemra nuk dorëzohet! 💕',
@@ -2244,7 +2261,7 @@ const I18N={
     seasonDoneMsg:'SEASON COMPLETE!', improveHint:'Replay the level with fewer moves to earn more stars!',
     goldMsg:'✨ GOLDEN PAIR! +3 ⛽ +8 🪙', bombMsg:'💥 BOOM! -2 ⛽',
     lightMsg:'⚡ LIGHTNING! Free pair!', chainMsg:'🔗 Locked! Match {n} more',
-    goldBtn:'ROYAL', goldSub:'Exclusive golden mode — how many pairs in 60 seconds?', goldPlay:'PLAY ROYAL', goldBest:'Best', goldOverT:'👑 TIME UP!', goldPts:'gold points', royalPairs:'pairs', goldNewBest:'NEW RECORD!', goldLbTitle:'ROYAL RANKING', goldEmpty:'Be the first PRO on the board! 👑', goldExclTitle:'ROYAL Mode is PRO exclusive', goldTease:'3D golden cards · higher rewards · exclusive ranking', pbGold:'👑 ROYAL Mode — exclusive royal game', loveBtn:'Love Match', loveGold:'💝 LOVE LETTER! +3 ⛽', loveBomb:'💔 HEARTBREAK! -3 ⛽', loveLight:'💘 CUPID! Free pair!', loveBetray:'🗡️ BETRAYAL! Cards scrambled −1 ⛽',
+    goldBtn:'ROYAL', goldSub:'Exclusive golden mode — how many pairs in 60 seconds?', goldPlay:'PLAY ROYAL', goldBest:'Best', goldOverT:'👑 TIME UP!', goldPts:'gold points', royalPairs:'pairs', goldNewBest:'NEW RECORD!', royalPickPlayer:'Choose your player', royalUnlocked:'New player!', needCoins:'Not enough coins', unlockLv:'Unlocks at Lv', fromWheel:'From the wheel', goldLbTitle:'ROYAL RANKING', goldEmpty:'Be the first PRO on the board! 👑', goldExclTitle:'ROYAL Mode is PRO exclusive', goldTease:'3D golden cards · higher rewards · exclusive ranking', pbGold:'👑 ROYAL Mode — exclusive royal game', loveBtn:'Love Match', loveGold:'💝 LOVE LETTER! +3 ⛽', loveBomb:'💔 HEARTBREAK! -3 ⛽', loveLight:'💘 CUPID! Free pair!', loveBetray:'🗡️ BETRAYAL! Cards scrambled −1 ⛽',
     funMsgs:["You're a legend! 💪","Focus… or don't 😜","Trust your memory 🧠","Don't get distracted 👀","Patience pays ✨","Too easy for you 😏","Keep it up, champ 🏁","One pair from glory 🌟","Your brain is a GPS 🛰️","Today you win, I feel it 🔥","Nothing can stop you 🚀","Calm… like a pro 🧘","Bip believes in you 🚗","This level has no idea who it's facing 😎","Eyes open, heart full 💛","Ooooh SO close! 😱","Fuel's burning, hurry! ⛽","Stop mixing up my cards 😤","Hellooo, where's your head? 🙃","This game has a grudge 😂","Your memory > your phone 📵","Even Bip got tired of waiting 🥱","Wait, what was THAT move?! 🤯","Be brave! Cards don't bite 🦈","One deep breath… now FIND IT 🎯"],
     funLove:["Love takes patience… you don't 😏","They're worth the wait 💕","Follow your heart 💘","Don't break the love streak 💞","Beware betrayal 🗡️"],
     loveComboLbl:'Love combo', loveWinT:'💘 TRUE LOVE!', loveLoseT:'💔 HEARTBROKEN', loveLoseD:'Love ran out… try again, the heart never gives up! 💕',
@@ -2346,7 +2363,7 @@ const I18N={
     seasonDoneMsg:'SEZONA KONČANA!', improveHint:'Ponovi stopnjo z manj potezami za več zvezdic!',
     goldMsg:'✨ ZLATI PAR! +3 ⛽ +20 🪙', bombMsg:'💥 BUM! -2 ⛽',
     lightMsg:'⚡ STRELA! Brezplačen par!', chainMsg:'🔗 Zaklenjeno! Poveži še {n}',
-    goldBtn:'ROYAL', goldSub:'Ekskluziven zlati način — koliko parov v 60 sekundah?', goldPlay:'IGRAJ ROYAL', goldBest:'Rekord', goldOverT:'👑 ČAS JE POTEKEL!', goldPts:'zlate točke', royalPairs:'parov', goldNewBest:'NOV REKORD!', goldLbTitle:'ROYAL LESTVICA', goldEmpty:'Bodi prvi PRO na lestvici! 👑', goldExclTitle:'ROYAL način je samo za PRO', goldTease:'3D zlate karte · višje nagrade · ekskluzivna lestvica', pbGold:'👑 ROYAL način — ekskluzivna kraljeva igra', loveBtn:'Love Match', loveGold:'💝 LJUBEZENSKO PISMO! +3 ⛽', loveBomb:'💔 ZLOMLJENO SRCE! -3 ⛽', loveLight:'💘 KUPID! Brezplačen par!', loveBetray:'🗡️ IZDAJA! Karte premešane −1 ⛽',
+    goldBtn:'ROYAL', goldSub:'Ekskluziven zlati način — koliko parov v 60 sekundah?', goldPlay:'IGRAJ ROYAL', goldBest:'Rekord', goldOverT:'👑 ČAS JE POTEKEL!', goldPts:'zlate točke', royalPairs:'parov', goldNewBest:'NOV REKORD!', royalPickPlayer:'Izberi igralca', royalUnlocked:'Nov igralec!', needCoins:'Premalo kovancev', unlockLv:'Odklene se na Lv', fromWheel:'Iz kolesa sreče', goldLbTitle:'ROYAL LESTVICA', goldEmpty:'Bodi prvi PRO na lestvici! 👑', goldExclTitle:'ROYAL način je samo za PRO', goldTease:'3D zlate karte · višje nagrade · ekskluzivna lestvica', pbGold:'👑 ROYAL način — ekskluzivna kraljeva igra', loveBtn:'Love Match', loveGold:'💝 LJUBEZENSKO PISMO! +3 ⛽', loveBomb:'💔 ZLOMLJENO SRCE! -3 ⛽', loveLight:'💘 KUPID! Brezplačen par!', loveBetray:'🗡️ IZDAJA! Karte premešane −1 ⛽',
     funMsgs:['Legenda si! 💪','Osredotoči se… ali pa ne 😜','Zaupaj spominu 🧠','Ne dovoli, da te zmoti 👀','Potrpljenje se izplača ✨','Zate prelahko 😏','Kar tako naprej, prvak 🏁','En par do slave 🌟','Tvoji možgani so GPS 🛰️','Danes zmagaš, čutim 🔥','Nič te ne ustavi 🚀','Mirno… kot profesionalec 🧘','Bip verjame vate 🚗','Ta stopnja ne ve, s kom ima opravka 😎','Oči odprte, srce polno 💛','Ooo kako blizu! 😱','Gorivo gori, pohiti! ⛽','Nehaj mešati moje karte 😤','Halooo, kje imaš glavo? 🙃','Ta igra ti zameri 😂','Tvoj spomin > tvoj telefon 📵','Še Bip se je naveličal čakati 🥱','Čakaj, kaj je bila TA poteza?! 🤯','Pogumno! Karte ne grizejo 🦈','En globok vdih… zdaj NAJDI 🎯'],
     funLove:['Ljubezen terja potrpljenje… ti ne 😏','Vredno je čakanja 💕','Sledi srcu 💘','Ne prekini niza ljubezni 💞','Pazi na izdajo 🗡️'],
     loveComboLbl:'Ljubezenski combo', loveWinT:'💘 PRAVA LJUBEZEN!', loveLoseT:'💔 STRTO SRCE', loveLoseD:'Ljubezni je zmanjkalo… poskusi znova, srce nikoli ne obupa! 💕',
@@ -2590,7 +2607,7 @@ function playNext(){playTap();startMusic();startLevel(nextPlayable())}
 /* ================= RUAJTJA ================= */
 async function saveData(){
   try{
-    await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,xp,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,introSceneSeen,streak,streakLast,dailyDoneDate,dailyBestMs,dailyHistory,endlessBestWave,goldBest,achievements,goldPairsTotal,loveLevel,loveStars,leagueTier,leagueWeek,leaguePoints,questDate,questProg,questClaimed,questBonusClaimed,weekKey,weekProg,weekClaimed,weekBonusClaimed,album,albumClaimed,albumSeen,spinDate,fuelTanks,fuelTanksTs,qSlots:todaysQuests,wSlots:weeklyQuests,questDone,weekDone,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang,music:settings.music}}));
+    await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,xp,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,introSceneSeen,streak,streakLast,dailyDoneDate,dailyBestMs,dailyHistory,endlessBestWave,goldBest,achievements,goldPairsTotal,loveLevel,loveStars,leagueTier,leagueWeek,leaguePoints,questDate,questProg,questClaimed,questBonusClaimed,weekKey,weekProg,weekClaimed,weekBonusClaimed,album,albumClaimed,albumSeen,royalPlayer,royalUnlocked,spinDate,fuelTanks,fuelTanksTs,qSlots:todaysQuests,wSlots:weeklyQuests,questDone,weekDone,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang,music:settings.music}}));
   }catch(e){}
 }
 /* 🗑️ Reset i plotë manual — fshin krejt progresin dhe fillon nga e para */
@@ -2638,6 +2655,8 @@ async function loadData(){
       weekKey=d.weekKey||''; weekProg=Array.isArray(d.weekProg)?d.weekProg:[0,0,0]; weekClaimed=Array.isArray(d.weekClaimed)?d.weekClaimed:[false,false,false]; weekBonusClaimed=!!d.weekBonusClaimed;
       album=(d.album&&typeof d.album==='object')?d.album:{}; albumClaimed=Array.isArray(d.albumClaimed)?d.albumClaimed:[];
       albumSeen=(typeof d.albumSeen==='number')?d.albumSeen:albumOwnedCount(); // lojtarët ekzistues: mos shfaq badge false
+      royalUnlocked=Array.isArray(d.royalUnlocked)?d.royalUnlocked:['speed']; if(!royalUnlocked.includes('speed'))royalUnlocked.push('speed');
+      royalPlayer=(typeof d.royalPlayer==='string'&&royalUnlocked.includes(d.royalPlayer))?d.royalPlayer:'speed';
       spinDate=d.spinDate||'';
       fuelTanks=(d.fuelTanks==null)?MAX_TANKS:d.fuelTanks; fuelTanksTs=d.fuelTanksTs||Date.now(); regenTanks();
       questDone=d.questDone||0; weekDone=d.weekDone||0;
@@ -3196,6 +3215,34 @@ let questDate='', questProg=[0,0,0], questClaimed=[false,false,false], questBonu
 let questDone=0, weekDone=0;   // 🔄 sa detyra ke mbledhur sot/këtë javë (detyrat qarkullojnë pas Collect)
 let album={}, albumClaimed=[];                          // {cardId:count}, [rewardIds]
 let albumSeen=0;                                        // 🃏 sa karta i kishte parë lojtari herën e fundit që hapi albumin
+// ⚽ ROYAL — lojtarë futbolli ORIGJINALË (jo persona realë). Fitohen me nivele/rrotë/coins.
+const ROYAL_PLAYERS=[
+  {id:'speed',   name:'Speed King',       em:'⚡', col:'#ffd93a', how:'free'},
+  {id:'striker', name:'The Striker',      em:'⚽', col:'#5ad1ff', how:'lvl',   need:5},
+  {id:'boot',    name:'Golden Boot',      em:'👟', col:'#ffb03a', how:'wheel'},
+  {id:'wall',    name:'The Wall',         em:'🧤', col:'#7cf0a0', how:'lvl',   need:10},
+  {id:'freekick',name:'Free-Kick Master', em:'🎯', col:'#ff6b9a', how:'coins', price:1500},
+  {id:'captain', name:'Captain',          em:'🎖️', col:'#c9a8ff', how:'lvl',   need:15},
+  {id:'maestro', name:'The Maestro',      em:'🎩', col:'#ff8c3a', how:'coins', price:2800},
+  {id:'phantom', name:'Phantom',          em:'👻', col:'#b0b8ff', how:'lvl',   need:25}
+];
+let royalPlayer='speed', royalUnlocked=['speed'];
+function currentRoyalPlayer(){return ROYAL_PLAYERS.find(p=>p.id===royalPlayer)||ROYAL_PLAYERS[0];}
+function levelsDoneCount(){return Object.keys(progress).filter(k=>progress[k]>0).length;}
+function unlockRoyalPlayer(id,silent){
+  if(royalUnlocked.includes(id))return false;
+  royalUnlocked.push(id); saveData();
+  const pl=ROYAL_PLAYERS.find(p=>p.id===id);
+  if(pl&&!silent)showRoyalUnlock(pl);
+  return true;
+}
+function checkRoyalUnlocks(){ const n=levelsDoneCount(); ROYAL_PLAYERS.forEach(p=>{ if(p.how==='lvl'&&n>=p.need&&!royalUnlocked.includes(p.id)){ unlockRoyalPlayer(p.id); } }); }
+function showRoyalUnlock(pl){
+  toast('⚽ '+t('royalUnlocked')+' '+pl.em+' '+pl.name);
+  try{ if(settings.sfx){if(!S('tada'))sfx(880,0.22,'sine',0.06);} if(typeof spawnConfetti==='function')spawnConfetti(); }catch(e){}
+  try{navigator.vibrate&&navigator.vibrate([20,40,60]);}catch(e){}
+}
+function maybeRoyalFromWheel(){ if(!royalUnlocked.includes('boot')&&Math.random()<0.12){ unlockRoyalPlayer('boot'); } }
 let spinDate='';                                        // data e spin-it të fundit falas
 let pendingLeaguePromo=null;                            // {dir, tier} për ekranin e fundjavës
 /* 🎴 Stile hyrëse të kartave — ndryshojnë çdo level */
@@ -3523,6 +3570,7 @@ function levelWon(){
   // ⚡ 2× Excellent radhazi → shpërblim në nivelin tjetër
   if(earned===3){ excellentStreak++; } else { excellentStreak=0; }   // (pa reveal bonus më)
   saveData();
+  setTimeout(()=>{try{checkRoyalUnlocks();}catch(e){}},600); // ⚽ shpërblim lojtari Royal sipas niveleve
   if(bombHitThisGame)unlockAch('bombSurvive'); // 🏅 mbijetove bombën & fitove
   checkAchievements(false);
   // 🏆📋🃏 retention
@@ -5799,8 +5847,32 @@ function openGold(){
   goldScore=0; goldWaveN=0;
   document.getElementById('goldBestVal').textContent=goldBest;
   spawnGoldParticles('goldPartsMenu');
+  renderRoyalPlayers();
   loadGoldLeaderboard();
   showScreen('goldScreen');
+}
+/* ⚽ Zgjedhja e lojtarit të Royal (si te Love Match) */
+function renderRoyalPlayers(){
+  const g=document.getElementById('goldPlayers'); if(!g)return;
+  g.innerHTML=ROYAL_PLAYERS.map(p=>{
+    const owned=royalUnlocked.includes(p.id); const sel=royalPlayer===p.id;
+    let hint=''; if(!owned){ hint = p.how==='lvl'?('🔒 Lv '+p.need) : p.how==='coins'?('🪙 '+p.price) : p.how==='wheel'?('🎡'):'🔒'; }
+    return `<div class="rplayer${sel?' sel':''}${owned?'':' locked'}" style="--pc:${p.col}" onclick="pickRoyalPlayer('${p.id}')">
+      <div class="rp-em">${p.em}</div><div class="rp-name">${p.name}</div>
+      ${owned?(sel?`<div class="rp-tag">✓</div>`:''):`<div class="rp-lock">${hint}</div>`}
+    </div>`;
+  }).join('');
+}
+function pickRoyalPlayer(id){
+  const p=ROYAL_PLAYERS.find(x=>x.id===id); if(!p)return; playTap();
+  if(royalUnlocked.includes(id)){ royalPlayer=id; saveData(); renderRoyalPlayers(); return; }
+  if(p.how==='coins'){
+    if(coins>=p.price){ coins-=p.price; unlockRoyalPlayer(id,true); royalPlayer=id; saveData(); renderRoyalPlayers();
+      toast('✅ '+p.em+' '+p.name); try{if(typeof coinCelebrate==='function')0;}catch(e){} }
+    else { toast('🪙 '+t('needCoins')); if(!S('miss',{vol:.5}))sfx(200,0.15,'sine',0.05); }
+    return;
+  }
+  toast(p.how==='lvl'?('🔒 '+t('unlockLv')+' '+p.need):(p.how==='wheel'?'🎡 '+t('fromWheel'):'🔒'));
 }
 function spawnGoldParticles(holderId){
   const h=document.getElementById(holderId); if(!h)return;
@@ -5846,8 +5918,9 @@ function startGold(){
   try{ startMusic(); }catch(e){ showDbg(e.message,'startMusic'); }
   hideOverlays();
   goldScore=0; goldWaveN=0; goldTimeLeft=GOLD_TIME; seconds=0;
-  document.documentElement.style.setProperty('--season','#9b6bff'); // 🟣 karta normale me theks royal-vjollcë (jo gold)
-  document.getElementById('levelBadge').innerHTML=`<div class="profile-chip"><span class="pav">${avatar}</span><b>${myName()}</b></div><div class="level-chip" style="background:linear-gradient(100deg,#ffd166,#e8a13a);color:#3a2600">👑 ROYAL</div>`;
+  const rpl=currentRoyalPlayer();
+  document.documentElement.style.setProperty('--season',rpl.col); // ⚽ theks sipas lojtarit të zgjedhur
+  document.getElementById('levelBadge').innerHTML=`<div class="profile-chip"><span class="pav">${rpl.em}</span><b>${rpl.name}</b></div><div class="level-chip" style="background:linear-gradient(100deg,#ffd166,#e8a13a);color:#3a2600">👑 ROYAL</div>`;
   // 🎴 NDËRTIMI I BORDIT — kritik: nëse dështon, e shohim menjëherë në ekran
   try{ buildGoldWave(); }
   catch(e){ showDbg((e&&e.stack||e&&e.message||e),'buildGoldWave'); }
@@ -6537,6 +6610,7 @@ function doSpin(){
     spinning=false;
     const f=SPIN_FIELDS[idx];
     const _cb=coins, _xb=xp; f.a(); if(coins>_cb)questProgress('earnCoins',coins-_cb); questProgress('spinWheel',1); saveData();
+    try{maybeRoyalFromWheel();}catch(e){} // ⚽ shans të fitosh lojtar Royal nga rrota
     // 🏆 kartela e rezultatit + monedha fluturuese + rifreskim i HUD (gjithmonë fiton diçka)
     const res=document.getElementById('spinResult');
     if(res){ res.textContent='🏆 '+t('spinWon').replace('{x}',f.t); res.classList.remove('show'); void res.offsetWidth; res.classList.add('show'); }
