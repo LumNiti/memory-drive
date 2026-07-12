@@ -462,6 +462,10 @@ svg{display:block}
 .gspark{position:fixed;pointer-events:none;z-index:60;font-size:12px;color:#ffd166;filter:drop-shadow(0 0 4px #ffd166);animation:gsparkFly .6s ease-out forwards}
 @keyframes gsparkFly{to{transform:translate(var(--sx),var(--sy)) scale(0);opacity:0}}
 .gold-intro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:12px;z-index:2;padding:88px 24px 30px;overflow-y:auto;-webkit-overflow-scrolling:touch}
+/* 🛠️ FIX: page-head e Royal e ngjitur LART (jo në qendër që mbivendoset me ranking) */
+#goldScreen>.page-head{position:absolute!important;top:max(12px,calc(env(safe-area-inset-top) + 6px));left:16px;right:16px;width:auto;max-width:none;margin:0;z-index:6}
+/* 🛠️ butoni mbrapa i lojës nën notch */
+#gameScreen .hud{margin-top:env(safe-area-inset-top)}
 .gold-desc{color:#ffe9a8;font-weight:800;font-size:13px;max-width:290px;text-align:center;line-height:1.5;margin-top:2px}
 .gold-best-pill{background:rgba(255,209,102,.12);border:1.5px solid rgba(255,209,102,.55);border-radius:16px;padding:8px 18px;font-weight:900;color:#ffd166;font-size:16px;box-shadow:0 0 12px rgba(255,209,102,.2);margin-top:2px}
 .gold-play-btn{width:100%;max-width:280px;background:linear-gradient(100deg,#ffd166,#e8a13a)!important;color:#3a2600!important;border:none!important;margin-top:4px;font-size:17px;box-shadow:0 6px 20px rgba(232,161,58,.4)}
@@ -1928,7 +1932,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <!-- 🌟 GOLD MODE (ekran hyrës + rezultat) -->
 <div class="screen" id="goldScreen">
   <div class="gold-parts" id="goldPartsMenu"></div>
-  <div class="page-head" style="position:relative;z-index:1">
+  <div class="page-head">
     <button class="hud-btn" onclick="playTap();showScreen('menuScreen')"><svg class="ic"><use href="#i-back"/></svg></button>
     <div class="page-title">🌟 <span data-i18n="goldBtn"></span></div>
     <div style="width:42px"></div>
@@ -2008,7 +2012,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='STORE2-R15';
+const BUILD_TAG='ROYALFIX-R16';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
@@ -3348,7 +3352,7 @@ function flipSecond(c,gamble){
     setTimeout(()=>{
       a.classList.add('matched');c.classList.add('matched');
       playMatch();pairsFound++;
-      if(mode==='gold'){goldPairScored(c);}
+      if(mode==='gold'){goldPairScored(c); try{shredCard(a,{gold:true,keepHidden:true});shredCard(c,{gold:true,keepHidden:true});}catch(e){}}
       if(!duel)fuelBonus++; // ⛽ çifti i saktë NUK harxhon naftë — vetëm gabimi e harxhon
       if(mode==='endless'&&!duel)endlessPairScored(); // ♾️ 5🪙/çift (max 100/seancë)
       questProgress('doMatches',1); // 📋 detyra e përputhjeve
@@ -5468,13 +5472,14 @@ function spawnShards(c,ems){
   spawnFrag3D(cx,cy,kind,10);
 }
 /* 🃏 SHQYERJE 3D — karta e gabuar copëtohet në 3 pjesë që fluturojnë me rrotullim, pastaj rimontohet */
-function shredCard(el){
+function shredCard(el,opts){
+  opts=opts||{};
   if(!el||!el.getBoundingClientRect)return;
   if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
   const r=el.getBoundingClientRect();
   if(r.width<5||r.height<5)return;
   const sym=faceSym(el.dataset.sym||'');
-  const isGold=el.classList.contains('goldcard');
+  const isGold=opts.gold||el.classList.contains('goldcard');
   const cx=r.left+r.width/2, cy=r.top+r.height/2;
   // 6 copëza si xham i thyer — mbulojnë kartën, fluturojnë radialisht + gravitet, ZHDUKEN (pa u rikthyer)
   const clips=[
@@ -5512,8 +5517,8 @@ function shredCard(el){
     fl.animate([{transform:'scale(.3)',opacity:.85},{transform:'scale(1)',opacity:0}],{duration:300,easing:'ease-out',fill:'forwards'});
     setTimeout(()=>fl.remove(),320);
   }catch(e){}
-  try{ spawnFrag3D(cx,cy,isGold?'goldf':'metal',9); }catch(e){}
-  setTimeout(()=>{ el.style.visibility=''; },560);
+  try{ spawnFrag3D(cx,cy,isGold?'goldf':'metal',isGold?13:9); }catch(e){}
+  if(!opts.keepHidden){ setTimeout(()=>{ el.style.visibility=''; },560); }
 }
 /* 🧊 THYERJE 3D REALE — fragmente qelqi/metali që fluturojnë me gravitet + rrotullim 3-akse */
 function spawnFrag3D(cx,cy,kind,n){
