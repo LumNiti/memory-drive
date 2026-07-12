@@ -78,7 +78,7 @@ svg{display:block}
 .bip-star{position:absolute;color:#fff;font-size:11px;animation:starTw 2.6s ease-in-out infinite;opacity:.2}
 @keyframes starTw{50%{opacity:.9;text-shadow:0 0 8px #fff}}
 .bip-hill{position:absolute;bottom:16%;left:6%;font-size:44px;opacity:.16;filter:grayscale(.4)}
-.bip-tint{position:absolute;inset:0;pointer-events:none;z-index:0;background:radial-gradient(circle at 50% 30%,var(--introTint,rgba(232,161,58,.16)),transparent 62%);transition:opacity 1.2s;opacity:1}
+.bip-tint{position:absolute;inset:0;pointer-events:none;z-index:0;color:var(--introTint,rgba(232,161,58,.16));background:radial-gradient(circle at 50% 30%,currentColor,transparent 62%);transition:color 1s ease;opacity:1}
 .bip-wrap{position:relative;z-index:1}
 .bip-road{width:230px;height:20px;border-radius:9px;background:linear-gradient(#2b2540,#181428);position:relative;overflow:hidden;margin-top:-8px;border:1px solid rgba(255,255,255,.07)}
 .bip-road-line{position:absolute;top:50%;left:0;width:220%;height:3px;transform:translateY(-50%);background:repeating-linear-gradient(90deg,#ffd166 0 16px,transparent 16px 34px);animation:roadMove 1.1s linear infinite;opacity:.6}
@@ -115,6 +115,11 @@ svg{display:block}
 .load-txt{font-size:10px;letter-spacing:4px;font-weight:900;color:rgba(255,255,255,.45);margin-top:9px;animation:blink 1.2s ease-in-out infinite}
 .bip-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;flex:1;width:100%;max-width:360px;padding:0 20px;cursor:pointer}
 .bip-car{font-size:96px;animation:bipBounce 1.1s ease-in-out infinite;filter:drop-shadow(0 8px 20px rgba(0,0,0,.4))}
+/* ⚽ topi që kërcen mbi kapakun e Bip-it (juggling) */
+.bip-carwrap{position:relative;display:flex;flex-direction:column;align-items:center}
+.bip-hop{position:absolute;top:-16px;left:50%;font-size:26px;z-index:3;pointer-events:none;filter:drop-shadow(0 3px 4px rgba(0,0,0,.4));animation:bipHop 1.1s ease-in-out infinite}
+@keyframes bipHop{0%,100%{transform:translateX(-50%) translateY(8px) rotate(0deg)}50%{transform:translateX(-50%) translateY(-30px) rotate(200deg)}}
+@media (prefers-reduced-motion: reduce){.bip-hop{animation:none;opacity:0}}
 /* ⚽ prekje futbolli te introja — topi rrokulliset, e shkelmon Bip, ikën (humor) */
 .bip-ball{position:absolute;bottom:30%;left:4%;font-size:24px;z-index:2;pointer-events:none;filter:drop-shadow(0 4px 5px rgba(0,0,0,.45));animation:bipBallKick 5.5s ease-in-out infinite;animation-delay:1.2s}
 @keyframes bipBallKick{0%,10%{transform:translate(0,0) rotate(0deg);opacity:0}14%{opacity:1}45%{transform:translate(38vw,0) rotate(680deg);opacity:1}52%{transform:translate(44vw,-72px) rotate(760deg)}72%{transform:translate(70vw,0) rotate(1040deg)}86%,100%{transform:translate(96vw,0) rotate(1300deg);opacity:0}}
@@ -759,6 +764,20 @@ svg{display:block}
 @media (prefers-reduced-motion: reduce){.coin-pack .cp-shine{animation:none}}
 .coin-drop{position:fixed;top:-32px;z-index:80;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4));animation:coinFall linear forwards}
 @keyframes coinFall{to{transform:translateY(112vh) rotate(420deg);opacity:.15}}
+/* 🃏🖼️ SHOP CARDS — stil FIFA për CARD STYLE & BACKGROUNDS */
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:11px}
+.shop-card{position:relative;overflow:hidden;border-radius:15px;padding:9px 8px;display:flex;flex-direction:column;align-items:center;gap:7px;border:1.5px solid;isolation:isolate;background:linear-gradient(160deg,#1c1a2e,#131019);box-shadow:0 4px 12px rgba(0,0,0,.42),inset 0 1px 2px rgba(255,255,255,.1)}
+.shop-card.cp1{border-color:#c08a54}
+.shop-card.cp2{border-color:#5aa8ff;box-shadow:0 4px 13px rgba(60,140,255,.28),inset 0 1px 2px rgba(255,255,255,.1)}
+.shop-card.cp3{border-color:#b06bff;box-shadow:0 4px 15px rgba(160,107,255,.4),inset 0 1px 2px rgba(255,255,255,.1)}
+.shop-card.cp4{border-color:#ffd166;box-shadow:0 4px 17px rgba(255,209,102,.5),inset 0 1px 2px rgba(255,240,190,.16)}
+.shop-card.inuse{box-shadow:0 0 0 2px rgba(60,240,160,.45),0 4px 12px rgba(0,0,0,.42)}
+.shop-prev{width:100%;height:70px;border-radius:11px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 -8px 14px rgba(0,0,0,.35),inset 0 1px 2px rgba(255,255,255,.14)}
+.shop-prev.skin{border-width:2px}
+.shop-prev .sp-em{font-size:34px;line-height:1;filter:drop-shadow(0 3px 5px rgba(0,0,0,.5))}
+.shop-prev::before{content:'';position:absolute;top:0;left:0;right:0;height:45%;background:linear-gradient(180deg,rgba(255,255,255,.18),transparent);pointer-events:none}
+.shop-name{font-size:11.5px;font-weight:900;color:#fff;text-align:center;line-height:1.1}
+.cp-badge.nnew{background:linear-gradient(90deg,#7fffd0,#3ef0a0);color:#0a2a1e}
 /* ---- Format e kartave (skins) ---- */
 body[data-skin="sharp"] .card-face,body[data-skin="sharp"] .dc-b,body[data-skin="sharp"] .dc-f{border-radius:3px}
 body[data-skin="pill"] .card-face,body[data-skin="pill"] .dc-b,body[data-skin="pill"] .dc-f{border-radius:28px}
@@ -1148,7 +1167,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
   </div>
   <button class="intro-skip" id="introSkip" onclick="playTap();finishIntro()">SKIP ✕</button>
   <div class="bip-wrap" id="bipWrap" onclick="introNext()">
-    <div class="bip-car" id="bipCar">🚗</div>
+    <div class="bip-carwrap"><div class="bip-hop" id="bipHop">⚽</div><div class="bip-car" id="bipCar">🚗</div></div>
     <div class="bip-ball" id="bipBall">⚽</div>
     <div class="bip-road"><div class="bip-road-line"></div></div>
     <div class="bip-name">BIP</div>
@@ -1971,7 +1990,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='STORE-R13';
+const BUILD_TAG='SHOP-R14';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
@@ -2053,7 +2072,7 @@ const I18N={
     s1:'Garazhi', s2:'Qyteti', s3:'Autostrada', s4:'Nata', s5:'Pista',
     store:'DYQANI', best:'Rekordi', scoreLbl:'Pikët', newBest:'REKORD I RI PIKËSH!',
     buy:'BLEJ', useIt:'PËRDORE', inUse:'NË PËRDORIM', notEnough:'S\u2019ke monedha të mjaftueshme! Shko te dyqani 🪙',
-    secCoins:'MERR MONEDHA', secFuel:'KARBURANT', secSkins:'STILI I KARTAVE', secBgs:'SFONDET', cpBest:'MË MIRË', cpPopular:'POPULLOR', bgStadium:'Stadiumi', bgArena:'Arena', skBasket:'Basketboll', skinsDesc:'Ndryshon PAMJEN e kartave në lojë', bgsDesc:'Ndryshon SFONDIN pas kartave',
+    secCoins:'MERR MONEDHA', secFuel:'KARBURANT', secSkins:'STILI I KARTAVE', secBgs:'SFONDET', cpBest:'MË MIRË', cpPopular:'POPULLOR', cpNew:'RE', bgStadium:'Stadiumi', bgArena:'Arena', skBasket:'Basketboll', skinsDesc:'Ndryshon PAMJEN e kartave në lojë', bgsDesc:'Ndryshon SFONDIN pas kartave',
     fuelBoost:'Karburant +3', fuelBoostD:'Shtohet automatikisht në nivelin tjetër',
     coinsAmt:'monedha', demoNote:'Demo — pagesa e vërtetë me Apple Pay bëhet në aplikacionin iOS',
     purchased:'U ble! 🎉', applied:'U aktivizua ✓',
@@ -2155,7 +2174,7 @@ const I18N={
     s1:'The Garage', s2:'The City', s3:'The Highway', s4:'The Night', s5:'The Racetrack',
     store:'STORE', best:'Best', scoreLbl:'Score', newBest:'NEW HIGH SCORE!',
     buy:'BUY', useIt:'USE', inUse:'IN USE', notEnough:'Not enough coins! Visit the store 🪙',
-    secCoins:'GET COINS', secFuel:'FUEL', secSkins:'CARD STYLE', secBgs:'BACKGROUNDS', cpBest:'BEST', cpPopular:'POPULAR', bgStadium:'Stadium', bgArena:'Arena', skBasket:'Basketball', skinsDesc:'Changes how your CARDS look in-game', bgsDesc:'Changes the BACKGROUND behind cards',
+    secCoins:'GET COINS', secFuel:'FUEL', secSkins:'CARD STYLE', secBgs:'BACKGROUNDS', cpBest:'BEST', cpPopular:'POPULAR', cpNew:'NEW', bgStadium:'Stadium', bgArena:'Arena', skBasket:'Basketball', skinsDesc:'Changes how your CARDS look in-game', bgsDesc:'Changes the BACKGROUND behind cards',
     fuelBoost:'Fuel +3', fuelBoostD:'Automatically added to your next level',
     coinsAmt:'coins', demoNote:'Demo — real Apple Pay payments work in the iOS app',
     purchased:'Purchased! 🎉', applied:'Applied ✓',
@@ -2257,7 +2276,7 @@ const I18N={
     s1:'Garaža', s2:'Mesto', s3:'Avtocesta', s4:'Noč', s5:'Dirkališče',
     store:'TRGOVINA', best:'Rekord', scoreLbl:'Točke', newBest:'NOV REKORD!',
     buy:'KUPI', useIt:'UPORABI', inUse:'V UPORABI', notEnough:'Premalo kovancev! Obišči trgovino 🪙',
-    secCoins:'KOVANCI', secFuel:'GORIVO', secSkins:'SLOG KART', secBgs:'OZADJA', cpBest:'NAJBOLJŠE', cpPopular:'PRILJUBLJENO', bgStadium:'Stadion', bgArena:'Arena', skBasket:'Košarka', skinsDesc:'Spremeni VIDEZ kart v igri', bgsDesc:'Spremeni OZADJE za kartami',
+    secCoins:'KOVANCI', secFuel:'GORIVO', secSkins:'SLOG KART', secBgs:'OZADJA', cpBest:'NAJBOLJŠE', cpPopular:'PRILJUBLJENO', cpNew:'NOVO', bgStadium:'Stadion', bgArena:'Arena', skBasket:'Košarka', skinsDesc:'Spremeni VIDEZ kart v igri', bgsDesc:'Spremeni OZADJE za kartami',
     fuelBoost:'Gorivo +3', fuelBoostD:'Samodejno dodano na naslednji stopnji',
     coinsAmt:'kovancev', demoNote:'Demo — pravo plačilo z Apple Pay deluje v iOS aplikaciji',
     purchased:'Kupljeno! 🎉', applied:'Aktivirano ✓',
@@ -3601,6 +3620,10 @@ const COINPACKS=[
   {coins:8000,price:'12,99',pid:'com.arianit.memorydrive.coins8000'}
 ];
 const PRO_PRODUCT='com.arianit.memorydrive.pro';
+// 🎨 ngjyra/preview për kartat e dyqanit (vetëm pamje)
+const SKIN_COL={classic:'#8a8f9a',gold:'#ffd166',holo:'#ffffff',ninja:'#5aa0ff',pirate:'#e0b050',supercar:'#ff5a6a',streamer:'#b06bff',dragon:'#ffd166',samurai:'#ff3b4e',soccer:'#eaffef',alien:'#4dff9a',fire:'#ff8c2a',diamond:'#bfeeff',skull:'#9aa0aa',royal:'#ffd166',shark:'#7fd8ff',galaxy:'#a06bff',hearts:'#ff6b9a',basket:'#ff9a3a'};
+const BG_SWATCH={midnight:'linear-gradient(160deg,#0b0e1c,#1a1a3a)',sunset:'linear-gradient(160deg,#3a2d7d,#f2934e)',forest:'linear-gradient(160deg,#12321f,#1a3d24)',ocean:'linear-gradient(160deg,#0b2b4a,#0e3a5c)',neonw:'linear-gradient(160deg,#2a0e3d,#3d1050)',lava:'linear-gradient(160deg,#3d0f08,#ff7a2a)',aurora:'linear-gradient(160deg,#08243a,#3cf0a0)',candy:'linear-gradient(160deg,#6a2050,#e86ba0)',space:'linear-gradient(160deg,#0a0a1e,#5a5aff)',desert:'linear-gradient(160deg,#5a3f18,#d0a050)',mono:'linear-gradient(160deg,#161619,#232328)',stadium:'linear-gradient(160deg,#0f3220,#12522c)',arena:'linear-gradient(160deg,#3a2a10,#a87c30)'};
+const ITEM_BADGE={diamond:'BEST',holo:'BEST',basket:'NEW',soccer:'POP',supercar:'POP',stadium:'NEW',arena:'NEW',mono:'BEST',neonw:'POP',sunset:'POP'};
 
 function applyCosmetics(){
   if(!SKINS.find(s=>s.id===curSkin))curSkin='classic'; // stilet e vjetra u hoqën → kthehu te klasik
@@ -3643,8 +3666,8 @@ function renderStore(){
   </div>`;
 
   // Stili i kartave & Sfondet — të organizuara në folder të palosshëm
-  h+=folderSection('skins','🃏 '+t('secSkins'), SKINS.map(it=>itemRow(it,'skin')).join(''), SKINS.length, t('skinsDesc'));
-  h+=folderSection('bgs','🖼️ '+t('secBgs'), BGS.map(it=>itemRow(it,'bg')).join(''), BGS.length, t('bgsDesc'));
+  h+=folderSection('skins','🃏 '+t('secSkins'), '<div class="shop-grid">'+SKINS.map(it=>itemRow(it,'skin')).join('')+'</div>', SKINS.length, t('skinsDesc'));
+  h+=folderSection('bgs','🖼️ '+t('secBgs'), '<div class="shop-grid">'+BGS.map(it=>itemRow(it,'bg')).join('')+'</div>', BGS.length, t('bgsDesc'));
 
   list.innerHTML=h;
 }
@@ -3683,13 +3706,20 @@ function toggleProfile(){
 function itemRow(it,kind){
   const isOwned=owned.includes(it.id);
   const inUse=(kind==='skin'?curSkin:curBg)===it.id;
+  const tier=it.price>=4000?'cp4':it.price>=2600?'cp3':it.price>=1500?'cp2':'cp1';
+  const bc=ITEM_BADGE[it.id];
+  const bLbl=bc==='BEST'?t('cpBest'):bc==='NEW'?t('cpNew'):bc==='POP'?t('cpPopular'):'';
+  const badge=bc?`<div class="cp-badge ${bc==='BEST'?'best':bc==='NEW'?'nnew':'pop'}">${bLbl}</div>`:'';
   let btn;
-  if(inUse)btn=`<button class="btn-mini inuse">✓ ${t('inUse')}</button>`;
-  else if(isOwned)btn=`<button class="btn-mini ghost" onclick="useItem('${kind}','${it.id}')">${t('useIt')}</button>`;
-  else btn=`<button class="btn-mini" onclick="buyItem('${kind}','${it.id}',${it.price})">${t('buy')} 🪙 ${it.price}</button>`;
-  return `<div class="store-row">
-    <div class="store-em">${it.em}</div>
-    <div class="store-info"><div class="store-name">${it.label||t(it.name)}</div></div>
+  if(inUse)btn=`<button class="btn-mini inuse" style="width:100%">✓ ${t('inUse')}</button>`;
+  else if(isOwned)btn=`<button class="btn-mini ghost" style="width:100%" onclick="useItem('${kind}','${it.id}')">${t('useIt')}</button>`;
+  else btn=`<button class="btn-mini" style="width:100%" onclick="buyItem('${kind}','${it.id}',${it.price})">🪙 ${it.price}</button>`;
+  let prev;
+  if(kind==='skin'){ const col=SKIN_COL[it.id]||'#8a8f9a'; prev=`<div class="shop-prev skin" style="border-color:${col};background:radial-gradient(circle at 50% 34%, ${col}33, #14121e)"><span class="sp-em">${it.em}</span></div>`; }
+  else { const g=BG_SWATCH[it.id]||'linear-gradient(160deg,#14121e,#232338)'; prev=`<div class="shop-prev bg" style="background:${g}"><span class="sp-em">${it.em}</span></div>`; }
+  return `<div class="shop-card ${tier}${inUse?' inuse':''}">${badge}
+    ${prev}
+    <div class="shop-name">${it.label||t(it.name)}</div>
     ${btn}
   </div>`;
 }
@@ -6551,8 +6581,8 @@ function showIntroScene(){
 }
 /* 🎭 Makina LUAN atë që thotë teksti — çdo rresht ka skenën + ngjyrën e vet të sfondit */
 const INTRO_TINTS=['rgba(232,161,58,.20)','rgba(58,198,232,.16)','rgba(255,92,92,.20)','rgba(155,107,255,.18)',
-                   'rgba(120,120,160,.20)','rgba(62,240,160,.14)','rgba(255,209,102,.18)','rgba(255,120,60,.22)',
-                   'rgba(255,143,192,.16)','rgba(255,80,60,.24)'];
+                   'rgba(120,120,160,.20)','rgba(60,205,115,.24)','rgba(255,209,102,.18)','rgba(255,120,60,.22)',
+                   'rgba(66,210,120,.26)','rgba(255,80,60,.24)'];   // 🟢 index 5 & 8 = nuancë fushe sportive
 function introLineFX(idx){
   const car=document.getElementById('bipCar'); if(!car)return;
   // 🌈 sfondi ndërron nuancën me çdo rresht
