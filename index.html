@@ -989,6 +989,9 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 #quitDialog,#surePopup,#tutAsk,#premiumSheet,#lbOverlay,#secondChance,#privacyOverlay,#questsOverlay,#spinOverlay,#cardDropOv,#cardDetailOv,#resetDialog,#musicCreditsOverlay,#fuelDialog,#matchOverlay,#profileOverlay{position:absolute;inset:0;background:rgba(0,0,0,.7);z-index:20;display:none;align-items:center;justify-content:center;padding:32px}
 #quitDialog.show,#surePopup.show,#tutAsk.show,#premiumSheet.show,#lbOverlay.show,#secondChance.show,#privacyOverlay.show,#questsOverlay.show,#spinOverlay.show,#cardDropOv.show,#cardDetailOv.show,#resetDialog.show,#musicCreditsOverlay.show,#fuelDialog.show,#matchOverlay.show,#profileOverlay.show{display:flex}
 #quitDialog.show,#surePopup.show,#tutAsk.show,#premiumSheet.show,#lbOverlay.show,#secondChance.show{display:flex}
+/* 🛒 PRO sheet — GJITHË fleta rrëshqet (jo vetëm brenda); s'pritet as lart as poshtë */
+#premiumSheet.show{align-items:flex-start;justify-content:center;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:24px 20px}
+#premiumSheet .dialog-box{max-height:none!important;overflow:visible!important}
 .lb-row{display:flex;align-items:center;gap:10px;padding:9px 12px;border-radius:11px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.08);margin-bottom:6px;font-weight:800;font-size:14px}
 .lb-row .lb-rank{width:26px;text-align:center;font-weight:900}
 .lb-row .lb-name{flex:1;text-align:left;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -1888,7 +1891,7 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='FIX-R10';
+const BUILD_TAG='FIX-R11';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
