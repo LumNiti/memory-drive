@@ -115,6 +115,10 @@ svg{display:block}
 .load-txt{font-size:10px;letter-spacing:4px;font-weight:900;color:rgba(255,255,255,.45);margin-top:9px;animation:blink 1.2s ease-in-out infinite}
 .bip-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;flex:1;width:100%;max-width:360px;padding:0 20px;cursor:pointer}
 .bip-car{font-size:96px;animation:bipBounce 1.1s ease-in-out infinite;filter:drop-shadow(0 8px 20px rgba(0,0,0,.4))}
+/* ⚽ prekje futbolli te introja — topi rrokulliset, e shkelmon Bip, ikën (humor) */
+.bip-ball{position:absolute;bottom:30%;left:4%;font-size:24px;z-index:2;pointer-events:none;filter:drop-shadow(0 4px 5px rgba(0,0,0,.45));animation:bipBallKick 5.5s ease-in-out infinite;animation-delay:1.2s}
+@keyframes bipBallKick{0%,10%{transform:translate(0,0) rotate(0deg);opacity:0}14%{opacity:1}45%{transform:translate(38vw,0) rotate(680deg);opacity:1}52%{transform:translate(44vw,-72px) rotate(760deg)}72%{transform:translate(70vw,0) rotate(1040deg)}86%,100%{transform:translate(96vw,0) rotate(1300deg);opacity:0}}
+@media (prefers-reduced-motion: reduce){.bip-ball{animation:none;opacity:0}}
 .bip-car.shake{animation:bipShake .5s ease-in-out 3}
 @keyframes bipBounce{0%,100%{transform:translateY(0) rotate(-2deg)}50%{transform:translateY(-16px) rotate(2deg)}}
 @keyframes bipShake{0%,100%{transform:translateX(0)}20%{transform:translateX(-9px) rotate(-4deg)}40%{transform:translateX(9px) rotate(4deg)}60%{transform:translateX(-7px)}80%{transform:translateX(7px)}}
@@ -638,8 +642,8 @@ svg{display:block}
   box-shadow:0 16px 46px rgba(0,0,0,.65);transform-style:preserve-3d}
 #cardDropOv.show .cd-card{animation:cdReveal 1s cubic-bezier(.2,1.15,.35,1) both}
 @keyframes cdReveal{0%{transform:rotateY(180deg) scale(.5);opacity:0}42%{opacity:1}72%{transform:rotateY(-10deg) scale(1.08)}100%{transform:rotateY(0) scale(1);opacity:1}}
-.cd-port{font-size:92px;line-height:1;z-index:2;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5));transform:translateY(-6px)}
-.cd-cardname{position:absolute;bottom:0;left:0;right:0;z-index:3;font-size:14px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:#fff;padding:7px 4px;background:linear-gradient(0deg,rgba(0,0,0,.82),transparent);text-shadow:0 1px 3px rgba(0,0,0,.85)}
+.cd-port{font-size:78px;line-height:1;z-index:2;filter:drop-shadow(0 6px 10px rgba(0,0,0,.5));transform:translateY(-18px)}
+.cd-cardname{position:absolute;bottom:52px;left:0;right:0;z-index:3;font-size:15px;font-weight:900;letter-spacing:1px;text-transform:uppercase;color:#fff;padding:0 4px;text-shadow:0 1px 3px rgba(0,0,0,.85)}
 .cd-gloss{position:absolute;top:0;left:0;right:0;height:45%;z-index:2;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.28),rgba(255,255,255,.05) 60%,transparent)}
 .cd-card.r0{border-color:#c08a54;background:linear-gradient(160deg,#3a2c1e,#20170f)}
 .cd-card.r1{border-color:#5aa8ff;background:linear-gradient(160deg,#153455,#0c1d30);box-shadow:0 16px 48px rgba(60,140,255,.42)}
@@ -662,10 +666,21 @@ svg{display:block}
 .cdt-card.r2 .cdt-front{border-color:#b06bff;background:linear-gradient(160deg,#341f56,#1b1030);box-shadow:0 18px 50px rgba(160,107,255,.5)}
 .cdt-card.r3 .cdt-front{border-color:#ffd166;background:linear-gradient(160deg,#4a3410,#241905);box-shadow:0 18px 54px rgba(255,209,102,.6)}
 .cdt-card.r3 .cdt-front::after{content:'';position:absolute;top:0;left:-70%;width:52%;height:100%;z-index:3;pointer-events:none;background:linear-gradient(105deg,transparent,rgba(255,255,255,.6),transparent);transform:skewX(-18deg);animation:acShine 2.6s ease-in-out infinite}
-.cdt-port{font-size:104px;line-height:1;z-index:2;filter:drop-shadow(0 6px 12px rgba(0,0,0,.5))}
-.cdt-rar{position:absolute;top:12px;left:0;right:0;text-align:center;font-weight:900;letter-spacing:2px;font-size:12px;z-index:3;text-shadow:0 1px 3px rgba(0,0,0,.7)}
-.cdt-name{position:absolute;bottom:30px;left:0;right:0;text-align:center;z-index:3;font-size:18px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:#fff;text-shadow:0 2px 5px rgba(0,0,0,.85)}
-.cdt-count{position:absolute;bottom:8px;left:0;right:0;text-align:center;z-index:3;font-size:12px;font-weight:800;color:rgba(255,255,255,.7)}
+.cdt-port{font-size:86px;line-height:1;z-index:2;filter:drop-shadow(0 6px 12px rgba(0,0,0,.5));transform:translateY(-16px)}
+.cdt-rar{position:absolute;top:16px;right:14px;text-align:right;font-weight:900;letter-spacing:1px;font-size:11px;z-index:4;text-shadow:0 1px 3px rgba(0,0,0,.7)}
+.cdt-name{position:absolute;bottom:62px;left:0;right:0;text-align:center;z-index:3;font-size:18px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:#fff;text-shadow:0 2px 5px rgba(0,0,0,.85)}
+.cdt-count{position:absolute;top:36px;right:14px;text-align:right;z-index:4;font-size:11px;font-weight:800;color:rgba(255,255,255,.6)}
+/* 🎴 badge rating + tipi (top-left) */
+.cdt-badge{position:absolute;top:12px;left:15px;z-index:4;display:flex;flex-direction:column;align-items:center;line-height:.95}
+.cdt-rating{font-size:32px;font-weight:900;color:#fff;text-shadow:0 2px 6px rgba(0,0,0,.75)}
+.cdt-type{font-size:10px;font-weight:900;letter-spacing:1px;color:rgba(255,255,255,.85);margin-top:1px;text-shadow:0 1px 2px rgba(0,0,0,.7)}
+/* 🎴 stats row */
+.cdt-stats{position:absolute;bottom:20px;left:0;right:0;z-index:4;display:flex;justify-content:center;gap:6px;padding:0 8px}
+.pc-statchip{display:flex;flex-direction:column;align-items:center;background:rgba(0,0,0,.34);border:1px solid rgba(255,255,255,.14);border-radius:8px;padding:3px 5px;min-width:34px;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+.pc-statchip b{font-size:14px;font-weight:900;color:#fff;line-height:1}
+.pc-statchip span{font-size:7px;font-weight:800;letter-spacing:.2px;color:rgba(255,255,255,.8);margin-top:2px}
+/* rating badge te grid album */
+.acard .ac-rating{position:absolute;top:2px;left:5px;z-index:3;font-size:11px;font-weight:900;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.75)}
 .cdt-back{transform:rotateY(180deg);background:linear-gradient(160deg,#241c3e,#0e0c22);border-color:rgba(255,209,102,.6)}
 .cdt-logo{font-size:64px;opacity:.9;filter:drop-shadow(0 0 12px rgba(255,209,102,.5))}
 .cdt-backname{margin-top:14px;font-weight:900;letter-spacing:3px;font-size:15px;color:#ffd166;text-transform:uppercase}
@@ -691,6 +706,21 @@ svg{display:block}
 .menu-logo{display:flex;align-items:center;gap:8px}
 .menu-logo .ml-flag{font-size:30px;filter:drop-shadow(0 0 10px rgba(232,161,58,.55));animation:wobble 1.8s ease-in-out infinite alternate}
 .menu-logo .ml-name{font-weight:900;letter-spacing:1.5px;font-size:13px;line-height:1.05;color:var(--amber2);text-shadow:0 0 10px rgba(232,161,58,.4)}
+/* ⚽🚗 BACKGROUND HOME — futboll + makina (vetëm te menyja; fixed brenda grupit opacity të #menuScreen) */
+.home-bg{position:fixed;inset:0;overflow:hidden;pointer-events:none;z-index:0}
+.home-bg .hb{position:absolute;opacity:.14;will-change:transform;filter:drop-shadow(0 2px 6px rgba(0,0,0,.4))}
+.hb-pitch{position:absolute;left:50%;bottom:-24%;width:160%;height:78%;transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(ellipse 55% 48% at 50% 100%,rgba(60,240,160,.06),transparent 70%)}
+.hb-pitch::after{content:'';position:absolute;left:50%;bottom:22%;width:180px;height:180px;transform:translateX(-50%);border-radius:50%;border:1px solid rgba(255,255,255,.05)}
+.hb-ball{animation:hbBall var(--d,36s) ease-in-out infinite}
+.hb-car{left:-16%;animation:hbDrive var(--d,30s) linear infinite;animation-delay:var(--delay,0s)}
+.hb-car2{right:-16%;animation:hbDriveR var(--d,40s) linear infinite;animation-delay:var(--delay,0s)}
+.hb-goal,.hb-trophy{animation:hbFloat 6s ease-in-out infinite}
+@keyframes hbBall{0%,100%{transform:translate(0,0) rotate(0)}50%{transform:translate(calc(32px*var(--dir,1)),-20px) rotate(calc(200deg*var(--dir,1)))}}
+@keyframes hbDrive{0%{transform:translateX(0)}100%{transform:translateX(132vw)}}
+@keyframes hbDriveR{0%{transform:translateX(0) scaleX(-1)}100%{transform:translateX(-132vw) scaleX(-1)}}
+@keyframes hbFloat{0%,100%{transform:translateY(0)}50%{transform:translateY(-9px)}}
+@media (prefers-reduced-motion: reduce){.home-bg .hb{animation:none}}
 .menu-corner{display:grid;grid-template-columns:1fr 1fr;gap:4px;align-items:stretch;pointer-events:auto;background:rgba(14,12,30,.6);border:1px solid rgba(232,161,58,.35);border-radius:13px;padding:4px;backdrop-filter:blur(4px)}
 .menu-corner .coin-pill{margin:0;background:transparent;border:none;padding:4px 7px;font-size:11px;border-radius:8px;min-width:50px;justify-content:center}
 .menu-corner .coin-pill+.coin-pill{}
@@ -1085,6 +1115,7 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
   <button class="intro-skip" id="introSkip" onclick="playTap();finishIntro()">SKIP ✕</button>
   <div class="bip-wrap" id="bipWrap" onclick="introNext()">
     <div class="bip-car" id="bipCar">🚗</div>
+    <div class="bip-ball" id="bipBall">⚽</div>
     <div class="bip-road"><div class="bip-road-line"></div></div>
     <div class="bip-name">BIP</div>
     <div class="bip-bubble" id="bipText"></div>
@@ -1148,6 +1179,17 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 
 <!-- MENYJA -->
 <div class="screen" id="menuScreen">
+  <div class="home-bg" aria-hidden="true">
+    <div class="hb-pitch"></div>
+    <span class="hb hb-ball" style="left:8%;top:24%;--d:34s;font-size:24px">⚽</span>
+    <span class="hb hb-ball" style="left:78%;top:16%;--d:46s;--dir:-1;font-size:18px">⚽</span>
+    <span class="hb hb-ball" style="left:60%;top:70%;--d:40s;font-size:20px">⚽</span>
+    <span class="hb hb-car" style="top:40%;--d:28s;font-size:30px">🏎️</span>
+    <span class="hb hb-car" style="top:78%;--d:38s;--delay:-12s;font-size:26px">🚗</span>
+    <span class="hb hb-car2" style="top:12%;--d:44s;--delay:-6s;font-size:22px">🚙</span>
+    <span class="hb hb-goal" style="left:5%;bottom:8%;font-size:30px">🥅</span>
+    <span class="hb hb-trophy" style="right:7%;top:60%;font-size:26px">🏆</span>
+  </div>
   <div class="menu-topbar">
     <div class="menu-logo"><span class="ml-flag">🏁</span><span class="ml-name">MEMORY<br>DRIVE</span></div>
     <div class="menu-corner">
@@ -1729,8 +1771,10 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
     <div class="cd-card-wrap">
       <div class="cd-card r0" id="cdCard">
         <div class="cd-gloss"></div>
+        <div class="cdt-badge"><b class="cdt-rating" id="cdRating">87</b><span class="cdt-type" id="cdType">CAR</span></div>
         <div class="cd-port" id="cdPort">🚗</div>
         <div class="cd-cardname" id="cdName">Cruiser</div>
+        <div class="cdt-stats" id="cdStats"></div>
       </div>
     </div>
     <div class="cd-rar" id="cdRar">Common</div>
@@ -1746,10 +1790,12 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
       <div class="cdt-card r0" id="cdtCard">
         <div class="cdt-face cdt-front">
           <div class="cd-gloss"></div>
-          <div class="cdt-port" id="cdtPort">🚗</div>
+          <div class="cdt-badge"><b class="cdt-rating" id="cdtRating">87</b><span class="cdt-type" id="cdtType">CAR</span></div>
           <div class="cdt-rar" id="cdtRar">Common</div>
+          <div class="cdt-port" id="cdtPort">🚗</div>
           <div class="cdt-name" id="cdtName">Cruiser</div>
           <div class="cdt-count" id="cdtCount">×1</div>
+          <div class="cdt-stats" id="cdtStats"></div>
         </div>
         <div class="cdt-face cdt-back">
           <div class="cdt-logo">🏁</div>
@@ -1891,7 +1937,7 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='FIX-R11';
+const BUILD_TAG='CARDS-R12';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
@@ -6182,6 +6228,15 @@ const ALBUM_NAMES=[
   ['Champion','Aurum','Volt','Prism','Inferno','Star','Valor','Nova','Siren','Fuse']
 ];
 function cardName(pi,ci){return (ALBUM_NAMES[pi]&&ALBUM_NAMES[pi][ci])||'???';}
+// 🎴 Rating + stats stil "player card" — deterministe për çdo kartë (vetëm PAMJE, s'prek lojën)
+const CARD_STAT_ICON=['⚡','💪','🛞','✨'];
+const CARD_STAT_LBL=['SPD','PWR','GRP','STY'];
+const CARD_TYPE_LBL=['CAR','DRV','TRK','ICON'];  // sipas faqes: Garage/Crew/Seasons/Legends
+function cardHash(pi,ci){let h=(((pi+1)*73856093)^((ci+1)*19349663))>>>0;h=(h*2654435761)>>>0;return h;}
+function cardRating(pi,ci){const rar=cardRarity(pi,ci);const base=[68,79,87,92][rar];const span=[11,8,5,8][rar];return base+(cardHash(pi,ci)%span);}
+function cardStats(pi,ci){const r=cardRating(pi,ci),h=cardHash(pi,ci);const cl=v=>Math.max(46,Math.min(99,v));return [cl(r+((h>>2)%11)-5),cl(r+((h>>6)%11)-5),cl(r+((h>>10)%11)-5),cl(r+((h>>14)%11)-5)];}
+function cardTypeLbl(pi){return CARD_TYPE_LBL[pi]||'CAR';}
+function cardStatsHTML(pi,ci){const s=cardStats(pi,ci);return s.map((v,i)=>`<div class="pc-statchip"><b>${v}</b><span>${CARD_STAT_ICON[i]}${CARD_STAT_LBL[i]}</span></div>`).join('');}
 // rariteti: index brenda faqes → common(0-5), rare(6-8), epic(9 faqe0-2), legendary(9 faqe3)
 function cardRarity(pi,ci){
   if(ci<=5)return 0; // common
@@ -6225,6 +6280,7 @@ function showCardDrop(em,rar,dup,coinsGot){
   const card=document.getElementById('cdCard'); if(card)card.className='cd-card r'+rar;
   const port=document.getElementById('cdPort'); if(port)port.textContent=em;
   const nm=document.getElementById('cdName'); if(nm)nm.textContent=(pi!=null)?cardName(pi,ci):'';
+  if(pi!=null){const rt=document.getElementById('cdRating');if(rt)rt.textContent=cardRating(pi,ci);const ty=document.getElementById('cdType');if(ty)ty.textContent=cardTypeLbl(pi);const st=document.getElementById('cdStats');if(st)st.innerHTML=cardStatsHTML(pi,ci);}
   const rarE=document.getElementById('cdRar'); if(rarE){rarE.textContent=t('rar_'+rar); rarE.style.color=RAR_COL[rar]; rarE.style.textShadow='0 0 14px '+RAR_COL[rar];}
   document.getElementById('cdDup').textContent=dup?('🔁 '+t('duplicate')+' +'+coinsGot+' 🪙'):('✨ '+t('newCard'));
   ov.classList.add('show');
@@ -6250,7 +6306,7 @@ function renderAlbum(){
     html+=`<div class="album-pg-title">${t(p.name)} ${done?'✅':''}</div><div class="album-page">`;
     p.cards.forEach((em,ci)=>{ const owned=!!album[cardId(pi,ci)]; const rar=cardRarity(pi,ci); const cnt=album[cardId(pi,ci)]||0;
       if(owned){
-        html+=`<div class="acard r${rar}" onclick="openCardDetail(${pi},${ci})"><div class="ac-gloss"></div><div class="ac-port">${em}</div><div class="ac-name">${cardName(pi,ci)}</div>${cnt>1?`<span class="acard-n">×${cnt}</span>`:''}</div>`;
+        html+=`<div class="acard r${rar}" onclick="openCardDetail(${pi},${ci})"><div class="ac-gloss"></div><span class="ac-rating">${cardRating(pi,ci)}</span><div class="ac-port">${em}</div><div class="ac-name">${cardName(pi,ci)}</div>${cnt>1?`<span class="acard-n">×${cnt}</span>`:''}</div>`;
       }else{
         html+=`<div class="acard locked"><div class="ac-gloss"></div><div class="ac-port">❓</div><div class="ac-name">${t('rar_'+rar)}</div></div>`;
       }
@@ -6270,6 +6326,9 @@ function openCardDetail(pi,ci){
   document.getElementById('cdtPort').textContent=em;
   document.getElementById('cdtName').textContent=cardName(pi,ci);
   document.getElementById('cdtRar').textContent=t('rar_'+rar); document.getElementById('cdtRar').style.color=RAR_COL[rar];
+  document.getElementById('cdtRating').textContent=cardRating(pi,ci);
+  document.getElementById('cdtType').textContent=cardTypeLbl(pi);
+  document.getElementById('cdtStats').innerHTML=cardStatsHTML(pi,ci);
   document.getElementById('cdtBackName').textContent=cardName(pi,ci);
   document.getElementById('cdtCount').textContent='×'+cnt;
   document.getElementById('cdtHint').textContent=t('tapFlip');
