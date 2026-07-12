@@ -243,7 +243,7 @@ svg{display:block}
 .btn-danger{background:#c0392b;color:#fff}
 .menu-btns{display:flex;flex-direction:column;gap:14px;margin-top:26px;width:100%;max-width:340px}
 /* 🏠 menyja: Play e madhe + grid 2-kolonësh + rresht i poshtëm — rri e centruar, rrëshqet vetëm nëse s'nxë */
-#menuScreen.active{justify-content:flex-start;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-top:calc(84px + env(safe-area-inset-top));padding-bottom:26px;scrollbar-width:none}
+#menuScreen.active{justify-content:safe center;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-top:calc(70px + env(safe-area-inset-top));padding-bottom:26px;scrollbar-width:none}
 #menuScreen::-webkit-scrollbar{display:none}
 .menu-play{flex-shrink:0;position:relative;overflow:hidden;font-size:19px;padding:16px;box-shadow:0 6px 20px rgba(232,161,58,.35);animation:playPulse 2.4s ease-in-out infinite}
 @keyframes playPulse{0%,100%{transform:scale(1);box-shadow:0 6px 20px rgba(232,161,58,.35)}50%{transform:scale(1.035);box-shadow:0 8px 30px rgba(255,209,102,.6)}}
@@ -2037,7 +2037,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='INTRO2-R17';
+const BUILD_TAG='MENU-R18';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
