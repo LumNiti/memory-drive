@@ -450,19 +450,20 @@ svg{display:block}
 @keyframes safeOpenA{0%{transform:scale(.7)}60%{transform:scale(1.12)}}
 .card.judder{animation:judder .42s ease-in-out}
 /* 🌟 GOLD MODE — modalitet ekskluziv PRO */
-#btnGold{position:relative;border:1.5px solid #ffe9a8!important;color:#3a2600!important;background:linear-gradient(100deg,#b9791a,#e8a13a 36%,#ffd166 54%,#e8a13a 72%,#b9791a)!important;overflow:hidden;box-shadow:0 4px 16px rgba(232,161,58,.5),inset 0 1px 3px rgba(255,255,255,.55),inset 0 -3px 7px rgba(120,70,0,.35);animation:goldGlow 3s ease-in-out infinite}
+#btnGold{position:relative;border:1.5px solid #b6f5cd!important;color:#052015!important;background:linear-gradient(100deg,#0e5c32,#1ea457 36%,#43e07f 54%,#1ea457 72%,#0e5c32)!important;overflow:hidden;box-shadow:0 4px 16px rgba(60,220,120,.5),inset 0 1px 3px rgba(255,255,255,.5),inset 0 -3px 7px rgba(0,60,30,.35);animation:goldGlow 3s ease-in-out infinite}
 #btnGold::after{content:'';position:absolute;top:0;left:-70%;width:50%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.7),transparent);transform:skewX(-18deg);animation:goldSheen 2.8s ease-in-out infinite;z-index:1}
 #btnGold::before{content:'';position:absolute;inset:0;pointer-events:none;background:radial-gradient(circle 2px at 14% 32%,#fff8dc,transparent),radial-gradient(circle 1.5px at 86% 64%,#fff8dc,transparent),radial-gradient(circle 2px at 66% 24%,#fff8dc,transparent),radial-gradient(circle 1.5px at 32% 74%,#fff8dc,transparent),radial-gradient(circle 1.5px at 50% 48%,#fff8dc,transparent);animation:gTwinkle 1.7s ease-in-out infinite}
 @keyframes goldSheen{0%,100%{left:-70%}55%{left:130%}}
-@keyframes goldGlow{0%,100%{box-shadow:0 4px 14px rgba(232,161,58,.42),inset 0 1px 3px rgba(255,255,255,.5),inset 0 -3px 7px rgba(120,70,0,.35)}50%{box-shadow:0 6px 24px rgba(255,209,102,.75),inset 0 1px 3px rgba(255,255,255,.6),inset 0 -3px 7px rgba(120,70,0,.3)}}
+@keyframes goldGlow{0%,100%{box-shadow:0 4px 14px rgba(60,220,120,.42),inset 0 1px 3px rgba(255,255,255,.5),inset 0 -3px 7px rgba(0,60,30,.35)}50%{box-shadow:0 6px 24px rgba(90,240,150,.75),inset 0 1px 3px rgba(255,255,255,.6),inset 0 -3px 7px rgba(0,60,30,.3)}}
 @keyframes gTwinkle{0%,100%{opacity:.2}50%{opacity:.85}}
-.gold-label{color:#3a2600;font-weight:900;letter-spacing:2px;text-shadow:0 1px 0 rgba(255,245,210,.6);position:relative;z-index:2}
+.gold-label{color:#052015;font-weight:900;letter-spacing:2px;text-shadow:0 1px 0 rgba(210,255,225,.6);position:relative;z-index:2}
 #btnGold .mg-e{position:relative;z-index:2;filter:drop-shadow(0 1px 2px rgba(120,70,0,.45))}
 #btnGold .gcrown{position:absolute;top:2px;right:10px;font-size:17px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4));animation:crownBounce 1.5s ease-in-out infinite;z-index:3}
 /* sfondi gold */
-#goldScreen.screen,#goldRun{background:radial-gradient(circle at 50% 30%,#3a2c08,#1c1405 60%,#0d0a03)!important}
+#goldScreen.screen,#goldRun{background:radial-gradient(ellipse 95% 46% at 50% 90%, rgba(60,200,110,.22), transparent 64%),radial-gradient(circle at 50% 14%, rgba(255,255,255,.06), transparent 55%),linear-gradient(180deg,#06170e 0%,#0c3a22 45%,#0f5a30 72%,#0a2c1a 100%)!important}
+#goldScreen.screen::after{content:'';position:absolute;left:50%;bottom:6%;width:min(70vw,320px);height:min(70vw,320px);transform:translateX(-50%);border-radius:50%;border:2px solid rgba(255,255,255,.07);pointer-events:none;z-index:0}
 .gold-parts{position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden}
-.gpart{position:absolute;bottom:-20px;color:#ffd166;font-size:10px;opacity:0;animation:gpart linear infinite;filter:drop-shadow(0 0 4px rgba(255,209,102,.8))}
+.gpart{position:absolute;bottom:-20px;color:#7cf0a0;font-size:10px;opacity:0;animation:gpart linear infinite;filter:drop-shadow(0 0 4px rgba(90,240,150,.8))}
 @keyframes gpart{0%{transform:translateY(0) scale(.6);opacity:0}12%{opacity:.85}100%{transform:translateY(-108vh) translateX(var(--gx,20px)) scale(1);opacity:0}}
 /* karta gold 3D */
 .card.goldcard .card-inner{transition:transform .5s cubic-bezier(.3,1.1,.4,1)}
@@ -475,20 +476,20 @@ svg{display:block}
 @keyframes goldMatch{0%{transform:scale(1)}45%{transform:scale(1.18) rotateY(180deg);filter:drop-shadow(0 0 16px #ffd166)}100%{transform:scale(1) rotateY(0)}}
 /* HUD gold */
 .gold-hud{display:flex;justify-content:center;gap:14px;margin-bottom:10px;flex-wrap:wrap}
-.gold-stat{background:rgba(255,209,102,.1);border:1.5px solid rgba(255,209,102,.5);border-radius:14px;padding:7px 15px;font-weight:900;color:#ffd166;font-size:15px;box-shadow:0 0 12px rgba(255,209,102,.2)}
+.gold-stat{background:rgba(70,230,130,.1);border:1.5px solid rgba(70,230,130,.5);border-radius:14px;padding:7px 15px;font-weight:900;color:#7cf0a0;font-size:15px;box-shadow:0 0 12px rgba(70,230,130,.2)}
 .gold-stat.gtime.low{color:#ff6b6b;border-color:rgba(255,107,107,.6);animation:gLow .5s ease-in-out infinite}
 @keyframes gLow{50%{transform:scale(1.08)}}
-.gspark{position:fixed;pointer-events:none;z-index:60;font-size:12px;color:#ffd166;filter:drop-shadow(0 0 4px #ffd166);animation:gsparkFly .6s ease-out forwards}
+.gspark{position:fixed;pointer-events:none;z-index:60;font-size:12px;color:#7cf0a0;filter:drop-shadow(0 0 4px #46e682);animation:gsparkFly .6s ease-out forwards}
 @keyframes gsparkFly{to{transform:translate(var(--sx),var(--sy)) scale(0);opacity:0}}
 .gold-intro{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:12px;z-index:2;padding:88px 24px 30px;overflow-y:auto;-webkit-overflow-scrolling:touch}
 /* 🛠️ FIX: page-head e Royal e ngjitur LART (jo në qendër që mbivendoset me ranking) */
 #goldScreen>.page-head{position:absolute!important;top:max(12px,calc(env(safe-area-inset-top) + 6px));left:16px;right:16px;width:auto;max-width:none;margin:0;z-index:6}
 /* 🛠️ butoni mbrapa i lojës nën notch */
 #gameScreen .hud{margin-top:env(safe-area-inset-top)}
-.gold-desc{color:#ffe9a8;font-weight:800;font-size:13px;max-width:290px;text-align:center;line-height:1.5;margin-top:2px}
-.gold-best-pill{background:rgba(255,209,102,.12);border:1.5px solid rgba(255,209,102,.55);border-radius:16px;padding:8px 18px;font-weight:900;color:#ffd166;font-size:16px;box-shadow:0 0 12px rgba(255,209,102,.2);margin-top:2px}
-.gold-play-btn{width:100%;max-width:280px;background:linear-gradient(100deg,#ffd166,#e8a13a)!important;color:#3a2600!important;border:none!important;margin-top:4px;font-size:17px;box-shadow:0 6px 20px rgba(232,161,58,.4)}
-.gold-lb-h{font-size:12px;letter-spacing:2px;font-weight:900;color:#ffd166;margin-top:10px}
+.gold-desc{color:#c8f5d8;font-weight:800;font-size:13px;max-width:290px;text-align:center;line-height:1.5;margin-top:2px}
+.gold-best-pill{background:rgba(70,230,130,.12);border:1.5px solid rgba(70,230,130,.55);border-radius:16px;padding:8px 18px;font-weight:900;color:#7cf0a0;font-size:16px;box-shadow:0 0 12px rgba(70,230,130,.2);margin-top:2px}
+.gold-play-btn{width:100%;max-width:280px;background:linear-gradient(100deg,#43e07f,#1ea457)!important;color:#052015!important;border:none!important;margin-top:4px;font-size:17px;box-shadow:0 6px 20px rgba(60,220,120,.45)}
+.gold-lb-h{font-size:12px;letter-spacing:2px;font-weight:900;color:#7cf0a0;margin-top:10px}
 /* ⚽ Zgjedhja e lojtarëve Royal */
 .gold-players-h{font-size:11px;letter-spacing:1.5px;font-weight:900;color:#ffe9a8;margin-top:6px;text-transform:uppercase}
 .gold-players{display:flex;gap:8px;overflow-x:auto;width:100%;max-width:320px;padding:4px 2px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
@@ -504,8 +505,8 @@ svg{display:block}
 .rp-lock{font-size:8px;font-weight:900;color:#ffd166;background:rgba(0,0,0,.55);border-radius:7px;padding:1px 5px;white-space:nowrap}
 .rp-tag{position:absolute;top:3px;right:5px;font-size:11px;color:var(--pc,#ffd166);font-weight:900}
 @media (prefers-reduced-motion: reduce){.rplayer{transition:none}}
-.gold-crown-big{font-size:70px;filter:drop-shadow(0 0 24px rgba(255,209,102,.6));animation:pop .8s cubic-bezier(.2,1.4,.4,1) both}
-.gold-title{font-size:30px;font-weight:900;letter-spacing:3px;background:linear-gradient(90deg,#ffe9a8,#ffd166,#e8a13a);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
+.gold-crown-big{font-size:70px;filter:drop-shadow(0 0 24px rgba(90,240,150,.6));animation:pop .8s cubic-bezier(.2,1.4,.4,1) both}
+.gold-title{font-size:30px;font-weight:900;letter-spacing:3px;background:linear-gradient(90deg,#c8f5d8,#4ade80,#1ea457);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
 @media (prefers-reduced-motion: reduce){
   #btnGold,#btnGold::after,#btnGold::before,#btnGold .gcrown,.gpart,.card.goldcard .card-face::before,.card.goldcard.matched{animation:none!important}
 }
@@ -896,6 +897,12 @@ body[data-bg="mono"]{background:radial-gradient(ellipse 80% 50% at 50% 20%, rgba
 body[data-bg="stadium"]{background:radial-gradient(ellipse 95% 46% at 50% 92%, rgba(70,230,130,.22), transparent 62%),radial-gradient(ellipse 70% 34% at 50% 4%, rgba(255,255,255,.10), transparent 60%),linear-gradient(180deg,#08160e 0%,#0f3220 42%,#12522c 72%,#0b3a1e 100%)}
 body[data-bg="stadium"]::after{content:'';position:fixed;left:50%;bottom:6%;width:min(70vw,300px);height:min(70vw,300px);transform:translateX(-50%);border-radius:50%;border:2px solid rgba(255,255,255,.06);pointer-events:none;z-index:0}
 body[data-bg="arena"]{background:radial-gradient(ellipse 88% 48% at 50% 88%, rgba(240,160,70,.24), transparent 60%),radial-gradient(ellipse 60% 30% at 50% 8%, rgba(255,200,120,.12), transparent 60%),linear-gradient(170deg,#1a1206 0%,#3a2a10 42%,#7a5820 72%,#a87c30 100%)}
+/* ⚽ GOAL RUSH — sfond stadiumi + karta futbolli VETËM në modalitet (s'prek skin/bg e lojtarit) */
+body.royalmode{background:radial-gradient(ellipse 96% 46% at 50% 92%, rgba(70,230,130,.28), transparent 62%),radial-gradient(ellipse 70% 34% at 50% 4%, rgba(255,255,255,.10), transparent 60%),linear-gradient(180deg,#06170e 0%,#0c3a22 42%,#0f5a30 72%,#0a3a1e 100%)!important;background-attachment:fixed!important}
+body.royalmode::after{content:'';position:fixed;left:50%;bottom:8%;width:min(66vw,300px);height:min(66vw,300px);transform:translateX(-50%);border-radius:50%;border:2px solid rgba(255,255,255,.08);pointer-events:none;z-index:0}
+body.royalmode .card-back-face svg{display:none}
+body.royalmode .card-back-face::after{content:'⚽';font-size:min(11vw,40px);line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
+body.royalmode .card-back-face{background:linear-gradient(160deg,#0a4a26,#12844a)!important;border-color:#7cf0a0!important;color:#eaffef!important}
 /* 🏀 stil karte sportiv */
 body[data-skin="basket"] .card-back-face svg{display:none}
 body[data-skin="basket"] .card-back-face::after{content:'🏀';font-size:min(11vw,40px);line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
@@ -1343,7 +1350,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
         <span class="mg-e">💘</span><span data-i18n="loveBtn"></span><span class="lock-tag" id="lockLove"></span>
       </button>
       <button class="mg-btn mg-gold span2" id="btnGold" onclick="playTap();openGold()">
-        <span class="mg-e">🌟</span><span class="gold-label" data-i18n="goldBtn"></span><span class="gcrown">👑</span>
+        <span class="mg-e">⚽</span><span class="gold-label" data-i18n="goldBtn"></span><span class="gcrown">🏆</span>
       </button>
     </div>
     <div class="menu-row3">
@@ -1974,12 +1981,12 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
   <div class="gold-parts" id="goldPartsMenu"></div>
   <div class="page-head">
     <button class="hud-btn" onclick="playTap();showScreen('menuScreen')"><svg class="ic"><use href="#i-back"/></svg></button>
-    <div class="page-title">🌟 <span data-i18n="goldBtn"></span></div>
+    <div class="page-title">⚽ <span data-i18n="goldBtn"></span></div>
     <div style="width:42px"></div>
   </div>
   <div class="gold-intro">
-    <div class="gold-crown-big">👑</div>
-    <div class="gold-title">ROYAL</div>
+    <div class="gold-crown-big">⚽</div>
+    <div class="gold-title" data-i18n="goldBtn"></div>
     <div class="gold-desc" data-i18n="goldSub"></div>
     <div class="gold-best-pill">🏆 <span data-i18n="goldBest"></span>: <b id="goldBestVal">0</b></div>
     <div class="gold-players-h">⚽ <span data-i18n="royalPickPlayer"></span></div>
@@ -2054,7 +2061,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='ROYALPLAYERS-R19';
+const BUILD_TAG='GOALRUSH-R20';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
@@ -2159,7 +2166,7 @@ const I18N={
     seasonDoneMsg:'SEZONI U PËRFUNDUA!', improveHint:'Përsërite nivelin me më pak lëvizje për më shumë yje!',
     goldMsg:'✨ ÇIFT I ARTË! +3 ⛽ +20 🪙', bombMsg:'💥 BUM! -2 ⛽',
     lightMsg:'⚡ VETËTIMË! Çift falas!', chainMsg:'🔗 E kyçur! Bëj edhe {n} çifte',
-    goldBtn:'ROYAL', goldSub:'Modalitet i artë ekskluziv — sa çifte gjen për 60 sekonda?', goldPlay:'LUAJ ROYAL', goldBest:'Rekord', goldOverT:'👑 KOHA MBAROI!', goldPts:'pikë ari', royalPairs:'çifte', goldNewBest:'REKORD I RI!', royalPickPlayer:'Zgjidh lojtarin', royalUnlocked:'Lojtar i ri!', needCoins:'S\'ke mjaft monedha', unlockLv:'Zhbllokohet në Lv', fromWheel:'Nga rrota e fatit', goldLbTitle:'RENDITJA ROYAL', goldEmpty:'Bëhu i pari PRO në renditje! 👑', goldExclTitle:'ROYAL Mode është vetëm për PRO', goldTease:'Karta të arta 3D · shpërblim i lartë · renditje ekskluzive', pbGold:'👑 ROYAL Mode — loja mbretërore ekskluzive', loveBtn:'Love Match', loveGold:'💝 LETËR DASHURIE! +3 ⛽', loveBomb:'💔 ZEMËRTHYERJE! -3 ⛽', loveLight:'💘 CUPIDI! Çift falas!', loveBetray:'🗡️ TRADHTI! Kartat u përzien −1 ⛽',
+    goldBtn:'GOAL RUSH', goldSub:'Sfida në fushë — sa gola (çifte) shënon për 60 sekonda? ⚽', goldPlay:'KICK OFF ⚽', goldBest:'Rekord', goldOverT:'⚽ FUND I NDESHJES!', goldPts:'pikë ari', royalPairs:'çifte', goldNewBest:'REKORD I RI!', royalPickPlayer:'Zgjidh lojtarin', royalUnlocked:'Lojtar i ri!', needCoins:'S\'ke mjaft monedha', unlockLv:'Zhbllokohet në Lv', fromWheel:'Nga rrota e fatit', goldLbTitle:'GOLASHËNUESIT', goldEmpty:'Bëhu i pari PRO në renditje! ⚽', goldExclTitle:'GOAL RUSH është vetëm për PRO', goldTease:'Karta futbolli · shpërblim i lartë · renditje ekskluzive', pbGold:'⚽ GOAL RUSH — sfida sportive ekskluzive', loveBtn:'Love Match', loveGold:'💝 LETËR DASHURIE! +3 ⛽', loveBomb:'💔 ZEMËRTHYERJE! -3 ⛽', loveLight:'💘 CUPIDI! Çift falas!', loveBetray:'🗡️ TRADHTI! Kartat u përzien −1 ⛽',
     funMsgs:['Ti je legjendë! 💪','Fokus… ose jo 😜','Besoja kujtesës 🧠','Mos u huto tani 👀','Shpirt, ki durim ✨','Shumë lehtë për ty 😏','Vazhdo kështu, kampion 🏁','Një çift larg lavdisë 🌟','Truri yt është GPS 🛰️','Sot fiton ti, e ndjej 🔥','Asgjë s\'të ndal dot 🚀','Qetësi… si profesionist 🧘','Bip beson te ti 🚗','Ky nivel s\'e di me kë ka punë 😎','Sytë hapur, zemra plot 💛','Oooo sa afër ishe! 😱','Karburanti digjet, nxito! ⛽','Mos m\'i ngatërro kartat 😤','Hëëë, ku e ke mendjen? 🙃','Kjo lojë të ka inat 😂','Kujtesa jote > telefoni 📵','Edhe Bip u lodh duke pritur 🥱','Prit, ça ishte ajo lëvizje?! 🤯','Guxo! Kartat s\'kafshojnë 🦈','Një frymëmarrje… tani GJEJE 🎯'],
     funLove:['Dashuria kërkon durim… ti jo 😏','Ia vlen pritja 💕','Ndiq zemrën 💘','Mos e prish serinë e dashurisë 💞','Kujdes nga tradhtia 🗡️'],
     loveComboLbl:'Combo dashurie', loveWinT:'💘 DASHURI E VËRTETË!', loveLoseT:'💔 U THYE ZEMRA', loveLoseD:'Mbaroi dashuria… provo prapë, zemra nuk dorëzohet! 💕',
@@ -2261,7 +2268,7 @@ const I18N={
     seasonDoneMsg:'SEASON COMPLETE!', improveHint:'Replay the level with fewer moves to earn more stars!',
     goldMsg:'✨ GOLDEN PAIR! +3 ⛽ +8 🪙', bombMsg:'💥 BOOM! -2 ⛽',
     lightMsg:'⚡ LIGHTNING! Free pair!', chainMsg:'🔗 Locked! Match {n} more',
-    goldBtn:'ROYAL', goldSub:'Exclusive golden mode — how many pairs in 60 seconds?', goldPlay:'PLAY ROYAL', goldBest:'Best', goldOverT:'👑 TIME UP!', goldPts:'gold points', royalPairs:'pairs', goldNewBest:'NEW RECORD!', royalPickPlayer:'Choose your player', royalUnlocked:'New player!', needCoins:'Not enough coins', unlockLv:'Unlocks at Lv', fromWheel:'From the wheel', goldLbTitle:'ROYAL RANKING', goldEmpty:'Be the first PRO on the board! 👑', goldExclTitle:'ROYAL Mode is PRO exclusive', goldTease:'3D golden cards · higher rewards · exclusive ranking', pbGold:'👑 ROYAL Mode — exclusive royal game', loveBtn:'Love Match', loveGold:'💝 LOVE LETTER! +3 ⛽', loveBomb:'💔 HEARTBREAK! -3 ⛽', loveLight:'💘 CUPID! Free pair!', loveBetray:'🗡️ BETRAYAL! Cards scrambled −1 ⛽',
+    goldBtn:'GOAL RUSH', goldSub:'The pitch challenge — how many goals (pairs) in 60 seconds? ⚽', goldPlay:'KICK OFF ⚽', goldBest:'Best', goldOverT:'⚽ FULL TIME!', goldPts:'gold points', royalPairs:'pairs', goldNewBest:'NEW RECORD!', royalPickPlayer:'Choose your player', royalUnlocked:'New player!', needCoins:'Not enough coins', unlockLv:'Unlocks at Lv', fromWheel:'From the wheel', goldLbTitle:'TOP SCORERS', goldEmpty:'Be the first PRO on the board! ⚽', goldExclTitle:'GOAL RUSH is PRO exclusive', goldTease:'Football cards · higher rewards · exclusive ranking', pbGold:'⚽ GOAL RUSH — exclusive pitch challenge', loveBtn:'Love Match', loveGold:'💝 LOVE LETTER! +3 ⛽', loveBomb:'💔 HEARTBREAK! -3 ⛽', loveLight:'💘 CUPID! Free pair!', loveBetray:'🗡️ BETRAYAL! Cards scrambled −1 ⛽',
     funMsgs:["You're a legend! 💪","Focus… or don't 😜","Trust your memory 🧠","Don't get distracted 👀","Patience pays ✨","Too easy for you 😏","Keep it up, champ 🏁","One pair from glory 🌟","Your brain is a GPS 🛰️","Today you win, I feel it 🔥","Nothing can stop you 🚀","Calm… like a pro 🧘","Bip believes in you 🚗","This level has no idea who it's facing 😎","Eyes open, heart full 💛","Ooooh SO close! 😱","Fuel's burning, hurry! ⛽","Stop mixing up my cards 😤","Hellooo, where's your head? 🙃","This game has a grudge 😂","Your memory > your phone 📵","Even Bip got tired of waiting 🥱","Wait, what was THAT move?! 🤯","Be brave! Cards don't bite 🦈","One deep breath… now FIND IT 🎯"],
     funLove:["Love takes patience… you don't 😏","They're worth the wait 💕","Follow your heart 💘","Don't break the love streak 💞","Beware betrayal 🗡️"],
     loveComboLbl:'Love combo', loveWinT:'💘 TRUE LOVE!', loveLoseT:'💔 HEARTBROKEN', loveLoseD:'Love ran out… try again, the heart never gives up! 💕',
@@ -2363,7 +2370,7 @@ const I18N={
     seasonDoneMsg:'SEZONA KONČANA!', improveHint:'Ponovi stopnjo z manj potezami za več zvezdic!',
     goldMsg:'✨ ZLATI PAR! +3 ⛽ +20 🪙', bombMsg:'💥 BUM! -2 ⛽',
     lightMsg:'⚡ STRELA! Brezplačen par!', chainMsg:'🔗 Zaklenjeno! Poveži še {n}',
-    goldBtn:'ROYAL', goldSub:'Ekskluziven zlati način — koliko parov v 60 sekundah?', goldPlay:'IGRAJ ROYAL', goldBest:'Rekord', goldOverT:'👑 ČAS JE POTEKEL!', goldPts:'zlate točke', royalPairs:'parov', goldNewBest:'NOV REKORD!', royalPickPlayer:'Izberi igralca', royalUnlocked:'Nov igralec!', needCoins:'Premalo kovancev', unlockLv:'Odklene se na Lv', fromWheel:'Iz kolesa sreče', goldLbTitle:'ROYAL LESTVICA', goldEmpty:'Bodi prvi PRO na lestvici! 👑', goldExclTitle:'ROYAL način je samo za PRO', goldTease:'3D zlate karte · višje nagrade · ekskluzivna lestvica', pbGold:'👑 ROYAL način — ekskluzivna kraljeva igra', loveBtn:'Love Match', loveGold:'💝 LJUBEZENSKO PISMO! +3 ⛽', loveBomb:'💔 ZLOMLJENO SRCE! -3 ⛽', loveLight:'💘 KUPID! Brezplačen par!', loveBetray:'🗡️ IZDAJA! Karte premešane −1 ⛽',
+    goldBtn:'GOAL RUSH', goldSub:'Izziv na igrišču — koliko golov (parov) v 60 sekundah? ⚽', goldPlay:'ZAČETNI UDAREC ⚽', goldBest:'Rekord', goldOverT:'⚽ KONEC TEKME!', goldPts:'zlate točke', royalPairs:'parov', goldNewBest:'NOV REKORD!', royalPickPlayer:'Izberi igralca', royalUnlocked:'Nov igralec!', needCoins:'Premalo kovancev', unlockLv:'Odklene se na Lv', fromWheel:'Iz kolesa sreče', goldLbTitle:'NAJBOLJŠI STRELCI', goldEmpty:'Bodi prvi PRO na lestvici! ⚽', goldExclTitle:'GOAL RUSH je samo za PRO', goldTease:'Nogometne karte · višje nagrade · ekskluzivna lestvica', pbGold:'⚽ GOAL RUSH — ekskluziven izziv na igrišču', loveBtn:'Love Match', loveGold:'💝 LJUBEZENSKO PISMO! +3 ⛽', loveBomb:'💔 ZLOMLJENO SRCE! -3 ⛽', loveLight:'💘 KUPID! Brezplačen par!', loveBetray:'🗡️ IZDAJA! Karte premešane −1 ⛽',
     funMsgs:['Legenda si! 💪','Osredotoči se… ali pa ne 😜','Zaupaj spominu 🧠','Ne dovoli, da te zmoti 👀','Potrpljenje se izplača ✨','Zate prelahko 😏','Kar tako naprej, prvak 🏁','En par do slave 🌟','Tvoji možgani so GPS 🛰️','Danes zmagaš, čutim 🔥','Nič te ne ustavi 🚀','Mirno… kot profesionalec 🧘','Bip verjame vate 🚗','Ta stopnja ne ve, s kom ima opravka 😎','Oči odprte, srce polno 💛','Ooo kako blizu! 😱','Gorivo gori, pohiti! ⛽','Nehaj mešati moje karte 😤','Halooo, kje imaš glavo? 🙃','Ta igra ti zameri 😂','Tvoj spomin > tvoj telefon 📵','Še Bip se je naveličal čakati 🥱','Čakaj, kaj je bila TA poteza?! 🤯','Pogumno! Karte ne grizejo 🦈','En globok vdih… zdaj NAJDI 🎯'],
     funLove:['Ljubezen terja potrpljenje… ti ne 😏','Vredno je čakanja 💕','Sledi srcu 💘','Ne prekini niza ljubezni 💞','Pazi na izdajo 🗡️'],
     loveComboLbl:'Ljubezenski combo', loveWinT:'💘 PRAVA LJUBEZEN!', loveLoseT:'💔 STRTO SRCE', loveLoseD:'Ljubezni je zmanjkalo… poskusi znova, srce nikoli ne obupa! 💕',
@@ -3154,6 +3161,8 @@ function showScreen(id){
   document.getElementById(id).classList.add('active');
   // 🌟 Royal ka HUD-in e vet (⏱️🪙🌊) — fshih shiritin standard fuel/time/pairs
   if(id==='gameScreen'){const sb=document.getElementById('statsBar'); if(sb)sb.style.display=(mode==='gold')?'none':'';}
+  // ⚽ GOAL RUSH: karta futbolli + sfond stadiumi VETËM në këtë modalitet (pa prekur skin/bg e lojtarit)
+  document.body.classList.toggle('royalmode', id==='gameScreen'&&mode==='gold');
   // 🎵 zgjidh track-un e muzikës sipas ekranit (duel mbulohet nga `duel`)
   startMusic();   // 🎵 një track i vetëm luan kudo, pa u ndërprerë mes ekraneve
   if(id==='menuScreen'){updateTotalStars();updateModeLocks();checkAchievements(false);handlePendingDuel();openFeaturesInit();
@@ -5920,7 +5929,7 @@ function startGold(){
   goldScore=0; goldWaveN=0; goldTimeLeft=GOLD_TIME; seconds=0;
   const rpl=currentRoyalPlayer();
   document.documentElement.style.setProperty('--season',rpl.col); // ⚽ theks sipas lojtarit të zgjedhur
-  document.getElementById('levelBadge').innerHTML=`<div class="profile-chip"><span class="pav">${rpl.em}</span><b>${rpl.name}</b></div><div class="level-chip" style="background:linear-gradient(100deg,#ffd166,#e8a13a);color:#3a2600">👑 ROYAL</div>`;
+  document.getElementById('levelBadge').innerHTML=`<div class="profile-chip"><span class="pav">${rpl.em}</span><b>${rpl.name}</b></div><div class="level-chip" style="background:linear-gradient(100deg,#43e07f,#1ea457);color:#052015">⚽ GOAL RUSH</div>`;
   // 🎴 NDËRTIMI I BORDIT — kritik: nëse dështon, e shohim menjëherë në ekran
   try{ buildGoldWave(); }
   catch(e){ showDbg((e&&e.stack||e&&e.message||e),'buildGoldWave'); }
@@ -5948,7 +5957,7 @@ function goldPairScored(el){
   const gsE=document.getElementById('gScore'); if(gsE)gsE.textContent='🃏 '+goldScore;
   const gwE=document.getElementById('gWave'); if(gwE)gwE.textContent='🌊 '+goldWaveN;
   // ✨ shkëndija ari
-  if(el){try{const r=el.getBoundingClientRect();for(let k=0;k<7;k++){const sp=document.createElement('div');sp.className='gspark';sp.textContent=['✦','✧','🪙'][k%3];sp.style.left=(r.left+r.width/2)+'px';sp.style.top=(r.top+r.height/2)+'px';const a=Math.random()*6.28,d=40+Math.random()*40;sp.style.setProperty('--sx',Math.cos(a)*d+'px');sp.style.setProperty('--sy',Math.sin(a)*d+'px');document.body.appendChild(sp);setTimeout(()=>sp.remove(),620);}}catch(e){}}
+  if(el){try{const r=el.getBoundingClientRect();for(let k=0;k<7;k++){const sp=document.createElement('div');sp.className='gspark';sp.textContent=['⚽','✦','✧'][k%3];sp.style.left=(r.left+r.width/2)+'px';sp.style.top=(r.top+r.height/2)+'px';const a=Math.random()*6.28,d=40+Math.random()*40;sp.style.setProperty('--sx',Math.cos(a)*d+'px');sp.style.setProperty('--sy',Math.sin(a)*d+'px');document.body.appendChild(sp);setTimeout(()=>sp.remove(),620);}}catch(e){}}
   S('gold',{vol:.5});
 }
 function goldWaveDone(){
@@ -5977,7 +5986,7 @@ function goldOver(){
 function spawnGoldRain(){
   const holder=document.getElementById('confettiHolder'); if(!holder)return;
   holder.innerHTML='';
-  const ems=['🪙','⭐','🌟','👑','💰','🥇'];
+  const ems=['⚽','🏆','🥅','🎉','🟢','⚽'];
   for(let i=0;i<32;i++){const p=document.createElement('span');p.className='confetti-piece';p.textContent=ems[i%ems.length];p.style.left=Math.random()*100+'vw';p.style.fontSize=(16+Math.random()*22)+'px';p.style.animationDuration=(2+Math.random()*2)+'s';p.style.animationDelay=(Math.random()*0.7)+'s';holder.appendChild(p);}
 }
 /* 🌟 Leaderboard gold — çelës i ri ekskluziv PRO */
