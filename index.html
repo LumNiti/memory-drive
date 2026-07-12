@@ -120,6 +120,20 @@ svg{display:block}
 .bip-hop{position:absolute;top:-16px;left:50%;font-size:26px;z-index:3;pointer-events:none;filter:drop-shadow(0 3px 4px rgba(0,0,0,.4));animation:bipHop 1.1s ease-in-out infinite}
 @keyframes bipHop{0%,100%{transform:translateX(-50%) translateY(8px) rotate(0deg)}50%{transform:translateX(-50%) translateY(-30px) rotate(200deg)}}
 @media (prefers-reduced-motion: reduce){.bip-hop{animation:none;opacity:0}}
+/* ⚽ prek makinën → shkelmon topin */
+.bip-carwrap{cursor:pointer;-webkit-tap-highlight-color:transparent}
+.bip-carwrap.bipkick{animation:bipKick .48s ease}
+@keyframes bipKick{0%{transform:rotate(0) translateX(0)}22%{transform:rotate(-13deg) translateX(-7px) scale(1.04)}52%{transform:rotate(9deg) translateX(4px)}78%{transform:rotate(-3deg)}100%{transform:rotate(0) translateX(0)}}
+.kickball{position:absolute;left:50%;top:2px;font-size:27px;z-index:6;pointer-events:none;filter:drop-shadow(0 3px 4px rgba(0,0,0,.4))}
+.kickspark{position:absolute;left:50%;top:14px;font-size:14px;color:#ffd166;pointer-events:none;z-index:7;filter:drop-shadow(0 0 3px rgba(255,209,102,.7));animation:kickSpark .5s ease-out forwards}
+@keyframes kickSpark{to{transform:translate(var(--kx),var(--ky)) scale(0);opacity:0}}
+/* ⚽ atmosferë sport në sfondin e intros */
+.bip-pitch{position:absolute;left:50%;bottom:-8%;width:170%;height:60%;transform:translateX(-50%);pointer-events:none;
+  background:radial-gradient(ellipse 50% 46% at 50% 100%,rgba(70,220,130,.10),transparent 72%)}
+.bip-pitch::after{content:'';position:absolute;left:50%;bottom:18%;width:140px;height:140px;transform:translateX(-50%);border-radius:50%;border:1.5px solid rgba(255,255,255,.05)}
+.bip-bgball{position:absolute;font-size:18px;opacity:.16;pointer-events:none;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4));animation:bgBallBounce var(--bd,6s) ease-in-out infinite;animation-delay:var(--delay,0s)}
+@keyframes bgBallBounce{0%,100%{transform:translateY(0) rotate(0)}50%{transform:translateY(-26px) rotate(180deg)}}
+@media (prefers-reduced-motion: reduce){.bip-bgball,.bip-carwrap.bipkick{animation:none}}
 /* ⚽ prekje futbolli te introja — topi rrokulliset, e shkelmon Bip, ikën (humor) */
 .bip-ball{position:absolute;bottom:30%;left:4%;font-size:24px;z-index:2;pointer-events:none;filter:drop-shadow(0 4px 5px rgba(0,0,0,.45));animation:bipBallKick 5.5s ease-in-out infinite;animation-delay:1.2s}
 @keyframes bipBallKick{0%,10%{transform:translate(0,0) rotate(0deg);opacity:0}14%{opacity:1}45%{transform:translate(38vw,0) rotate(680deg);opacity:1}52%{transform:translate(44vw,-72px) rotate(760deg)}72%{transform:translate(70vw,0) rotate(1040deg)}86%,100%{transform:translate(96vw,0) rotate(1300deg);opacity:0}}
@@ -295,11 +309,16 @@ svg{display:block}
 .pro-benefits{display:flex;flex-direction:column;gap:8px;margin:14px 0 18px;text-align:left}
 .pro-b{display:flex;align-items:center;gap:10px;background:rgba(232,161,58,.08);border:1px solid rgba(232,161,58,.3);border-radius:12px;padding:10px 12px;font-weight:800;font-size:13px}
 .pro-b .pe{font-size:18px;flex-shrink:0}
-#usernameInput,#regName{width:100%;background:rgba(14,12,30,.6);border:1.5px solid rgba(232,161,58,.5);border-radius:12px;color:#fff;padding:11px 14px;font-family:'Nunito';font-weight:800;font-size:15px;outline:none}
-.avatar-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;width:100%}
-.av{aspect-ratio:1;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px;background:rgba(255,255,255,.06);border:2px solid transparent;cursor:pointer;position:relative;transition:transform .15s}
+#usernameInput,#regName{width:100%;background:rgba(14,12,30,.7);border:1.5px solid rgba(232,161,58,.5);border-radius:13px;color:#fff;padding:13px 15px;font-family:'Nunito';font-weight:800;font-size:16px;outline:none;text-align:center;letter-spacing:.5px;transition:border-color .15s,box-shadow .15s;box-shadow:inset 0 2px 5px rgba(0,0,0,.3)}
+#usernameInput:focus,#regName:focus{border-color:var(--amber2);box-shadow:inset 0 2px 5px rgba(0,0,0,.3),0 0 0 3px rgba(232,161,58,.2)}
+#usernameInput::placeholder,#regName::placeholder{color:rgba(255,255,255,.35);font-weight:700}
+/* 👤 panel premium te ekrani i profilit */
+#registerScreen .panel{background:linear-gradient(165deg,rgba(30,24,56,.94),rgba(16,14,34,.94));border:1.5px solid rgba(232,161,58,.38);box-shadow:0 14px 42px rgba(0,0,0,.55),0 0 30px rgba(232,161,58,.12),inset 0 1px 2px rgba(255,255,255,.09)}
+#registerScreen .panel h2{text-shadow:0 0 14px rgba(232,161,58,.4)}
+.avatar-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:9px;width:100%}
+.av{aspect-ratio:1;border-radius:13px;display:flex;align-items:center;justify-content:center;font-size:26px;background:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.03));border:2px solid rgba(255,255,255,.08);cursor:pointer;position:relative;transition:transform .15s,box-shadow .15s,border-color .15s;box-shadow:inset 0 -4px 8px rgba(0,0,0,.25)}
 .av:active{transform:scale(.9)}
-.av.sel{border-color:var(--amber);background:rgba(232,161,58,.18)}
+.av.sel{border-color:var(--amber);background:radial-gradient(circle at 50% 35%,rgba(232,161,58,.28),rgba(232,161,58,.1));box-shadow:0 0 0 2px rgba(232,161,58,.55),0 0 16px rgba(232,161,58,.45);transform:scale(1.05)}
 .av.lockedAv{opacity:.45}
 .av .crown{position:absolute;top:-7px;right:-5px;font-size:11px}
 .av .lockbadge{position:absolute;bottom:-6px;left:50%;transform:translateX(-50%);font-size:11px}
@@ -769,18 +788,18 @@ svg{display:block}
 .coin-drop{position:fixed;top:-32px;z-index:80;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4));animation:coinFall linear forwards}
 @keyframes coinFall{to{transform:translateY(112vh) rotate(420deg);opacity:.15}}
 /* 🃏🖼️ SHOP CARDS — stil FIFA për CARD STYLE & BACKGROUNDS */
-.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;padding:11px}
-.shop-card{position:relative;overflow:hidden;border-radius:15px;padding:9px 8px;display:flex;flex-direction:column;align-items:center;gap:7px;border:1.5px solid;isolation:isolate;background:linear-gradient(160deg,#1c1a2e,#131019);box-shadow:0 4px 12px rgba(0,0,0,.42),inset 0 1px 2px rgba(255,255,255,.1)}
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:9px}
+.shop-card{position:relative;overflow:hidden;border-radius:14px;padding:8px 7px;display:flex;flex-direction:column;align-items:center;gap:5px;border:1.5px solid;isolation:isolate;background:linear-gradient(160deg,#1c1a2e,#131019);box-shadow:0 4px 11px rgba(0,0,0,.42),inset 0 1px 2px rgba(255,255,255,.1)}
 .shop-card.cp1{border-color:#c08a54}
 .shop-card.cp2{border-color:#5aa8ff;box-shadow:0 4px 13px rgba(60,140,255,.28),inset 0 1px 2px rgba(255,255,255,.1)}
 .shop-card.cp3{border-color:#b06bff;box-shadow:0 4px 15px rgba(160,107,255,.4),inset 0 1px 2px rgba(255,255,255,.1)}
 .shop-card.cp4{border-color:#ffd166;box-shadow:0 4px 17px rgba(255,209,102,.5),inset 0 1px 2px rgba(255,240,190,.16)}
 .shop-card.inuse{box-shadow:0 0 0 2px rgba(60,240,160,.45),0 4px 12px rgba(0,0,0,.42)}
-.shop-prev{width:100%;height:70px;border-radius:11px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 -8px 14px rgba(0,0,0,.35),inset 0 1px 2px rgba(255,255,255,.14)}
+.shop-prev{width:100%;height:56px;border-radius:10px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 -8px 14px rgba(0,0,0,.35),inset 0 1px 2px rgba(255,255,255,.14)}
 .shop-prev.skin{border-width:2px}
-.shop-prev .sp-em{font-size:34px;line-height:1;filter:drop-shadow(0 3px 5px rgba(0,0,0,.5))}
+.shop-prev .sp-em{font-size:27px;line-height:1;filter:drop-shadow(0 3px 5px rgba(0,0,0,.5))}
 .shop-prev::before{content:'';position:absolute;top:0;left:0;right:0;height:45%;background:linear-gradient(180deg,rgba(255,255,255,.18),transparent);pointer-events:none}
-.shop-name{font-size:11.5px;font-weight:900;color:#fff;text-align:center;line-height:1.1}
+.shop-name{font-size:11px;font-weight:900;color:#fff;text-align:center;line-height:1.1}
 .cp-badge.nnew{background:linear-gradient(90deg,#7fffd0,#3ef0a0);color:#0a2a1e}
 /* ⭐ FEATURED hero + tabs kategori */
 .store-featured{position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;margin:10px 0 4px;padding:13px 14px;border-radius:18px;border:1.5px solid #ffe9a8;cursor:pointer;background:linear-gradient(105deg,#5a3d0a,#b9791a 38%,#e8a13a 58%,#b9791a 78%,#5a3d0a);box-shadow:0 6px 20px rgba(232,161,58,.45),inset 0 1px 2px rgba(255,255,255,.3)}
@@ -1186,10 +1205,16 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
     <span class="bip-star" style="top:26%;left:8%;animation-delay:1.8s;font-size:8px">✧</span>
     <span class="bip-star" style="top:30%;left:86%;animation-delay:1s">✦</span>
     <span class="bip-hill">🏙️</span>
+    <!-- ⚽ atmosferë sport/stadium -->
+    <div class="bip-pitch"></div>
+    <span class="bip-bgball" style="left:14%;top:40%;--bd:5.5s">⚽</span>
+    <span class="bip-bgball" style="left:80%;top:52%;--bd:6.8s;--delay:-2s">⚽</span>
+    <span class="bip-bgball" style="left:60%;top:30%;--bd:7.6s;--delay:-4s;font-size:14px">⚽</span>
+    <span class="bip-bgball" style="left:30%;top:66%;--bd:6.2s;--delay:-1s;font-size:15px">⚽</span>
   </div>
   <button class="intro-skip" id="introSkip" onclick="playTap();finishIntro()">SKIP ✕</button>
   <div class="bip-wrap" id="bipWrap" onclick="introNext()">
-    <div class="bip-carwrap"><div class="bip-hop" id="bipHop">⚽</div><div class="bip-car" id="bipCar">🚗</div></div>
+    <div class="bip-carwrap" id="bipCarWrap" onclick="kickBip(event)"><div class="bip-hop" id="bipHop">⚽</div><div class="bip-car" id="bipCar">🚗</div></div>
     <div class="bip-ball" id="bipBall">⚽</div>
     <div class="bip-road"><div class="bip-road-line"></div></div>
     <div class="bip-name">BIP</div>
@@ -2012,7 +2037,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='ROYALFIX-R16';
+const BUILD_TAG='INTRO2-R17';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
@@ -2565,7 +2590,7 @@ function playNext(){playTap();startMusic();startLevel(nextPlayable())}
 /* ================= RUAJTJA ================= */
 async function saveData(){
   try{
-    await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,xp,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,introSceneSeen,streak,streakLast,dailyDoneDate,dailyBestMs,dailyHistory,endlessBestWave,goldBest,achievements,goldPairsTotal,loveLevel,loveStars,leagueTier,leagueWeek,leaguePoints,questDate,questProg,questClaimed,questBonusClaimed,weekKey,weekProg,weekClaimed,weekBonusClaimed,album,albumClaimed,spinDate,fuelTanks,fuelTanksTs,qSlots:todaysQuests,wSlots:weeklyQuests,questDone,weekDone,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang,music:settings.music}}));
+    await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,xp,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,introSceneSeen,streak,streakLast,dailyDoneDate,dailyBestMs,dailyHistory,endlessBestWave,goldBest,achievements,goldPairsTotal,loveLevel,loveStars,leagueTier,leagueWeek,leaguePoints,questDate,questProg,questClaimed,questBonusClaimed,weekKey,weekProg,weekClaimed,weekBonusClaimed,album,albumClaimed,albumSeen,spinDate,fuelTanks,fuelTanksTs,qSlots:todaysQuests,wSlots:weeklyQuests,questDone,weekDone,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang,music:settings.music}}));
   }catch(e){}
 }
 /* 🗑️ Reset i plotë manual — fshin krejt progresin dhe fillon nga e para */
@@ -2612,6 +2637,7 @@ async function loadData(){
       questClaimed=Array.isArray(d.questClaimed)?d.questClaimed:[false,false,false]; questBonusClaimed=!!d.questBonusClaimed;
       weekKey=d.weekKey||''; weekProg=Array.isArray(d.weekProg)?d.weekProg:[0,0,0]; weekClaimed=Array.isArray(d.weekClaimed)?d.weekClaimed:[false,false,false]; weekBonusClaimed=!!d.weekBonusClaimed;
       album=(d.album&&typeof d.album==='object')?d.album:{}; albumClaimed=Array.isArray(d.albumClaimed)?d.albumClaimed:[];
+      albumSeen=(typeof d.albumSeen==='number')?d.albumSeen:albumOwnedCount(); // lojtarët ekzistues: mos shfaq badge false
       spinDate=d.spinDate||'';
       fuelTanks=(d.fuelTanks==null)?MAX_TANKS:d.fuelTanks; fuelTanksTs=d.fuelTanksTs||Date.now(); regenTanks();
       questDone=d.questDone||0; weekDone=d.weekDone||0;
@@ -3169,6 +3195,7 @@ let leagueTier=0, leagueWeek='', leaguePoints=0;        // 0=Bronze..4=Legend
 let questDate='', questProg=[0,0,0], questClaimed=[false,false,false], questBonusClaimed=false;
 let questDone=0, weekDone=0;   // 🔄 sa detyra ke mbledhur sot/këtë javë (detyrat qarkullojnë pas Collect)
 let album={}, albumClaimed=[];                          // {cardId:count}, [rewardIds]
+let albumSeen=0;                                        // 🃏 sa karta i kishte parë lojtari herën e fundit që hapi albumin
 let spinDate='';                                        // data e spin-it të fundit falas
 let pendingLeaguePromo=null;                            // {dir, tier} për ekranin e fundjavës
 /* 🎴 Stile hyrëse të kartave — ndryshojnë çdo level */
@@ -6432,7 +6459,7 @@ function openCardDetail(pi,ci){
   if(rar>=3){try{S('shine',{vol:.4});}catch(e){}}
 }
 function flipDetailCard(){ const c=document.getElementById('cdtCard'); if(c){c.classList.toggle('flip'); try{S('flip',{vol:.4});}catch(e){}} }
-function openAlbum(){ renderAlbum(); showScreen('albumScreen'); }
+function openAlbum(){ renderAlbum(); showScreen('albumScreen'); albumSeen=albumOwnedCount(); saveData(); updateFeatureBadges(); } // 🃏 hapja e albumit fshin pikën e kuqe
 
 /* ---------- 🎡 SPIN ---------- */
 /* 🎡 8 çmime të PËRZIERA — gjithçka nga loja, çdo fushë jep VETËM NJË gjë, asnjë fushë bosh.
@@ -6531,7 +6558,7 @@ function updateFeatureBadges(){
           +weeklyQuests.filter((q,i)=>!weekClaimed[i]&&weekProg[i]>=q.goal).length;
   set('badgeQuests',qn>0,qn);
   set('badgeSpin',canSpin(),'');
-  set('badgeAlbum', typeof albumOwnedCount==='function' && albumOwnedCount()<40, '');   // 🃏 ka ende karta për të mbledhur
+  set('badgeAlbum', typeof albumOwnedCount==='function' && albumOwnedCount()>albumSeen, ''); // 🃏 vetëm kur ka kartë të re të pambledhur që s'e ke parë
   set('badgeLeague', !!pendingLeaguePromo, '');                                          // 🏆 ngjitje/rënie e re
 }
 function openFeaturesInit(){ checkQuestDate(); processWeeklyRollover(); updateFeatureBadges(); }
@@ -6726,6 +6753,34 @@ function introNext(){
   if(introTyping){ clearInterval(introTimer); introTyping=false; document.getElementById('bipText').textContent=introLines()[introIdx]; onIntroLineDone(); return; }
   const lines=introLines();
   if(introIdx<lines.length-1){ introIdx++; typeIntroLine(); }
+}
+/* ⚽ prek makinën Bip → e shkelmon topin (nuk vazhdon introne; loj e vogël e përsëritshme) */
+function kickBip(ev){
+  if(ev&&ev.stopPropagation)ev.stopPropagation();
+  const wrap=document.getElementById('bipCarWrap'); if(!wrap)return;
+  wrap.classList.remove('bipkick'); void wrap.offsetWidth; wrap.classList.add('bipkick');
+  setTimeout(()=>wrap.classList.remove('bipkick'),500);
+  const reduced=window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  if(!reduced){
+    // 🏈 topi që fluturon me hark + rrotullim
+    const b=document.createElement('div'); b.className='kickball'; b.textContent='⚽'; wrap.appendChild(b);
+    const dir=Math.random()<0.5?1:-1;
+    const dx=(70+Math.random()*70)*dir, up=-(120+Math.random()*70);
+    try{b.animate([
+      {transform:'translate(-50%,0) rotate(0deg)',opacity:1,offset:0},
+      {transform:`translate(calc(-50% + ${dx*0.5}px),${up}px) rotate(${380*dir}deg)`,opacity:1,offset:.42},
+      {transform:`translate(calc(-50% + ${dx}px),18px) rotate(${740*dir}deg)`,opacity:1,offset:.82},
+      {transform:`translate(calc(-50% + ${dx*1.12}px),44px) rotate(${860*dir}deg)`,opacity:0,offset:1}
+    ],{duration:900,easing:'cubic-bezier(.3,.72,.4,1)'});}catch(e){}
+    setTimeout(()=>b.remove(),920);
+    // ✨ grimca kontakti
+    for(let i=0;i<8;i++){ const s=document.createElement('div'); s.className='kickspark'; s.textContent=['✦','✧','⚡'][i%3];
+      const a=Math.random()*6.28, d=18+Math.random()*28; s.style.setProperty('--kx',Math.cos(a)*d+'px'); s.style.setProperty('--ky',(Math.sin(a)*d-12)+'px');
+      wrap.appendChild(s); setTimeout(()=>s.remove(),520); }
+  }
+  // 🔊 goditje / boing
+  if(settings.sfx){ try{ if(sfxBuf.pop)S('pop',{vol:.6,rate:1.15}); else if(sfxBuf.whooshSoft)S('whooshSoft',{vol:.6,rate:1.2}); else {sfx(300,0.07,'sine',0.06);setTimeout(()=>sfx(560,0.1,'sine',0.05),55);} }catch(e){} }
+  try{navigator.vibrate&&navigator.vibrate(15);}catch(e){}
 }
 function afterIntroFlow(){
   if(!registered){renderAvatars('regAvatarGrid');showScreen('registerScreen')}
