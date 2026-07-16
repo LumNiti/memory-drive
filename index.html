@@ -459,7 +459,8 @@ svg{display:block}
 .gold-label{color:#052015;font-weight:900;letter-spacing:2px;text-shadow:0 1px 0 rgba(210,255,225,.6);position:relative;z-index:2}
 #btnGold .mg-e{position:relative;z-index:2;filter:drop-shadow(0 1px 2px rgba(120,70,0,.45))}
 #btnGold .gcrown{position:absolute;top:2px;right:10px;font-size:17px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4));animation:crownBounce 1.5s ease-in-out infinite;z-index:3}
-#btnGold .cup-count{position:absolute;top:-6px;left:-6px;z-index:4;background:linear-gradient(135deg,#ffe27a,#f5a623);color:#3a2400;font-size:11px;font-weight:900;padding:2px 6px;border-radius:11px;border:1.5px solid #fff;box-shadow:0 2px 6px rgba(0,0,0,.35);display:none;align-items:center;line-height:1}
+#btnGold .cup-count{position:absolute;top:-9px;left:-9px;z-index:5;background:linear-gradient(135deg,#fff2b0,#ffce4d 45%,#f5a623);color:#3a2400;font-size:14px;font-weight:900;padding:3px 9px;border-radius:14px;border:2px solid #fff;box-shadow:0 0 10px rgba(255,200,60,.9),0 0 20px rgba(255,180,40,.55),0 3px 8px rgba(0,0,0,.4);display:none;align-items:center;gap:1px;line-height:1;text-shadow:0 1px 1px rgba(255,255,255,.4);animation:cupBadgePulse 1.8s ease-in-out infinite}
+@keyframes cupBadgePulse{0%,100%{transform:scale(1);box-shadow:0 0 10px rgba(255,200,60,.9),0 0 20px rgba(255,180,40,.55),0 3px 8px rgba(0,0,0,.4)}50%{transform:scale(1.12);box-shadow:0 0 16px rgba(255,220,90,1),0 0 30px rgba(255,190,50,.75),0 3px 8px rgba(0,0,0,.4)}}
 /* 🏆 Festim kampioni në HOME */
 .cup-home-fx{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 42%,rgba(70,230,130,.28),rgba(4,10,8,.82));backdrop-filter:blur(3px);animation:cupHomeIn .5s ease-out}
 .cup-home-fx.out{animation:cupHomeOut .5s ease-in forwards}
@@ -502,7 +503,10 @@ svg{display:block}
 .gold-play-btn{width:100%;max-width:280px;background:linear-gradient(100deg,#43e07f,#1ea457)!important;color:#052015!important;border:none!important;margin-top:4px;font-size:17px;box-shadow:0 6px 20px rgba(60,220,120,.45)}
 .gold-lb-h{font-size:12px;letter-spacing:2px;font-weight:900;color:#7cf0a0;margin-top:10px}
 /* ⚽ Tabela e turneut (bracket) */
-.royal-bracket{display:flex;align-items:center;justify-content:center;gap:3px;flex-wrap:nowrap;margin-top:2px}
+.royal-bracket{display:flex;flex-direction:column;align-items:center;gap:5px;margin-top:2px}
+.rb-row{display:flex;align-items:center;justify-content:center;gap:3px;flex-wrap:nowrap}
+.rb-cap{font-size:11px;font-weight:800;letter-spacing:.5px;color:#8ff0b0;opacity:.9}
+#goldCupsVal{color:#ffd24a;font-weight:900;text-shadow:0 0 8px rgba(255,200,60,.6)}
 .rb-stage{min-width:34px;height:30px;padding:0 6px;display:flex;align-items:center;justify-content:center;border-radius:9px;font-weight:900;font-size:12px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);color:rgba(255,255,255,.55)}
 .rb-stage.done{background:rgba(70,230,130,.2);border-color:rgba(70,230,130,.7);color:#8ff0b0}
 .rb-stage.cur{background:linear-gradient(100deg,#43e07f,#1ea457);border-color:#7cf0a0;color:#052015;box-shadow:0 0 12px rgba(70,230,130,.5);animation:rbpulse 1.3s ease-in-out infinite}
@@ -724,7 +728,13 @@ svg{display:block}
 .cdt-wrap{perspective:1000px;width:190px;height:260px;cursor:pointer}
 .cdt-card{position:relative;width:100%;height:100%;transform-style:preserve-3d;transition:transform .6s cubic-bezier(.3,1.1,.4,1)}
 .cdt-card.flip{transform:rotateY(180deg)}
-.cdt-face{position:absolute;inset:0;border-radius:22px;border:4px solid #fff;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 18px 50px rgba(0,0,0,.6)}
+.cdt-face{position:absolute;inset:0;border-radius:22px;border:4px solid #fff;overflow:hidden;backface-visibility:hidden;-webkit-backface-visibility:hidden;display:flex;flex-direction:column;align-items:center;justify-content:center;box-shadow:0 18px 50px rgba(0,0,0,.6);transition:opacity 0s linear .3s}
+/* 🛠️ FIX iOS/WebKit: overflow:hidden prish backface-visibility → teksti del i pasqyruar.
+   Zgjidhje: fshih faqen e pasme me opacity, ndrrimi bëhet në mesin e flip-it (0.3s) kur karta është anash → pa mirror */
+.cdt-front{opacity:1}
+.cdt-back{opacity:0}
+.cdt-card.flip .cdt-front{opacity:0}
+.cdt-card.flip .cdt-back{opacity:1}
 .cdt-front{background:linear-gradient(160deg,#2a2440,#161226)}
 .cdt-card.r0 .cdt-front{border-color:#c08a54;background:linear-gradient(160deg,#3a2c1e,#20170f)}
 .cdt-card.r1 .cdt-front{border-color:#5aa8ff;background:linear-gradient(160deg,#153455,#0c1d30);box-shadow:0 18px 50px rgba(60,140,255,.4)}
@@ -746,6 +756,31 @@ svg{display:block}
 .pc-statchip span{font-size:7px;font-weight:800;letter-spacing:.2px;color:rgba(255,255,255,.8);margin-top:2px}
 /* rating badge te grid album */
 .acard .ac-rating{position:absolute;top:2px;left:5px;z-index:3;font-size:11px;font-weight:900;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.75)}
+/* 🎴 Identiteti i kategorisë — shirit theksi lart te çdo kartë */
+.acard .ac-accent{position:absolute;top:0;left:0;right:0;height:4px;z-index:4;opacity:.95}
+.acard.th-garage .ac-accent{background:repeating-linear-gradient(90deg,#141414 0 5px,#e9e9e9 5px 10px)}
+.acard.th-crew .ac-accent{background:linear-gradient(90deg,#3f8bff,#9ed2ff)}
+.acard.th-season .ac-accent{background:linear-gradient(90deg,#2fbf6a,#8ff0b0)}
+.acard.th-icon .ac-accent{background:linear-gradient(90deg,#f5b423,#fff2b0)}
+.acard.locked .ac-accent{display:none}
+/* GARAGE grid — theks makine: rating i kuq */
+.acard.th-garage .ac-rating{color:#ff9a90}
+/* ═══ IDENTITETI I KARTAVE sipas kategorisë (detaj + pako) ═══ */
+/* 🏁 GARAGE — makina: carbon fiber + shirit checkered + gauge stats */
+.cdt-card.th-garage .cdt-front,.cd-card.th-garage{background:linear-gradient(160deg,#262626,#0e0e11)!important;border-color:#ff5a4d!important}
+.cdt-card.th-garage .cdt-front{background-image:linear-gradient(160deg,#262626,#0e0e11),repeating-linear-gradient(45deg,rgba(255,255,255,.035) 0 7px,transparent 7px 14px)!important}
+.cdt-card.th-garage .cdt-front::before,.cd-card.th-garage::before{content:'';position:absolute;top:0;left:0;right:0;height:11px;z-index:3;background:repeating-linear-gradient(90deg,#141414 0 8px,#ededed 8px 16px);opacity:.92}
+.cdt-card.th-garage .cdt-type,.cd-card.th-garage .cdt-type{color:#ff9a90}
+.cdt-card.th-garage .cdt-stats,.cd-card.th-garage .cdt-stats{flex-direction:column;bottom:16px;left:16px;right:16px;gap:4px}
+.gauge-stat{display:flex;align-items:center;gap:7px;width:100%;line-height:1}
+.gauge-stat .gs-lbl{width:46px;text-align:left;font-size:8.5px;font-weight:900;letter-spacing:.4px;color:rgba(255,255,255,.82)}
+.gauge-stat .gs-bar{flex:1;height:6px;border-radius:4px;background:rgba(255,255,255,.14);overflow:hidden;box-shadow:inset 0 1px 2px rgba(0,0,0,.4)}
+.gauge-stat .gs-bar i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#ff5a4d,#ffb03a)}
+.gauge-stat b{width:22px;text-align:right;font-size:11px;font-weight:900;color:#fff;text-shadow:0 1px 2px rgba(0,0,0,.6)}
+/* ⭐ CREW / 🌄 SEASON / 🏆 LEGEND — theks tipi për identitet */
+.cdt-card.th-crew .cdt-type{color:#9ed2ff}
+.cdt-card.th-season .cdt-type{color:#8ff0b0}
+.cdt-card.th-icon .cdt-type{color:#ffe08a}
 .cdt-back{transform:rotateY(180deg);background:linear-gradient(160deg,#241c3e,#0e0c22);border-color:rgba(255,209,102,.6)}
 .cdt-logo{font-size:64px;opacity:.9;filter:drop-shadow(0 0 12px rgba(255,209,102,.5))}
 .cdt-backname{margin-top:14px;font-weight:900;letter-spacing:3px;font-size:15px;color:#ffd166;text-transform:uppercase}
@@ -825,29 +860,29 @@ svg{display:block}
 .coin-drop{position:fixed;top:-32px;z-index:80;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4));animation:coinFall linear forwards}
 @keyframes coinFall{to{transform:translateY(112vh) rotate(420deg);opacity:.15}}
 /* 🃏🖼️ SHOP CARDS — stil FIFA për CARD STYLE & BACKGROUNDS */
-.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:9px}
-.shop-card{position:relative;overflow:hidden;border-radius:14px;padding:8px 7px;display:flex;flex-direction:column;align-items:center;gap:5px;border:1.5px solid;isolation:isolate;background:linear-gradient(160deg,#1c1a2e,#131019);box-shadow:0 4px 11px rgba(0,0,0,.42),inset 0 1px 2px rgba(255,255,255,.1)}
-.shop-card.cp1{border-color:#c08a54}
-.shop-card.cp2{border-color:#5aa8ff;box-shadow:0 4px 13px rgba(60,140,255,.28),inset 0 1px 2px rgba(255,255,255,.1)}
-.shop-card.cp3{border-color:#b06bff;box-shadow:0 4px 15px rgba(160,107,255,.4),inset 0 1px 2px rgba(255,255,255,.1)}
-.shop-card.cp4{border-color:#ffd166;box-shadow:0 4px 17px rgba(255,209,102,.5),inset 0 1px 2px rgba(255,240,190,.16)}
-.shop-card.inuse{box-shadow:0 0 0 2px rgba(60,240,160,.45),0 4px 12px rgba(0,0,0,.42)}
-.shop-prev{width:100%;height:56px;border-radius:10px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.14);box-shadow:inset 0 -8px 14px rgba(0,0,0,.35),inset 0 1px 2px rgba(255,255,255,.14)}
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:11px 10px 9px}
+.shop-card{position:relative;overflow:hidden;border-radius:13px;padding:7px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;border:1px solid;isolation:isolate;background:linear-gradient(160deg,#1b1928,#131019);box-shadow:0 2px 7px rgba(0,0,0,.35)}
+.shop-card.cp1{border-color:rgba(192,138,84,.55)}
+.shop-card.cp2{border-color:rgba(90,168,255,.5)}
+.shop-card.cp3{border-color:rgba(176,107,255,.5)}
+.shop-card.cp4{border-color:rgba(255,209,102,.6)}
+.shop-card.inuse{border-color:rgba(60,240,160,.7);box-shadow:0 0 0 1.5px rgba(60,240,160,.4),0 2px 7px rgba(0,0,0,.35)}
+.shop-prev{width:100%;height:50px;border-radius:10px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 -6px 12px rgba(0,0,0,.3)}
 .shop-prev.skin{border-width:2px}
 .shop-prev .sp-em{font-size:27px;line-height:1;filter:drop-shadow(0 3px 5px rgba(0,0,0,.5))}
 .shop-prev::before{content:'';position:absolute;top:0;left:0;right:0;height:45%;background:linear-gradient(180deg,rgba(255,255,255,.18),transparent);pointer-events:none}
 .shop-name{font-size:11px;font-weight:900;color:#fff;text-align:center;line-height:1.1}
 .cp-badge.nnew{background:linear-gradient(90deg,#7fffd0,#3ef0a0);color:#0a2a1e}
 /* ⭐ FEATURED hero + tabs kategori */
-.store-featured{position:relative;overflow:hidden;display:flex;align-items:center;gap:12px;margin:10px 0 4px;padding:13px 14px;border-radius:18px;border:1.5px solid #ffe9a8;cursor:pointer;background:linear-gradient(105deg,#5a3d0a,#b9791a 38%,#e8a13a 58%,#b9791a 78%,#5a3d0a);box-shadow:0 6px 20px rgba(232,161,58,.45),inset 0 1px 2px rgba(255,255,255,.3)}
+.store-featured{position:relative;overflow:hidden;display:flex;align-items:center;gap:11px;margin:8px 0 4px;padding:10px 13px;border-radius:15px;border:1px solid #ffe9a8;cursor:pointer;background:linear-gradient(105deg,#5a3d0a,#b9791a 38%,#e8a13a 58%,#b9791a 78%,#5a3d0a);box-shadow:0 4px 13px rgba(232,161,58,.32),inset 0 1px 2px rgba(255,255,255,.25)}
 .store-featured:active{transform:scale(.98)}
 .store-featured .sf-shine{position:absolute;top:0;left:-70%;width:48%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);animation:goldSheen 3.4s ease-in-out infinite;pointer-events:none}
 .sf-badge{position:absolute;top:8px;right:10px;z-index:2;font-size:8px;font-weight:900;letter-spacing:1px;color:#3a2600;background:rgba(255,255,255,.6);border-radius:8px;padding:2px 7px}
-.sf-icon{font-size:40px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4));z-index:1}
+.sf-icon{font-size:33px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4));z-index:1}
 .sf-info{flex:1;z-index:1;min-width:0}
-.sf-amt{font-size:23px;font-weight:900;color:#3a2600;line-height:1}
-.sf-amt span{font-size:10px;letter-spacing:1px;text-transform:uppercase}
-.sf-sub{font-size:10.5px;font-weight:800;color:#5a3c00;margin-top:3px}
+.sf-amt{font-size:20px;font-weight:900;color:#3a2600;line-height:1}
+.sf-amt span{font-size:9.5px;letter-spacing:1px;text-transform:uppercase}
+.sf-sub{font-size:10px;font-weight:800;color:#5a3c00;margin-top:2px}
 .sf-buy{z-index:1;flex-shrink:0;pointer-events:none}
 .store-tabs{position:sticky;top:0;z-index:6;display:flex;gap:6px;padding:9px 0 8px;margin-bottom:8px;background:linear-gradient(180deg,rgba(11,9,26,.96) 68%,transparent);backdrop-filter:blur(4px)}
 .stab{flex:1;display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 3px;border-radius:12px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);color:rgba(255,255,255,.6);font-weight:900;cursor:pointer;transition:transform .12s,background .15s,color .15s}
@@ -2083,7 +2118,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='CUP-R21';
+const BUILD_TAG='POLISH-R22';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
@@ -5900,17 +5935,19 @@ function openGold(){
   loadGoldLeaderboard();
   showScreen('goldScreen');
 }
-/* ⚽ Tabela e turneut: ÇF → GJF → FINALE → 🏆 */
+/* ⚽ Tabela e turneut: QF → SF → FINAL → 🏆 (vetëm fitorja të çon përpara) */
 function renderRoyalBracket(){
   const el=document.getElementById('royalBracket'); if(!el)return;
   const rIdx=Math.min(Math.max(royalRound,0),2);
-  const stages=[{l:roundName('QUARTER-FINAL'),s:'ÇF'},{l:roundName('SEMI-FINAL'),s:'GJF'},{l:roundName('FINAL'),s:'FIN'},{l:'',s:'🏆'}];
-  el.innerHTML=stages.map((st,i)=>{
+  const stages=[{l:roundName('QUARTER-FINAL'),s:'QF'},{l:roundName('SEMI-FINAL'),s:'SF'},{l:roundName('FINAL'),s:'FINAL'},{l:'',s:'🏆'}];
+  const row=stages.map((st,i)=>{
     const done=i<rIdx; const cur=i===rIdx&&i<3;
     const cls=done?'done':(cur?'cur':'');
     const label=(i===3)?'🏆':(done?'✓':st.s);
     return `<div class="rb-stage ${cls}">${label}</div>`+(i<stages.length-1?'<div class="rb-arrow">›</div>':'');
   }).join('');
+  const cap=`▶ <b>${roundName(ROYAL_ROUNDS[rIdx].name)}</b>`;
+  el.innerHTML=`<div class="rb-row">${row}</div><div class="rb-cap">${cap}</div>`;
 }
 /* ⚽ Zgjedhja e lojtarit të Royal (si te Love Match) */
 function renderRoyalPlayers(){
@@ -6540,12 +6577,22 @@ function cardName(pi,ci){return (ALBUM_NAMES[pi]&&ALBUM_NAMES[pi][ci])||'???';}
 // 🎴 Rating + stats stil "player card" — deterministe për çdo kartë (vetëm PAMJE, s'prek lojën)
 const CARD_STAT_ICON=['⚡','💪','🛞','✨'];
 const CARD_STAT_LBL=['SPD','PWR','GRP','STY'];
-const CARD_TYPE_LBL=['CAR','DRV','TRK','ICON'];  // sipas faqes: Garage/Crew/Seasons/Legends
+const GARAGE_STAT_LBL=['SPEED','POWER','GRIP','STYLE']; // 🏁 gauge-stats për garazhin
+const CARD_TYPE_LBL=['🏁 GARAGE','⭐ CREW','🌄 SEASON','🏆 LEGEND'];  // Garage/Crew/Seasons/Legends
+// 🎴 Identiteti i kategorisë: makina→garage card, tjerat me identitetin e vet
+const CARD_THEME=['garage','crew','season','icon'];
+function cardTheme(pi){return CARD_THEME[pi]||'garage';}
 function cardHash(pi,ci){let h=(((pi+1)*73856093)^((ci+1)*19349663))>>>0;h=(h*2654435761)>>>0;return h;}
 function cardRating(pi,ci){const rar=cardRarity(pi,ci);const base=[68,79,87,92][rar];const span=[11,8,5,8][rar];return base+(cardHash(pi,ci)%span);}
 function cardStats(pi,ci){const r=cardRating(pi,ci),h=cardHash(pi,ci);const cl=v=>Math.max(46,Math.min(99,v));return [cl(r+((h>>2)%11)-5),cl(r+((h>>6)%11)-5),cl(r+((h>>10)%11)-5),cl(r+((h>>14)%11)-5)];}
 function cardTypeLbl(pi){return CARD_TYPE_LBL[pi]||'CAR';}
-function cardStatsHTML(pi,ci){const s=cardStats(pi,ci);return s.map((v,i)=>`<div class="pc-statchip"><b>${v}</b><span>${CARD_STAT_ICON[i]}${CARD_STAT_LBL[i]}</span></div>`).join('');}
+function cardStatsHTML(pi,ci){
+  const s=cardStats(pi,ci);
+  if(cardTheme(pi)==='garage'){ // 🏁 stil garazhi — gauge bars me SPEED/POWER/GRIP/STYLE
+    return s.map((v,i)=>`<div class="gauge-stat"><span class="gs-lbl">${GARAGE_STAT_LBL[i]}</span><span class="gs-bar"><i style="width:${v}%"></i></span><b>${v}</b></div>`).join('');
+  }
+  return s.map((v,i)=>`<div class="pc-statchip"><b>${v}</b><span>${CARD_STAT_ICON[i]}${CARD_STAT_LBL[i]}</span></div>`).join('');
+}
 // rariteti: index brenda faqes → common(0-5), rare(6-8), epic(9 faqe0-2), legendary(9 faqe3)
 function cardRarity(pi,ci){
   if(ci<=5)return 0; // common
@@ -6586,7 +6633,7 @@ function findCardByEmoji(em){ for(let pi=0;pi<ALBUM_PAGES.length;pi++){const ci=
 function showCardDrop(em,rar,dup,coinsGot){
   const ov=document.getElementById('cardDropOv'); if(!ov)return;
   const [pi,ci]=findCardByEmoji(em);
-  const card=document.getElementById('cdCard'); if(card)card.className='cd-card r'+rar;
+  const card=document.getElementById('cdCard'); if(card)card.className='cd-card r'+rar+(pi!=null?(' th-'+cardTheme(pi)):'');
   const port=document.getElementById('cdPort'); if(port)port.textContent=em;
   const nm=document.getElementById('cdName'); if(nm)nm.textContent=(pi!=null)?cardName(pi,ci):'';
   if(pi!=null){const rt=document.getElementById('cdRating');if(rt)rt.textContent=cardRating(pi,ci);const ty=document.getElementById('cdType');if(ty)ty.textContent=cardTypeLbl(pi);const st=document.getElementById('cdStats');if(st)st.innerHTML=cardStatsHTML(pi,ci);}
@@ -6615,7 +6662,7 @@ function renderAlbum(){
     html+=`<div class="album-pg-title">${t(p.name)} ${done?'✅':''}</div><div class="album-page">`;
     p.cards.forEach((em,ci)=>{ const owned=!!album[cardId(pi,ci)]; const rar=cardRarity(pi,ci); const cnt=album[cardId(pi,ci)]||0;
       if(owned){
-        html+=`<div class="acard r${rar}" onclick="openCardDetail(${pi},${ci})"><div class="ac-gloss"></div><span class="ac-rating">${cardRating(pi,ci)}</span><div class="ac-port">${em}</div><div class="ac-name">${cardName(pi,ci)}</div>${cnt>1?`<span class="acard-n">×${cnt}</span>`:''}</div>`;
+        html+=`<div class="acard r${rar} th-${cardTheme(pi)}" onclick="openCardDetail(${pi},${ci})"><div class="ac-accent"></div><div class="ac-gloss"></div><span class="ac-rating">${cardRating(pi,ci)}</span><div class="ac-port">${em}</div><div class="ac-name">${cardName(pi,ci)}</div>${cnt>1?`<span class="acard-n">×${cnt}</span>`:''}</div>`;
       }else{
         html+=`<div class="acard locked"><div class="ac-gloss"></div><div class="ac-port">❓</div><div class="ac-name">${t('rar_'+rar)}</div></div>`;
       }
@@ -6631,7 +6678,7 @@ function openCardDetail(pi,ci){
   const rar=cardRarity(pi,ci), em=ALBUM_PAGES[pi].cards[ci], cnt=album[cardId(pi,ci)]||1;
   const ov=document.getElementById('cardDetailOv'); if(!ov)return;
   const card=document.getElementById('cdtCard');
-  card.className='cdt-card r'+rar; card.classList.remove('flip');
+  card.className='cdt-card r'+rar+' th-'+cardTheme(pi); card.classList.remove('flip');
   document.getElementById('cdtPort').textContent=em;
   document.getElementById('cdtName').textContent=cardName(pi,ci);
   document.getElementById('cdtRar').textContent=t('rar_'+rar); document.getElementById('cdtRar').style.color=RAR_COL[rar];
