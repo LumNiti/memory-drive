@@ -963,6 +963,67 @@ body.royalmode::after{content:'';position:fixed;left:50%;bottom:8%;width:min(66v
 body.royalmode .card-back-face svg{display:none}
 body.royalmode .card-back-face::after{content:'⚽';font-size:min(11vw,40px);line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
 body.royalmode .card-back-face{background:linear-gradient(160deg,#0a4a26,#12844a)!important;border-color:#7cf0a0!important;color:#eaffef!important}
+/* ═══════════ ⚽ GOAL RUSH — FUSHË PREMIUM, TOPI, MISS, LIGA, ONLINE ═══════════ */
+/* Fusha (vija, rreth, portë, thellësi, dritë) brenda ekraneve */
+.pitch-fx{position:absolute;inset:0;z-index:-1;pointer-events:none;overflow:hidden;display:none}
+#goldScreen .pitch-fx{display:block}
+body.royalmode #gameScreen .pitch-fx{display:block}
+.pf-stripes{position:absolute;inset:0;background:repeating-linear-gradient(180deg, rgba(255,255,255,.028) 0 46px, rgba(0,0,0,.03) 46px 92px)}
+.pf-lines{position:absolute;inset:0;width:100%;height:100%;opacity:.55}
+.pf-glow{position:absolute;left:50%;top:-14%;width:150%;height:56%;transform:translateX(-50%);background:radial-gradient(ellipse at 50% 0%, rgba(180,255,210,.18), transparent 70%);filter:blur(6px)}
+.pf-vig{position:absolute;inset:0;background:radial-gradient(ellipse 120% 80% at 50% 50%, transparent 55%, rgba(0,25,10,.45) 100%)}
+.pf-dot{position:absolute;width:4px;height:4px;border-radius:50%;background:rgba(200,255,225,.7);box-shadow:0 0 8px rgba(150,255,190,.9);animation:pfFloat linear infinite;opacity:.6}
+.pf-dot.d0{left:12%;top:78%;animation-duration:9s}
+.pf-dot.d1{left:80%;top:70%;animation-duration:11s;animation-delay:1.4s}
+.pf-dot.d2{left:26%;top:60%;animation-duration:8s;animation-delay:.6s}
+.pf-dot.d3{left:66%;top:82%;animation-duration:12s;animation-delay:2s}
+.pf-dot.d4{left:46%;top:88%;animation-duration:10s;animation-delay:.9s}
+.pf-dot.d5{left:90%;top:52%;animation-duration:13s;animation-delay:1.1s}
+.pf-dot.d6{left:6%;top:50%;animation-duration:10.5s;animation-delay:1.7s}
+@keyframes pfFloat{0%{transform:translateY(0);opacity:0}12%{opacity:.6}100%{transform:translateY(-120px);opacity:0}}
+/* ⚽ Topi i animuar (bounce + spin + hije + glow + kick) */
+.gold-ball{position:relative;width:96px;height:104px;margin:2px auto 0;display:flex;align-items:flex-end;justify-content:center;cursor:pointer;-webkit-tap-highlight-color:transparent}
+.gb-shadow{position:absolute;bottom:1px;left:50%;width:54px;height:12px;transform:translateX(-50%);background:radial-gradient(ellipse,rgba(0,0,0,.5),transparent 70%);border-radius:50%;animation:gbShadow 1.8s ease-in-out infinite}
+.gb-bounce{animation:gbBounce 1.8s ease-in-out infinite;will-change:transform}
+.gb-spin{font-size:72px;line-height:1;filter:drop-shadow(0 0 20px rgba(110,255,170,.6));animation:gbSpin 3.4s linear infinite;will-change:transform}
+@keyframes gbBounce{0%,100%{transform:translateY(0)}50%{transform:translateY(-24px)}}
+@keyframes gbSpin{to{transform:rotate(360deg)}}
+@keyframes gbShadow{0%,100%{transform:translateX(-50%) scale(1);opacity:.5}50%{transform:translateX(-50%) scale(.62);opacity:.28}}
+.gb-bounce.kick{animation:gbKick .72s cubic-bezier(.2,1.5,.4,1)}
+@keyframes gbKick{0%{transform:translateY(0)}26%{transform:translateY(-66px) scale(1.12)}55%{transform:translateY(-16px) scale(.98)}78%{transform:translateY(-30px)}100%{transform:translateY(0)}}
+/* ❌ GABIM te GOAL RUSH: skuqje + shake (JO thyerje) */
+.card.missred .card-face{box-shadow:0 0 0 3px rgba(255,70,70,.9),0 0 18px rgba(255,60,60,.7)!important;border-color:#ff5a5a!important;animation:missFlash .5s ease}
+.card.missred .card-front{background:linear-gradient(160deg,#5a1414,#3a0c0c)!important}
+@keyframes missFlash{0%{filter:brightness(1.6) saturate(1.4)}100%{filter:none}}
+/* 🌐 Online tag — live + offline */
+.gold-online-tag.offline{color:#ff9a9a;background:rgba(255,80,80,.14);border-color:rgba(255,110,110,.6)}
+.gold-online-tag.offline::before{background:#ff6b6b;box-shadow:0 0 8px #ff6b6b}
+.gold-play-btn.off{filter:grayscale(.7) brightness(.7);opacity:.7}
+/* 🏅 LIGA — emblema + progres */
+.gold-tier-box{display:flex;align-items:center;gap:11px;width:100%;max-width:290px;background:rgba(8,20,14,.5);border:1.5px solid rgba(255,255,255,.12);border-radius:16px;padding:9px 13px;margin-top:2px;box-shadow:inset 0 1px 2px rgba(255,255,255,.06)}
+.gt-emblem{font-size:34px;line-height:1;filter:drop-shadow(0 0 10px var(--tc));flex-shrink:0}
+.gt-info{flex:1;min-width:0}
+.gt-name{font-size:15px;font-weight:900;letter-spacing:1px;line-height:1}
+.gt-name .gt-league{font-size:8.5px;color:rgba(255,255,255,.45);letter-spacing:1.5px}
+.gt-bar{height:9px;border-radius:6px;background:rgba(255,255,255,.12);overflow:hidden;margin-top:5px;box-shadow:inset 0 1px 2px rgba(0,0,0,.4)}
+.gt-bar i{display:block;height:100%;border-radius:6px;transition:width .5s cubic-bezier(.3,1.1,.4,1)}
+.gt-sub{font-size:9.5px;font-weight:800;color:rgba(255,255,255,.6);margin-top:4px;letter-spacing:.3px}
+/* ⬆️ Festë ngjitjeje */
+.tier-up-fx{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 42%,rgba(0,0,0,.5),rgba(4,10,8,.85));backdrop-filter:blur(3px);animation:cupHomeIn .5s ease-out}
+.tier-up-fx.out{animation:cupHomeOut .5s ease-in forwards}
+.tu-in{text-align:center}
+.tu-em{font-size:100px;filter:drop-shadow(0 8px 26px var(--tc));animation:cupHomePop .7s cubic-bezier(.2,1.4,.4,1)}
+.tu-t{margin-top:6px;font-weight:900;font-size:17px;letter-spacing:3px;color:rgba(255,255,255,.7)}
+.tu-name{font-weight:900;font-size:38px;letter-spacing:2px;text-shadow:0 2px 14px rgba(0,0,0,.5)}
+.tu-sub{margin-top:6px;font-weight:800;font-size:14px;color:#8ff0b0}
+/* 🌐 Overlay "Online required" */
+.online-req-ov{position:fixed;inset:0;z-index:130;display:none;align-items:center;justify-content:center;background:rgba(0,0,0,.72);padding:32px}
+.online-req-ov.show{display:flex;animation:cupHomeIn .3s ease-out}
+.orq-box{background:linear-gradient(160deg,#0c2a1a,#08160e);border:1.5px solid rgba(90,190,255,.5);border-radius:20px;padding:26px 22px;max-width:300px;text-align:center;box-shadow:0 18px 50px rgba(0,0,0,.6)}
+.orq-em{font-size:56px;animation:onlPulse 1.4s ease-in-out infinite}
+.orq-t{font-weight:900;font-size:19px;color:#8ef0ff;margin-top:8px}
+.orq-s{font-size:13px;color:rgba(255,255,255,.65);margin-top:8px;line-height:1.5}
+@media (prefers-reduced-motion: reduce){.gb-bounce,.gb-spin,.gb-shadow,.pf-dot,.orq-em{animation:none!important}}
 /* 🏀 stil karte sportiv */
 body[data-skin="basket"] .card-back-face svg{display:none}
 body[data-skin="basket"] .card-back-face::after{content:'🏀';font-size:min(11vw,40px);line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
@@ -2045,10 +2106,11 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
     <div style="width:42px"></div>
   </div>
   <div class="gold-intro">
-    <div class="gold-crown-big">⚽</div>
+    <div class="gold-ball" onclick="kickGoldBall(this)"><div class="gb-shadow"></div><div class="gb-bounce"><div class="gb-spin">⚽</div></div></div>
     <div class="gold-title" data-i18n="goldBtn"></div>
     <div class="gold-desc" data-i18n="goldSub"></div>
     <div class="gold-online-tag">🌐 <span data-i18n="onlineTourney"></span></div>
+    <div class="gold-tier-box" id="goldTierBox"></div>
     <div class="gold-best-pill">🏆 <span id="goldCupsVal">0</span> · <span data-i18n="goldBest"></span>: <b id="goldBestVal">0</b></div>
     <div class="royal-bracket" id="royalBracket"></div>
     <div class="gold-players-h">⚽ <span data-i18n="royalPickPlayer"></span></div>
@@ -2123,7 +2185,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='ONLINE-R24';
+const BUILD_TAG='LEAGUE-R25';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
@@ -2228,7 +2290,7 @@ const I18N={
     seasonDoneMsg:'SEZONI U PËRFUNDUA!', improveHint:'Përsërite nivelin me më pak lëvizje për më shumë yje!',
     goldMsg:'✨ ÇIFT I ARTË! +3 ⛽ +20 🪙', bombMsg:'💥 BUM! -2 ⛽',
     lightMsg:'⚡ VETËTIMË! Çift falas!', chainMsg:'🔗 E kyçur! Bëj edhe {n} çifte',
-    goldBtn:'GOAL RUSH', goldSub:'Sfida në fushë — sa gola (çifte) shënon për 60 sekonda? ⚽', goldPlay:'KICK OFF ⚽', goldBest:'Rekord', goldOverT:'⚽ FUND I NDESHJES!', goldPts:'pikë ari', royalPairs:'çifte', goldNewBest:'REKORD I RI!', cupWonT:'🏆 KUPA E FITUAR!', cupWonMsg:'JE KAMPION!', cupsHave:'Kupa', cupNewTourney:'Turne i ri', roundWonT:'✅ FITUE!', advanceTo:'Kalon në', roundLostT:'❌ HUMBE', knockedOut:'U eliminove — turneu rifillon', tryAgain:'Provo prapë', 'rn_QUARTER-FINAL':'ÇEREKFINALE', 'rn_SEMI-FINAL':'GJYSMËFINALE', 'rn_FINAL':'FINALE', onlineTourney:'TURNE ONLINE', needOnline:'Kërkon internet — po luan kundër CPU', royalPickPlayer:'Zgjidh lojtarin', royalUnlocked:'Lojtar i ri!', needCoins:'S\'ke mjaft monedha', unlockLv:'Zhbllokohet në Lv', fromWheel:'Nga rrota e fatit', goldLbTitle:'GOLASHËNUESIT', goldEmpty:'Bëhu i pari PRO në renditje! ⚽', goldExclTitle:'GOAL RUSH është vetëm për PRO', goldTease:'Karta futbolli · shpërblim i lartë · renditje ekskluzive', pbGold:'⚽ GOAL RUSH — sfida sportive ekskluzive', loveBtn:'Love Match', loveGold:'💝 LETËR DASHURIE! +3 ⛽', loveBomb:'💔 ZEMËRTHYERJE! -3 ⛽', loveLight:'💘 CUPIDI! Çift falas!', loveBetray:'🗡️ TRADHTI! Kartat u përzien −1 ⛽',
+    goldBtn:'GOAL RUSH', goldSub:'Sfida në fushë — sa gola (çifte) shënon për 60 sekonda? ⚽', goldPlay:'KICK OFF ⚽', goldBest:'Rekord', goldOverT:'⚽ FUND I NDESHJES!', goldPts:'pikë ari', royalPairs:'çifte', goldNewBest:'REKORD I RI!', cupWonT:'🏆 KUPA E FITUAR!', cupWonMsg:'JE KAMPION!', cupsHave:'Kupa', cupNewTourney:'Turne i ri', roundWonT:'✅ FITUE!', advanceTo:'Kalon në', roundLostT:'❌ HUMBE', knockedOut:'U eliminove — turneu rifillon', tryAgain:'Provo prapë', 'rn_QUARTER-FINAL':'ÇEREKFINALE', 'rn_SEMI-FINAL':'GJYSMËFINALE', 'rn_FINAL':'FINALE', onlineTourney:'TURNE ONLINE', needOnline:'Kërkon internet — po luan kundër CPU', liveNow:'live tani', onlineReqT:'Online required 🌐', onlineReqS:'GOAL RUSH luhet vetëm online. Lidhu me internet për të hyrë në turne.', promoted:'NGJITJE!', relegated:'Zbrite në', newLeague:'Ligë e re!', leagueLbl:'LIGA', maxTier:'Niveli maksimal!', toPromote:'për ngjitje', royalPickPlayer:'Zgjidh lojtarin', royalUnlocked:'Lojtar i ri!', needCoins:'S\'ke mjaft monedha', unlockLv:'Zhbllokohet në Lv', fromWheel:'Nga rrota e fatit', goldLbTitle:'GOLASHËNUESIT', goldEmpty:'Bëhu i pari PRO në renditje! ⚽', goldExclTitle:'GOAL RUSH është vetëm për PRO', goldTease:'Karta futbolli · shpërblim i lartë · renditje ekskluzive', pbGold:'⚽ GOAL RUSH — sfida sportive ekskluzive', loveBtn:'Love Match', loveGold:'💝 LETËR DASHURIE! +3 ⛽', loveBomb:'💔 ZEMËRTHYERJE! -3 ⛽', loveLight:'💘 CUPIDI! Çift falas!', loveBetray:'🗡️ TRADHTI! Kartat u përzien −1 ⛽',
     funMsgs:['Ti je legjendë! 💪','Fokus… ose jo 😜','Besoja kujtesës 🧠','Mos u huto tani 👀','Shpirt, ki durim ✨','Shumë lehtë për ty 😏','Vazhdo kështu, kampion 🏁','Një çift larg lavdisë 🌟','Truri yt është GPS 🛰️','Sot fiton ti, e ndjej 🔥','Asgjë s\'të ndal dot 🚀','Qetësi… si profesionist 🧘','Bip beson te ti 🚗','Ky nivel s\'e di me kë ka punë 😎','Sytë hapur, zemra plot 💛','Oooo sa afër ishe! 😱','Karburanti digjet, nxito! ⛽','Mos m\'i ngatërro kartat 😤','Hëëë, ku e ke mendjen? 🙃','Kjo lojë të ka inat 😂','Kujtesa jote > telefoni 📵','Edhe Bip u lodh duke pritur 🥱','Prit, ça ishte ajo lëvizje?! 🤯','Guxo! Kartat s\'kafshojnë 🦈','Një frymëmarrje… tani GJEJE 🎯'],
     funLove:['Dashuria kërkon durim… ti jo 😏','Ia vlen pritja 💕','Ndiq zemrën 💘','Mos e prish serinë e dashurisë 💞','Kujdes nga tradhtia 🗡️'],
     loveComboLbl:'Combo dashurie', loveWinT:'💘 DASHURI E VËRTETË!', loveLoseT:'💔 U THYE ZEMRA', loveLoseD:'Mbaroi dashuria… provo prapë, zemra nuk dorëzohet! 💕',
@@ -2330,7 +2392,7 @@ const I18N={
     seasonDoneMsg:'SEASON COMPLETE!', improveHint:'Replay the level with fewer moves to earn more stars!',
     goldMsg:'✨ GOLDEN PAIR! +3 ⛽ +8 🪙', bombMsg:'💥 BOOM! -2 ⛽',
     lightMsg:'⚡ LIGHTNING! Free pair!', chainMsg:'🔗 Locked! Match {n} more',
-    goldBtn:'GOAL RUSH', goldSub:'The pitch challenge — how many goals (pairs) in 60 seconds? ⚽', goldPlay:'KICK OFF ⚽', goldBest:'Best', goldOverT:'⚽ FULL TIME!', goldPts:'gold points', royalPairs:'pairs', goldNewBest:'NEW RECORD!', cupWonT:'🏆 CUP WON!', cupWonMsg:'YOU ARE CHAMPION!', cupsHave:'Cups', cupNewTourney:'New tournament', roundWonT:'✅ YOU WIN!', advanceTo:'Advance to', roundLostT:'❌ YOU LOSE', knockedOut:'Knocked out — tournament restarts', tryAgain:'Try again', 'rn_QUARTER-FINAL':'QUARTER-FINAL', 'rn_SEMI-FINAL':'SEMI-FINAL', 'rn_FINAL':'FINAL', onlineTourney:'ONLINE TOURNAMENT', needOnline:'Needs internet — playing vs CPU', royalPickPlayer:'Choose your player', royalUnlocked:'New player!', needCoins:'Not enough coins', unlockLv:'Unlocks at Lv', fromWheel:'From the wheel', goldLbTitle:'TOP SCORERS', goldEmpty:'Be the first PRO on the board! ⚽', goldExclTitle:'GOAL RUSH is PRO exclusive', goldTease:'Football cards · higher rewards · exclusive ranking', pbGold:'⚽ GOAL RUSH — exclusive pitch challenge', loveBtn:'Love Match', loveGold:'💝 LOVE LETTER! +3 ⛽', loveBomb:'💔 HEARTBREAK! -3 ⛽', loveLight:'💘 CUPID! Free pair!', loveBetray:'🗡️ BETRAYAL! Cards scrambled −1 ⛽',
+    goldBtn:'GOAL RUSH', goldSub:'The pitch challenge — how many goals (pairs) in 60 seconds? ⚽', goldPlay:'KICK OFF ⚽', goldBest:'Best', goldOverT:'⚽ FULL TIME!', goldPts:'gold points', royalPairs:'pairs', goldNewBest:'NEW RECORD!', cupWonT:'🏆 CUP WON!', cupWonMsg:'YOU ARE CHAMPION!', cupsHave:'Cups', cupNewTourney:'New tournament', roundWonT:'✅ YOU WIN!', advanceTo:'Advance to', roundLostT:'❌ YOU LOSE', knockedOut:'Knocked out — tournament restarts', tryAgain:'Try again', 'rn_QUARTER-FINAL':'QUARTER-FINAL', 'rn_SEMI-FINAL':'SEMI-FINAL', 'rn_FINAL':'FINAL', onlineTourney:'ONLINE TOURNAMENT', needOnline:'Needs internet — playing vs CPU', liveNow:'live now', onlineReqT:'Online required 🌐', onlineReqS:'GOAL RUSH is online-only. Connect to the internet to enter the tournament.', promoted:'PROMOTED!', relegated:'Relegated to', newLeague:'New league!', leagueLbl:'LEAGUE', maxTier:'Top tier reached!', toPromote:'to promote', royalPickPlayer:'Choose your player', royalUnlocked:'New player!', needCoins:'Not enough coins', unlockLv:'Unlocks at Lv', fromWheel:'From the wheel', goldLbTitle:'TOP SCORERS', goldEmpty:'Be the first PRO on the board! ⚽', goldExclTitle:'GOAL RUSH is PRO exclusive', goldTease:'Football cards · higher rewards · exclusive ranking', pbGold:'⚽ GOAL RUSH — exclusive pitch challenge', loveBtn:'Love Match', loveGold:'💝 LOVE LETTER! +3 ⛽', loveBomb:'💔 HEARTBREAK! -3 ⛽', loveLight:'💘 CUPID! Free pair!', loveBetray:'🗡️ BETRAYAL! Cards scrambled −1 ⛽',
     funMsgs:["You're a legend! 💪","Focus… or don't 😜","Trust your memory 🧠","Don't get distracted 👀","Patience pays ✨","Too easy for you 😏","Keep it up, champ 🏁","One pair from glory 🌟","Your brain is a GPS 🛰️","Today you win, I feel it 🔥","Nothing can stop you 🚀","Calm… like a pro 🧘","Bip believes in you 🚗","This level has no idea who it's facing 😎","Eyes open, heart full 💛","Ooooh SO close! 😱","Fuel's burning, hurry! ⛽","Stop mixing up my cards 😤","Hellooo, where's your head? 🙃","This game has a grudge 😂","Your memory > your phone 📵","Even Bip got tired of waiting 🥱","Wait, what was THAT move?! 🤯","Be brave! Cards don't bite 🦈","One deep breath… now FIND IT 🎯"],
     funLove:["Love takes patience… you don't 😏","They're worth the wait 💕","Follow your heart 💘","Don't break the love streak 💞","Beware betrayal 🗡️"],
     loveComboLbl:'Love combo', loveWinT:'💘 TRUE LOVE!', loveLoseT:'💔 HEARTBROKEN', loveLoseD:'Love ran out… try again, the heart never gives up! 💕',
@@ -2432,7 +2494,7 @@ const I18N={
     seasonDoneMsg:'SEZONA KONČANA!', improveHint:'Ponovi stopnjo z manj potezami za več zvezdic!',
     goldMsg:'✨ ZLATI PAR! +3 ⛽ +20 🪙', bombMsg:'💥 BUM! -2 ⛽',
     lightMsg:'⚡ STRELA! Brezplačen par!', chainMsg:'🔗 Zaklenjeno! Poveži še {n}',
-    goldBtn:'GOAL RUSH', goldSub:'Izziv na igrišču — koliko golov (parov) v 60 sekundah? ⚽', goldPlay:'ZAČETNI UDAREC ⚽', goldBest:'Rekord', goldOverT:'⚽ KONEC TEKME!', goldPts:'zlate točke', royalPairs:'parov', goldNewBest:'NOV REKORD!', cupWonT:'🏆 POKAL OSVOJEN!', cupWonMsg:'SI PRVAK!', cupsHave:'Pokali', cupNewTourney:'Nov turnir', roundWonT:'✅ ZMAGA!', advanceTo:'Napreduješ v', roundLostT:'❌ PORAZ', knockedOut:'Izpadel — turnir se začne znova', tryAgain:'Poskusi znova', 'rn_QUARTER-FINAL':'ČETRTFINALE', 'rn_SEMI-FINAL':'POLFINALE', 'rn_FINAL':'FINALE', onlineTourney:'ONLINE TURNIR', needOnline:'Potrebuje internet — igraš proti CPU', royalPickPlayer:'Izberi igralca', royalUnlocked:'Nov igralec!', needCoins:'Premalo kovancev', unlockLv:'Odklene se na Lv', fromWheel:'Iz kolesa sreče', goldLbTitle:'NAJBOLJŠI STRELCI', goldEmpty:'Bodi prvi PRO na lestvici! ⚽', goldExclTitle:'GOAL RUSH je samo za PRO', goldTease:'Nogometne karte · višje nagrade · ekskluzivna lestvica', pbGold:'⚽ GOAL RUSH — ekskluziven izziv na igrišču', loveBtn:'Love Match', loveGold:'💝 LJUBEZENSKO PISMO! +3 ⛽', loveBomb:'💔 ZLOMLJENO SRCE! -3 ⛽', loveLight:'💘 KUPID! Brezplačen par!', loveBetray:'🗡️ IZDAJA! Karte premešane −1 ⛽',
+    goldBtn:'GOAL RUSH', goldSub:'Izziv na igrišču — koliko golov (parov) v 60 sekundah? ⚽', goldPlay:'ZAČETNI UDAREC ⚽', goldBest:'Rekord', goldOverT:'⚽ KONEC TEKME!', goldPts:'zlate točke', royalPairs:'parov', goldNewBest:'NOV REKORD!', cupWonT:'🏆 POKAL OSVOJEN!', cupWonMsg:'SI PRVAK!', cupsHave:'Pokali', cupNewTourney:'Nov turnir', roundWonT:'✅ ZMAGA!', advanceTo:'Napreduješ v', roundLostT:'❌ PORAZ', knockedOut:'Izpadel — turnir se začne znova', tryAgain:'Poskusi znova', 'rn_QUARTER-FINAL':'ČETRTFINALE', 'rn_SEMI-FINAL':'POLFINALE', 'rn_FINAL':'FINALE', onlineTourney:'ONLINE TURNIR', needOnline:'Potrebuje internet — igraš proti CPU', liveNow:'v živo', onlineReqT:'Online required 🌐', onlineReqS:'GOAL RUSH je samo za splet. Poveži se z internetom za turnir.', promoted:'NAPREDOVANJE!', relegated:'Nazadoval v', newLeague:'Nova liga!', leagueLbl:'LIGA', maxTier:'Najvišji nivo!', toPromote:'za napredovanje', royalPickPlayer:'Izberi igralca', royalUnlocked:'Nov igralec!', needCoins:'Premalo kovancev', unlockLv:'Odklene se na Lv', fromWheel:'Iz kolesa sreče', goldLbTitle:'NAJBOLJŠI STRELCI', goldEmpty:'Bodi prvi PRO na lestvici! ⚽', goldExclTitle:'GOAL RUSH je samo za PRO', goldTease:'Nogometne karte · višje nagrade · ekskluzivna lestvica', pbGold:'⚽ GOAL RUSH — ekskluziven izziv na igrišču', loveBtn:'Love Match', loveGold:'💝 LJUBEZENSKO PISMO! +3 ⛽', loveBomb:'💔 ZLOMLJENO SRCE! -3 ⛽', loveLight:'💘 KUPID! Brezplačen par!', loveBetray:'🗡️ IZDAJA! Karte premešane −1 ⛽',
     funMsgs:['Legenda si! 💪','Osredotoči se… ali pa ne 😜','Zaupaj spominu 🧠','Ne dovoli, da te zmoti 👀','Potrpljenje se izplača ✨','Zate prelahko 😏','Kar tako naprej, prvak 🏁','En par do slave 🌟','Tvoji možgani so GPS 🛰️','Danes zmagaš, čutim 🔥','Nič te ne ustavi 🚀','Mirno… kot profesionalec 🧘','Bip verjame vate 🚗','Ta stopnja ne ve, s kom ima opravka 😎','Oči odprte, srce polno 💛','Ooo kako blizu! 😱','Gorivo gori, pohiti! ⛽','Nehaj mešati moje karte 😤','Halooo, kje imaš glavo? 🙃','Ta igra ti zameri 😂','Tvoj spomin > tvoj telefon 📵','Še Bip se je naveličal čakati 🥱','Čakaj, kaj je bila TA poteza?! 🤯','Pogumno! Karte ne grizejo 🦈','En globok vdih… zdaj NAJDI 🎯'],
     funLove:['Ljubezen terja potrpljenje… ti ne 😏','Vredno je čakanja 💕','Sledi srcu 💘','Ne prekini niza ljubezni 💞','Pazi na izdajo 🗡️'],
     loveComboLbl:'Ljubezenski combo', loveWinT:'💘 PRAVA LJUBEZEN!', loveLoseT:'💔 STRTO SRCE', loveLoseD:'Ljubezni je zmanjkalo… poskusi znova, srce nikoli ne obupa! 💕',
@@ -2676,7 +2738,7 @@ function playNext(){playTap();startMusic();startLevel(nextPlayable())}
 /* ================= RUAJTJA ================= */
 async function saveData(){
   try{
-    await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,xp,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,introSceneSeen,streak,streakLast,dailyDoneDate,dailyBestMs,dailyHistory,endlessBestWave,goldBest,achievements,goldPairsTotal,loveLevel,loveStars,leagueTier,leagueWeek,leaguePoints,questDate,questProg,questClaimed,questBonusClaimed,weekKey,weekProg,weekClaimed,weekBonusClaimed,album,albumClaimed,albumSeen,royalPlayer,royalUnlocked,royalCups,royalRound,spinDate,fuelTanks,fuelTanksTs,qSlots:todaysQuests,wSlots:weeklyQuests,questDone,weekDone,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang,music:settings.music}}));
+    await window.storage.set('mm-save-v5',JSON.stringify({progress,coins,highScore,fuelPacks,xp,owned,curSkin,curBg,tutorialSeen,username,avatar,premium,duelWins,registered,introSceneSeen,streak,streakLast,dailyDoneDate,dailyBestMs,dailyHistory,endlessBestWave,goldBest,achievements,goldPairsTotal,loveLevel,loveStars,leagueTier,leagueWeek,leaguePoints,questDate,questProg,questClaimed,questBonusClaimed,weekKey,weekProg,weekClaimed,weekBonusClaimed,album,albumClaimed,albumSeen,royalPlayer,royalUnlocked,royalCups,royalRound,goldTier,goldTierCup,spinDate,fuelTanks,fuelTanksTs,qSlots:todaysQuests,wSlots:weeklyQuests,questDone,weekDone,settings:{sfx:settings.sfx,haptic:settings.haptic,lang:settings.lang,music:settings.music}}));
   }catch(e){}
 }
 /* 🗑️ Reset i plotë manual — fshin krejt progresin dhe fillon nga e para */
@@ -2727,6 +2789,7 @@ async function loadData(){
       royalUnlocked=Array.isArray(d.royalUnlocked)?d.royalUnlocked:['speed']; if(!royalUnlocked.includes('speed'))royalUnlocked.push('speed');
       royalPlayer=(typeof d.royalPlayer==='string'&&royalUnlocked.includes(d.royalPlayer))?d.royalPlayer:'speed';
       royalCups=(typeof d.royalCups==='number')?d.royalCups:0; royalRound=(typeof d.royalRound==='number'&&d.royalRound>=0&&d.royalRound<=2)?d.royalRound:0;
+      goldTier=(typeof d.goldTier==='number'&&d.goldTier>=0&&d.goldTier<GOLD_TIERS.length)?d.goldTier:0; goldTierCup=(typeof d.goldTierCup==='number'&&d.goldTierCup>=0)?d.goldTierCup:0;
       spinDate=d.spinDate||'';
       fuelTanks=(d.fuelTanks==null)?MAX_TANKS:d.fuelTanks; fuelTanksTs=d.fuelTanksTs||Date.now(); regenTanks();
       questDone=d.questDone||0; weekDone=d.weekDone||0;
@@ -3226,6 +3289,7 @@ function showScreen(id){
   if(id==='gameScreen'){const sb=document.getElementById('statsBar'); if(sb)sb.style.display=(mode==='gold')?'none':'';}
   // ⚽ GOAL RUSH: karta futbolli + sfond stadiumi VETËM në këtë modalitet (pa prekur skin/bg e lojtarit)
   document.body.classList.toggle('royalmode', id==='gameScreen'&&mode==='gold');
+  document.body.classList.toggle('goldintro', id==='goldScreen'); // 🌱 fusha te intro-ja e GOAL RUSH
   // 🎵 zgjidh track-un e muzikës sipas ekranit (duel mbulohet nga `duel`)
   startMusic();   // 🎵 një track i vetëm luan kudo, pa u ndërprerë mes ekraneve
   if(id==='menuScreen'){updateTotalStars();updateModeLocks();checkAchievements(false);handlePendingDuel();openFeaturesInit();refreshCupBadge();
@@ -3327,8 +3391,37 @@ const ROYAL_ROUNDS=[
   {key:'sf', name:'SEMI-FINAL',    short:'SF',    base:7},
   {key:'fn', name:'FINAL',         short:'FINAL', base:9}
 ];
-let royalRound=0, royalCups=0, royalOppName='', royalOppEm='🔴', royalTarget=5, royalJustWonCup=false, royalOppOnline=false;
+let royalRound=0, royalCups=0, royalOppName='', royalOppEm='🔴', royalTarget=5, royalJustWonCup=false, royalOppOnline=false, royalOppTier=0;
 function royalRoundTarget(rd){ return ROYAL_ROUNDS[rd].base + Math.floor(levelsDoneCount()/12); }
+// 🏅 LIGA ME NIVELE (tiers) për GOAL RUSH — sa lart, aq më e vështirë të mbushet kupa
+const GOLD_TIERS=[
+  {id:'wood',   name:'WOOD',    em:'🪵', col:'#c08a54', need:3},
+  {id:'iron',   name:'IRON',    em:'⚙️', col:'#a9bccb', need:5},
+  {id:'bronze', name:'BRONZE',  em:'🥉', col:'#cd7f45', need:7},
+  {id:'silver', name:'SILVER',  em:'🥈', col:'#d3dde8', need:10},
+  {id:'gold',   name:'GOLD',    em:'🥇', col:'#ffd24a', need:12},
+  {id:'diamond',name:'DIAMOND', em:'💎', col:'#5be0ff', need:15}
+];
+let goldTier=0, goldTierCup=0, goldTierJustUp=false;
+function goldTierNeed(t){ return GOLD_TIERS[Math.min(Math.max(t,0),GOLD_TIERS.length-1)].need; }
+function goldTierInfo(t){ return GOLD_TIERS[Math.min(Math.max(t,0),GOLD_TIERS.length-1)]; }
+function goldTierWin(){ // fito → kupa +1; kur mbushet → ngjitje
+  goldTierCup++;
+  if(goldTierCup>=goldTierNeed(goldTier)){
+    if(goldTier<GOLD_TIERS.length-1){ goldTier++; goldTierCup=0; goldTierJustUp=true; return 'up'; }
+    goldTierCup=goldTierNeed(goldTier); // Diamond = kapak
+  }
+  return null;
+}
+function goldTierLoss(){ // humb → kupa −1; nëse bie nën 0 → zbritje
+  goldTierCup--;
+  if(goldTierCup<0){
+    if(goldTier>0){ goldTier--; goldTierCup=Math.max(0,goldTierNeed(goldTier)-2); return 'down'; }
+    goldTierCup=0;
+  }
+  return null;
+}
+function goldTierReward(t){ return 120 + t*80; } // shpërblim coins në ngjitje
 let spinDate='';                                        // data e spin-it të fundit falas
 let pendingLeaguePromo=null;                            // {dir, tier} për ekranin e fundjavës
 /* 🎴 Stile hyrëse të kartave — ndryshojnë çdo level */
@@ -3567,12 +3660,16 @@ function flipSecond(c,gamble){
       return;
     }
     setTimeout(()=>{
-      a.classList.add('shake');c.classList.add('shake');
-      try{shredCard(a);shredCard(c);}catch(e){}         // 🃏 shqyerje 3D reale në gabim
+      if(mode==='gold'){ // ⚽ GOAL RUSH: GABIM = shake + skuqje (JO thyerje) — dallon qartë nga fitorja
+        a.classList.add('shake','missred');c.classList.add('shake','missred');
+      } else {
+        a.classList.add('shake');c.classList.add('shake');
+        try{shredCard(a);shredCard(c);}catch(e){}         // 🃏 shqyerje 3D reale në gabim (modet e tjera)
+      }
       playMiss();
       setTimeout(()=>{
-        a.classList.remove('flipped','shake');
-        c.classList.remove('flipped','shake');
+        a.classList.remove('flipped','shake','missred');
+        c.classList.remove('flipped','shake','missred');
         lock=false;
         if(duel){
           duelStats.mi++;updateHud();
@@ -5933,8 +6030,11 @@ function openGold(){
   }
   goldScore=0; goldWaveN=0;
   document.getElementById('goldBestVal').textContent=goldBest;
+  ensurePitchFx('goldScreen');
   const cv=document.getElementById('goldCupsVal'); if(cv)cv.textContent='🏆 '+royalCups;
   renderRoyalBracket();
+  renderGoldTier();
+  refreshGoldOnline();
   spawnGoldParticles('goldPartsMenu');
   renderRoyalPlayers();
   loadGoldLeaderboard();
@@ -5953,6 +6053,63 @@ function renderRoyalBracket(){
   }).join('');
   const cap=`<b>${roundName(ROYAL_ROUNDS[rIdx].name)}</b>`;
   el.innerHTML=`<div class="rb-row">${row}</div><div class="rb-cap">${cap}</div>`;
+}
+/* 🏅 Emblema + progres i ligës me nivele */
+function renderGoldTier(){
+  const box=document.getElementById('goldTierBox'); if(!box)return;
+  const ti=goldTierInfo(goldTier); const need=goldTierNeed(goldTier);
+  const pct=Math.min(100,Math.round((goldTierCup/need)*100));
+  const left=Math.max(0,need-goldTierCup);
+  const isMax=goldTier>=GOLD_TIERS.length-1 && goldTierCup>=need;
+  box.innerHTML=`<div class="gt-emblem" style="--tc:${ti.col}">${ti.em}</div>
+    <div class="gt-info">
+      <div class="gt-name" style="color:${ti.col}">${ti.name} <span class="gt-league">${t('leagueLbl')}</span></div>
+      <div class="gt-bar"><i style="width:${pct}%;background:linear-gradient(90deg,${ti.col},#ffffffcc)"></i></div>
+      <div class="gt-sub">${isMax?('🏆 '+t('maxTier')):('🏅 '+goldTierCup+'/'+need+' · '+left+' '+t('toPromote'))}</div>
+    </div>`;
+}
+/* 🌐 Info online: sa lojtarë live + gjendja offline */
+async function refreshGoldOnline(){
+  const tag=document.querySelector('.gold-online-tag');
+  const btn=document.querySelector('.gold-play-btn');
+  const online = navigator.onLine!==false;
+  if(!online){ if(tag){tag.classList.add('offline'); tag.innerHTML='🌐 '+t('onlineReqT');} if(btn)btn.classList.add('off'); return; }
+  if(btn)btn.classList.remove('off');
+  let b={}; try{ b=(await withTimeoutNull(sGet(GOLD_LB_KEY),2500))||{}; }catch(e){}
+  const n=Object.values(b).filter(v=>v&&v.sc>0).length;
+  if(tag){ tag.classList.remove('offline'); tag.innerHTML=`🌐 <b>${Math.max(1,n)}</b> ${t('liveNow')} · <span>${t('onlineTourney')}</span>`; }
+}
+/* 🌐 Mesazh "Online required" kur s'ka internet */
+function showOnlineRequired(){
+  let ov=document.getElementById('onlineReqOv');
+  if(!ov){ ov=document.createElement('div'); ov.id='onlineReqOv'; ov.className='online-req-ov';
+    ov.innerHTML=`<div class="orq-box"><div class="orq-em">🌐</div><div class="orq-t"></div><div class="orq-s"></div><button class="btn btn-primary" style="margin-top:16px;min-width:150px">OK</button></div>`;
+    ov.querySelector('button').onclick=()=>ov.classList.remove('show');
+    document.body.appendChild(ov);
+  }
+  ov.querySelector('.orq-t').textContent=t('onlineReqT');
+  ov.querySelector('.orq-s').textContent=t('onlineReqS');
+  ov.classList.add('show');
+  try{if(!S('miss'))sfx(200,0.15,'sine',0.05);}catch(e){}
+}
+/* ⚽ Shkelmimi i topit në prekje (spring) */
+function kickGoldBall(el){
+  const b=el?el.querySelector('.gb-bounce'):document.querySelector('.gold-ball .gb-bounce'); if(!b)return;
+  b.classList.remove('kick'); void b.offsetWidth; b.classList.add('kick');
+  try{ if(!S('kick')) sfx(240,0.12,'triangle',0.06); }catch(e){}
+  try{vibrate(12);}catch(e){}
+  try{const r=(el||b).getBoundingClientRect();for(let k=0;k<6;k++){const sp=document.createElement('div');sp.className='gspark';sp.textContent=['✦','✧','⚽'][k%3];sp.style.left=(r.left+r.width/2)+'px';sp.style.top=(r.top+r.height/2)+'px';const a=Math.random()*6.28,d=30+Math.random()*34;sp.style.setProperty('--sx',Math.cos(a)*d+'px');sp.style.setProperty('--sy',Math.sin(a)*d+'px');document.body.appendChild(sp);setTimeout(()=>sp.remove(),600);}}catch(e){}
+  setTimeout(()=>b.classList.remove('kick'),720);
+}
+/* 🌱 Fusha e stilizuar (vija, rreth, portë, dritë, grimca) brenda ekranit */
+function ensurePitchFx(id){
+  const s=document.getElementById(id); if(!s||s.querySelector('.pitch-fx'))return;
+  const d=document.createElement('div'); d.className='pitch-fx'; d.setAttribute('aria-hidden','true');
+  d.innerHTML=`<div class="pf-stripes"></div>`+
+    `<svg class="pf-lines" viewBox="0 0 400 800" preserveAspectRatio="xMidYMid slice"><g fill="none" stroke="rgba(255,255,255,.11)" stroke-width="2"><rect x="12" y="12" width="376" height="776" rx="4"/><line x1="12" y1="400" x2="388" y2="400"/><circle cx="200" cy="400" r="66"/><rect x="120" y="12" width="160" height="82"/><rect x="163" y="12" width="74" height="34"/><rect x="120" y="706" width="160" height="82"/><rect x="163" y="754" width="74" height="34"/></g><circle cx="200" cy="400" r="3" fill="rgba(255,255,255,.16)"/></svg>`+
+    `<div class="pf-glow"></div><div class="pf-vig"></div>`+
+    [0,1,2,3,4,5,6].map(i=>`<span class="pf-dot d${i}"></span>`).join('');
+  s.insertBefore(d, s.firstChild);
 }
 /* ⚽ Zgjedhja e lojtarit të Royal (si te Love Match) */
 function renderRoyalPlayers(){
@@ -6046,12 +6203,14 @@ async function pickOnlineOpponent(rIdx){
     else if(rIdx===1) pick=rows[Math.min(n-1,Math.floor(n/3)+Math.floor(Math.random()*Math.ceil(n/2)))]; // mesi→lart
     else pick=rows[n-1];                                                                                  // më i forti → finale
     if(!pick) pick=rows[n-1];
-    return { name:pick.name, av:pick.av, sc:Math.max(3,Math.min(pick.sc,15)) }; // beatable: [3..15]
+    return { name:pick.name, av:pick.av, sc:Math.max(3,Math.min(pick.sc,15)), tier:(typeof pick.tier==='number'?pick.tier:0) }; // beatable: [3..15]
   }catch(e){ return null; }
 }
 async function startGold(){
   if(!premium){openGold();return;}
+  if(navigator.onLine===false){ showOnlineRequired(); return; } // 🌐 GOAL RUSH = vetëm online
   mode='gold'; duel=null; tut=null;
+  ensurePitchFx('gameScreen');
   try{ startMusic(); }catch(e){ showDbg(e.message,'startMusic'); }
   hideOverlays();
   goldScore=0; goldWaveN=0; goldTimeLeft=GOLD_TIME; seconds=0;
@@ -6059,9 +6218,8 @@ async function startGold(){
   // ⚽ turne knockout ONLINE: kundërshtar REAL nga renditja; nëse offline/bosh → CPU
   const rIdx=Math.min(Math.max(royalRound,0),2); const rd=ROYAL_ROUNDS[rIdx];
   const onl=await pickOnlineOpponent(rIdx);
-  if(onl){ royalOppName=onl.name; royalOppEm='🌐'; royalTarget=onl.sc; royalOppOnline=true; }
-  else { const opp=ROYAL_OPPS[Math.floor(Math.random()*ROYAL_OPPS.length)]; royalOppName=opp.name; royalOppEm=opp.em; royalTarget=royalRoundTarget(rIdx); royalOppOnline=false;
-    if(navigator.onLine===false){ try{toast('🌐 '+t('needOnline'));}catch(e){} } }
+  if(onl){ royalOppName=onl.name; royalOppEm=goldTierInfo(onl.tier).em; royalTarget=onl.sc; royalOppOnline=true; royalOppTier=onl.tier; }
+  else { const opp=ROYAL_OPPS[Math.floor(Math.random()*ROYAL_OPPS.length)]; royalOppName=opp.name; royalOppEm=opp.em; royalTarget=royalRoundTarget(rIdx); royalOppOnline=false; royalOppTier=0; }
   document.documentElement.style.setProperty('--season',rpl.col); // ⚽ theks sipas lojtarit të zgjedhur
   const cupTag=royalCups>0?` 🏆${royalCups}`:'';
   document.getElementById('levelBadge').innerHTML=`<div class="profile-chip"><span class="pav">${rpl.em}</span><b>${rpl.name}</b></div><div class="level-chip" style="background:linear-gradient(100deg,#43e07f,#1ea457);color:#052015">⚽ ${roundName(rd.name)}${cupTag}</div>`;
@@ -6110,6 +6268,13 @@ function goldOver(){
   const won = goldScore>=royalTarget;                     // ⚽ mund kundërshtarin nëse bën ≥ target çifte
   const oppLine=`${royalOppEm} <b>${royalOppName}</b>`;
   const scoreLine=`⚽ <b style="color:#ffd166;font-size:26px">${goldScore}</b> vs <b>${royalTarget}</b> 🎯 &nbsp; ${oppLine}`;
+  // 🏅 Liga me nivele: fito → kupa +1 (ndoshta ngjitje); humb → −1 (ndoshta zbritje)
+  const tierChange = won ? goldTierWin() : goldTierLoss();
+  let tierReward=0; if(tierChange==='up'){ tierReward=goldTierReward(goldTier); coins+=tierReward; }
+  const ti=goldTierInfo(goldTier);
+  const tierLine = tierChange==='up' ? `<br>⬆️ <b style="color:${ti.col}">${t('promoted')} ${ti.em} ${ti.name}!</b> +${tierReward} 🪙`
+               : tierChange==='down' ? `<br>⬇️ <b style="color:#ff9a9a">${t('relegated')} ${ti.em} ${ti.name}</b>`
+               : `<br>${ti.em} <b>${ti.name}</b> · 🏅 ${goldTierCup}/${goldTierNeed(goldTier)}`;
   submitGoldScore(); coins+=won?goldScore*5:goldScore*2;
   if(won){
     if(rIdx>=2){
@@ -6118,7 +6283,7 @@ function goldOver(){
       saveData();
       playWinMusic(); try{spawnGoldRain();}catch(e){} try{spawnConfetti();}catch(e){}
       showModeResult({emoji:'🏆', cls:'win', title:t('cupWonT'),
-        stats:`${scoreLine}<br>🏆 <b style="color:#ffd166;font-size:22px">${t('cupWonMsg')}</b><br>💰 +${goldScore*5+200} 🪙 &nbsp;•&nbsp; 🏆 ${t('cupsHave')}: ${royalCups}`,
+        stats:`${scoreLine}<br>🏆 <b style="color:#ffd166;font-size:22px">${t('cupWonMsg')}</b><br>💰 +${goldScore*5+200} 🪙 &nbsp;•&nbsp; 🏆 ${t('cupsHave')}: ${royalCups}${tierLine}`,
         buttons:[
           {label:'🏆 '+t('cupNewTourney'),cls:'btn-primary',fn:()=>{hideModeResult();startGold();}},
           {label:t('menu'),cls:'btn-ghost',fn:()=>{hideModeResult();mode='campaign';showScreen('menuScreen');}}
@@ -6129,7 +6294,7 @@ function goldOver(){
       playWinMusic(); try{spawnConfetti();}catch(e){}
       const nxt=ROYAL_ROUNDS[royalRound];
       showModeResult({emoji:'✅', cls:'win', title:t('roundWonT'),
-        stats:`${scoreLine}<br>➡️ <b style="color:#43e07f">${t('advanceTo')} ${roundName(nxt.name)}</b><br>💰 +${goldScore*5} 🪙`,
+        stats:`${scoreLine}<br>➡️ <b style="color:#43e07f">${t('advanceTo')} ${roundName(nxt.name)}</b><br>💰 +${goldScore*5} 🪙${tierLine}`,
         buttons:[
           {label:'▶ '+roundName(nxt.name),cls:'btn-primary',fn:()=>{hideModeResult();startGold();}},
           {label:t('menu'),cls:'btn-ghost',fn:()=>{hideModeResult();mode='campaign';showScreen('menuScreen');}}
@@ -6140,12 +6305,24 @@ function goldOver(){
     royalRound=0; saveData();
     try{playLoseMusic&&playLoseMusic();}catch(e){}
     showModeResult({emoji:'❌', cls:'lose', title:t('roundLostT'),
-      stats:`${scoreLine}<br>😔 <b>${t('knockedOut')}</b><br>💰 +${goldScore*2} 🪙`,
+      stats:`${scoreLine}<br>😔 <b>${t('knockedOut')}</b><br>💰 +${goldScore*2} 🪙${tierLine}`,
       buttons:[
         {label:'🔁 '+t('tryAgain'),cls:'btn-primary',fn:()=>{hideModeResult();startGold();}},
         {label:t('menu'),cls:'btn-ghost',fn:()=>{hideModeResult();mode='campaign';showScreen('menuScreen');}}
       ]});
   }
+  if(tierChange==='up'){ setTimeout(()=>{ try{celebrateTierUp();}catch(e){} },220); } // ⬆️ festë ngjitjeje
+}
+/* ⬆️ Festim ngjitjeje niveli (tier-up) */
+function celebrateTierUp(){
+  const ti=goldTierInfo(goldTier);
+  try{spawnGoldRain();}catch(e){}
+  const ov=document.createElement('div'); ov.className='tier-up-fx'; ov.style.setProperty('--tc',ti.col);
+  ov.innerHTML=`<div class="tu-in"><div class="tu-em">${ti.em}</div><div class="tu-t">${t('promoted')}</div><div class="tu-name" style="color:${ti.col}">${ti.name}</div><div class="tu-sub">🏅 ${t('newLeague')}</div></div>`;
+  document.body.appendChild(ov);
+  try{if(!S('tada'))playWinMusic();}catch(e){}
+  setTimeout(()=>{ov.classList.add('out'); setTimeout(()=>ov.remove(),600);},2500);
+  ov.addEventListener('click',()=>{ov.classList.add('out'); setTimeout(()=>ov.remove(),600);});
 }
 function roundName(n){ return t('rn_'+n)||n; }
 function spawnGoldRain(){
@@ -6157,8 +6334,9 @@ function spawnGoldRain(){
 /* 🌟 Leaderboard gold — çelës i ri ekskluziv PRO */
 const GOLD_LB_KEY='duel:goldlb:v1';
 async function submitGoldScore(){
-  try{let b=(await sGet(GOLD_LB_KEY))||{};const me=myName();
-    if(!b[me]||goldScore>b[me].sc){b[me]={name:me,av:avatar,sc:goldScore};await sSet(GOLD_LB_KEY,b);}
+  try{let b=(await sGet(GOLD_LB_KEY))||{};const me=myName();const prev=b[me]||{};
+    b[me]={name:me,av:avatar,sc:Math.max(prev.sc||0,goldScore),tier:goldTier}; // 🏅 ruaj edhe tier-in te serveri
+    await sSet(GOLD_LB_KEY,b);
   }catch(e){}
 }
 async function loadGoldLeaderboard(){
