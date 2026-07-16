@@ -500,18 +500,19 @@ svg{display:block}
 #gameScreen .hud{margin-top:env(safe-area-inset-top)}
 .gold-desc{color:#c8f5d8;font-weight:800;font-size:13px;max-width:290px;text-align:center;line-height:1.5;margin-top:2px}
 .gold-best-pill{background:rgba(70,230,130,.12);border:1.5px solid rgba(70,230,130,.55);border-radius:16px;padding:8px 18px;font-weight:900;color:#7cf0a0;font-size:16px;box-shadow:0 0 12px rgba(70,230,130,.2);margin-top:2px}
-.gold-play-btn{width:100%;max-width:280px;background:linear-gradient(100deg,#43e07f,#1ea457)!important;color:#052015!important;border:none!important;margin-top:4px;font-size:17px;box-shadow:0 6px 20px rgba(60,220,120,.45)}
+.gold-play-btn{width:100%;max-width:290px;background:linear-gradient(100deg,#4ff08a,#1ea457)!important;color:#052015!important;border:none!important;margin-top:8px;font-size:19px;font-weight:900;letter-spacing:1.2px;padding:16px 0;border-radius:16px;box-shadow:0 8px 22px rgba(60,220,120,.5),inset 0 1px 2px rgba(255,255,255,.45)}
+.gold-play-btn:active{transform:scale(.97)}
 .gold-lb-h{font-size:12px;letter-spacing:2px;font-weight:900;color:#7cf0a0;margin-top:10px}
 /* ⚽ Tabela e turneut (bracket) */
 .royal-bracket{display:flex;flex-direction:column;align-items:center;gap:5px;margin-top:2px}
 .rb-row{display:flex;align-items:center;justify-content:center;gap:3px;flex-wrap:nowrap}
 .rb-cap{font-size:11px;font-weight:800;letter-spacing:.5px;color:#8ff0b0;opacity:.9}
 #goldCupsVal{color:#ffd24a;font-weight:900;text-shadow:0 0 8px rgba(255,200,60,.6)}
-.rb-stage{min-width:34px;height:30px;padding:0 6px;display:flex;align-items:center;justify-content:center;border-radius:9px;font-weight:900;font-size:12px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);color:rgba(255,255,255,.55)}
+.rb-stage{width:52px;height:32px;flex:0 0 auto;display:flex;align-items:center;justify-content:center;border-radius:10px;font-weight:900;font-size:11px;letter-spacing:.3px;background:rgba(255,255,255,.06);border:1.5px solid rgba(255,255,255,.14);color:rgba(255,255,255,.55)}
 .rb-stage.done{background:rgba(70,230,130,.2);border-color:rgba(70,230,130,.7);color:#8ff0b0}
 .rb-stage.cur{background:linear-gradient(100deg,#43e07f,#1ea457);border-color:#7cf0a0;color:#052015;box-shadow:0 0 12px rgba(70,230,130,.5);animation:rbpulse 1.3s ease-in-out infinite}
-.rb-stage:last-child{font-size:15px}
-@keyframes rbpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.1)}}
+.rb-stage:last-child{font-size:16px}
+@keyframes rbpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
 .rb-arrow{color:rgba(124,240,160,.5);font-weight:900;font-size:14px}
 .gold-stat.gtarget{background:rgba(255,107,107,.14);border-color:rgba(255,120,120,.5);color:#ffb3b3}
 .gold-stat.gwin{background:rgba(70,230,130,.25)!important;border-color:#7cf0a0!important;color:#8ff0b0!important;animation:rbpulse .8s ease-in-out infinite}
@@ -2048,7 +2049,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
     <div class="royal-bracket" id="royalBracket"></div>
     <div class="gold-players-h">⚽ <span data-i18n="royalPickPlayer"></span></div>
     <div class="gold-players" id="goldPlayers"></div>
-    <button class="btn btn-primary gold-play-btn" onclick="playTap();startGold()">▶ <span data-i18n="goldPlay"></span></button>
+    <button class="btn btn-primary gold-play-btn" onclick="playTap();startGold()"><span data-i18n="goldPlay"></span></button>
     <div class="gold-lb-h">🏆 <span data-i18n="goldLbTitle"></span></div>
     <div id="goldLbList" class="daily-lb" style="width:100%;max-width:300px"></div>
   </div>
@@ -2118,7 +2119,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='POLISH-R22';
+const BUILD_TAG='POLISH-R23';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
