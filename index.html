@@ -1048,6 +1048,8 @@ body.royalmode #gameScreen .pitch-fx{display:block}
 .mm-vslabel{font-size:16px;font-weight:900;color:#ffd166;flex-shrink:0}
 .mm-status{font-size:12px;font-weight:800;color:rgba(255,255,255,.7);margin-top:8px;min-height:16px}
 .mm-cancel,.mm-retry{margin-top:14px;min-width:150px}
+.mm-retry{display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.mm-retry .mm-ic{flex-shrink:0}
 @media (prefers-reduced-motion: reduce){.gb-bounce,.gb-spin,.gb-shadow,.pf-dot,.orq-em,.mm-sweep,.mm-core,.mm-blip,.mm-av.mm-scan{animation:none!important}}
 /* 🏀 stil karte sportiv */
 body[data-skin="basket"] .card-back-face svg{display:none}
@@ -2210,7 +2212,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='MATCH-R26';
+const BUILD_TAG='MATCH-R27';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
@@ -6290,7 +6292,7 @@ async function matchmakeGold(rIdx){
       // shto buton "Provo prapë"
       let retry=document.getElementById('mmRetry');
       if(!retry){ retry=document.createElement('button'); retry.id='mmRetry'; retry.className='btn btn-primary mm-retry'; ov.querySelector('.mm-box').insertBefore(retry, document.getElementById('mmCancel')); }
-      retry.textContent='🔁 '+t('retrySearch'); retry.style.display='';
+      retry.innerHTML=`<svg class="mm-ic" viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/></svg><span>${t('retrySearch')}</span>`; retry.style.display='';
       retry.onclick=()=>{ retry.style.display='none'; finish('__retry__'); };
       try{ if(!S('miss',{vol:.5})) sfx(200,0.15,'sine',0.05); }catch(e){}
       return; // presim veprimin e përdoruesit (finish thirret nga cancel/retry)
