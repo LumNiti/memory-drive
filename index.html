@@ -1047,8 +1047,7 @@ body.royalmode #gameScreen .pitch-fx{display:block}
 .mm-nm{font-size:12px;font-weight:800;color:#fff;margin-top:6px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 .mm-vslabel{font-size:16px;font-weight:900;color:#ffd166;flex-shrink:0}
 .mm-status{font-size:12px;font-weight:800;color:rgba(255,255,255,.7);margin-top:8px;min-height:16px}
-.mm-cancel,.mm-retry{margin-top:14px;min-width:150px}
-.mm-retry{display:inline-flex;align-items:center;justify-content:center;gap:7px}
+.mm-cancel,.mm-retry{margin:12px auto 0!important;width:100%;max-width:250px;display:flex;align-items:center;justify-content:center;gap:7px}
 .mm-retry .mm-ic{flex-shrink:0}
 @media (prefers-reduced-motion: reduce){.gb-bounce,.gb-spin,.gb-shadow,.pf-dot,.orq-em,.mm-sweep,.mm-core,.mm-blip,.mm-av.mm-scan{animation:none!important}}
 /* 🏀 stil karte sportiv */
@@ -2212,7 +2211,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='MATCH-R27';
+const BUILD_TAG='MATCH-R28';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
