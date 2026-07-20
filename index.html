@@ -832,10 +832,11 @@ svg{display:block}
 @keyframes statPop{0%{transform:scale(1)}35%{transform:scale(1.32);color:#ffd166;text-shadow:0 0 10px rgba(255,209,102,.9)}100%{transform:scale(1)}}
 @keyframes badgePulse{0%,100%{transform:scale(1);box-shadow:0 2px 6px rgba(0,0,0,.4)}50%{transform:scale(1.18);box-shadow:0 0 10px rgba(255,79,94,.8)}}
 .menu-corner .coin-pill{font-size:12px}
-.store-list{display:flex;flex-direction:column;gap:9px;width:100%;max-width:390px;padding-bottom:60px}
-.store-sec{font-size:11px;letter-spacing:2px;color:rgba(255,255,255,.5);font-weight:800;margin:10px 2px 0}
-.store-row{display:flex;align-items:center;gap:12px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:12px 14px}
-.store-em{font-size:27px;width:42px;text-align:center;flex-shrink:0}
+.store-list{display:flex;flex-direction:column;gap:12px;width:100%;max-width:390px;padding-bottom:60px}
+.store-sec{font-size:10.5px;letter-spacing:2.2px;color:rgba(255,255,255,.45);font-weight:800;margin:18px 2px 2px}   /* hapësirë sipër/poshtë titujve */
+.store-row{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:13px 14px;transition:transform .16s cubic-bezier(.3,1.35,.5,1)}
+.store-row:active{transform:scale(.97)}
+.store-em{font-size:22px;width:38px;text-align:center;flex-shrink:0}
 .store-info{flex:1;min-width:0}
 .store-name{font-weight:900;font-size:14px}
 .store-sub{font-size:11px;color:rgba(255,255,255,.5);font-weight:700}
@@ -846,45 +847,49 @@ svg{display:block}
 .btn-mini.ap{background:#000;color:#fff;border:1px solid rgba(255,255,255,.3);display:flex;align-items:center;gap:5px}
 .store-note{font-size:10px;color:rgba(255,255,255,.4);text-align:center;font-weight:700;margin-top:6px}
 /* 🪙 COIN PACKS — stil premium "pack" */
-.coin-packs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:8px}
-.coin-pack{position:relative;overflow:hidden;border-radius:16px;padding:14px 10px 12px;display:flex;flex-direction:column;align-items:center;gap:3px;border:1.5px solid;isolation:isolate;box-shadow:0 5px 14px rgba(0,0,0,.45),inset 0 1px 2px rgba(255,255,255,.14),inset 0 -10px 16px rgba(0,0,0,.35)}
-.coin-pack .cp-icon{font-size:38px;line-height:1;filter:drop-shadow(0 3px 6px rgba(0,0,0,.5));z-index:1}
-.coin-pack .cp-amt{font-size:22px;font-weight:900;color:#fff;text-shadow:0 2px 5px rgba(0,0,0,.6);z-index:1;line-height:1}
-.coin-pack .cp-lbl{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.65);z-index:1;margin-bottom:6px}
+/* 🛍️ STORE i thjeshtuar: ikona më të vogla, sfond neutral, glow vetëm te specialet */
+.coin-packs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
+.coin-pack{position:relative;overflow:hidden;border-radius:16px;padding:13px 10px 11px;display:flex;flex-direction:column;align-items:center;gap:4px;border:1px solid rgba(255,255,255,.12);isolation:isolate;background:linear-gradient(165deg,#1a1828,#121019);box-shadow:0 3px 10px rgba(0,0,0,.3);transition:transform .16s cubic-bezier(.3,1.35,.5,1)}
+.coin-pack:active{transform:scale(.96)}
+.coin-pack .cp-icon{font-size:29px;line-height:1;filter:drop-shadow(0 2px 5px rgba(0,0,0,.45));z-index:1}
+.coin-pack .cp-amt{font-size:18px;font-weight:900;color:#fff;z-index:1;line-height:1}
+.coin-pack .cp-lbl{font-size:8.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);z-index:1;margin-bottom:7px}
 .coin-pack .cp-buy{width:100%;justify-content:center;z-index:1}
-.coin-pack .cp-shine{position:absolute;top:0;left:-70%;width:55%;height:100%;z-index:0;pointer-events:none;background:linear-gradient(105deg,transparent,rgba(255,255,255,.28),transparent);transform:skewX(-18deg);animation:goldSheen 3.6s ease-in-out infinite}
-.coin-pack.cp1{border-color:#c08a54;background:linear-gradient(160deg,#3a2c1e,#201811)}
-.coin-pack.cp2{border-color:#5aa8ff;background:linear-gradient(160deg,#16324f,#0d1f33)}
-.coin-pack.cp3{border-color:#b06bff;background:linear-gradient(160deg,#341f56,#1b1030);box-shadow:0 5px 16px rgba(160,107,255,.4),inset 0 1px 2px rgba(255,255,255,.16),inset 0 -10px 16px rgba(0,0,0,.35)}
-.coin-pack.cp4{border-color:#ffd166;background:linear-gradient(160deg,#4a3410,#241905);box-shadow:0 5px 18px rgba(255,209,102,.5),inset 0 1px 2px rgba(255,240,190,.22),inset 0 -10px 16px rgba(0,0,0,.35)}
-.cp-badge{position:absolute;top:8px;right:-26px;transform:rotate(38deg);z-index:2;font-size:8px;font-weight:900;letter-spacing:.5px;color:#1a1410;padding:2px 26px;box-shadow:0 1px 4px rgba(0,0,0,.4)}
+.coin-pack .cp-shine{display:none}   /* shkëlqim vetëm te BEST */
+.coin-pack.cp1{border-color:rgba(192,138,84,.32)}
+.coin-pack.cp2{border-color:rgba(90,168,255,.3)}
+.coin-pack.cp3{border-color:rgba(176,107,255,.5);box-shadow:0 3px 14px rgba(160,107,255,.2)}      /* POPULAR */
+.coin-pack.cp4{border-color:rgba(255,209,102,.6);box-shadow:0 3px 16px rgba(255,209,102,.26)}     /* BEST */
+.coin-pack.cp4 .cp-shine{display:block;position:absolute;top:0;left:-70%;width:55%;height:100%;z-index:0;pointer-events:none;background:linear-gradient(105deg,transparent,rgba(255,255,255,.18),transparent);transform:skewX(-18deg);animation:goldSheen 3.6s ease-in-out infinite}
+.cp-badge{position:absolute;top:8px;right:-26px;transform:rotate(38deg);z-index:2;font-size:8px;font-weight:900;letter-spacing:.5px;color:#1a1410;padding:2px 26px;box-shadow:0 1px 3px rgba(0,0,0,.3)}
 .cp-badge.best{background:linear-gradient(90deg,#ffe9a8,#ffd166)}
 .cp-badge.pop{background:linear-gradient(90deg,#c9a8ff,#a06bff);color:#fff}
 @media (prefers-reduced-motion: reduce){.coin-pack .cp-shine{animation:none}}
 .coin-drop{position:fixed;top:-32px;z-index:80;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4));animation:coinFall linear forwards}
 @keyframes coinFall{to{transform:translateY(112vh) rotate(420deg);opacity:.15}}
 /* 🃏🖼️ SHOP CARDS — stil FIFA për CARD STYLE & BACKGROUNDS */
-.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;padding:11px 10px 9px}
-.shop-card{position:relative;overflow:hidden;border-radius:13px;padding:7px 6px;display:flex;flex-direction:column;align-items:center;gap:5px;border:1px solid;isolation:isolate;background:linear-gradient(160deg,#1b1928,#131019);box-shadow:0 2px 7px rgba(0,0,0,.35)}
-.shop-card.cp1{border-color:rgba(192,138,84,.55)}
-.shop-card.cp2{border-color:rgba(90,168,255,.5)}
-.shop-card.cp3{border-color:rgba(176,107,255,.5)}
-.shop-card.cp4{border-color:rgba(255,209,102,.6)}
-.shop-card.inuse{border-color:rgba(60,240,160,.7);box-shadow:0 0 0 1.5px rgba(60,240,160,.4),0 2px 7px rgba(0,0,0,.35)}
-.shop-prev{width:100%;height:50px;border-radius:10px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.1);box-shadow:inset 0 -6px 12px rgba(0,0,0,.3)}
-.shop-prev.skin{border-width:2px}
-.shop-prev .sp-em{font-size:27px;line-height:1;filter:drop-shadow(0 3px 5px rgba(0,0,0,.5))}
-.shop-prev::before{content:'';position:absolute;top:0;left:0;right:0;height:45%;background:linear-gradient(180deg,rgba(255,255,255,.18),transparent);pointer-events:none}
-.shop-name{font-size:11px;font-weight:900;color:#fff;text-align:center;line-height:1.1}
+.shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:14px 12px 10px}
+.shop-card{position:relative;overflow:hidden;border-radius:14px;padding:9px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.11);isolation:isolate;background:linear-gradient(165deg,#1a1828,#121019);box-shadow:0 2px 8px rgba(0,0,0,.28);transition:transform .16s cubic-bezier(.3,1.35,.5,1)}
+.shop-card:active{transform:scale(.96)}
+/* korniza neutrale — pa ngjyra të forta kudo; theks vetëm te ai në përdorim */
+.shop-card.cp1,.shop-card.cp2,.shop-card.cp3,.shop-card.cp4{border-color:rgba(255,255,255,.11)}
+.shop-card.inuse{border-color:rgba(60,240,160,.5)}
+.shop-prev{width:100%;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 -4px 9px rgba(0,0,0,.25)}
+.shop-prev.skin{border-width:1px}
+.shop-prev .sp-em{font-size:21px;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.45))}
+.shop-prev::before{content:'';position:absolute;top:0;left:0;right:0;height:45%;background:linear-gradient(180deg,rgba(255,255,255,.12),transparent);pointer-events:none}
+.shop-name{font-size:10.5px;font-weight:900;color:rgba(255,255,255,.92);text-align:center;line-height:1.15}
+/* çmimi / USE: i qartë por jo bërtitës */
+.shop-card .btn-mini,.coin-pack .cp-buy{padding:8px 10px;font-size:11px;border-radius:10px}
 .cp-badge.nnew{background:linear-gradient(90deg,#7fffd0,#3ef0a0);color:#0a2a1e}
 /* ⭐ FEATURED hero + tabs kategori */
-.store-featured{position:relative;overflow:hidden;display:flex;align-items:center;gap:11px;margin:8px 0 4px;padding:10px 13px;border-radius:15px;border:1px solid #ffe9a8;cursor:pointer;background:linear-gradient(105deg,#5a3d0a,#b9791a 38%,#e8a13a 58%,#b9791a 78%,#5a3d0a);box-shadow:0 4px 13px rgba(232,161,58,.32),inset 0 1px 2px rgba(255,255,255,.25)}
-.store-featured:active{transform:scale(.98)}
+.store-featured{position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;margin:10px 0 6px;padding:9px 12px;border-radius:14px;border:1px solid rgba(255,233,168,.7);cursor:pointer;background:linear-gradient(105deg,#5a3d0a,#b9791a 38%,#e8a13a 58%,#b9791a 78%,#5a3d0a);box-shadow:0 4px 14px rgba(232,161,58,.28),inset 0 1px 2px rgba(255,255,255,.22);transition:transform .16s cubic-bezier(.3,1.35,.5,1)}
+.store-featured:active{transform:scale(.96)}
 .store-featured .sf-shine{position:absolute;top:0;left:-70%;width:48%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);animation:goldSheen 3.4s ease-in-out infinite;pointer-events:none}
 .sf-badge{position:absolute;top:8px;right:10px;z-index:2;font-size:8px;font-weight:900;letter-spacing:1px;color:#3a2600;background:rgba(255,255,255,.6);border-radius:8px;padding:2px 7px}
-.sf-icon{font-size:33px;filter:drop-shadow(0 3px 5px rgba(0,0,0,.4));z-index:1}
+.sf-icon{font-size:27px;filter:drop-shadow(0 2px 4px rgba(0,0,0,.35));z-index:1}
 .sf-info{flex:1;z-index:1;min-width:0}
-.sf-amt{font-size:20px;font-weight:900;color:#3a2600;line-height:1}
+.sf-amt{font-size:18px;font-weight:900;color:#3a2600;line-height:1}
 .sf-amt span{font-size:9.5px;letter-spacing:1px;text-transform:uppercase}
 .sf-sub{font-size:10px;font-weight:800;color:#5a3c00;margin-top:2px}
 .sf-buy{z-index:1;flex-shrink:0;pointer-events:none}
@@ -894,7 +899,19 @@ svg{display:block}
 .stab .stab-ic{font-size:18px;line-height:1}
 .stab .stab-lbl{font-size:8px;letter-spacing:.2px}
 .stab.on{background:linear-gradient(180deg,var(--amber2),var(--amber));color:#1a1410;border-color:transparent;box-shadow:0 3px 10px rgba(232,161,58,.35)}
-.store-catdesc{font-size:11px;font-weight:800;color:rgba(255,255,255,.5);margin:2px 4px 10px;text-align:center}
+.store-catdesc{font-size:11px;font-weight:800;color:rgba(255,255,255,.45);margin:4px 4px 14px;text-align:center}
+/* ✨ Mikro-animacione: hyrje me stagger i lehtë */
+@keyframes storeIn{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.shop-grid>*,.coin-packs>*,.store-list>.store-row,.store-featured{animation:storeIn .34s cubic-bezier(.2,.9,.3,1) both}
+.shop-grid>*:nth-child(2),.coin-packs>*:nth-child(2),.store-list>.store-row:nth-of-type(2){animation-delay:.04s}
+.shop-grid>*:nth-child(3),.coin-packs>*:nth-child(3),.store-list>.store-row:nth-of-type(3){animation-delay:.08s}
+.shop-grid>*:nth-child(4),.coin-packs>*:nth-child(4),.store-list>.store-row:nth-of-type(4){animation-delay:.12s}
+.shop-grid>*:nth-child(5),.coin-packs>*:nth-child(5),.store-list>.store-row:nth-of-type(5){animation-delay:.16s}
+.shop-grid>*:nth-child(6),.coin-packs>*:nth-child(6),.store-list>.store-row:nth-of-type(6){animation-delay:.2s}
+.shop-grid>*:nth-child(7){animation-delay:.24s}
+.shop-grid>*:nth-child(8){animation-delay:.27s}
+.shop-grid>*:nth-child(n+9){animation-delay:.3s}
+@media (prefers-reduced-motion: reduce){.shop-grid>*,.coin-packs>*,.store-list>.store-row,.store-featured{animation:none!important}}
 /* ---- Format e kartave (skins) ---- */
 body[data-skin="sharp"] .card-face,body[data-skin="sharp"] .dc-b,body[data-skin="sharp"] .dc-f{border-radius:3px}
 body[data-skin="pill"] .card-face,body[data-skin="pill"] .dc-b,body[data-skin="pill"] .dc-f{border-radius:28px}
@@ -2236,7 +2253,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='LEAGUE-R29';
+const BUILD_TAG='STORE-R30';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
