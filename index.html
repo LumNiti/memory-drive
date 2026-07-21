@@ -284,7 +284,7 @@ svg{display:block}
 .menu-btns .btn:nth-child(even)>span:first-child,.menu-btns .btn:nth-child(even) svg.ic:first-child{animation-delay:.6s}
 .menu-btns .btn:active{transform:scale(.96)}
 .menu-btns .btn-primary{animation:playGlow 2.6s ease-in-out infinite}
-@keyframes playGlow{0%,100%{box-shadow:0 8px 24px rgba(232,161,58,.35)}50%{box-shadow:0 8px 30px rgba(232,161,58,.6)}}
+@keyframes playGlow{0%,100%{box-shadow:0 6px 0 #a9711f,0 8px 24px rgba(232,161,58,.35),0 1px 0 rgba(255,255,255,.4) inset}50%{box-shadow:0 6px 0 #a9711f,0 8px 30px rgba(232,161,58,.6),0 1px 0 rgba(255,255,255,.4) inset}}
 .total-stars{display:flex;align-items:center;gap:6px;margin-top:14px;font-size:14px;font-weight:800;color:#fff;text-shadow:0 1px 8px rgba(0,0,0,.5);background:rgba(14,12,30,.5);padding:7px 14px;border-radius:20px}
 .total-stars .ic{width:16px;height:16px}
 
@@ -1330,6 +1330,70 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 .dialog-box p{font-size:13px;color:rgba(255,255,255,.55);margin-bottom:20px}
 .dialog-btns{display:flex;gap:10px}
 .dialog-btns .btn{width:auto;flex:1;padding:12px;font-size:13px}
+
+/* ============================================================
+   ✨ 3D UPGRADE — gjithçka që sheh bëhet 3D (pa prekur logjikën)
+   Vetëm CSS shtesë (thellësi, bevel, hije, dritë) që nuk prish
+   asnjë animacion apo mekanikë ekzistuese.
+   ============================================================ */
+
+/* Tavolina merr perspektivë reale që kartat të duken me vëllim */
+#board{perspective:1200px;perspective-origin:50% 38%}
+
+/* Kartat: trashësi + bevel + hije e shtresuar (duken si objekt fizik) */
+.card{transition:transform .16s cubic-bezier(.3,1.2,.4,1)}
+.card-face{
+  box-shadow:
+    0 1px 0 rgba(255,255,255,.22) inset,
+    0 -4px 8px rgba(0,0,0,.30) inset,
+    0 5px 9px rgba(0,0,0,.48),
+    0 11px 20px rgba(0,0,0,.40),
+    0 20px 34px rgba(0,0,0,.28);
+}
+/* pak dritë sipër/hije poshtë te fytyra e bardhë për efekt të lakuar */
+.card-front{background:linear-gradient(158deg,#ffffff 0%,#f1f1f4 46%,#d7d7dd 100%)}
+/* buzë e ndritshme rreth fytyrës (skaji i kartës) */
+.card-face::after{
+  content:'';position:absolute;inset:0;border-radius:inherit;pointer-events:none;
+  box-shadow:0 0 0 1px rgba(255,255,255,.10) inset;
+  background:linear-gradient(150deg,rgba(255,255,255,.14),transparent 32%,transparent 70%,rgba(0,0,0,.14));
+  mix-blend-mode:overlay;
+}
+
+/* Ngritje 3D në hover (desktop) — !important tejkalon transformet e mbajtura nga deal-anim */
+@media (hover:hover) and (pointer:fine){
+  .card:not(.matched):hover{transform:translateY(-7px) rotateX(8deg) scale(1.04)!important;z-index:6}
+  .card:not(.matched):hover .card-face{box-shadow:
+    0 1px 0 rgba(255,255,255,.25) inset,
+    0 -4px 8px rgba(0,0,0,.30) inset,
+    0 12px 18px rgba(0,0,0,.55),
+    0 24px 40px rgba(0,0,0,.42)}
+}
+
+/* Butonat kryesorë: relievo 3D reale me buzë poshtë + shtypje */
+.btn{position:relative;transition:transform .11s ease,box-shadow .11s ease;transform-style:preserve-3d}
+.btn-primary{box-shadow:0 6px 0 #a9711f,0 9px 16px rgba(0,0,0,.42),0 1px 0 rgba(255,255,255,.4) inset}
+.btn-ghost{box-shadow:0 5px 0 rgba(120,80,20,.55),0 9px 15px rgba(0,0,0,.4)}
+.btn-danger{box-shadow:0 6px 0 #7d241a,0 9px 16px rgba(0,0,0,.42)}
+.btn:active{transform:translateY(4px)!important}
+.btn-primary:active{box-shadow:0 2px 0 #a9711f,0 4px 8px rgba(0,0,0,.4),0 1px 0 rgba(255,255,255,.4) inset}
+.btn-ghost:active{box-shadow:0 1px 0 rgba(120,80,20,.55),0 3px 7px rgba(0,0,0,.4)}
+.btn-danger:active{box-shadow:0 2px 0 #7d241a,0 4px 8px rgba(0,0,0,.42)}
+
+/* Butonat mini: shtypje 3D */
+.btn-mini{box-shadow:0 4px 0 rgba(0,0,0,.32),0 6px 11px rgba(0,0,0,.35);transition:transform .1s ease,box-shadow .1s ease}
+.btn-mini:active{transform:translateY(3px)!important;box-shadow:0 1px 0 rgba(0,0,0,.32),0 2px 5px rgba(0,0,0,.35)}
+
+/* Panele / dialogje / overlay: ngritur nga sfondi (thellësi) */
+.dialog-box{box-shadow:0 1px 0 rgba(255,255,255,.10) inset,0 18px 44px rgba(0,0,0,.6),0 4px 12px rgba(0,0,0,.45)}
+/* Chips & statuse: bevel i lehtë 3D */
+.stat,.profile-chip,.level-chip{box-shadow:0 1px 0 rgba(255,255,255,.12) inset,0 4px 10px rgba(0,0,0,.35)}
+.pav{box-shadow:0 2px 5px rgba(0,0,0,.4),0 1px 0 rgba(255,255,255,.25) inset}
+
+/* Respekton përdoruesit që duan më pak lëvizje */
+@media (prefers-reduced-motion:reduce){
+  .card:not(.matched):hover{transform:none!important}
+}
 </style>
 </head>
 <body>
