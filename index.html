@@ -2253,7 +2253,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='STORE-R30';
+const BUILD_TAG='MISS-R31';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
@@ -3713,13 +3713,12 @@ function flipSecond(c,gamble){
     if(gamble){
       // Basti HUMBI — niveli mbaron menjëherë! 💀 (në stërvitje je i sigurt)
       setTimeout(()=>{
-        a.classList.add('shake');c.classList.add('shake');
-        try{shredCard(a);shredCard(c);}catch(e){}       // 🃏 shqyerje 3D
+        a.classList.add('shake','missred');c.classList.add('shake','missred'); // ❌ shake + skuqje (jo thyerje)
         if(!S('wompBig'))playMiss();                    // 💀 basti humbi = womp dramatik
         vibrate([15,30,15]);
         setTimeout(()=>{
           if(tut){
-            a.classList.remove('flipped','shake');c.classList.remove('flipped','shake');
+            a.classList.remove('flipped','shake','missred');c.classList.remove('flipped','shake','missred');
             lock=false;tutAfterSure();
           }else if(mode==='love'){loveLost();}
           else levelLost(true);
@@ -3728,12 +3727,8 @@ function flipSecond(c,gamble){
       return;
     }
     setTimeout(()=>{
-      if(mode==='gold'){ // ⚽ GOAL RUSH: GABIM = shake + skuqje (JO thyerje) — dallon qartë nga fitorja
-        a.classList.add('shake','missred');c.classList.add('shake','missred');
-      } else {
-        a.classList.add('shake');c.classList.add('shake');
-        try{shredCard(a);shredCard(c);}catch(e){}         // 🃏 shqyerje 3D reale në gabim (modet e tjera)
-      }
+      // ❌ GABIM (të GJITHA modet): shake + skuqje e butë — JO thyerje. Thyerja mbetet vetëm për fitoren.
+      a.classList.add('shake','missred');c.classList.add('shake','missred');
       playMiss();
       setTimeout(()=>{
         a.classList.remove('flipped','shake','missred');
