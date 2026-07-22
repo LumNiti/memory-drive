@@ -1470,12 +1470,30 @@ body.duelmode .duel-seat{display:flex}
   background:linear-gradient(180deg,#2c2846,#14111e);
   border:2px solid rgba(232,161,58,.28);
   box-shadow:0 10px 20px rgba(0,0,0,.55),inset 0 2px 0 rgba(255,255,255,.07);z-index:2}
-.dp-name{font-weight:900;font-size:12px;letter-spacing:.5px;background:rgba(14,12,30,.72);border:1px solid rgba(232,161,58,.45);color:var(--amber2);padding:3px 11px;border-radius:12px;white-space:nowrap;max-width:150px;overflow:hidden;text-overflow:ellipsis}
-/* Lojtari im (poshtë) shihet nga shpina → koka pak më e vogël dhe pa fytyrë e theksuar */
-.duel-seat.bottom .dp-head{font-size:0;background:radial-gradient(circle at 40% 32%,#4a4468,#211d38)}
-.duel-seat.bottom .dp-head::after{content:'';width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#6a628c,#2a2544)}
+.dp-name{display:flex;align-items:center;gap:4px;font-weight:900;font-size:12px;letter-spacing:.3px;background:rgba(14,12,30,.72);border:1px solid rgba(232,161,58,.45);color:var(--amber2);padding:3px 10px;border-radius:12px;white-space:nowrap;max-width:160px;overflow:hidden;text-overflow:ellipsis}
+/* 👑 kurorë PRO, 🏅 rang dhe distinktivi PRO te profilet e ulur */
+.dp-crown{position:absolute;top:-9px;right:24px;font-size:16px;z-index:4;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
+.dp-rank{position:absolute;top:-6px;left:26px;font-size:15px;z-index:4;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
+.dp-pro{font-size:9px;font-weight:900;letter-spacing:.5px;background:linear-gradient(90deg,#ffe9a8,#ffd166);color:#3a2600;padding:1px 5px;border-radius:6px;flex-shrink:0}
+.dp-fig.pro .dp-head{border-color:#ffd166;box-shadow:0 6px 16px rgba(0,0,0,.55),0 0 20px rgba(255,209,102,.6),inset 0 2px 3px rgba(255,255,255,.18)}
 /* Në duel, ngjeshim pak bordin që të lërë vend për lojtarët */
-body.duelmode #board{transform:rotateX(16deg) scale(.92)}
+body.duelmode #board{transform:rotateX(16deg) scale(.9)}
+
+/* ================= 🛒 DYQANI — më i thjeshtë, ikona më të vogla, më i pastër ================= */
+.shop-grid{gap:10px;padding:10px 10px 8px}
+.shop-card{padding:8px 7px 9px;gap:5px;border-radius:12px}
+.shop-prev{height:34px;border-radius:8px}
+.shop-prev .sp-em{font-size:16px}
+.shop-name{font-size:10px}
+.shop-card .btn-mini,.coin-pack .cp-buy{padding:7px 9px;font-size:10.5px;border-radius:9px}
+.stab{padding:7px 3px;border-radius:11px}
+.stab .stab-ic{font-size:14px}
+.stab .stab-lbl{font-size:8px}
+.store-featured{gap:9px;padding:8px 11px;border-radius:12px}
+.sf-icon{font-size:21px}
+.sf-amt{font-size:16px}
+.store-catdesc{font-size:10.5px;margin:2px 4px 10px}
+.cp-badge{font-size:7.5px;padding:2px 24px}
 
 /* Respekton përdoruesit që duan më pak lëvizje */
 @media (prefers-reduced-motion:reduce){
@@ -3523,15 +3541,20 @@ function showScreen(id){
   } // 🌙 muzika e qetë e menusë
   if(id==='settingsScreen'){refreshProfileUI();syncMusicUI();}
 }
-/* 🪑 Vizato dy lojtarët në anët e tavolinës (vetëm në duel/online) */
+/* 🪑 Vizato dy lojtarët në anët e tavolinës me PROFILIN e plotë (vetëm në duel/online) */
 function renderDuelSeats(){
   const top=document.getElementById('duelSeatTop'), bot=document.getElementById('duelSeatBottom');
   if(!top||!bot) return;
-  const oppAv=(duel&&(duel.opAv||duel.oppAv))||'🧑';
-  const oppNm=(duel&&duel.opName)||'Rival';
-  const fig=(av)=>`<div class="dp-fig"><div class="dp-body"></div><div class="dp-head">${av}</div></div>`;
-  top.innerHTML=fig(oppAv)+`<div class="dp-name">${oppNm}</div>`;
-  bot.innerHTML=`<div class="dp-name">${myName()}</div>`+fig(avatar);
+  const oL=(typeof oppLast!=='undefined')?oppLast:null;
+  const oppAv=(oL&&oL.av)||(duel&&(duel.opAv||duel.oppAv))||'🧑';
+  const oppNm=(duel&&duel.opName)||(oL&&oL.name)||'Rival';
+  const oppPro=!!(oL&&oL.pr);
+  const oppRk=(oL&&oL.rk)||'';
+  const mR=(typeof myRank==='function')?myRank():[0,'',''];
+  const fig=(av,pro,rk)=>`<div class="dp-fig${pro?' pro':''}">${rk?`<span class="dp-rank">${rk}</span>`:''}<div class="dp-body"></div><div class="dp-head">${av}</div>${pro?'<span class="dp-crown">👑</span>':''}</div>`;
+  const nm=(name,pro)=>`<div class="dp-name">${pro?'<span class="dp-pro">PRO</span>':''}${name}</div>`;
+  top.innerHTML=fig(oppAv,oppPro,oppRk)+nm(oppNm,oppPro);
+  bot.innerHTML=nm(myName(),premium)+fig(avatar,premium,mR[1]);
 }
 function hideOverlays(){
   document.getElementById('winOverlay').classList.remove('show');
@@ -4907,6 +4930,7 @@ function updateOppBar(){
     `<span class="me-prof" onclick="openEmotePicker()">${premium?'👑':''}${avatar} ${myName()} 💬</span>`+
     `<span style="display:flex;flex-direction:column;align-items:center">${rInfo}<span style="color:var(--amber2);font-size:15px;font-weight:900">${pairsFound} : ${oppLast.p}</span></span>`+
     `<span class="opp-prof">${oppLast.pr?'👑':''}${oppLast.av||'❔'} ${duel.opName} R${(oppLast.rd||0)+1}</span>`;
+  try{ renderDuelSeats(); }catch(e){}   // 🪑 përditëso profilet e ulur me të dhënat live të kundërshtarit
 }
 /* 👑 Emote bar LIVE në duel — free: 👍😢 · PRO: +🔥💀😏👑 */
 const EMOTE_FREE=['👍','😢'];
