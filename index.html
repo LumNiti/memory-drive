@@ -1480,26 +1480,38 @@ body.duelmode .duel-seat{display:flex}
 /* Në duel, ngjeshim pak bordin që të lërë vend për lojtarët */
 body.duelmode #board{transform:rotateX(16deg) scale(.9)}
 
-/* ================= 🛒 DYQANI — më i thjeshtë, ikona më të vogla, më i pastër ================= */
-.shop-grid{gap:10px;padding:10px 10px 8px}
-.shop-card{padding:8px 7px 9px;gap:5px;border-radius:12px}
-.shop-prev{height:34px;border-radius:8px}
-.shop-prev .sp-em{font-size:16px}
-.shop-name{font-size:10px}
-.shop-card .btn-mini,.coin-pack .cp-buy{padding:7px 9px;font-size:10.5px;border-radius:9px}
-.stab{padding:7px 3px;border-radius:11px}
-.stab .stab-ic{font-size:14px}
+/* ================= 🛒 DYQANI — i njëjti stil i pastër si PROFILI/HOME ================= */
+/* Tile të njëjta si profili: sfond amber i lehtë + bordurë delikate */
+.shop-card,.coin-pack{
+  background:linear-gradient(160deg,rgba(232,161,58,.10),rgba(14,12,30,.55))!important;
+  border:1px solid rgba(255,255,255,.12)!important;
+  box-shadow:0 1px 0 rgba(255,255,255,.06) inset,0 6px 16px rgba(0,0,0,.4)!important;
+}
+.shop-card.inuse,.coin-pack.cp4{border-color:rgba(255,209,102,.6)!important;box-shadow:0 0 0 1px rgba(255,209,102,.35) inset,0 8px 20px rgba(0,0,0,.45)!important}
+/* Butonat e blerjes = gold si PLAY (tema e artë kudo) */
+.shop-card .btn-mini,.coin-pack .cp-buy{padding:8px 10px;font-size:11px;border-radius:10px}
+.coin-pack .cp-buy.ap,.store-featured .sf-buy.ap{
+  background:linear-gradient(180deg,var(--amber2),var(--amber))!important;color:#1a1410!important;
+  border:none!important;box-shadow:0 3px 0 #a9711f,0 6px 12px rgba(0,0,0,.4)!important;font-weight:900}
+.store-featured .sf-buy.ap{box-shadow:0 3px 0 #8a5a12,0 5px 10px rgba(0,0,0,.35)!important}
+/* Grid & spacing më të pastra */
+.shop-grid{gap:11px;padding:10px 10px 8px}
+.shop-card{padding:9px 8px 10px;gap:6px;border-radius:14px}
+.shop-prev{height:38px;border-radius:9px;border:1px solid rgba(255,255,255,.1)!important}
+.shop-prev .sp-em{font-size:18px}
+.shop-name{font-size:10.5px;color:#fff}
+/* Tabs si segment control i pastër */
+.stab{padding:8px 3px;border-radius:12px}
+.stab .stab-ic{font-size:15px}
 .stab .stab-lbl{font-size:8px}
-.store-featured{gap:9px;padding:8px 11px;border-radius:12px}
-.sf-icon{font-size:21px}
-.sf-amt{font-size:16px}
-.store-catdesc{font-size:10.5px;margin:2px 4px 10px}
+.store-catdesc{font-size:10.5px;margin:2px 4px 12px}
 .cp-badge{font-size:7.5px;padding:2px 24px}
-/* Coins tab më kompakt & i pastër */
-.coin-packs{gap:10px;margin-top:10px}
-.coin-pack{padding:10px 9px 9px;border-radius:12px;gap:3px}
-.coin-pack .cp-icon{font-size:20px}
-.coin-pack .cp-amt{font-size:16px}
+/* Coins tab: karta të pastra me ikonë + shumë + label + buton gold */
+.coin-packs{gap:11px;margin-top:12px}
+.coin-pack{padding:12px 10px 11px;border-radius:16px;gap:3px}
+.coin-pack .cp-icon{font-size:26px;filter:drop-shadow(0 2px 5px rgba(0,0,0,.45))}
+.coin-pack .cp-amt{font-size:19px;color:#fff}
+.coin-pack .cp-lbl{color:rgba(255,255,255,.6)}
 
 /* Respekton përdoruesit që duan më pak lëvizje */
 @media (prefers-reduced-motion:reduce){
