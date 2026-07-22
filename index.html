@@ -521,18 +521,25 @@ svg{display:block}
 .gold-stat.gwin{background:rgba(70,230,130,.25)!important;border-color:#7cf0a0!important;color:#8ff0b0!important;animation:rbpulse .8s ease-in-out infinite}
 /* ⚽ Zgjedhja e lojtarëve Royal */
 .gold-players-h{font-size:11px;letter-spacing:1.5px;font-weight:900;color:#ffe9a8;margin-top:6px;text-transform:uppercase}
-.gold-players{display:flex;gap:8px;overflow-x:auto;width:100%;max-width:320px;padding:4px 2px 8px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.gold-players{display:flex;gap:8px;overflow-x:auto;width:100%;max-width:320px;padding:12px 4px 14px;-webkit-overflow-scrolling:touch;scrollbar-width:none}
 .gold-players::-webkit-scrollbar{display:none}
 .rplayer{flex:0 0 auto;width:74px;border-radius:13px;padding:8px 4px 7px;display:flex;flex-direction:column;align-items:center;gap:3px;cursor:pointer;position:relative;
   border:2px solid rgba(255,255,255,.12);background:radial-gradient(circle at 50% 30%,color-mix(in srgb,var(--pc,#ffd166) 22%,transparent),rgba(20,16,32,.85));transition:transform .14s,border-color .15s,box-shadow .15s}
 .rplayer:active{transform:scale(.93)}
+/* Kartat e pazgjedhura zbehen që e zgjedhura të dallohet qartë */
+.rplayer:not(.sel):not(.locked){opacity:.55;filter:saturate(.85)}
 .rplayer .rp-em{font-size:28px;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
 .rplayer .rp-name{font-size:8px;font-weight:900;letter-spacing:.2px;color:#fff;text-align:center;line-height:1.05;text-transform:uppercase;min-height:18px;display:flex;align-items:center}
-.rplayer.sel{border-color:var(--pc,#ffd166);box-shadow:0 0 0 2px var(--pc,#ffd166),0 0 16px color-mix(in srgb,var(--pc,#ffd166) 60%,transparent);transform:scale(1.04)}
-.rplayer.locked{filter:grayscale(.7);opacity:.72}
+/* Lojtari i zgjedhur: shkëlqen qartë, i ngritur, me kornizë dhe distinktiv */
+.rplayer.sel{opacity:1;filter:none;border-color:var(--pc,#ffd166);border-width:2.5px;
+  background:radial-gradient(circle at 50% 28%,color-mix(in srgb,var(--pc,#ffd166) 42%,transparent),rgba(20,16,32,.92));
+  box-shadow:0 0 0 3px var(--pc,#ffd166),0 0 18px color-mix(in srgb,var(--pc,#ffd166) 75%,transparent),0 8px 16px rgba(0,0,0,.5);
+  transform:scale(1.08);z-index:2}
+.rplayer.locked{filter:grayscale(.7);opacity:.6}
 .rplayer.locked .rp-em{filter:grayscale(1) brightness(.7)}
 .rp-lock{font-size:8px;font-weight:900;color:#ffd166;background:rgba(0,0,0,.55);border-radius:7px;padding:1px 5px;white-space:nowrap}
-.rp-tag{position:absolute;top:3px;right:5px;font-size:11px;color:var(--pc,#ffd166);font-weight:900}
+/* Distinktiv rrethor me shenjë ✓ brenda cepit (i dukshëm, s'pritet) */
+.rp-tag{position:absolute;top:3px;right:3px;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:11px;color:#12140f;font-weight:900;background:var(--pc,#ffd166);border-radius:50%;box-shadow:0 2px 5px rgba(0,0,0,.5),0 0 0 2px rgba(20,16,32,.85)}
 @media (prefers-reduced-motion: reduce){.rplayer{transition:none}}
 .gold-crown-big{font-size:70px;filter:drop-shadow(0 0 24px rgba(90,240,150,.6));animation:pop .8s cubic-bezier(.2,1.4,.4,1) both}
 .gold-title{font-size:30px;font-weight:900;letter-spacing:3px;background:linear-gradient(90deg,#c8f5d8,#4ade80,#1ea457);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;filter:drop-shadow(0 2px 4px rgba(0,0,0,.4))}
@@ -2902,7 +2909,7 @@ function updateTotalStars(){
 }
 
 /* 🔒 ---- Kyçja e modeve sipas progresit (levele të kaluara) ---- */
-const MODE_UNLOCK={daily:4,endless:7,duel:10,love:11};
+const MODE_UNLOCK={daily:4,endless:7,duel:0,love:11};
 function levelsDone(){return Object.keys(progress).filter(k=>progress[k]>0).length}
 function modeReq(m){const need=MODE_UNLOCK[m]||0;return levelsDone()>=need?0:need}
 function modeLocked(m){
