@@ -1476,6 +1476,7 @@ body.duelmode .duel-seat{display:flex}
 .dp-rank{position:absolute;top:-6px;left:26px;font-size:15px;z-index:4;filter:drop-shadow(0 1px 2px rgba(0,0,0,.55))}
 .dp-pro{font-size:9px;font-weight:900;letter-spacing:.5px;background:linear-gradient(90deg,#ffe9a8,#ffd166);color:#3a2600;padding:1px 5px;border-radius:6px;flex-shrink:0}
 .dp-fig.pro .dp-head{border-color:#ffd166;box-shadow:0 6px 16px rgba(0,0,0,.55),0 0 20px rgba(255,209,102,.6),inset 0 2px 3px rgba(255,255,255,.18)}
+.dp-stats{font-size:9.5px;font-weight:800;color:rgba(255,255,255,.7);background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.1);padding:1px 8px;border-radius:9px;white-space:nowrap}
 /* Në duel, ngjeshim pak bordin që të lërë vend për lojtarët */
 body.duelmode #board{transform:rotateX(16deg) scale(.9)}
 
@@ -1494,6 +1495,11 @@ body.duelmode #board{transform:rotateX(16deg) scale(.9)}
 .sf-amt{font-size:16px}
 .store-catdesc{font-size:10.5px;margin:2px 4px 10px}
 .cp-badge{font-size:7.5px;padding:2px 24px}
+/* Coins tab më kompakt & i pastër */
+.coin-packs{gap:10px;margin-top:10px}
+.coin-pack{padding:10px 9px 9px;border-radius:12px;gap:3px}
+.coin-pack .cp-icon{font-size:20px}
+.coin-pack .cp-amt{font-size:16px}
 
 /* Respekton përdoruesit që duan më pak lëvizje */
 @media (prefers-reduced-motion:reduce){
@@ -3551,10 +3557,14 @@ function renderDuelSeats(){
   const oppPro=!!(oL&&oL.pr);
   const oppRk=(oL&&oL.rk)||'';
   const mR=(typeof myRank==='function')?myRank():[0,'',''];
+  const rankName=(em)=>{ try{ const f=RANKS.find(x=>x[1]===em); return f?f[2]:''; }catch(e){ return ''; } };
   const fig=(av,pro,rk)=>`<div class="dp-fig${pro?' pro':''}">${rk?`<span class="dp-rank">${rk}</span>`:''}<div class="dp-body"></div><div class="dp-head">${av}</div>${pro?'<span class="dp-crown">👑</span>':''}</div>`;
   const nm=(name,pro)=>`<div class="dp-name">${pro?'<span class="dp-pro">PRO</span>':''}${name}</div>`;
-  top.innerHTML=fig(oppAv,oppPro,oppRk)+nm(oppNm,oppPro);
-  bot.innerHTML=nm(myName(),premium)+fig(avatar,premium,mR[1]);
+  const line=(rankNm,lv,wins)=>`<div class="dp-stats">${rankNm?rankNm:''}${lv!=null?(rankNm?' · ':'')+'Lv '+lv:''}${wins!=null?' · '+wins+'🆚':''}</div>`;
+  const oppLv=(oL&&(oL.lv!=null))?oL.lv:null;
+  const oppWn=(oL&&(oL.wn!=null))?oL.wn:null;
+  top.innerHTML=fig(oppAv,oppPro,oppRk)+nm(oppNm,oppPro)+line(rankName(oppRk),oppLv,oppWn);
+  bot.innerHTML=line(mR[2],(typeof playerLevel==='function'?playerLevel():null),(typeof duelWins!=='undefined'?duelWins:null))+nm(myName(),premium)+fig(avatar,premium,mR[1]);
 }
 function hideOverlays(){
   document.getElementById('winOverlay').classList.remove('show');
@@ -4911,7 +4921,7 @@ async function duelSync(){
   if(!duel)return;
   if(duel.mode==='2v2')return duelSync2v2();
   if(!duel.bot)sSet('duel:'+duel.code+':'+duel.role,
-    {p:pairsFound,rd:duel.round||0,mi:duelStats.mi,mo:moves,bh:duelStats.bh,th:duelStats.th,done:duel.done,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],em:myEmote});
+    {p:pairsFound,rd:duel.round||0,mi:duelStats.mi,mo:moves,bh:duelStats.bh,th:duelStats.th,done:duel.done,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],lv:playerLevel(),wn:duelWins,em:myEmote});
   const op=duel.bot?botNextState():await sGet('duel:'+duel.code+':'+(duel.role==='h'?'g':'h'));
   if(op){
     if(op.left){ if(duelPoll){clearInterval(duelPoll);duelPoll=null} toast('👋 Opponent left — you win!'); if(!duel.decided){duel.oppLeft=true;duel.done=true;duel.tm=duel.tm||(Date.now()-goTs);oppLast=op;finishDecide(true);} return; }
@@ -5050,7 +5060,7 @@ function duelTimeUp(){
   if(duel.mode==='2v2'){ try{duelSync2v2();}catch(e){} finish2v2(duel.lastSumA||0, duel.lastSumB||0); return; }
   if(duelPoll){clearInterval(duelPoll);duelPoll=null}
   duel.decided=true;
-  try{ sSet('duel:'+duel.code+':'+duel.role,{p:pairsFound,rd:duel.round||0,mi:duelStats.mi,mo:moves,bh:duelStats.bh,th:duelStats.th,done:true,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],em:myEmote}); }catch(e){}
+  try{ sSet('duel:'+duel.code+':'+duel.role,{p:pairsFound,rd:duel.round||0,mi:duelStats.mi,mo:moves,bh:duelStats.bh,th:duelStats.th,done:true,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],lv:playerLevel(),wn:duelWins,em:myEmote}); }catch(e){}
   // fituesi: raundi më i lartë → pastaj çiftet → pastaj më pak gabime
   const myR=duel.round||0, opR=oppLast.rd||0, myP=pairsFound, opP=oppLast.p||0;
   let outcome = myR>opR?'win':myR<opR?'lose':(myP>opP?'win':myP<opP?'lose':(duelStats.mi<(oppLast.mi||0)?'win':duelStats.mi>(oppLast.mi||0)?'lose':'draw'));
