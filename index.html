@@ -1390,9 +1390,32 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 .stat,.profile-chip,.level-chip{box-shadow:0 1px 0 rgba(255,255,255,.12) inset,0 4px 10px rgba(0,0,0,.35)}
 .pav{box-shadow:0 2px 5px rgba(0,0,0,.4),0 1px 0 rgba(255,255,255,.25) inset}
 
+/* ---- 3D në GJITHË aplikacionin (jo vetëm te loja) ---- */
+
+/* Titulli & logo me tekst 3D të reliefuar */
+.title{text-shadow:0 1px 0 rgba(120,80,15,.55),0 2px 0 rgba(100,66,12,.5),0 3px 0 rgba(80,52,10,.45),0 5px 10px rgba(0,0,0,.55)}
+.menu-logo .ml-name{text-shadow:0 1px 0 rgba(120,80,15,.6),0 2px 0 rgba(90,58,10,.5),0 4px 8px rgba(0,0,0,.5)}
+.help-h.grad,.tut-title,.season-name,.panel h2{text-shadow:0 2px 0 rgba(0,0,0,.35),0 4px 10px rgba(0,0,0,.45)}
+
+/* Panelet: ngritur qartë nga sfondi me thellësi */
+.panel{box-shadow:0 1px 0 rgba(255,255,255,.10) inset,0 16px 40px rgba(0,0,0,.55),0 4px 12px rgba(0,0,0,.4)}
+
+/* Kartat e dyqanit: thellësi + ngritje 3D */
+.shop-card{box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 6px 0 rgba(0,0,0,.28),0 10px 18px rgba(0,0,0,.4)}
+@media (hover:hover) and (pointer:fine){
+  .shop-card:hover{transform:translateY(-5px) scale(1.03)!important;box-shadow:0 1px 0 rgba(255,255,255,.1) inset,0 12px 22px rgba(0,0,0,.5)}
+}
+
+/* Kartat e modaliteteve: relievo 3D + shtypje */
+.mode-card{box-shadow:0 1px 0 rgba(255,255,255,.08) inset,0 5px 0 rgba(0,0,0,.3),0 9px 16px rgba(0,0,0,.4)}
+.mode-card:active{transform:translateY(4px)!important}
+
+/* Rreshtat e klasifikimit (leaderboard): bevel 3D */
+.lb-row{box-shadow:0 1px 0 rgba(255,255,255,.07) inset,0 3px 8px rgba(0,0,0,.35)}
+
 /* Respekton përdoruesit që duan më pak lëvizje */
 @media (prefers-reduced-motion:reduce){
-  .card:not(.matched):hover{transform:none!important}
+  .card:not(.matched):hover,.shop-card:hover{transform:none!important}
 }
 </style>
 </head>
