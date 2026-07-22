@@ -1418,32 +1418,64 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 .card-inner::before{
   content:'';position:absolute;inset:0;border-radius:13px;
   background:linear-gradient(180deg,
-    #23283a 0%, #23283a 9%,
-    #ffffff 12%, #f6f2e6 40%, #efe9d8 66%,
-    #d8d1bd 84%, #a49c86 92%, #6f6a5a 100%);
-  transform:translateZ(-16px);
-  /* hije e butë kontakti mbi tavolinë */
-  box-shadow:0 24px 30px -6px rgba(0,0,0,.62),0 10px 16px rgba(0,0,0,.5),0 3px 6px rgba(0,0,0,.45);
+    #23283a 0%, #23283a 8%,
+    #ffffff 11%, #f6f2e6 38%, #efe9d8 64%,
+    #d8d1bd 82%, #a49c86 91%, #625d4e 100%);
+  transform:translateZ(-20px);
+  /* hije shumë më e fortë kontakti mbi tavolinë */
+  box-shadow:0 34px 42px -6px rgba(0,0,0,.72),0 16px 24px rgba(0,0,0,.6),0 5px 9px rgba(0,0,0,.5);
   backface-visibility:hidden;-webkit-backface-visibility:hidden;
 }
 /* Dritë e printuar + teksturë e lehtë letre mbi fytyrë (si kartë reale) */
 .card-face{border-radius:13px}
 .card-face::after{
   background:
-    repeating-linear-gradient(115deg,rgba(255,255,255,.035) 0 2px,transparent 2px 4px),
-    linear-gradient(145deg,rgba(255,255,255,.30) 0%,rgba(255,255,255,.06) 24%,transparent 48%,rgba(0,0,0,.12) 76%,rgba(0,0,0,.24) 100%);
+    repeating-linear-gradient(115deg,rgba(255,255,255,.04) 0 2px,transparent 2px 4px),
+    linear-gradient(145deg,rgba(255,255,255,.34) 0%,rgba(255,255,255,.07) 22%,transparent 46%,rgba(0,0,0,.14) 74%,rgba(0,0,0,.28) 100%);
 }
 /* hije më e fortë poshtë fytyrës = ndjesi trashësie/kontakti */
-.card-front{box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 -6px 12px rgba(120,110,85,.28) inset,0 6px 10px rgba(0,0,0,.35),0 14px 22px rgba(0,0,0,.3)}
-.card-back-face{box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 -6px 12px rgba(0,0,0,.4) inset,0 6px 10px rgba(0,0,0,.45),0 14px 22px rgba(0,0,0,.35)}
+.card-front{box-shadow:0 1px 0 rgba(255,255,255,.65) inset,0 -7px 14px rgba(120,110,85,.3) inset,0 8px 12px rgba(0,0,0,.4),0 18px 28px rgba(0,0,0,.35)}
+.card-back-face{box-shadow:0 1px 0 rgba(255,255,255,.16) inset,0 -7px 14px rgba(0,0,0,.45) inset,0 8px 12px rgba(0,0,0,.5),0 18px 28px rgba(0,0,0,.4)}
 
 /* Tavolina anohet si sipërfaqe 3D → trashësia/hija e kartave duket edhe në telefon.
    VETËM transform statik (pa animacion) → i sigurt & i shpejtë në iOS. */
-#gameScreen{perspective:1250px;perspective-origin:50% 30%}
-#board{transform:rotateX(13deg);transform-style:preserve-3d}
+#gameScreen{perspective:1150px;perspective-origin:50% 28%}
+#board{transform:rotateX(15deg);transform-style:preserve-3d;position:relative}
 /* Kur e kthen, karta "ngrihet" drejt teje si kartë e vërtetë në dorë, me hije më të madhe */
 .card.flipped{z-index:4}
-.card.flipped .card-inner{transform:translateZ(10px) rotateY(180deg) scale(1.05)}
+.card.flipped .card-inner{transform:translateZ(14px) rotateY(180deg) scale(1.06)}
+
+/* ---- SIPËRFAQJA E TAVOLINËS (mat prapa kartave) ---- */
+body:not(.royalmode) #board::before{
+  content:'';position:absolute;inset:-34px -24px -46px;border-radius:34px;
+  background:
+    radial-gradient(ellipse 82% 64% at 50% 40%, rgba(88,72,52,.60), rgba(40,30,44,.72) 55%, rgba(14,10,20,.82) 100%);
+  border:2px solid rgba(232,161,58,.30);
+  box-shadow:0 54px 70px rgba(0,0,0,.62),inset 0 0 80px rgba(0,0,0,.55),inset 0 2px 0 rgba(255,255,255,.06);
+  transform:translateZ(-26px);
+  z-index:-1;pointer-events:none;
+}
+
+/* ---- DY LOJTARËT NË ANËT E TAVOLINËS (vetëm në ONLINE/DUEL) ---- */
+.duel-seat{position:absolute;left:50%;transform:translateX(-50%);display:none;flex-direction:column;align-items:center;gap:5px;z-index:1;pointer-events:none;filter:drop-shadow(0 10px 16px rgba(0,0,0,.5))}
+body.duelmode .duel-seat{display:flex}
+.duel-seat.top{top:190px}
+.duel-seat.bottom{bottom:14px}
+.dp-fig{position:relative;width:120px;height:62px;display:flex;flex-direction:column;align-items:center;justify-content:flex-end}
+.dp-head{width:50px;height:50px;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:27px;
+  background:radial-gradient(circle at 38% 30%,#413a5c,#1a1730);border:2.5px solid var(--amber2);
+  box-shadow:0 6px 16px rgba(0,0,0,.55),0 0 18px rgba(232,161,58,.35),inset 0 2px 3px rgba(255,255,255,.15);z-index:3}
+.dp-body{width:104px;height:38px;margin-top:-13px;
+  border-radius:58px 58px 20px 20px/74px 74px 20px 20px;
+  background:linear-gradient(180deg,#2c2846,#14111e);
+  border:2px solid rgba(232,161,58,.28);
+  box-shadow:0 10px 20px rgba(0,0,0,.55),inset 0 2px 0 rgba(255,255,255,.07);z-index:2}
+.dp-name{font-weight:900;font-size:12px;letter-spacing:.5px;background:rgba(14,12,30,.72);border:1px solid rgba(232,161,58,.45);color:var(--amber2);padding:3px 11px;border-radius:12px;white-space:nowrap;max-width:150px;overflow:hidden;text-overflow:ellipsis}
+/* Lojtari im (poshtë) shihet nga shpina → koka pak më e vogël dhe pa fytyrë e theksuar */
+.duel-seat.bottom .dp-head{font-size:0;background:radial-gradient(circle at 40% 32%,#4a4468,#211d38)}
+.duel-seat.bottom .dp-head::after{content:'';width:22px;height:22px;border-radius:50%;background:radial-gradient(circle at 40% 35%,#6a628c,#2a2544)}
+/* Në duel, ngjeshim pak bordin që të lërë vend për lojtarët */
+body.duelmode #board{transform:rotateX(16deg) scale(.92)}
 
 /* Respekton përdoruesit që duan më pak lëvizje */
 @media (prefers-reduced-motion:reduce){
@@ -2004,7 +2036,9 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
     <button class="boost-btn" id="bFreeze" onclick="playTap();boostFreeze()"><span class="bc">⏸️ 12</span></button>
     <button class="boost-btn" id="bLock" onclick="playTap();boostLock()"><span class="bc">🔒 12</span></button>
   </div>
+  <div class="duel-seat top" id="duelSeatTop"></div>
   <div id="board"></div>
+  <div class="duel-seat bottom" id="duelSeatBottom"></div>
 </div>
 
 <!-- FITORJA -->
@@ -3477,6 +3511,10 @@ function showScreen(id){
   // ⚽ GOAL RUSH: karta futbolli + sfond stadiumi VETËM në këtë modalitet (pa prekur skin/bg e lojtarit)
   document.body.classList.toggle('royalmode', id==='gameScreen'&&mode==='gold');
   document.body.classList.toggle('goldintro', id==='goldScreen'); // 🌱 fusha te intro-ja e GOAL RUSH
+  // 🪑 ONLINE (duel): dy lojtarë ulur në anët e tavolinës — VETËM kur luhet një duel
+  const inDuelPlay = (id==='gameScreen' && !!duel);
+  document.body.classList.toggle('duelmode', inDuelPlay);
+  if(inDuelPlay){ try{ renderDuelSeats(); }catch(e){} }
   // 🎵 zgjidh track-un e muzikës sipas ekranit (duel mbulohet nga `duel`)
   startMusic();   // 🎵 një track i vetëm luan kudo, pa u ndërprerë mes ekraneve
   if(id==='menuScreen'){updateTotalStars();updateModeLocks();checkAchievements(false);handlePendingDuel();openFeaturesInit();refreshCupBadge();
@@ -3484,6 +3522,16 @@ function showScreen(id){
     if(royalJustWonCup){ royalJustWonCup=false; setTimeout(()=>{try{celebrateCupHome();}catch(e){}},350); } // 🏆 festim kampioni në HOME
   } // 🌙 muzika e qetë e menusë
   if(id==='settingsScreen'){refreshProfileUI();syncMusicUI();}
+}
+/* 🪑 Vizato dy lojtarët në anët e tavolinës (vetëm në duel/online) */
+function renderDuelSeats(){
+  const top=document.getElementById('duelSeatTop'), bot=document.getElementById('duelSeatBottom');
+  if(!top||!bot) return;
+  const oppAv=(duel&&(duel.opAv||duel.oppAv))||'🧑';
+  const oppNm=(duel&&duel.opName)||'Rival';
+  const fig=(av)=>`<div class="dp-fig"><div class="dp-body"></div><div class="dp-head">${av}</div></div>`;
+  top.innerHTML=fig(oppAv)+`<div class="dp-name">${oppNm}</div>`;
+  bot.innerHTML=`<div class="dp-name">${myName()}</div>`+fig(avatar);
 }
 function hideOverlays(){
   document.getElementById('winOverlay').classList.remove('show');
@@ -3644,7 +3692,7 @@ function paintBoard(goldCards){
 
 function startLevel(g){
   if(!tut&&!hasTank()){showFuelDialog();return;}        // ⛽ pa rezervuar s'ka lojë (si Candy Crush)
-  mode='campaign'; bombHitThisGame=false; dealStyleIx=g; // 🆕 mode + stil kartash sipas levelit
+  mode='campaign'; duel=null; bombHitThisGame=false; dealStyleIx=g; // 🆕 mode + stil kartash sipas levelit (fushata s'është duel)
   startMusic();hideOverlays();
   document.getElementById('quitDialog').classList.remove('show');
   {const rb=document.getElementById('refreshBtn');if(rb)rb.style.display='';} // refresh vetëm në fushatë/offline
