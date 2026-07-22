@@ -1413,36 +1413,24 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 /* Rreshtat e klasifikimit (leaderboard): bevel 3D */
 .lb-row{box-shadow:0 1px 0 rgba(255,255,255,.07) inset,0 3px 8px rgba(0,0,0,.35)}
 
-/* ---- KARTAT E LOJËS: 3D REALE EDHE NË TELEFON (pa hover) ---- */
-/* Trashësi reale: një pllakë prapa fytyrave brenda hapësirës 3D */
+/* ---- KARTAT E LOJËS: 3D REALE EDHE NË TELEFON (pa hover, pa animacion të vazhdueshëm) ---- */
+/* Trashësi reale: një pllakë prapa fytyrave brenda hapësirës 3D (statike, e lehtë) */
 .card-inner::before{
   content:'';position:absolute;inset:0;border-radius:13px;
   background:linear-gradient(180deg,#3a3d55 0%,#191a2b 55%,#0c0d18 100%);
   transform:translateZ(-9px);
-  box-shadow:0 10px 16px rgba(0,0,0,.5);
+  box-shadow:0 8px 14px rgba(0,0,0,.5);
   backface-visibility:hidden;-webkit-backface-visibility:hidden;
 }
-/* Lëvizje e lehtë 3D që zbulon vëllimin (vetëm kur karta s'është kthyer/çiftuar) */
-@keyframes cardIdle3D{
-  0%{transform:rotateX(9deg) rotateY(-11deg)}
-  50%{transform:rotateX(5deg) rotateY(11deg)}
-  100%{transform:rotateX(9deg) rotateY(-11deg)}
-}
-.card:not(.flipped):not(.matched) .card-inner{
-  animation:cardIdle3D 4.2s ease-in-out infinite;
-  will-change:transform;
-}
-/* Desincronizim i lehtë që të mos tunden të gjitha njësoj */
-.card:nth-child(3n) .card-inner{animation-delay:-1.1s}
-.card:nth-child(3n+1) .card-inner{animation-delay:-2.4s}
-.card:nth-child(4n) .card-inner{animation-delay:-.6s}
-/* Kur kthehet, ndalon tundja dhe qëndron e lexueshme */
-.card.flipped .card-inner{animation:none}
+/* Tavolina anohet si sipërfaqe 3D → trashësia e kartave duket edhe në telefon.
+   Është VETËM një transform statik (pa animacion) → i sigurt & i shpejtë në iOS. */
+#gameScreen{perspective:1300px;perspective-origin:50% 32%}
+#board{transform:rotateX(11deg);transform-style:preserve-3d}
+/* Kur kthehet, karta rri e sheshtë dhe e lexueshme (pa trashësi mbi fytyrë) */
 
 /* Respekton përdoruesit që duan më pak lëvizje */
 @media (prefers-reduced-motion:reduce){
   .card:not(.matched):hover,.shop-card:hover{transform:none!important}
-  .card:not(.flipped):not(.matched) .card-inner{animation:none}
 }
 </style>
 </head>
