@@ -1414,26 +1414,36 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 .lb-row{box-shadow:0 1px 0 rgba(255,255,255,.07) inset,0 3px 8px rgba(0,0,0,.35)}
 
 /* ---- KARTAT E LOJËS: DUKEN SI LETRA/KARTA REALE 3D (i lehtë, pa animacion të vazhdueshëm) ---- */
-/* Trashësia = "bërthama e letrës" krem/e bardhë si buza e një karte të vërtetë */
+/* Trashësia = shtresa letre: print i errët + bërthamë e bardhë + print i errët (si buza e një karte reale) */
 .card-inner::before{
   content:'';position:absolute;inset:0;border-radius:13px;
-  background:linear-gradient(180deg,#fdfbf4 0%,#ece7d7 42%,#d3ccb8 72%,#b7ae97 100%);
-  transform:translateZ(-13px);
-  box-shadow:0 16px 22px rgba(0,0,0,.55),0 4px 8px rgba(0,0,0,.4);
+  background:linear-gradient(180deg,
+    #23283a 0%, #23283a 9%,
+    #ffffff 12%, #f6f2e6 40%, #efe9d8 66%,
+    #d8d1bd 84%, #a49c86 92%, #6f6a5a 100%);
+  transform:translateZ(-16px);
+  /* hije e butë kontakti mbi tavolinë */
+  box-shadow:0 24px 30px -6px rgba(0,0,0,.62),0 10px 16px rgba(0,0,0,.5),0 3px 6px rgba(0,0,0,.45);
   backface-visibility:hidden;-webkit-backface-visibility:hidden;
 }
-/* Dritë e printuar mbi fytyrë (shkëlqim si kartë reale) */
+/* Dritë e printuar + teksturë e lehtë letre mbi fytyrë (si kartë reale) */
 .card-face{border-radius:13px}
 .card-face::after{
-  background:linear-gradient(145deg,rgba(255,255,255,.28) 0%,rgba(255,255,255,.05) 26%,transparent 50%,rgba(0,0,0,.10) 78%,rgba(0,0,0,.20) 100%);
+  background:
+    repeating-linear-gradient(115deg,rgba(255,255,255,.035) 0 2px,transparent 2px 4px),
+    linear-gradient(145deg,rgba(255,255,255,.30) 0%,rgba(255,255,255,.06) 24%,transparent 48%,rgba(0,0,0,.12) 76%,rgba(0,0,0,.24) 100%);
 }
-/* Tavolina anohet si sipërfaqe 3D → trashësia e kartave duket edhe në telefon.
+/* hije më e fortë poshtë fytyrës = ndjesi trashësie/kontakti */
+.card-front{box-shadow:0 1px 0 rgba(255,255,255,.6) inset,0 -6px 12px rgba(120,110,85,.28) inset,0 6px 10px rgba(0,0,0,.35),0 14px 22px rgba(0,0,0,.3)}
+.card-back-face{box-shadow:0 1px 0 rgba(255,255,255,.14) inset,0 -6px 12px rgba(0,0,0,.4) inset,0 6px 10px rgba(0,0,0,.45),0 14px 22px rgba(0,0,0,.35)}
+
+/* Tavolina anohet si sipërfaqe 3D → trashësia/hija e kartave duket edhe në telefon.
    VETËM transform statik (pa animacion) → i sigurt & i shpejtë në iOS. */
 #gameScreen{perspective:1250px;perspective-origin:50% 30%}
-#board{transform:rotateX(12deg);transform-style:preserve-3d}
-/* Kur e kthen, karta "ngrihet" pak drejt teje si kartë e vërtetë në dorë */
+#board{transform:rotateX(13deg);transform-style:preserve-3d}
+/* Kur e kthen, karta "ngrihet" drejt teje si kartë e vërtetë në dorë, me hije më të madhe */
 .card.flipped{z-index:4}
-.card.flipped .card-inner{transform:rotateY(180deg) scale(1.06)}
+.card.flipped .card-inner{transform:translateZ(10px) rotateY(180deg) scale(1.05)}
 
 /* Respekton përdoruesit që duan më pak lëvizje */
 @media (prefers-reduced-motion:reduce){
