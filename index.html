@@ -376,10 +376,17 @@ svg{display:block}
 .level-chip{background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:8px 14px;font-weight:900;font-size:12px;letter-spacing:2px;color:var(--season);white-space:nowrap}
 #board{display:grid;gap:9px;width:100%;max-width:420px;flex:1;align-content:center;margin:0 auto}
 .card{position:relative;aspect-ratio:0.8;perspective:600px;cursor:pointer}
-.card-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .45s cubic-bezier(.3,1.2,.4,1)}
+.card-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .26s cubic-bezier(.3,1.25,.4,1)}
 .card.flipped .card-inner{transform:rotateY(180deg)}
-.card-face{position:absolute;inset:0;border-radius:13px;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 4px 12px rgba(0,0,0,.35)}
-.card-back-face{background:var(--card-back);border:2px solid color-mix(in srgb, var(--season) 55%, transparent);color:color-mix(in srgb, var(--season) 55%, transparent)}
+/* 🃏 VETËM hija u thellua — kartë reale mbi tavolinë. Flip-i 3D & pamja mbeten identike. */
+.card-face{position:absolute;inset:0;border-radius:13px;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 10px 18px rgba(0,0,0,.6),0 4px 7px rgba(0,0,0,.5),0 1px 2px rgba(0,0,0,.45)}
+/* hije e kontaktit nën kartë (jashtë 3D-së, s'prek flip-in) */
+.card::after{content:'';position:absolute;left:9%;right:9%;bottom:-5px;height:9px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.68),rgba(0,0,0,0) 72%);filter:blur(2.5px);pointer-events:none;z-index:-1;transition:all .45s cubic-bezier(.3,1.2,.4,1)}
+/* ngritje e vogël kur hapet → hija zbutet e zgjerohet */
+.card.flipped .card-inner{transform:rotateY(180deg) translateZ(9px)}
+.card.flipped::after{left:5%;right:5%;bottom:-8px;height:11px;filter:blur(4.5px);background:radial-gradient(ellipse,rgba(0,0,0,.55),rgba(0,0,0,0) 72%)}
+/* 🃏 Navy e errët + kornizë ARI e HOLLË + timoni (si te foto 3) */
+.card-back-face{background:linear-gradient(168deg,#1c2340,#141a30 55%,#0f1425);border:1.5px solid rgba(232,177,74,.72);color:rgba(232,177,74,.85);box-shadow:inset 0 1px 0 rgba(255,214,140,.16)}
 .card-front{background:linear-gradient(180deg,#fff,#e2e2e2);border:2.5px solid var(--season);font-size:32px;transform:rotateY(180deg)}
 .card.matched{animation:matchPulse .5s ease both}
 .card.matched .card-inner{opacity:.4}
@@ -459,7 +466,8 @@ svg{display:block}
 .gold-label{color:#052015;font-weight:900;letter-spacing:2px;text-shadow:0 1px 0 rgba(210,255,225,.6);position:relative;z-index:2}
 #btnGold .mg-e{position:relative;z-index:2;filter:drop-shadow(0 1px 2px rgba(120,70,0,.45))}
 #btnGold .gcrown{position:absolute;top:2px;right:10px;font-size:17px;filter:drop-shadow(0 1px 2px rgba(0,0,0,.4));animation:crownBounce 1.5s ease-in-out infinite;z-index:3}
-#btnGold .cup-count{position:absolute;top:-9px;left:-9px;z-index:5;background:linear-gradient(135deg,#fff2b0,#ffce4d 45%,#f5a623);color:#3a2400;font-size:14px;font-weight:900;padding:3px 9px;border-radius:14px;border:2px solid #fff;box-shadow:0 0 10px rgba(255,200,60,.9),0 0 20px rgba(255,180,40,.55),0 3px 8px rgba(0,0,0,.4);display:none;align-items:center;gap:1px;line-height:1;text-shadow:0 1px 1px rgba(255,255,255,.4);animation:cupBadgePulse 1.8s ease-in-out infinite}
+/* 🏆 Badge i kupave — BRENDA butonit (butoni ka overflow:hidden, jashtë pritej/prehej) */
+#btnGold .cup-count{position:absolute;top:6px;left:8px;z-index:5;background:linear-gradient(135deg,#fff2b0,#ffce4d 45%,#f5a623);color:#3a2400;font-size:12.5px;font-weight:900;padding:2px 8px;border-radius:12px;border:1.5px solid rgba(255,255,255,.9);box-shadow:0 0 8px rgba(255,200,60,.75),0 2px 5px rgba(0,0,0,.35);display:none;align-items:center;gap:1px;line-height:1;text-shadow:0 1px 1px rgba(255,255,255,.35);animation:cupBadgePulse 1.8s ease-in-out infinite}
 @keyframes cupBadgePulse{0%,100%{transform:scale(1);box-shadow:0 0 10px rgba(255,200,60,.9),0 0 20px rgba(255,180,40,.55),0 3px 8px rgba(0,0,0,.4)}50%{transform:scale(1.12);box-shadow:0 0 16px rgba(255,220,90,1),0 0 30px rgba(255,190,50,.75),0 3px 8px rgba(0,0,0,.4)}}
 /* 🏆 Festim kampioni në HOME */
 .cup-home-fx{position:fixed;inset:0;z-index:120;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 50% 42%,rgba(70,230,130,.28),rgba(4,10,8,.82));backdrop-filter:blur(3px);animation:cupHomeIn .5s ease-out}
@@ -478,7 +486,7 @@ svg{display:block}
 .gpart{position:absolute;bottom:-20px;color:#7cf0a0;font-size:10px;opacity:0;animation:gpart linear infinite;filter:drop-shadow(0 0 4px rgba(90,240,150,.8))}
 @keyframes gpart{0%{transform:translateY(0) scale(.6);opacity:0}12%{opacity:.85}100%{transform:translateY(-108vh) translateX(var(--gx,20px)) scale(1);opacity:0}}
 /* karta gold 3D */
-.card.goldcard .card-inner{transition:transform .5s cubic-bezier(.3,1.1,.4,1)}
+.card.goldcard .card-inner{transition:transform .3s cubic-bezier(.3,1.15,.4,1)}
 .card.goldcard .card-face{background:linear-gradient(150deg,#fff3cc 0%,#ffd166 38%,#e8a13a 62%,#b47510 100%)!important;border:2px solid #ffe9a8!important;box-shadow:0 4px 14px rgba(0,0,0,.5),inset 0 2px 6px rgba(255,255,255,.5),inset 0 -4px 8px rgba(120,70,0,.4)!important;color:#5a3c00!important;overflow:hidden;position:absolute!important;inset:0!important}
 .card.goldcard .card-face::before{content:'';position:absolute;top:-60%;left:-70%;width:60%;height:220%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.6),transparent);transform:rotate(8deg);animation:goldShine 2.8s ease-in-out infinite}
 @keyframes goldShine{0%,100%{left:-70%}50%{left:130%}}
@@ -545,23 +553,24 @@ svg{display:block}
 .hist-d{color:rgba(255,255,255,.7);min-width:64px;text-align:left}
 .hist-rk{flex:1;text-align:center}
 .hist-ms{color:var(--amber2);min-width:66px;text-align:right}
-/* 🎲 matchmaking VS */
-.mm-vs{display:flex;align-items:center;justify-content:space-between;gap:8px;margin:18px 0 8px}
-.mm-side{display:flex;flex-direction:column;align-items:center;gap:7px;width:96px}
-.mm-av{width:72px;height:72px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#2c2650,#141128);border:3px solid var(--amber2);display:flex;align-items:center;justify-content:center;font-size:34px;box-shadow:0 0 18px rgba(232,161,58,.35)}
-.mm-av.mm-unknown{border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.5);box-shadow:none;animation:mmPulse 1.4s ease-in-out infinite}
+/* 🎲 matchmaking VS — SCOPED to #matchOverlay so GOAL RUSH .mm-* CSS can't override it */
+#matchOverlay .mm-vs{display:flex;align-items:flex-start;justify-content:center;gap:4px;margin:18px 0 8px}
+#matchOverlay .mm-side{display:flex;flex-direction:column;align-items:center;gap:8px;flex:1;min-width:0}
+#matchOverlay .mm-mid{flex:0 0 auto;align-self:center}
+#matchOverlay .mm-av{width:66px;height:66px;border-radius:50%;background:radial-gradient(circle at 35% 30%,#2c2650,#141128);border:3px solid var(--amber2);display:flex;align-items:center;justify-content:center;font-size:32px;box-shadow:0 0 18px rgba(232,161,58,.35)}
+#matchOverlay .mm-av.mm-unknown{border-color:rgba(255,255,255,.25);color:rgba(255,255,255,.5);box-shadow:none;animation:mmPulse 1.4s ease-in-out infinite}
 @keyframes mmPulse{50%{transform:scale(1.07);border-color:rgba(255,209,102,.5)}}
-.mm-av.mm-found{animation:mmFound .6s cubic-bezier(.2,1.4,.4,1)}
+#matchOverlay .mm-av.mm-found{animation:mmFound .6s cubic-bezier(.2,1.4,.4,1)}
 @keyframes mmFound{0%{transform:scale(1.8);opacity:0}60%{transform:scale(.95);opacity:1}100%{transform:scale(1)}}
-.mm-avwrap{position:relative;display:flex;align-items:center;justify-content:center}
-.mm-radar{position:absolute;width:72px;height:72px;border-radius:50%;border:2px solid rgba(255,209,102,.55);animation:mmRadar 1.6s ease-out infinite;pointer-events:none}
-.mm-radar.r2{animation-delay:.8s}
-@keyframes mmRadar{0%{transform:scale(1);opacity:.8}100%{transform:scale(2);opacity:0}}
-.mm-name{font-weight:900;font-size:13px;max-width:96px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
-.mm-vstxt{font-weight:900;font-size:22px;color:var(--amber2);text-shadow:0 0 14px rgba(232,161,58,.6)}
-.mm-bet{display:inline-block;background:rgba(255,209,102,.12);border:1.5px solid rgba(255,209,102,.5);color:#ffd166;font-weight:900;border-radius:14px;padding:5px 16px;font-size:14px}
-.mm-status{margin-top:10px;font-size:12px;font-weight:800;color:rgba(255,255,255,.6);min-height:16px}
-.mm-found-txt{color:#3ef0a0!important}
+#matchOverlay .mm-avwrap{position:relative;display:flex;align-items:center;justify-content:center;width:66px;height:66px}
+#matchOverlay .mm-radar{position:absolute;top:0;left:0;width:66px;height:66px;margin:0;border-radius:50%;background:none;border:2px solid rgba(255,209,102,.55);animation:mmRadar 1.6s ease-out infinite;pointer-events:none}
+#matchOverlay .mm-radar.r2{animation-delay:.8s}
+@keyframes mmRadar{0%{transform:scale(1);opacity:.8}100%{transform:scale(1.85);opacity:0}}
+#matchOverlay .mm-name{font-weight:900;font-size:13px;max-width:100px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+#matchOverlay .mm-vstxt{font-weight:900;font-size:22px;color:var(--amber2);text-shadow:0 0 14px rgba(232,161,58,.6)}
+#matchOverlay .mm-bet{display:inline-block;background:rgba(255,209,102,.12);border:1.5px solid rgba(255,209,102,.5);color:#ffd166;font-weight:900;border-radius:14px;padding:5px 16px;font-size:14px}
+#matchOverlay .mm-status{margin-top:10px;font-size:12px;font-weight:800;color:rgba(255,255,255,.6);min-height:16px}
+#matchOverlay .mm-found-txt{color:#3ef0a0!important}
 .card.lightcard .card-front{background:linear-gradient(160deg,#0a2a6a,#1e5aff);border-color:#7fd0ff;box-shadow:0 0 16px rgba(90,160,255,.7);color:#fff;text-shadow:0 0 8px rgba(255,255,255,.6)}
 .card.lightcard .card-front::after{content:'⚡';position:absolute;top:2px;right:5px;font-size:13px;animation:blink 1s ease-in-out infinite}
 .card.shake,#regName.shake{animation:shake .4s ease}
@@ -833,7 +842,9 @@ svg{display:block}
 @keyframes badgePulse{0%,100%{transform:scale(1);box-shadow:0 2px 6px rgba(0,0,0,.4)}50%{transform:scale(1.18);box-shadow:0 0 10px rgba(255,79,94,.8)}}
 .menu-corner .coin-pill{font-size:12px}
 .store-list{display:flex;flex-direction:column;gap:12px;width:100%;max-width:390px;padding-bottom:60px}
-.store-sec{font-size:10.5px;letter-spacing:2.2px;color:rgba(255,255,255,.45);font-weight:800;margin:18px 2px 2px}   /* hapësirë sipër/poshtë titujve */
+/* tituj seksionesh me theks — më të qartë, jo bërtitës */
+.store-sec{display:flex;align-items:center;gap:8px;font-size:10.5px;letter-spacing:2.2px;color:rgba(255,255,255,.62);font-weight:900;margin:18px 2px 2px}
+.store-sec::before{content:'';width:3px;height:13px;border-radius:2px;background:linear-gradient(180deg,var(--amber2),var(--amber));flex-shrink:0}
 .store-row{display:flex;align-items:center;gap:12px;background:rgba(255,255,255,.035);border:1px solid rgba(255,255,255,.1);border-radius:16px;padding:13px 14px;transition:transform .16s cubic-bezier(.3,1.35,.5,1)}
 .store-row:active{transform:scale(.97)}
 .store-em{font-size:22px;width:38px;text-align:center;flex-shrink:0}
@@ -849,41 +860,63 @@ svg{display:block}
 /* 🪙 COIN PACKS — stil premium "pack" */
 /* 🛍️ STORE i thjeshtuar: ikona më të vogla, sfond neutral, glow vetëm te specialet */
 .coin-packs{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:12px}
-.coin-pack{position:relative;overflow:hidden;border-radius:16px;padding:13px 10px 11px;display:flex;flex-direction:column;align-items:center;gap:4px;border:1px solid rgba(255,255,255,.12);isolation:isolate;background:linear-gradient(165deg,#1a1828,#121019);box-shadow:0 3px 10px rgba(0,0,0,.3);transition:transform .16s cubic-bezier(.3,1.35,.5,1)}
+.coin-pack{position:relative;overflow:hidden;border-radius:16px;padding:13px 10px 11px;display:flex;flex-direction:column;align-items:center;gap:4px;border:1px solid rgba(255,255,255,.13);isolation:isolate;background:linear-gradient(168deg,#231f35,#15111f 55%,#100d18);box-shadow:0 4px 13px rgba(0,0,0,.4),inset 0 1px 0 rgba(255,255,255,.09);transition:transform .16s cubic-bezier(.3,1.35,.5,1)}
+.coin-pack::before{content:'';position:absolute;top:0;left:0;right:0;height:36%;z-index:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.07),transparent)}
 .coin-pack:active{transform:scale(.96)}
-.coin-pack .cp-icon{font-size:29px;line-height:1;filter:drop-shadow(0 2px 5px rgba(0,0,0,.45));z-index:1}
-.coin-pack .cp-amt{font-size:18px;font-weight:900;color:#fff;z-index:1;line-height:1}
+.coin-pack .cp-icon{font-size:33px;line-height:1;filter:drop-shadow(0 2px 5px rgba(0,0,0,.45));z-index:1}
+.coin-pack .cp-amt{font-size:20px;font-weight:900;color:#fff;z-index:1;line-height:1}
 .coin-pack .cp-lbl{font-size:8.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.5);z-index:1;margin-bottom:7px}
 .coin-pack .cp-buy{width:100%;justify-content:center;z-index:1}
 .coin-pack .cp-shine{display:none}   /* shkëlqim vetëm te BEST */
-.coin-pack.cp1{border-color:rgba(192,138,84,.32)}
-.coin-pack.cp2{border-color:rgba(90,168,255,.3)}
-.coin-pack.cp3{border-color:rgba(176,107,255,.5);box-shadow:0 3px 14px rgba(160,107,255,.2)}      /* POPULAR */
-.coin-pack.cp4{border-color:rgba(255,209,102,.6);box-shadow:0 3px 16px rgba(255,209,102,.26)}     /* BEST */
-.coin-pack.cp4 .cp-shine{display:block;position:absolute;top:0;left:-70%;width:55%;height:100%;z-index:0;pointer-events:none;background:linear-gradient(105deg,transparent,rgba(255,255,255,.18),transparent);transform:skewX(-18deg);animation:goldSheen 3.6s ease-in-out infinite}
-.cp-badge{position:absolute;top:8px;right:-26px;transform:rotate(38deg);z-index:2;font-size:8px;font-weight:900;letter-spacing:.5px;color:#1a1410;padding:2px 26px;box-shadow:0 1px 3px rgba(0,0,0,.3)}
+/* 🪙 paketa uniforme, të pastra — vetëm POPULAR/BEST marrin theks të lehtë */
+.coin-pack.cp3{border-color:rgba(255,209,102,.4)}                          /* POPULAR — theks i lehtë ari */
+.coin-pack.cp4{border-color:#ffd166;box-shadow:0 6px 20px rgba(255,209,102,.28),inset 0 1px 0 rgba(255,255,255,.1)}  /* BEST */
+.coin-pack .cp-icon{transition:transform .2s cubic-bezier(.3,1.4,.5,1)}
+.coin-pack:active .cp-icon{transform:scale(1.12) rotate(-6deg)}
+.coin-pack.cp4 .cp-shine{display:block;position:absolute;top:0;left:-70%;width:55%;height:100%;z-index:0;pointer-events:none;background:linear-gradient(105deg,transparent,rgba(255,255,255,.14),transparent);transform:skewX(-18deg);animation:goldSheen 3.6s ease-in-out infinite}
+/* 🪙 monedhat që fluturojnë drejt numëruesit + numëruesi që pulson */
+.fly-coin{position:fixed;z-index:96;font-size:22px;pointer-events:none;filter:drop-shadow(0 2px 5px rgba(0,0,0,.5))}
+#storeCoins.coin-pop{animation:coinPop .55s cubic-bezier(.2,1.5,.4,1)}
+@keyframes coinPop{0%{transform:scale(1)}40%{transform:scale(1.28);filter:drop-shadow(0 0 10px rgba(255,209,102,.9))}100%{transform:scale(1)}}
+/* etiketat BEST/POPULAR më të dukshme */
+.cp-badge{position:absolute;top:9px;right:-26px;transform:rotate(38deg);z-index:2;font-size:8.5px;font-weight:900;letter-spacing:.7px;color:#1a1410;padding:3px 26px;box-shadow:0 2px 6px rgba(0,0,0,.5);text-shadow:0 1px 0 rgba(255,255,255,.35)}
 .cp-badge.best{background:linear-gradient(90deg,#ffe9a8,#ffd166)}
-.cp-badge.pop{background:linear-gradient(90deg,#c9a8ff,#a06bff);color:#fff}
+.cp-badge.pop{background:linear-gradient(90deg,#e8e0cf,#c9bfa6);color:#2a2418}
 @media (prefers-reduced-motion: reduce){.coin-pack .cp-shine{animation:none}}
 .coin-drop{position:fixed;top:-32px;z-index:80;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4));animation:coinFall linear forwards}
 @keyframes coinFall{to{transform:translateY(112vh) rotate(420deg);opacity:.15}}
 /* 🃏🖼️ SHOP CARDS — stil FIFA për CARD STYLE & BACKGROUNDS */
 .shop-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;padding:14px 12px 10px}
-.shop-card{position:relative;overflow:hidden;border-radius:14px;padding:9px 8px;display:flex;flex-direction:column;align-items:center;gap:6px;border:1px solid rgba(255,255,255,.11);isolation:isolate;background:linear-gradient(165deg,#1a1828,#121019);box-shadow:0 2px 8px rgba(0,0,0,.28);transition:transform .16s cubic-bezier(.3,1.35,.5,1)}
-.shop-card:active{transform:scale(.96)}
-/* korniza neutrale — pa ngjyra të forta kudo; theks vetëm te ai në përdorim */
-.shop-card.cp1,.shop-card.cp2,.shop-card.cp3,.shop-card.cp4{border-color:rgba(255,255,255,.11)}
-.shop-card.inuse{border-color:rgba(60,240,160,.5)}
-.shop-prev{width:100%;height:40px;border-radius:9px;display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden;border:1px solid rgba(255,255,255,.08);box-shadow:inset 0 -4px 9px rgba(0,0,0,.25)}
-.shop-prev.skin{border-width:1px}
-.shop-prev .sp-em{font-size:21px;line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.45))}
-.shop-prev::before{content:'';position:absolute;top:0;left:0;right:0;height:45%;background:linear-gradient(180deg,rgba(255,255,255,.12),transparent);pointer-events:none}
-.shop-name{font-size:10.5px;font-weight:900;color:rgba(255,255,255,.92);text-align:center;line-height:1.15}
-/* çmimi / USE: i qartë por jo bërtitës */
-.shop-card .btn-mini,.coin-pack .cp-buy{padding:8px 10px;font-size:11px;border-radius:10px}
+/* ═══ 🍎 STORE stil App Store — rreshta të pastër, ikona të vogla, pill GET ═══ */
+.as-group{display:flex;flex-direction:column;background:rgba(255,255,255,.038);border:1px solid rgba(255,255,255,.09);border-radius:16px;overflow:hidden;box-shadow:0 4px 14px rgba(0,0,0,.28)}
+.asrow{display:flex;align-items:center;gap:12px;padding:10px 13px;cursor:pointer;position:relative;-webkit-tap-highlight-color:transparent;transition:background .16s;animation:asIn .34s cubic-bezier(.2,.9,.3,1) both}
+.asrow+.asrow::before{content:'';position:absolute;top:0;left:66px;right:0;height:1px;background:rgba(255,255,255,.07)} /* ndarëse si App Store, jo nën ikonë */
+.asrow:active{background:rgba(255,255,255,.06)}
+@keyframes asIn{from{opacity:0;transform:translateY(9px)}to{opacity:1;transform:none}}
+.asrow:nth-child(2){animation-delay:.03s}.asrow:nth-child(3){animation-delay:.06s}.asrow:nth-child(4){animation-delay:.09s}.asrow:nth-child(5){animation-delay:.12s}.asrow:nth-child(6){animation-delay:.15s}.asrow:nth-child(7){animation-delay:.18s}.asrow:nth-child(8){animation-delay:.21s}.asrow:nth-child(n+9){animation-delay:.24s}
+.as-ic{width:42px;height:42px;flex-shrink:0;border-radius:11px;display:flex;align-items:center;justify-content:center;overflow:hidden;position:relative;box-shadow:0 2px 5px rgba(0,0,0,.35)}
+.as-ic span{font-size:20px;line-height:1;filter:drop-shadow(0 1px 3px rgba(0,0,0,.5))}
+.as-ic::after{content:'';position:absolute;inset:0;pointer-events:none;background:linear-gradient(180deg,rgba(255,255,255,.16),transparent 50%)}
+.as-mid{flex:1;min-width:0}
+.as-name{display:flex;align-items:center;gap:6px;font-size:14px;font-weight:900;color:#fff;line-height:1.1;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.as-sub{font-size:11px;font-weight:700;color:rgba(255,255,255,.42);margin-top:2px}
+.as-tag{flex-shrink:0;font-size:7.5px;font-weight:900;letter-spacing:.4px;color:#1a1410;padding:2px 6px;border-radius:6px}
+.as-tag.best{background:linear-gradient(90deg,#ffe9a8,#ffd166)}
+.as-tag.pop{background:linear-gradient(90deg,#c9a8ff,#a06bff);color:#fff}
+.as-tag.nnew{background:linear-gradient(90deg,#7fffd0,#3ef0a0);color:#0a2a1e}
+/* pill GET stil App Store (djathtas) */
+.as-pill{flex-shrink:0;font-size:12px;font-weight:900;letter-spacing:.3px;border-radius:16px;padding:6px 15px;line-height:1;transition:transform .14s cubic-bezier(.3,1.35,.5,1)}
+.asrow:active .as-pill{transform:scale(.9)}
+.as-pill.buy{color:#ffd97a;background:rgba(255,209,102,.16)}
+.as-pill.own{color:#8fd0ff;background:rgba(90,168,255,.16)}
+.as-pill.on{color:#7ED957;background:rgba(126,217,87,.18)}
+@media (prefers-reduced-motion: reduce){.asrow{animation:none!important}}
+/* çmimi / USE: i qartë, me pak thellësi — jo i sheshtë */
+.shop-card .btn-mini,.coin-pack .cp-buy{padding:8px 10px;font-size:11px;border-radius:10px;box-shadow:0 2px 6px rgba(0,0,0,.3),inset 0 1px 0 rgba(255,255,255,.28);z-index:1}
+.shop-card .btn-mini.inuse{box-shadow:0 2px 6px rgba(0,0,0,.25),inset 0 1px 0 rgba(126,217,87,.25)}
 .cp-badge.nnew{background:linear-gradient(90deg,#7fffd0,#3ef0a0);color:#0a2a1e}
 /* ⭐ FEATURED hero + tabs kategori */
-.store-featured{position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;margin:10px 0 6px;padding:9px 12px;border-radius:14px;border:1px solid rgba(255,233,168,.7);cursor:pointer;background:linear-gradient(105deg,#5a3d0a,#b9791a 38%,#e8a13a 58%,#b9791a 78%,#5a3d0a);box-shadow:0 4px 14px rgba(232,161,58,.28),inset 0 1px 2px rgba(255,255,255,.22);transition:transform .16s cubic-bezier(.3,1.35,.5,1)}
+.store-featured{position:relative;overflow:hidden;display:flex;align-items:center;gap:10px;margin:10px 0 6px;padding:10px 13px;border-radius:15px;border:1.5px solid #ffe9a8;cursor:pointer;background:linear-gradient(105deg,#5a3d0a,#b9791a 38%,#e8a13a 58%,#b9791a 78%,#5a3d0a);box-shadow:0 6px 22px rgba(232,161,58,.5),0 0 0 1px rgba(255,224,150,.3),inset 0 1px 3px rgba(255,255,255,.4);transition:transform .16s cubic-bezier(.3,1.35,.5,1)}
 .store-featured:active{transform:scale(.96)}
 .store-featured .sf-shine{position:absolute;top:0;left:-70%;width:48%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.55),transparent);transform:skewX(-18deg);animation:goldSheen 3.4s ease-in-out infinite;pointer-events:none}
 .sf-badge{position:absolute;top:8px;right:10px;z-index:2;font-size:8px;font-weight:900;letter-spacing:1px;color:#3a2600;background:rgba(255,255,255,.6);border-radius:8px;padding:2px 7px}
@@ -1097,7 +1130,20 @@ body[data-skin="basket"] .card-back-face svg{display:none}
 body[data-skin="basket"] .card-back-face::after{content:'🏀';font-size:min(11vw,40px);line-height:1;filter:drop-shadow(0 2px 4px rgba(0,0,0,.5))}
 body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c06,#7a3a0e);border-color:#ff9a3a;box-shadow:0 0 12px rgba(255,140,42,.35)}
 /* ---- Karta e profilit ---- */
-.profile-card{background:linear-gradient(160deg,rgba(232,161,58,.14),rgba(14,12,30,.5));border:1px solid rgba(232,161,58,.35);border-radius:18px;padding:14px;margin-bottom:14px}
+.profile-card{position:relative;overflow:hidden;background:linear-gradient(160deg,color-mix(in srgb,var(--rc,#E8A13A) 22%,transparent),rgba(14,12,30,.72) 55%,rgba(10,8,22,.85));border:1.5px solid color-mix(in srgb,var(--rc,#E8A13A) 55%,transparent);border-radius:20px;padding:16px 15px;margin-bottom:14px;box-shadow:0 10px 30px rgba(0,0,0,.45),inset 0 1px 0 rgba(255,255,255,.1),0 0 0 1px rgba(255,255,255,.04)}
+.pc-shine{position:absolute;top:0;left:-60%;width:45%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.12),transparent);transform:skewX(-18deg);animation:goldSheen 4.5s ease-in-out infinite;pointer-events:none}
+.pc-rankchip{position:absolute;top:13px;right:13px;font-size:8.5px;font-weight:900;letter-spacing:1.3px;color:#12101d;padding:3px 10px;border-radius:9px;box-shadow:0 3px 9px rgba(0,0,0,.45);z-index:2}
+.pc-hero{display:flex;align-items:center;gap:13px;position:relative;z-index:1}
+.pc-avbig{position:relative;width:62px;height:62px;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:32px;background:rgba(0,0,0,.35);border:2.5px solid var(--rc,#E8A13A);box-shadow:0 0 22px color-mix(in srgb,var(--rc,#E8A13A) 55%,transparent),inset 0 2px 6px rgba(0,0,0,.5)}
+.pc-crown{position:absolute;top:-11px;font-size:15px;font-style:normal;filter:drop-shadow(0 2px 3px rgba(0,0,0,.6))}
+.pc-nm{font-size:20px;font-weight:900;color:#fff;line-height:1.05;text-shadow:0 2px 6px rgba(0,0,0,.5)}
+.pc-rank{font-weight:900;font-size:13px;color:var(--rc,#E8A13A);margin-top:2px}
+.pc-lvl{font-size:10.5px;font-weight:700;color:rgba(255,255,255,.55);margin-top:2px}
+.pc-wr{margin-top:13px;position:relative;z-index:1}
+.pc-wrbar{height:9px;border-radius:6px;background:rgba(0,0,0,.4);overflow:hidden;box-shadow:inset 0 1px 3px rgba(0,0,0,.5)}
+.pc-wrbar i{display:block;height:100%;border-radius:6px;background:linear-gradient(90deg,var(--rc,#E8A13A),#fff);transition:width .7s cubic-bezier(.3,1.1,.4,1)}
+.pc-wrtxt{display:flex;justify-content:space-between;align-items:center;margin-top:5px;font-size:10px;font-weight:800;color:rgba(255,255,255,.6)}
+.pc-wrtxt b{color:var(--rc,#E8A13A);font-size:11px}
 .pc-top{display:flex;align-items:center;gap:12px}
 .pc-badge{font-size:30px;width:50px;height:50px;display:flex;align-items:center;justify-content:center;background:rgba(14,12,30,.55);border-radius:14px;border:1px solid rgba(255,255,255,.12);flex-shrink:0}
 .pc-id{flex:1;min-width:0}
@@ -1111,6 +1157,32 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 .pc-stat{background:rgba(14,12,30,.5);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px 4px;text-align:center}
 .pc-stat b{display:block;font-size:16px;font-weight:900;color:#fff}
 .pc-stat span{font-size:9.5px;font-weight:700;color:rgba(255,255,255,.55)}
+/* 🗂️ PROFILI me tabs (folder) — i shkurtër, i qartë, me animacione */
+.prof-tabs{display:flex;gap:7px;margin:14px 0 12px}
+.ptab{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:9px 4px;border-radius:13px;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.045);color:rgba(255,255,255,.6);font-weight:900;cursor:pointer;transition:transform .14s cubic-bezier(.3,1.35,.5,1),background .18s,color .18s,border-color .18s}
+.ptab:active{transform:scale(.95)}
+.ptab .pt-ic{font-size:17px;line-height:1;transition:transform .25s cubic-bezier(.2,1.4,.4,1)}
+.ptab .pt-lbl{font-size:8.5px;letter-spacing:.6px}
+.ptab.on{background:linear-gradient(180deg,var(--amber2),var(--amber));color:#1a1410;border-color:transparent;box-shadow:0 3px 10px rgba(232,161,58,.32)}
+.ptab.on .pt-ic{transform:scale(1.18) translateY(-1px)}
+.prof-pane{display:none}
+.prof-pane.show{display:block;animation:ppIn .32s cubic-bezier(.2,.9,.3,1) both}
+@keyframes ppIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+.pf-lbl{display:flex;align-items:center;gap:7px;font-size:11px;font-weight:900;letter-spacing:1.2px;color:rgba(255,255,255,.55);text-transform:uppercase;margin-bottom:9px}
+.pf-lbl span:first-child{font-size:15px}
+/* stagger i lehtë te chips-at e statistikave */
+.prof-pane.show .pc-stat{animation:ppIn .3s cubic-bezier(.2,.9,.3,1) both}
+.prof-pane.show .pc-stat:nth-child(2){animation-delay:.03s}
+.prof-pane.show .pc-stat:nth-child(3){animation-delay:.06s}
+.prof-pane.show .pc-stat:nth-child(4){animation-delay:.09s}
+.prof-pane.show .pc-stat:nth-child(5){animation-delay:.12s}
+.prof-pane.show .pc-stat:nth-child(6){animation-delay:.15s}
+.prof-pane.show .pc-stat:nth-child(7){animation-delay:.18s}
+.prof-pane.show .pc-stat:nth-child(8){animation-delay:.21s}
+.prof-pane.show .pc-stat:nth-child(n+9){animation-delay:.24s}
+.pc-stat{transition:transform .14s cubic-bezier(.3,1.35,.5,1)}
+.pc-stat:active{transform:scale(.96)}
+@media (prefers-reduced-motion: reduce){.prof-pane.show,.prof-pane.show .pc-stat{animation:none!important}}
 /* ---- Flash i shpërthimit të bombës ---- */
 #flash{position:fixed;inset:0;background:radial-gradient(circle at 50% 44%,#fff,#eaf2ff 70%);opacity:0;pointer-events:none;z-index:60}
 #flash.on{animation:flashPop .5s ease-out}
@@ -1261,7 +1333,95 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 .stat.timelow{color:#ff6b6b;text-shadow:0 0 10px rgba(255,90,90,.6);animation:pulseLow .8s ease-in-out infinite}
 @keyframes pulseLow{0%,100%{opacity:1}50%{opacity:.55}}
 /* ---- Dueli ---- */
-.opp-bar{display:none;align-items:center;justify-content:space-between;width:100%;max-width:420px;background:rgba(14,12,30,.55);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:9px 14px;font-weight:800;font-size:13px;margin-bottom:8px;gap:10px}
+/* 🪑 TAVOLINA E DUELIT — kundërshtari lart, VS në mes, ti poshtë */
+.opp-bar{display:none;flex-direction:column;width:100%;max-width:420px;background:linear-gradient(180deg,rgba(20,16,40,.7),rgba(12,10,26,.6));border:1px solid rgba(255,255,255,.12);border-radius:16px;padding:8px 12px;margin-bottom:8px;gap:2px;box-shadow:0 4px 14px rgba(0,0,0,.35),inset 0 1px 0 rgba(255,255,255,.06)}
+.dt-side{display:flex;align-items:center;gap:9px;padding:5px 2px}
+.dt-side.me{cursor:pointer}
+.dt-av{position:relative;width:32px;height:32px;flex-shrink:0;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:18px;background:rgba(255,255,255,.09);border:1.5px solid rgba(255,255,255,.2)}
+.dt-side.me .dt-av{border-color:rgba(126,217,87,.6);box-shadow:0 0 9px rgba(126,217,87,.3)}
+.dt-side.opp .dt-av{border-color:rgba(255,107,107,.55);box-shadow:0 0 9px rgba(255,107,107,.25)}
+.dt-crown{position:absolute;top:-9px;font-size:11px;font-style:normal}
+.dt-info{flex:1;min-width:0}
+.dt-name{font-size:12.5px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.1}
+.dt-pairs{font-size:9.5px;font-weight:700;color:rgba(255,255,255,.45);margin-top:1px}
+.dt-score{flex-shrink:0;font-size:19px;font-weight:900;color:#ff8a8a;min-width:26px;text-align:right}
+.dt-score.me{color:#7ED957}
+/* mesi: vija + VS */
+.dt-mid{display:flex;align-items:center;justify-content:center;gap:9px;position:relative;padding:1px 0}
+.dt-mid::before,.dt-mid::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.18),transparent)}
+.dt-vs{font-size:11px;font-weight:900;letter-spacing:2px;color:var(--amber2);flex-shrink:0}
+.dt-round{position:absolute;right:0;font-size:8px;font-weight:800;letter-spacing:.5px;color:rgba(255,255,255,.4)}
+/* ═══ 😈 TROLLAT — shirit + cooldown me sekonda + efektet ═══ */
+.troll-bar{display:none;gap:7px;justify-content:center;flex-wrap:wrap;width:100%;max-width:420px;margin:6px 0 2px}
+.tr-btn{position:relative;width:44px;height:40px;border-radius:12px;border:1px solid rgba(255,255,255,.14);background:rgba(255,255,255,.06);font-size:19px;cursor:pointer;transition:transform .14s cubic-bezier(.3,1.35,.5,1),opacity .2s;-webkit-tap-highlight-color:transparent}
+.tr-btn:active{transform:scale(.9)}
+.tr-btn.cool{opacity:.45;pointer-events:none}
+.tr-cd{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:16px;font-weight:900;color:#fff;text-shadow:0 2px 5px rgba(0,0,0,.8);background:rgba(0,0,0,.45);border-radius:12px}
+.tr-btn:not(.cool) .tr-cd{display:none}
+/* overlay i efekteve (vetëm te marrësi) */
+.troll-fx{position:fixed;inset:0;z-index:118;pointer-events:none;display:none;overflow:hidden}
+.troll-fx.show{display:block}
+.troll-fx.white{background:#fff;animation:trFade 1.5s ease-out forwards}
+.troll-fx.dark{background:#000;animation:trDark 2.2s ease-out forwards}
+.troll-fx.bomb{animation:trShake .55s cubic-bezier(.36,.07,.19,.97)}
+@keyframes trFade{0%{opacity:.96}70%{opacity:.9}100%{opacity:0}}
+@keyframes trDark{0%{opacity:.95}75%{opacity:.92}100%{opacity:0}}
+@keyframes trShake{0%,100%{transform:translate(0,0)}20%{transform:translate(-9px,5px)}40%{transform:translate(8px,-6px)}60%{transform:translate(-6px,-4px)}80%{transform:translate(5px,6px)}}
+.tr-boom{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-size:110px;animation:trBoom .85s ease-out forwards}
+@keyframes trBoom{0%{transform:scale(.3);opacity:0}30%{transform:scale(1.25);opacity:1}100%{transform:scale(1.7);opacity:0}}
+.tr-rain{position:absolute;top:-40px;animation:trRain 2.2s linear forwards}
+@keyframes trRain{to{transform:translateY(112vh) rotate(320deg);opacity:.2}}
+.tr-talk{position:absolute;left:50%;top:26%;transform:translateX(-50%);max-width:78vw;background:linear-gradient(160deg,#2a1030,#160a1c);border:1.5px solid rgba(255,120,180,.6);border-radius:16px;padding:12px 16px;font-weight:800;font-size:14px;color:#fff;text-align:center;box-shadow:0 12px 34px rgba(0,0,0,.6);animation:cupHomePop .5s cubic-bezier(.2,1.4,.4,1)}
+.tr-talk b{display:block;font-size:10px;letter-spacing:1px;color:#ff8ac0;margin-bottom:4px}
+#board.tr-blur{filter:blur(6px);transition:filter .3s}
+/* 😈 efektet e reja të trollave (vetëm te marrësi) */
+#board.tr-spin{animation:trSpin 2.2s ease-in-out}
+#board.tr-flip{transform:rotate(180deg);transition:transform .5s}
+#board.tr-zoom{transform:scale(1.35);transition:transform .4s}
+#board.tr-fog{filter:blur(1.5px) contrast(.6) brightness(.7);transition:filter .3s}
+#board.tr-glitch{animation:trGlitch .18s steps(2) infinite}
+#board.tr-tiny{transform:scale(.62);transition:transform .4s}
+@keyframes trSpin{0%,100%{transform:rotate(0)}50%{transform:rotate(360deg)}}
+@keyframes trGlitch{0%{transform:translate(0);filter:hue-rotate(0)}50%{transform:translate(-4px,2px);filter:hue-rotate(90deg)}100%{transform:translate(3px,-2px);filter:hue-rotate(0)}}
+/* ⚡ energjia + gjendjet e butonave */
+.tr-energy{display:flex;align-items:center;font-size:12px;font-weight:900;color:#ffd97a;background:rgba(255,209,102,.14);border:1px solid rgba(255,209,102,.4);border-radius:11px;padding:0 9px;height:40px}
+.tr-en{position:absolute;bottom:1px;right:4px;font-size:8px;font-weight:900;color:rgba(255,255,255,.55)}
+.tr-btn.poor{opacity:.5}
+.tr-btn.blocked{border-color:rgba(255,90,90,.7)}
+.tr-btn.blocked .tr-cd{color:#ff9a9a}
+/* 👤 Karta e lojtarit (prek emrin/avatarin) */
+.pcard-ov{position:fixed;inset:0;z-index:134;display:none;align-items:center;justify-content:center;padding:30px;background:rgba(0,0,0,.72)}
+.pcard-ov.show{display:flex;animation:cupHomeIn .28s ease-out}
+.pcard{width:100%;max-width:300px;text-align:center;background:linear-gradient(165deg,#241f38,#12101d);border:1.5px solid rgba(255,255,255,.16);border-radius:20px;padding:20px 18px;box-shadow:0 20px 54px rgba(0,0,0,.6);animation:cupHomePop .45s cubic-bezier(.2,1.4,.4,1)}
+.pcard-av{position:relative;width:66px;height:66px;margin:0 auto;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:34px;background:rgba(255,255,255,.08);border:2px solid rgba(232,161,58,.6);box-shadow:0 0 16px rgba(232,161,58,.28)}
+.pcard-nm{font-size:19px;font-weight:900;color:#fff;margin-top:9px}
+.pcard-sub{font-size:11px;font-weight:800;color:rgba(255,255,255,.5);margin-top:2px}
+.pcard-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:14px}
+.pcard-st{background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px 4px}
+.pcard-st b{display:block;font-size:16px;font-weight:900;color:#fff}
+.pcard-st span{font-size:8.5px;font-weight:700;color:rgba(255,255,255,.5)}
+/* 👤 profil premium */
+.pcard{position:relative;overflow:hidden}
+.pcard-glow{position:absolute;top:-40%;left:50%;width:150%;height:70%;transform:translateX(-50%);background:radial-gradient(ellipse at 50% 0%,color-mix(in srgb,var(--rc) 34%,transparent),transparent 70%);pointer-events:none}
+.pcard-rank{position:absolute;top:12px;right:12px;font-size:8.5px;font-weight:900;letter-spacing:1.2px;color:#12101d;padding:3px 9px;border-radius:8px;box-shadow:0 2px 7px rgba(0,0,0,.4)}
+.pcard-av{border-color:var(--rc)!important;box-shadow:0 0 20px color-mix(in srgb,var(--rc) 55%,transparent)!important}
+.pcard-wr{margin-top:11px}
+.pcard-wrbar{height:8px;border-radius:5px;background:rgba(255,255,255,.12);overflow:hidden}
+.pcard-wrbar i{display:block;height:100%;border-radius:5px;background:linear-gradient(90deg,var(--rc),#fff);transition:width .6s cubic-bezier(.3,1.1,.4,1)}
+.pcard-wr span{display:block;font-size:9.5px;font-weight:800;color:rgba(255,255,255,.6);margin-top:4px}
+.pcard-grid{grid-template-columns:repeat(3,1fr)!important}
+.pcard-st.win b{color:#7ED957}
+.pcard-st.loss b{color:#ff8a8a}
+/* 🏷️ rank chip + ⚔️ head-to-head */
+.rank-chip{font-size:7px;font-weight:900;letter-spacing:.6px;color:#12101d;padding:1.5px 5px;border-radius:6px;margin-left:5px;vertical-align:middle;white-space:nowrap}
+.mm-h2h{display:none;width:100%;max-width:280px;margin:10px auto 0;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.12);border-radius:14px;padding:8px 12px}
+.mm-h2h.show{display:block;animation:ppIn .35s cubic-bezier(.2,.9,.3,1) both}
+.h2h-row{display:flex;align-items:center;justify-content:space-between;gap:8px;padding:4px 0;font-size:13px;font-weight:900;color:#fff}
+.h2h-row+.h2h-row{border-top:1px solid rgba(255,255,255,.07)}
+.h2h-l{flex:1;text-align:left;color:#7ED957}
+.h2h-r{flex:1;text-align:right;color:#ff9a9a}
+.h2h-c{font-size:8.5px;font-weight:800;letter-spacing:1px;color:rgba(255,255,255,.42);text-transform:uppercase}
+@media (prefers-reduced-motion: reduce){.troll-fx.bomb,.tr-boom,.tr-rain{animation-duration:.01s}}
 #countOverlay{position:absolute;inset:0;background:rgba(5,6,12,.88);z-index:26;display:none;align-items:center;justify-content:center}
 #countOverlay.show{display:flex}
 .count-num{font-size:96px;font-weight:900;color:var(--amber2);text-shadow:0 0 44px rgba(232,161,58,.6)}
@@ -1879,6 +2039,8 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
   <div class="level-badge" id="levelBadge"></div>
   <div class="opp-bar" id="oppBar"></div>
   <div class="emote-bar" id="emoteBar"></div>
+  <div class="troll-bar" id="trollBar"></div>
+  <div class="troll-fx" id="trollFx"></div>
   <div class="booster-bar" id="boosterBar">
     <button class="boost-btn" id="bPeek" onclick="playTap();boostPeek()"><span class="bc">👁️ 15</span></button>
     <button class="boost-btn" id="bFuel" onclick="playTap();boostFuel()"><span class="bc">⛽ 10</span></button>
@@ -2068,6 +2230,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
       <div class="mm-mid"><div class="mm-vstxt">VS</div></div>
       <div class="mm-side"><div class="mm-avwrap"><div class="mm-radar"></div><div class="mm-radar r2"></div><div class="mm-av mm-unknown" id="mmOppAv">❔</div></div><div class="mm-name" id="mmOppName">…</div></div>
     </div>
+    <div class="mm-h2h" id="mmH2H"></div>
     <div class="mm-bet" id="mmBet">🪙 50</div>
     <div class="mm-status" id="mmStatus"></div>
     <button class="btn btn-ghost" style="width:100%;margin-top:12px" onclick="playTap();cancelMatch()"><span data-i18n="cancel"></span></button>
@@ -2146,22 +2309,27 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
   <div class="dialog-box profile-sheet" style="max-width:440px;width:94%;max-height:92vh;overflow-y:auto;text-align:left">
     <h3 style="margin-bottom:8px">👤 <span data-i18n="secProfile"></span></h3>
     <div id="profileCard" class="profile-card"></div>
-    <div class="set-row" style="flex-direction:column;align-items:stretch;gap:8px">
-      <span class="set-label"><span style="font-size:16px">✏️</span><span data-i18n="usernameLbl"></span></span>
+    <!-- 🗂️ Tabs si folder — profil i shkurtër dhe i qartë -->
+    <div class="prof-tabs">
+      <button class="ptab on" id="ptabStats"  onclick="setProfTab('stats')"><span class="pt-ic">📊</span><span class="pt-lbl" data-i18n="tabStats"></span></button>
+      <button class="ptab"    id="ptabLook"   onclick="setProfTab('look')"><span class="pt-ic">😎</span><span class="pt-lbl" data-i18n="tabLook"></span></button>
+      <button class="ptab"    id="ptabBadges" onclick="setProfTab('badges')"><span class="pt-ic">🏅</span><span class="pt-lbl" data-i18n="tabBadges"></span></button>
+    </div>
+    <div class="prof-pane show" id="ppStats"><div class="pc-stats" id="profStats"></div></div>
+    <div class="prof-pane" id="ppLook">
+      <div class="pf-lbl"><span>✏️</span><span data-i18n="usernameLbl"></span></div>
       <div style="display:flex;gap:8px">
         <input id="profNameInput" maxlength="12" placeholder="Racer" style="flex:1;background:rgba(14,12,30,.6);border:1.5px solid rgba(232,161,58,.5);border-radius:12px;color:#fff;padding:10px 12px;font-family:'Nunito';font-weight:800;font-size:14px;outline:none">
         <button class="btn-mini" onclick="saveProfileName()"><span data-i18n="saveBtn"></span></button>
       </div>
-    </div>
-    <div class="set-row" style="flex-direction:column;align-items:stretch;gap:10px">
-      <span class="set-label"><span style="font-size:16px">😎</span><span data-i18n="avatarLbl"></span></span>
+      <div class="pf-lbl" style="margin-top:14px"><span>😎</span><span data-i18n="avatarLbl"></span></div>
       <div class="avatar-grid" id="avatarGrid"></div>
     </div>
-    <div class="set-row" style="flex-direction:column;align-items:stretch;gap:10px">
-      <span class="set-label"><span style="font-size:16px">🏅</span><span data-i18n="achTitle"></span> <span id="achCount" style="opacity:.6;font-weight:800;font-size:12px"></span></span>
+    <div class="prof-pane" id="ppBadges">
+      <div class="pf-lbl"><span>🏅</span><span data-i18n="achTitle"></span> <span id="achCount" style="opacity:.6;font-weight:800;font-size:12px"></span></div>
       <div class="ach-grid" id="achGrid"></div>
     </div>
-    <button class="btn btn-ghost" style="width:100%;margin-top:8px" onclick="playTap();document.getElementById('profileOverlay').classList.remove('show')"><span data-i18n="close"></span></button>
+    <button class="btn btn-ghost" style="width:100%;margin-top:12px" onclick="playTap();document.getElementById('profileOverlay').classList.remove('show')"><span data-i18n="close"></span></button>
   </div>
 </div>
 
@@ -2253,7 +2421,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='MISS-R31';
+const BUILD_TAG='FIX-R41';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
@@ -2307,7 +2475,7 @@ const I18N={
     swapWarn:'🌀 Gabove — dy karta ndërruan vendet!',
     shufLbl:'ÇIFTI PËRZIERËS', peekLbl:'ÇIFTI SHIKUES', shufSub:'I NGATËRRON KARTAT', peekSub:'TREGON GJITHÇKA',
     iceLbl:'AKULL', iceSub:'PREKE PËR TA ÇARË', chainLbl:'ME ZINXHIRË', chainSub:'BËJ 2 ÇIFTE PËR TA HAPUR', lightLbl:'VETËTIMË', lightSub:'ÇIFT FALAS', oilSpread:'🛢️ Vaji u përhap!', countDefused:'DEFUSED! 😮‍💨 +2⛽', countBoom:'⏲️💥 BUM! −2⛽', shutMsg:'🪟 Qepeni i mbyllur — prit radhën!', torMsg:'🌪️ Tornado! Luaj rreth saj', mystG1:'MISTER: +2⛽ 🎉', mystG2:'MISTER: +30 🪙', mystG3:'MISTER: Shikim i shpejtë! 👀', mystB1:'MISTER: −1⛽ 😬', mystB2:'MISTER: Përzierje! 🔀', mystB3:'MISTER: Akull! 🧊', safeMsg:'🔐 Edhe {n} goditje…', safeOpen:'💎 Kasaforta u hap! +100 🪙', hOilL:'VAJ', hOilS:'PASTROJE PARA SE TË PËRHAPET', hCntL:'NUMËRIMI', hCntS:'GJEJE PARA 0 — OSE BUM', hShutL:'QEPENAT', hShutS:'HAPEN-MBYLLEN ÇDO LËVIZJE', hTorL:'TORNADO', hTorS:'KËRCEN PAS ÇDO LËVIZJEJE', hMystL:'MISTERI', hMystS:'50/50 — GUXON?', hSafeL:'KASAFORTA', hSafeS:'3 PREKJE → 💎 +100',
-    secProfile:'PROFILI ONLINE', usernameLbl:'Emri i lojtarit', saveBtn:'Ruaj', avatarLbl:'Avatari', rankLbl:'Rangu', winsLbl:'fitore',
+    secProfile:'PROFILI ONLINE', tabStats:'STATS', tabLook:'PAMJA', tabBadges:'ARRITJE', trollSent:'U dërgua!', trollMsg:'Mesazh (max 40)', pairsLbl:'çifte', trollBlocked:'Trollat u bllokuan!', trollNoEnergy:'S\'ka energji — gjej çifte!', noLiveOpp:'S\'u gjet lojtar live — po luan me CPU', pcStrength:'Forca', pcEasy:'Lehtë', pcMed:'Mesatar', pcHard:'I fortë', pcElite:'Elitë', winRate:'fitore', lossLbl:'humbje', duelsLbl:'duele', trollsLbl:'trolla', seasonLbl:'Sezoni', usernameLbl:'Emri i lojtarit', saveBtn:'Ruaj', avatarLbl:'Avatari', rankLbl:'Rangu', winsLbl:'fitore',
     premiumLbl:'Memory Drive PRO', proActive:'PRO AKTIV',
     proOnly:'👑 Avatarët PRO hapen me Premium!', proWelcome:'👑 Mirë se erdhe në PRO! +500 🪙',
     regTitle:'Krijo profilin', regSub:'Zgjidh emrin dhe avatarin për duelet online', regGo:'FILLO',
@@ -2335,7 +2503,7 @@ const I18N={
     s1:'Garazhi', s2:'Qyteti', s3:'Autostrada', s4:'Nata', s5:'Pista',
     store:'DYQANI', best:'Rekordi', scoreLbl:'Pikët', newBest:'REKORD I RI PIKËSH!',
     buy:'BLEJ', useIt:'PËRDORE', inUse:'NË PËRDORIM', notEnough:'S\u2019ke monedha të mjaftueshme! Shko te dyqani 🪙',
-    secCoins:'MERR MONEDHA', secFuel:'KARBURANT', secSkins:'STILI I KARTAVE', secBgs:'SFONDET', cpBest:'MË MIRË', cpPopular:'POPULLOR', cpNew:'RE', sfLbl:'VEÇANTË', sfSub:'Vlera më e mirë — më shumë monedha', bgStadium:'Stadiumi', bgArena:'Arena', skBasket:'Basketboll', skinsDesc:'Ndryshon PAMJEN e kartave në lojë', bgsDesc:'Ndryshon SFONDIN pas kartave',
+    secCoins:'MERR MONEDHA', secFuel:'KARBURANT', secSkins:'STILI I KARTAVE', secBgs:'SFONDET', cpBest:'MË MIRË', cpPopular:'POPULLOR', cpNew:'RE', sfLbl:'VEÇANTË', sfSub:'Vlera më e mirë — më shumë monedha', bgStadium:'Stadiumi', bgArena:'Arena', skBasket:'Basketboll', skinsDesc:'Ndryshon PAMJEN e kartave në lojë', bgsDesc:'Ndryshon SFONDIN pas kartave', skinSub:'Stil karte', bgSub:'Sfond',
     fuelBoost:'Karburant +3', fuelBoostD:'Shtohet automatikisht në nivelin tjetër',
     coinsAmt:'monedha', demoNote:'Demo — pagesa e vërtetë me Apple Pay bëhet në aplikacionin iOS',
     purchased:'U ble! 🎉', applied:'U aktivizua ✓',
@@ -2409,7 +2577,7 @@ const I18N={
     swapWarn:'🌀 You missed — two cards swapped places!',
     shufLbl:'SHUFFLE PAIR', peekLbl:'PEEK PAIR', shufSub:'MIXES ALL CARDS', peekSub:'REVEALS EVERYTHING',
     iceLbl:'ICE', iceSub:'TAP TO CRACK', chainLbl:'CHAINED', chainSub:'MATCH 2 TO UNLOCK', lightLbl:'LIGHTNING', lightSub:'FREE PAIR', oilSpread:'🛢️ The oil spread!', countDefused:'DEFUSED! 😮‍💨 +2⛽', countBoom:'⏲️💥 BOOM! −2⛽', shutMsg:'🪟 Shutter closed — wait a turn!', torMsg:'🌪️ Tornado! Play around it', mystG1:'MYSTERY: +2⛽ 🎉', mystG2:'MYSTERY: +30 🪙', mystG3:'MYSTERY: Quick peek! 👀', mystB1:'MYSTERY: −1⛽ 😬', mystB2:'MYSTERY: Shuffle! 🔀', mystB3:'MYSTERY: Ice! 🧊', safeMsg:'🔐 {n} more hits…', safeOpen:'💎 Safe cracked! +100 🪙', hOilL:'OIL', hOilS:'WIPE IT BEFORE IT SPREADS', hCntL:'COUNTDOWN', hCntS:'MATCH BEFORE 0 — OR BOOM', hShutL:'SHUTTERS', hShutS:'OPEN & CLOSE EVERY MOVE', hTorL:'TORNADO', hTorS:'JUMPS AFTER EVERY MOVE', hMystL:'MYSTERY', hMystS:'50/50 — DARE?', hSafeL:'THE SAFE', hSafeS:'3 TAPS → 💎 +100',
-    secProfile:'ONLINE PROFILE', usernameLbl:'Username', saveBtn:'Save', avatarLbl:'Avatar', rankLbl:'Rank', winsLbl:'wins',
+    secProfile:'ONLINE PROFILE', tabStats:'STATS', tabLook:'LOOK', tabBadges:'BADGES', trollSent:'Sent!', trollMsg:'Message (max 40)', pairsLbl:'pairs', trollBlocked:'Trolls blocked!', trollNoEnergy:'No energy — find pairs!', noLiveOpp:'No live opponent found — playing vs CPU', pcStrength:'Strength', pcEasy:'Easy', pcMed:'Medium', pcHard:'Strong', pcElite:'Elite', winRate:'win rate', lossLbl:'losses', duelsLbl:'duels', trollsLbl:'trolls', seasonLbl:'Season', usernameLbl:'Username', saveBtn:'Save', avatarLbl:'Avatar', rankLbl:'Rank', winsLbl:'wins',
     premiumLbl:'Memory Drive PRO', proActive:'PRO ACTIVE',
     proOnly:'👑 PRO avatars unlock with Premium!', proWelcome:'👑 Welcome to PRO! +500 🪙',
     regTitle:'Create your profile', regSub:'Pick a name and avatar for online duels', regGo:'START',
@@ -2437,7 +2605,7 @@ const I18N={
     s1:'The Garage', s2:'The City', s3:'The Highway', s4:'The Night', s5:'The Racetrack',
     store:'STORE', best:'Best', scoreLbl:'Score', newBest:'NEW HIGH SCORE!',
     buy:'BUY', useIt:'USE', inUse:'IN USE', notEnough:'Not enough coins! Visit the store 🪙',
-    secCoins:'GET COINS', secFuel:'FUEL', secSkins:'CARD STYLE', secBgs:'BACKGROUNDS', cpBest:'BEST', cpPopular:'POPULAR', cpNew:'NEW', sfLbl:'FEATURED', sfSub:'Best value — most coins', bgStadium:'Stadium', bgArena:'Arena', skBasket:'Basketball', skinsDesc:'Changes how your CARDS look in-game', bgsDesc:'Changes the BACKGROUND behind cards',
+    secCoins:'GET COINS', secFuel:'FUEL', secSkins:'CARD STYLE', secBgs:'BACKGROUNDS', cpBest:'BEST', cpPopular:'POPULAR', cpNew:'NEW', sfLbl:'FEATURED', sfSub:'Best value — most coins', bgStadium:'Stadium', bgArena:'Arena', skBasket:'Basketball', skinsDesc:'Changes how your CARDS look in-game', bgsDesc:'Changes the BACKGROUND behind cards', skinSub:'Card style', bgSub:'Background',
     fuelBoost:'Fuel +3', fuelBoostD:'Automatically added to your next level',
     coinsAmt:'coins', demoNote:'Demo — real Apple Pay payments work in the iOS app',
     purchased:'Purchased! 🎉', applied:'Applied ✓',
@@ -2511,7 +2679,7 @@ const I18N={
     swapWarn:'🌀 Zgrešil si — dve karti sta zamenjali mesti!',
     shufLbl:'PAR MEŠANJA', peekLbl:'PAR POGLEDA', shufSub:'PREMEŠA KARTE', peekSub:'POKAŽE VSE',
     iceLbl:'LED', iceSub:'TAPNI ZA RAZBITJE', chainLbl:'VERIGE', chainSub:'POVEŽI 2 ZA ODKLEP', lightLbl:'STRELA', lightSub:'BREZPLAČEN PAR', oilSpread:'🛢️ Olje se je razlilo!', countDefused:'RAZOROŽENO! 😮‍💨 +2⛽', countBoom:'⏲️💥 BUM! −2⛽', shutMsg:'🪟 Roleta zaprta — počakaj potezo!', torMsg:'🌪️ Tornado! Igraj okoli njega', mystG1:'SKRIVNOST: +2⛽ 🎉', mystG2:'SKRIVNOST: +30 🪙', mystG3:'SKRIVNOST: Hiter pogled! 👀', mystB1:'SKRIVNOST: −1⛽ 😬', mystB2:'SKRIVNOST: Mešanje! 🔀', mystB3:'SKRIVNOST: Led! 🧊', safeMsg:'🔐 Še {n} udarcev…', safeOpen:'💎 Sef odprt! +100 🪙', hOilL:'OLJE', hOilS:'OBRIŠI, PREDEN SE RAZLIJE', hCntL:'ODŠTEVANJE', hCntS:'NAJDI PRED 0 — ALI BUM', hShutL:'ROLETE', hShutS:'ODPIRAJO-ZAPIRAJO VSAKO POTEZO', hTorL:'TORNADO', hTorS:'SKOČI PO VSAKI POTEZI', hMystL:'SKRIVNOST', hMystS:'50/50 — SI UPAŠ?', hSafeL:'SEF', hSafeS:'3 DOTIKI → 💎 +100',
-    secProfile:'SPLETNI PROFIL', usernameLbl:'Uporabniško ime', saveBtn:'Shrani', avatarLbl:'Avatar', rankLbl:'Rang', winsLbl:'zmag',
+    secProfile:'SPLETNI PROFIL', tabStats:'STATI', tabLook:'VIDEZ', tabBadges:'ZNAČKE', trollSent:'Poslano!', trollMsg:'Sporočilo (max 40)', pairsLbl:'parov', trollBlocked:'Troli blokirani!', trollNoEnergy:'Ni energije — najdi pare!', noLiveOpp:'Ni igralca v živo — igraš proti CPU', pcStrength:'Moč', pcEasy:'Lahko', pcMed:'Srednje', pcHard:'Močan', pcElite:'Elita', winRate:'zmage', lossLbl:'porazi', duelsLbl:'dvoboji', trollsLbl:'troli', seasonLbl:'Sezona', usernameLbl:'Uporabniško ime', saveBtn:'Shrani', avatarLbl:'Avatar', rankLbl:'Rang', winsLbl:'zmag',
     premiumLbl:'Memory Drive PRO', proActive:'PRO AKTIVEN',
     proOnly:'👑 PRO avatarji se odklenejo s Premium!', proWelcome:'👑 Dobrodošel v PRO! +500 🪙',
     regTitle:'Ustvari profil', regSub:'Izberi ime in avatarja za spletne dvoboje', regGo:'ZAČNI',
@@ -2539,7 +2707,7 @@ const I18N={
     s1:'Garaža', s2:'Mesto', s3:'Avtocesta', s4:'Noč', s5:'Dirkališče',
     store:'TRGOVINA', best:'Rekord', scoreLbl:'Točke', newBest:'NOV REKORD!',
     buy:'KUPI', useIt:'UPORABI', inUse:'V UPORABI', notEnough:'Premalo kovancev! Obišči trgovino 🪙',
-    secCoins:'KOVANCI', secFuel:'GORIVO', secSkins:'SLOG KART', secBgs:'OZADJA', cpBest:'NAJBOLJŠE', cpPopular:'PRILJUBLJENO', cpNew:'NOVO', sfLbl:'IZBRANO', sfSub:'Najboljša vrednost — največ kovancev', bgStadium:'Stadion', bgArena:'Arena', skBasket:'Košarka', skinsDesc:'Spremeni VIDEZ kart v igri', bgsDesc:'Spremeni OZADJE za kartami',
+    secCoins:'KOVANCI', secFuel:'GORIVO', secSkins:'SLOG KART', secBgs:'OZADJA', cpBest:'NAJBOLJŠE', cpPopular:'PRILJUBLJENO', cpNew:'NOVO', sfLbl:'IZBRANO', sfSub:'Najboljša vrednost — največ kovancev', bgStadium:'Stadion', bgArena:'Arena', skBasket:'Košarka', skinsDesc:'Spremeni VIDEZ kart v igri', bgsDesc:'Spremeni OZADJE za kartami', skinSub:'Slog kart', bgSub:'Ozadje',
     fuelBoost:'Gorivo +3', fuelBoostD:'Samodejno dodano na naslednji stopnji',
     coinsAmt:'kovancev', demoNote:'Demo — pravo plačilo z Apple Pay deluje v iOS aplikaciji',
     purchased:'Kupljeno! 🎉', applied:'Aktivirano ✓',
@@ -2593,16 +2761,20 @@ const SEASONS=[
   {key:'s2',emoji:'🚦',color:'#3AC6E8',symbols:['🚕','🚌','🚓','🚑','🚒','🚦','🛵','🚲','🚧','🏢','🅿️','🚏']},
   {key:'s3',emoji:'🌄',color:'#7ED957',symbols:['🚚','🚛','🚐','🏍️','🌉','⛺','🗺️','🧭','🌄','☀️','🛑','⛰️']},
   {key:'s4',emoji:'🌙',color:'#9B6BFF',symbols:['🌙','⭐','🌃','💡','🔦','🚨','🦌','🦉','🌌','🌠','🚗','⛽️']},
-  {key:'s5',emoji:'🏆',color:'#FF5C5C',symbols:['🏎️','🏁','🏆','🥇','⏱️','🔥','💨','🛞','⚡','🎖️','🥈','🥉']}
+  {key:'s5',emoji:'🏆',color:'#FF5C5C',symbols:['🏎️','🏁','🏆','🥇','⏱️','🔥','💨','🛞','⚡','🎖️','🥈','🥉']},
+  // 🆕 Sezone të reja të luajtshme
+  {key:'cs6',emoji:'🚀',color:'#8B7BFF',symbols:['🚀','🛸','🪐','🌕','⭐','☄️','👨‍🚀','🛰️','🌌','🔭','🌠','🪨']},
+  {key:'cs7',emoji:'🏝️',color:'#2FC4A0',symbols:['🏝️','🌴','🥥','🐚','⛵','🐬','🦜','🌺','🍹','🏄','🐠','🌊']},
+  {key:'cs8',emoji:'❄️',color:'#5AC8F5',symbols:['❄️','⛄','🧊','🐧','🏔️','🛷','🧣','🐻‍❄️','🌨️','⛸️','🦌','🏂']}
 ];
-const TOTAL=50, PER_SEASON=10;
+const TOTAL=80, PER_SEASON=10;
 
 function levelParams(g){
   const season=Math.floor(g/PER_SEASON);
   // 🔥 Më e zorshme: çifte rriten më shpejt (fillon 4, +1 çdo 4 nivele)
   const pairs=Math.min(4+Math.floor(g/4),12);
   // Karburanti bëhet gjithnjë e më i pakët sezon pas sezoni (më i shtrënguar)
-  const factor=[2.5,2.3,2.1,1.95,1.8][season];
+  const factor=[2.5,2.3,2.1,1.95,1.8,1.75,1.7,1.65][season]||1.65;
   const maxMoves=Math.max(pairs+1, Math.ceil(pairs*factor));
   const cols=pairs<=3?3:4;
   return {season,pairs,maxMoves,cols};
@@ -2752,20 +2924,20 @@ function renderSeasons(){
       card.innerHTML=`<div class="season-emoji" style="filter:grayscale(1)">${se.emoji}</div>
         <div class="season-info">
           <div class="season-name">${s+1}. ${t(se.key)}</div>
-          <div class="season-sub">${t('s'+s)||''}</div>
+          <div class="season-sub">${s<5?(t('s'+s)||''):''}</div>
         </div>
         <div class="season-lock"><svg class="ic"><use href="#i-lock"/></svg></div>`;
     }
     list.appendChild(card);
   });
   // 🔜 Sezonet 6-10 — Coming Soon me tema (deri në 10 sezone)
-  [['🚀','cs6'],['🏝️','cs7'],['❄️','cs8'],['🌋','cs9'],['👑','cs10']].forEach(([em,key],i)=>{
+  [['🌋','cs9'],['👑','cs10']].forEach(([em,key],i)=>{
     const card=document.createElement('div');
     card.className='season-card locked';
     card.style.setProperty('--sc','#999');
     card.innerHTML=`<div class="season-emoji" style="filter:grayscale(.75)">${em}</div>
       <div class="season-info">
-        <div class="season-name">${6+i}. ${t(key)}</div>
+        <div class="season-name">${9+i}. ${t(key)}</div>
         <div class="season-sub" style="color:var(--amber2);font-weight:900;letter-spacing:2px">${t('comingSoon')}</div>
       </div>
       <div class="season-lock">🔜</div>`;
@@ -3573,7 +3745,9 @@ function startLevel(g){
 
   document.getElementById('oppBar').style.display='none';
   {const eb=document.getElementById('emoteBar');if(eb)eb.style.display='none';}
-  {const bb=document.getElementById('boosterBar');if(bb)bb.style.display='flex';} // ndihmësat në fushatë
+  {const tb=document.getElementById('trollBar');if(tb)tb.style.display='none';}   // 😈 trollat VETËM në duel
+  {const tf=document.getElementById('trollFx');if(tf){tf.className='troll-fx';tf.innerHTML='';}}
+  {const bb=document.getElementById('boosterBar');if(bb)bb.style.display='flex';} // ndihmësat falas në fushatë
   updateBoosterBar();
   stopTimer();
   timerInt=setInterval(()=>{if(Date.now()<freezeUntil)return;seconds++;updateHud()},1000);
@@ -3639,7 +3813,7 @@ function chooseCard(c){
 
   // KARTA E DYTË — ndonjëherë del BASTI 😏 (para se të hapet!)
   if(tut&&tut.forceSure){tut.forceSure=false;showSurePopup(c);return}
-  if(!duel&&!tut&&!sureShown&&Math.random()<(mode==='love'?0.3:0.16)){showSurePopup(c);return} // 💘 rrena më shpesh në Love
+  if(!duel&&!tut&&!sureShown&&Math.random()<(mode==='love'?0.16:0.05)){showSurePopup(c);return} // 💘 rrena rrallë — kartat hapen menjëherë (më shpesh vetëm në Love)
   flipSecond(c,false);
 }
 
@@ -3675,6 +3849,7 @@ function flipSecond(c,gamble){
       playMatch();pairsFound++;
       if(mode==='gold'){goldPairScored(c); try{shredCard(a,{gold:true,keepHidden:true});shredCard(c,{gold:true,keepHidden:true});}catch(e){}}
       if(!duel)fuelBonus++; // ⛽ çifti i saktë NUK harxhon naftë — vetëm gabimi e harxhon
+      else { try{addTrollEnergy(1);}catch(e){} }   // ⚡ çift i gjetur në duel = +1 energji trolli
       if(mode==='endless'&&!duel)endlessPairScored(); // ♾️ 5🪙/çift (max 100/seancë)
       questProgress('doMatches',1); // 📋 detyra e përputhjeve
       tickChains(); // 🔗 çdo përputhje ul numëruesit e zinxhirëve
@@ -3739,11 +3914,11 @@ function flipSecond(c,gamble){
           // ⚡ gabim në duel → rrufe + letrat ndërrohen (kaos)
           try{const r=c.getBoundingClientRect();drawLightning(r.left+r.width/2,r.top+r.height/2);}catch(e){}
           try{oilOnMiss();onMoveDone();clearLastPairTraps();}catch(e){}
-          if(pairsFound<params.pairs)swapTwo(true);
+          if(pairsFound<params.pairs&&Math.random()<0.2)swapTwo(true); // 🌀 rrallë (~1 në 5 gabime) — jo çdo herë
         }
         else if(!tut){
           try{oilOnMiss();onMoveDone();clearLastPairTraps();}catch(e){}    // 🛢️ vaji + mekanikat + fundi i pastër
-          if(mode==='campaign'&&params.season>=2)swapTwo(true); // 🌀 gabove? dy karta ndërrojnë vendet! (vetëm fushatë)
+          if(mode==='campaign'&&params.season>=3&&Math.random()<0.15)swapTwo(true); // 🌀 gabove? rrallë (~1 në 7) dy karta ndërrojnë vendet — vetëm sezonet e vona
           if(mode==='campaign'&&moves>=4 && Math.random()<0.28) toast(FUNNY_MISS[Math.floor(Math.random()*FUNNY_MISS.length)]); // 😄 shaka e rrallë kur gabon
           if(fuelLeft()<=0)onFuelOut();
         }
@@ -3873,9 +4048,11 @@ function playNextFromWin(){
 /* 🛟 SECOND CHANCE — kur mbaron karburanti (vetëm fushatë) */
 function handleFuelOut(){
   if(secondChanceUsed){ levelLost(); return; }
+  // 🚫 PA paywall te Play: nëse s'je PRO, thjesht mbaron niveli — asnjë upsell
+  if(!premium){ levelLost(); return; }
   stopTimer();
   const btn=document.getElementById('scContinueBtn');
-  if(btn)btn.innerHTML = premium ? 'CONTINUE (+3 ⛽)' : 'CONTINUE 👑';
+  if(btn)btn.innerHTML = 'CONTINUE (+3 ⛽)';
   document.getElementById('secondChance').classList.add('show');
 }
 function scContinue(){
@@ -3990,17 +4167,15 @@ function renderStore(){
   document.getElementById('storeCoins').textContent=`🪙 ${coins}`;
   const list=document.getElementById('storeList');
   let h='';
-  // ⭐ FEATURED — oferta më e mirë e coinsave
-  {const cp=COINPACKS[3];
-   h+=`<div class="store-featured" onclick="buyCoins(3)"><div class="sf-shine"></div><div class="sf-badge">⭐ ${t('sfLbl')}</div><div class="sf-icon">👑</div><div class="sf-info"><div class="sf-amt">${cp.coins.toLocaleString()} <span>${t('coinsAmt')}</span></div><div class="sf-sub">${t('sfSub')}</div></div><div class="btn-mini ap sf-buy">&#63743; €${cp.price}</div></div>`;}
   // 🗂️ Tabs kategori
+
   const tabs=[['coins','🪙',t('secCoins')],['cards','🃏',t('secSkins')],['bgs','🖼️',t('secBgs')],['fuel','⛽',t('secFuel')]];
   h+=`<div class="store-tabs">`+tabs.map(([k,ic,lbl])=>`<button class="stab${storeTab===k?' on':''}" onclick="setStoreTab('${k}')"><span class="stab-ic">${ic}</span><span class="stab-lbl">${lbl}</span></button>`).join('')+`</div>`;
   // 📦 Përmbajtja sipas tabit
   h+=`<div class="store-tabbody">`;
   if(storeTab==='coins'){ h+=coinPacksHTML(); }
-  else if(storeTab==='cards'){ h+=`<div class="store-catdesc">🃏 ${t('skinsDesc')}</div><div class="shop-grid">`+SKINS.map(it=>itemRow(it,'skin')).join('')+`</div>`; }
-  else if(storeTab==='bgs'){ h+=`<div class="store-catdesc">🖼️ ${t('bgsDesc')}</div><div class="shop-grid">`+BGS.map(it=>itemRow(it,'bg')).join('')+`</div>`; }
+  else if(storeTab==='cards'){ h+=`<div class="store-catdesc">🃏 ${t('skinsDesc')}</div><div class="as-group">`+SKINS.map(it=>itemRow(it,'skin')).join('')+`</div>`; }
+  else if(storeTab==='bgs'){ h+=`<div class="store-catdesc">🖼️ ${t('bgsDesc')}</div><div class="as-group">`+BGS.map(it=>itemRow(it,'bg')).join('')+`</div>`; }
   else if(storeTab==='fuel'){ h+=`<div class="store-row"><div class="store-em">⛽</div><div class="store-info"><div class="store-name">${t('fuelBoost')}${fuelPacks>0?` &nbsp;×${fuelPacks}`:''}</div><div class="store-sub">${t('fuelBoostD')}</div></div><button class="btn-mini" onclick="buyFuel()">${t('buy')} 🪙 600</button></div>`; }
   h+=`</div>`;
   list.innerHTML=h;
@@ -4043,18 +4218,21 @@ function itemRow(it,kind){
   const tier=it.price>=4000?'cp4':it.price>=2600?'cp3':it.price>=1500?'cp2':'cp1';
   const bc=ITEM_BADGE[it.id];
   const bLbl=bc==='BEST'?t('cpBest'):bc==='NEW'?t('cpNew'):bc==='POP'?t('cpPopular'):'';
-  const badge=bc?`<div class="cp-badge ${bc==='BEST'?'best':bc==='NEW'?'nnew':'pop'}">${bLbl}</div>`:'';
-  let btn;
-  if(inUse)btn=`<button class="btn-mini inuse" style="width:100%">✓ ${t('inUse')}</button>`;
-  else if(isOwned)btn=`<button class="btn-mini ghost" style="width:100%" onclick="useItem('${kind}','${it.id}')">${t('useIt')}</button>`;
-  else btn=`<button class="btn-mini" style="width:100%" onclick="buyItem('${kind}','${it.id}',${it.price})">🪙 ${it.price}</button>`;
-  let prev;
-  if(kind==='skin'){ const col=SKIN_COL[it.id]||'#8a8f9a'; prev=`<div class="shop-prev skin" style="border-color:${col};background:radial-gradient(circle at 50% 34%, ${col}33, #14121e)"><span class="sp-em">${it.em}</span></div>`; }
-  else { const g=BG_SWATCH[it.id]||'linear-gradient(160deg,#14121e,#232338)'; prev=`<div class="shop-prev bg" style="background:${g}"><span class="sp-em">${it.em}</span></div>`; }
-  return `<div class="shop-card ${tier}${inUse?' inuse':''}">${badge}
-    ${prev}
-    <div class="shop-name">${it.label||t(it.name)}</div>
-    ${btn}
+  const badge=bc?`<div class="si-badge ${bc==='BEST'?'best':bc==='NEW'?'nnew':'pop'}">${bLbl}</div>`:'';
+  // 🍎 Stil App Store: ikonë e vogël majtas · emër+nën-etiketë · pill GET/USE djathtas
+  let ic;
+  if(kind==='skin'){ const col=SKIN_COL[it.id]||'#8a8f9a'; ic=`<div class="as-ic" style="background:radial-gradient(circle at 50% 30%, ${col}55, #16131f 76%);box-shadow:inset 0 0 0 1.5px ${col}66,inset 0 -3px 8px rgba(0,0,0,.4)"><span>${it.em}</span></div>`; }
+  else { const g=BG_SWATCH[it.id]||'linear-gradient(160deg,#14121e,#232338)'; ic=`<div class="as-ic" style="background:${g}"><span>${it.em}</span></div>`; }
+  const bTag=bc?`<span class="as-tag ${bc==='BEST'?'best':bc==='NEW'?'nnew':'pop'}">${bLbl}</span>`:'';
+  const sub=kind==='skin'?t('skinSub'):t('bgSub');
+  let pill, cls='', act='';
+  if(inUse){ pill=`<div class="as-pill on">✓ ${t('inUse')}</div>`; cls=' inuse'; }
+  else if(isOwned){ pill=`<div class="as-pill own">${t('useIt')}</div>`; cls=' owned'; act=`onclick="useItem('${kind}','${it.id}')"`; }
+  else { pill=`<div class="as-pill buy">🪙 ${it.price}</div>`; act=`onclick="buyItem('${kind}','${it.id}',${it.price})"`; }
+  return `<div class="asrow${cls}" ${act}>
+    ${ic}
+    <div class="as-mid"><div class="as-name">${it.label||t(it.name)}${bTag}</div><div class="as-sub">${sub}</div></div>
+    ${pill}
   </div>`;
 }
 function buyCoins(i){
@@ -4063,11 +4241,47 @@ function buyCoins(i){
   grantCoins(i); // fallback demo në web
 }
 function grantCoins(i){
-  coins+=COINPACKS[i].coins;
-  toast(`${t('purchased')} +${COINPACKS[i].coins.toLocaleString()} 🪙`);
+  const from=coins, add=COINPACKS[i].coins;
+  coins+=add;
+  toast(`${t('purchased')} +${add.toLocaleString()} 🪙`);
   saveData();renderStore();
+  try{flyCoinsToCounter(); countUpCoins(from,coins);}catch(e){}   // 🪙 monedhat fluturojnë + numëruesi rritet
   try{coinCelebrate();}catch(e){}
   if(settings.sfx){try{ if(sfxBuf.coins)S('coins',{vol:.7}); else if(sfxBuf.gold)S('gold',{vol:.6}); else {sfx(880,0.1,'triangle',0.06);setTimeout(()=>sfx(1180,0.12,'triangle',0.06),90);} }catch(e){}}
+}
+/* 🪙 Monedhat fluturojnë drejt numëruesit lart */
+function flyCoinsToCounter(){
+  if(window.matchMedia&&window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+  const target=document.getElementById('storeCoins'); if(!target)return;
+  const tr=target.getBoundingClientRect();
+  const sx=window.innerWidth/2, sy=window.innerHeight*0.62;
+  for(let k=0;k<14;k++){
+    const c=document.createElement('div'); c.className='fly-coin'; c.textContent='🪙';
+    c.style.left=sx+'px'; c.style.top=sy+'px';
+    document.body.appendChild(c);
+    const dx=(tr.left+tr.width/2)-sx, dy=(tr.top+tr.height/2)-sy;
+    const arc=-90-Math.random()*70, spread=(Math.random()-.5)*150;
+    try{
+      c.animate([
+        {transform:'translate(0,0) scale(.6)',opacity:0},
+        {transform:`translate(${spread}px,${arc}px) scale(1.1)`,opacity:1,offset:.32},
+        {transform:`translate(${dx}px,${dy}px) scale(.45)`,opacity:0}
+      ],{duration:760+Math.random()*260,delay:k*38,easing:'cubic-bezier(.35,.05,.3,1)',fill:'forwards'});
+    }catch(e){}
+    setTimeout(()=>c.remove(),1250+k*38);
+  }
+  setTimeout(()=>{ target.classList.remove('coin-pop'); void target.offsetWidth; target.classList.add('coin-pop'); },700);
+}
+/* 🔢 Numëruesi i coins-ave rritet me animacion */
+function countUpCoins(from,to){
+  const el=document.getElementById('storeCoins'); if(!el)return;
+  const t0=performance.now(), dur=900;
+  const step=(now)=>{
+    const p=Math.min(1,(now-t0)/dur), e=1-Math.pow(1-p,3);
+    el.textContent='🪙 '+Math.round(from+(to-from)*e).toLocaleString();
+    if(p<1)requestAnimationFrame(step); else el.textContent='🪙 '+to.toLocaleString();
+  };
+  requestAnimationFrame(step);
 }
 // 🪙 Derdhje coins + shkëlqim kur blen (vetëm pamje)
 function coinCelebrate(){
@@ -4182,7 +4396,23 @@ const LEVEL_AV=[[2,'🐯'],[3,'🦅'],[4,'🥷'],[5,'🤖'],[6,'👽'],[7,'⚔�
 function openProfile(){
   refreshProfileUI();
   const ni=document.getElementById('profNameInput'); if(ni)ni.value=username||myName();
+  setProfTab('stats',true);   // hap gjithmonë te STATS
   document.getElementById('profileOverlay').classList.add('show');
+}
+/* 🗂️ Tabs të profilit — kalim i lëmuar mes STATS / LOOK / BADGES */
+let profTab='stats';
+function setProfTab(k,silent){
+  profTab=k; if(!silent)playTap();
+  const map={stats:['ptabStats','ppStats'],look:['ptabLook','ppLook'],badges:['ptabBadges','ppBadges']};
+  Object.keys(map).forEach(key=>{
+    const [tabId,paneId]=map[key];
+    const tab=document.getElementById(tabId), pane=document.getElementById(paneId);
+    if(tab)tab.classList.toggle('on',key===k);
+    if(pane){
+      if(key===k){ pane.classList.remove('show'); void pane.offsetWidth; pane.classList.add('show'); }
+      else pane.classList.remove('show');
+    }
+  });
 }
 function saveProfileName(){
   const ni=document.getElementById('profNameInput'); if(!ni)return;
@@ -4201,18 +4431,31 @@ function refreshProfileUI(){
   const done=Object.keys(progress).filter(k=>progress[k]>0).length;
   const card=document.getElementById('profileCard');
   if(card){
+    // 🏆 KARTË PROFILI PREMIUM — rank, avatar me glow, win-rate, XP
+    const loss=(typeof duelLosses!=='undefined'?duelLosses:0);
+    const duels=duelWins+loss, wr=duels?Math.round(duelWins/duels*100):0;
+    const [rkT,rkC]=rankTitle(pl,duelWins);
+    card.style.setProperty('--rc',rkC);
     card.innerHTML=`
-      <div class="pc-top">
-        <div class="pc-badge">${r[1]}</div>
+      <div class="pc-shine"></div>
+      <div class="pc-rankchip" style="background:${rkC}">${rkT}</div>
+      <div class="pc-hero">
+        <div class="pc-avbig">${premium?'<i class="pc-crown">👑</i>':''}${avatar}</div>
         <div class="pc-id">
-          <div class="pc-rank">${r[2]}</div>
-          <div class="pc-lvl">${t('lvlLbl')} ${pl} • ${duelWins} ${t('winsLbl')}</div>
+          <div class="pc-nm">${String(myName()).replace(/[<>"'&]/g,'')}</div>
+          <div class="pc-rank">${r[1]} ${r[2]}</div>
+          <div class="pc-lvl">${t('lvlLbl')} ${pl} · ${t('seasonLbl')} ${Math.min(SEASONS.length,Math.floor(done/PER_SEASON)+1)}</div>
         </div>
-        <div class="pc-av">${premium?'👑':''}${avatar}</div>
       </div>
+      <div class="pc-wr"><div class="pc-wrbar"><i style="width:${wr}%"></i></div>
+        <div class="pc-wrtxt"><span>🆚 ${duelWins}${t('winsLbl').charAt(0)} · ${loss}${t('lossLbl').charAt(0)}</span><b>${wr}% ${t('winRate')}</b></div></div>
       <div class="pc-xpbar"><div class="pc-xpfill" style="width:${pct}%"></div></div>
-      <div class="pc-xptext">${inLvl}/${XP_PER_LEVEL} XP${nr?` • ${t('nextRank')}: ${nr[1]} ${nr[2]} (${t('lvlLbl')} ${nr[0]})`:' • MAX 👑'}</div>
-      <div class="pc-stats">
+      <div class="pc-xptext">${inLvl}/${XP_PER_LEVEL} XP${nr?` • ${t('nextRank')}: ${nr[1]} ${nr[2]} (${t('lvlLbl')} ${nr[0]})`:' • MAX 👑'}</div>`;
+  }
+  // 📊 Statistikat shkojnë te tabi STATS (profili mbetet i shkurtër)
+  const st=document.getElementById('profStats');
+  if(st){
+    st.innerHTML=`
         <div class="pc-stat"><b>${totalStarCount()}</b><span>${t('statTotalStars')} ⭐</span></div>
         <div class="pc-stat"><b>${done}/${TOTAL}</b><span>${t('statLevelsDone')}</span></div>
         <div class="pc-stat"><b>${perfect}</b><span>${t('statPerfect')} ✨</span></div>
@@ -4225,8 +4468,7 @@ function refreshProfileUI(){
         <div class="pc-stat"><b>${TIER_NAMES[leagueTier]}</b><span>${t('statLeague')} 🏆</span></div>
         <div class="pc-stat"${premium?' style="border:1px solid rgba(255,209,102,.5)"':''}><b${premium?' style="color:#ffd166"':''}>${premium?goldBest:'🔒'}</b><span>👑 ${t('statRoyal')}</span></div>
         <div class="pc-stat"${royalCups>0?' style="border:1px solid rgba(70,230,130,.6);box-shadow:0 0 10px rgba(70,230,130,.25)"':''}><b${royalCups>0?' style="color:#7cf0a0"':''}>${royalCups}</b><span>🏆 ${t('cupsHave')}</span></div>
-        <div class="pc-stat"><b>${xp}</b><span>XP</span></div>
-      </div>`;
+        <div class="pc-stat"><b>${xp}</b><span>XP</span></div>`;
   }
   {const summ=document.getElementById('profSummary'); if(summ)summ.textContent=`${r[1]} ${r[2]} • ${t('lvlLbl')} ${pl}`;}
   renderAvatars();
@@ -4554,10 +4796,12 @@ function revealOpponent(name,av){
   oa.classList.remove('mm-found'); void oa.offsetWidth; oa.classList.add('mm-found');
   document.getElementById('mmOppName').textContent=name;
   const st=document.getElementById('mmStatus'); st.textContent='⚡ '+t('mmFound'); st.classList.add('mm-found-txt');
+  try{ showHeadToHead(name,av,oppLast&&oppLast.lv,oppLast&&oppLast.wn); }catch(e){}   // ⚔️ krahasimi para ndeshjes
   if(!S('tada',{vol:.8}))sfx(880,0.25,'sine',0.07); vibrate([30,40,60]);
 }
 function closeMatchOverlay(){
   if(mmDotsIv){clearInterval(mmDotsIv);mmDotsIv=null;}
+  {const h=document.getElementById('mmH2H'); if(h){h.classList.remove('show');h.innerHTML='';}}
   document.getElementById('matchOverlay').classList.remove('show');
 }
 function cancelMatch(){
@@ -4618,6 +4862,7 @@ async function randomMatch(){
     const bot=makeBot(), seed=Math.floor(Math.random()*1e9), startAt=Date.now()+5400;
     duel={code:'B'+Math.floor(1000+Math.random()*9000),role:'h',seed,mode:'1v1',opName:bot.name,bet:duelBet,bot:true,tier:duelTier()};
     startBotSim(bot,startAt);
+    try{toast('🔎 '+t('noLiveOpp'));}catch(e){}   // 💬 mesazh i qartë: s'u gjet lojtar live → CPU
     revealOpponent(bot.name,bot.av);
     setTimeout(()=>{if(matchActive){closeMatchOverlay();beginCountdown(startAt);}},1600);
   }, 6000+Math.random()*5000);
@@ -4664,7 +4909,7 @@ function startDuelBoard(){
   const RS=duelRounds();
   const rdCfg = twoV2 ? {pairs:8,cols:4} : (RS[duel.round]||RS[RS.length-1]);
   const rnd=mulberry32(duel.seed + duel.round*7919);   // seed per raund → i njëjtë për të dy
-  const se=SEASONS[(duel.seed+duel.round)%5];
+  const se=SEASONS[(duel.seed+duel.round)%SEASONS.length];
   document.documentElement.style.setProperty('--season',se.color);
   dealStyleIx=duel.seed+duel.round;               // stil kartash ndryshon çdo raund
   const dt=(duel.tier!=null?duel.tier:duelTier());
@@ -4703,7 +4948,7 @@ function startDuelBoard(){
 
   document.getElementById('oppBar').style.display='flex';
   myEmote=null;lastOppEmoteT=0;
-  renderEmoteBar(); // 👑 shiriti i emoteve live (free + PRO)
+  renderEmoteBar(); if(duel.round===0)rollTrolls(); renderTrollBar(); // 👑 emotet + 😈 6 trolla me rotacion
   if(duel.mode==='2v2')update2v2Bar(0,0,{});else updateOppBar();
   stopTimer();
   goTs=Date.now();
@@ -4721,25 +4966,222 @@ async function duelSync(){
   if(!duel)return;
   if(duel.mode==='2v2')return duelSync2v2();
   if(!duel.bot)sSet('duel:'+duel.code+':'+duel.role,
-    {p:pairsFound,rd:duel.round||0,mi:duelStats.mi,mo:moves,bh:duelStats.bh,th:duelStats.th,done:duel.done,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],em:myEmote});
+    {p:pairsFound,rd:duel.round||0,mi:duelStats.mi,mo:moves,bh:duelStats.bh,th:duelStats.th,done:duel.done,tm:duel.tm,name:myName(),av:avatar,pr:premium,rk:myRank()[1],em:myEmote,lv:playerLevel(),wn:duelWins,ls:(typeof duelLosses!=='undefined'?duelLosses:0),ac:(typeof achUnlocked!=='undefined'?Object.keys(achUnlocked||{}).length:0),sk:(typeof streak!=='undefined'?streak:0),tt:(typeof trollUses!=='undefined'?Object.values(trollUses).reduce((a,b)=>a+b,0):0),rn:myRank()[2]});
   const op=duel.bot?botNextState():await sGet('duel:'+duel.code+':'+(duel.role==='h'?'g':'h'));
   if(op){
     if(op.left){ if(duelPoll){clearInterval(duelPoll);duelPoll=null} toast('👋 Opponent left — you win!'); if(!duel.decided){duel.oppLeft=true;duel.done=true;duel.tm=duel.tm||(Date.now()-goTs);oppLast=op;finishDecide(true);} return; }
     oppLast=op;updateOppBar();
     // Emoji / chat nga kundërshtari
     if(op.em&&op.em.t>lastOppEmoteT){lastOppEmoteT=op.em.t; op.em.chat?showChat(op.em.e,duel.opName||'Opp','opp'):showEmote(op.em.e,duel.opName||'Opp','opp');}
-    pollLiveEmotes(); // 👑 emotet live me çelësin e ri
+    pollLiveEmotes(); pollTrolls(); // 👑 emotet + 😈 trollat drejtimorë
     if(duel.done&&op.done)finishDecide();
   }
 }
 function updateOppBar(){
   if(!duel)return;
   if(duel.mode==='2v2')return; // skorbordi i ekipeve menaxhohet nga update2v2Bar
-  const rInfo = `<div style="font-size:9px;opacity:.75;text-align:center;letter-spacing:.5px">ROUND ${(duel.round||0)+1}/${duelRounds().length}</div>`;
+  // 🪑 Tavolinë: kundërshtari LART · VS në mes · ti POSHTË
+  const tot=(params&&params.pairs)||0;
+  const opP=oppLast.p||0;
   document.getElementById('oppBar').innerHTML=
-    `<span class="me-prof" onclick="openEmotePicker()">${premium?'👑':''}${avatar} ${myName()} 💬</span>`+
-    `<span style="display:flex;flex-direction:column;align-items:center">${rInfo}<span style="color:var(--amber2);font-size:15px;font-weight:900">${pairsFound} : ${oppLast.p}</span></span>`+
-    `<span class="opp-prof">${oppLast.pr?'👑':''}${oppLast.av||'❔'} ${duel.opName} R${(oppLast.rd||0)+1}</span>`;
+    `<div class="dt-side opp" onclick="showPlayerCard(1)">
+       <div class="dt-av">${oppLast.pr?'<i class="dt-crown">👑</i>':''}${oppLast.av||'❔'}</div>
+       <div class="dt-info"><div class="dt-name">${duel.opName}${rankChip(oppLast.lv||1,oppLast.wn||0)}</div><div class="dt-pairs">${opP}${tot?'/'+tot:''} ${t('pairsLbl')||'pairs'}</div></div>
+       <div class="dt-score">${opP}</div>
+     </div>
+     <div class="dt-mid"><span class="dt-vs">VS</span><span class="dt-round">R${(duel.round||0)+1}/${duelRounds().length}</span></div>
+     <div class="dt-side me" onclick="showPlayerCard(0)">
+       <div class="dt-av">${premium?'<i class="dt-crown">👑</i>':''}${avatar}</div>
+       <div class="dt-info"><div class="dt-name">${myName()}${rankChip(playerLevel(),duelWins)} 💬</div><div class="dt-pairs">${pairsFound}${tot?'/'+tot:''} ${t('pairsLbl')||'pairs'}</div></div>
+       <div class="dt-score me">${pairsFound}</div>
+     </div>`;
+}
+/* ═══ 😈 TROLLAT — VETËM në duel, DREJTIMORË (shkojnë te kundërshtari) ═══
+   Rrugëtimi: dërguesi sSet('duel:<code>:troll:<targetRole>', {kind,id,ts,from,txt})
+   Marrësi poll-on çelësin e VET dhe luan efektin te ekrani i tij. Dërguesi s'e sheh. */
+/* 📚 BIBLIOTEKË e madhe trollash — çdo lojë zgjidhen VETËM 6 (rotacion) */
+const TROLL_LIB=[
+  {k:'bomb',  em:'💣', cd:8,  en:2},
+  {k:'white', em:'⬜', cd:10, en:3},
+  {k:'dark',  em:'🌑', cd:10, en:3},
+  {k:'emoji', em:'🌧️', cd:6,  en:1},
+  {k:'blur',  em:'🌀', cd:8,  en:2},
+  {k:'talk',  em:'💬', cd:6,  en:1},
+  {k:'block', em:'🚫', cd:12, en:4},   // 🚫 bllokon trollat e kundërshtarit
+  {k:'shake', em:'📳', cd:7,  en:2},
+  {k:'spin',  em:'🌀', cd:9,  en:3},
+  {k:'flip',  em:'🙃', cd:9,  en:3},
+  {k:'zoom',  em:'🔍', cd:8,  en:2},
+  {k:'fog',   em:'🌫️', cd:8,  en:2},
+  {k:'glitch',em:'📺', cd:7,  en:2},
+  {k:'tiny',  em:'🐜', cd:9,  en:3}
+];
+let TROLLS=[];             // 6 të zgjedhurit për këtë lojë
+let trollCd={};            // {kind: ts kur lirohet}
+let trollUses={};          // {kind: sa herë përdorur} → cooldown progresiv
+let trollLastUse={};       // {kind: ts i përdorimit të fundit} → ftohet me kohë
+let trollLockUntil=0;      // 🔒 GLOBAL: vetëm një troll në kohë
+let trollBlockUntil=0;     // 🚫 kur kundërshtari të bllokon trollat
+let trollImmuneUntil=0;    // 🛡️ imunitet i shkurtër pas goditjes
+let trollEnergy=0;         // ⚡ energji nga çiftet
+let lastTrollSeen=0, trollCdTimer=null;
+function oppRole(){ return duel ? (duel.mode==='2v2' ? SLOTS2.filter(s=>s!==duel.role) : [duel.role==='h'?'g':'h']) : []; }
+function rollTrolls(){       // 🎲 rotacion: 6 të rastësishëm çdo lojë e re
+  TROLLS=shuffleArrRnd(TROLL_LIB.slice()).slice(0,6);
+  trollCd={}; trollUses={}; trollLastUse={}; trollLockUntil=0; trollBlockUntil=0; trollImmuneUntil=0; trollEnergy=2;
+}
+function trollCdFor(tr){     // ⏫ cooldown progresiv: sa më shpesh, aq më gjatë
+  const now=Date.now();
+  if(trollLastUse[tr.k] && now-trollLastUse[tr.k]>30000) trollUses[tr.k]=0;   // ftohet pas 30s pa përdorim
+  const n=trollUses[tr.k]||0;
+  return Math.round(tr.cd*(1+0.6*n));                                          // +60% për çdo përdorim
+}
+function renderTrollBar(){
+  const bar=document.getElementById('trollBar'); if(!bar||!duel)return;
+  if(!TROLLS.length) rollTrolls();
+  bar.style.display='flex';
+  bar.innerHTML=`<span class="tr-energy" id="trEnergy">⚡0</span>`+TROLLS.map(tr=>
+    `<button class="tr-btn" id="tr-${tr.k}" onclick="sendTroll('${tr.k}')">${tr.em}<span class="tr-en">${tr.en}</span><span class="tr-cd" id="trcd-${tr.k}"></span></button>`).join('');
+  if(trollCdTimer)clearInterval(trollCdTimer);
+  trollCdTimer=setInterval(tickTrollCd,200); tickTrollCd();
+}
+function tickTrollCd(){      // ⏱️ numërim SEKONDASH stil Dota (jo shirit)
+  const now=Date.now();
+  const e=document.getElementById('trEnergy'); if(e)e.textContent='⚡'+trollEnergy;
+  const blocked=now<trollBlockUntil;
+  const gLeft=Math.ceil((trollLockUntil-now)/1000);
+  TROLLS.forEach(tr=>{
+    const b=document.getElementById('tr-'+tr.k), c=document.getElementById('trcd-'+tr.k);
+    if(!b||!c)return;
+    const own=Math.ceil(((trollCd[tr.k]||0)-now)/1000);
+    if(blocked){ b.classList.add('cool','blocked'); c.textContent=Math.ceil((trollBlockUntil-now)/1000); }
+    else if(own>0){ b.classList.add('cool'); b.classList.remove('blocked'); c.textContent=own; }   // ai që përdore tregon sekondat
+    else if(gLeft>0){ b.classList.add('cool'); b.classList.remove('blocked'); c.textContent=''; }  // të tjerët bllokohen pa numër
+    else { b.classList.remove('cool','blocked'); c.textContent=''; b.classList.toggle('poor',trollEnergy<tr.en); }
+  });
+}
+function sendTroll(kind){
+  if(!duel)return;
+  const tr=TROLLS.find(x=>x.k===kind); if(!tr)return;
+  const now=Date.now();
+  if(now<trollBlockUntil){ toast('🚫 '+t('trollBlocked')); return; }          // kundërshtari të bllokoi
+  if(now<trollLockUntil || (trollCd[kind]||0)>now) return;                    // 🔒 një troll në kohë
+  if(trollEnergy<tr.en){ toast('⚡ '+t('trollNoEnergy')); return; }            // duhet energji nga çiftet
+  let txt='';
+  if(kind==='talk'){ txt=(prompt(t('trollMsg')||'Message (max 40)','')||'').trim().slice(0,40); if(!txt)return; }
+  trollEnergy-=tr.en;
+  trollUses[kind]=(trollUses[kind]||0)+1; trollLastUse[kind]=now;
+  const cd=trollCdFor(tr)*1000;
+  trollCd[kind]=now+cd; trollLockUntil=now+cd;    // 🔒 të gjithë bllokohen derisa mbaron ky
+  tickTrollCd();
+  const pack={kind,id:Math.random().toString(36).slice(2),ts:now,from:myName(),txt};
+  oppRole().forEach(r=>{ try{ sSet('duel:'+duel.code+':troll:'+r, pack); }catch(e){} });   // → te KUNDËRSHTARI
+  playTap(); vibrate(14); toast('😈 '+t('trollSent'));
+  // ⚠️ Dërguesi NUK e sheh efektin te vetja — vetëm konfirmim.
+}
+function addTrollEnergy(n){   // ⚡ energji fitohet duke gjetur çifte
+  if(!duel)return; trollEnergy=Math.min(10,trollEnergy+(n||1)); tickTrollCd();
+}
+/* 🏷️ Chip i rankut pranë emrit (duel + leaderboard) */
+function rankChip(lv,wins){ const [r,c]=rankTitle(lv,wins); return `<span class="rank-chip" style="background:${c}">${r}</span>`; }
+/* ⚔️ HEAD-TO-HEAD para ndeshjes — krahasim i shkurtër i dy profileve */
+function showHeadToHead(oppName,oppAv,oppLv,oppWins){
+  const box=document.getElementById('mmH2H'); if(!box)return;
+  const myLv=playerLevel(), myW=duelWins;
+  const [mr,mc]=rankTitle(myLv,myW), [or_,oc]=rankTitle(oppLv||1,oppWins||0);
+  const esc=x=>String(x==null?'':x).replace(/[<>"'&]/g,'');
+  box.innerHTML=`
+    <div class="h2h-row"><span class="h2h-l">${myW}</span><span class="h2h-c">${t('winsLbl')}</span><span class="h2h-r">${oppWins||0}</span></div>
+    <div class="h2h-row"><span class="h2h-l">${myLv}</span><span class="h2h-c">${t('lvlLbl')}</span><span class="h2h-r">${oppLv||1}</span></div>
+    <div class="h2h-row"><span class="h2h-l"><b class="rank-chip" style="background:${mc}">${mr}</b></span><span class="h2h-c">${t('rankLbl')}</span><span class="h2h-r"><b class="rank-chip" style="background:${oc}">${or_}</b></span></div>`;
+  box.classList.add('show');
+}
+/* 👤 KARTË PROFILI PREMIUM — prek emrin/avatarin te tavolina */
+function rankTitle(lv,wins){                       // Rookie → Pro → Legend
+  const sc=(wins||0)*2+(lv||1);
+  if(sc>=60)return['LEGEND','#ffd24a'];
+  if(sc>=40)return['MASTER','#c9a8ff'];
+  if(sc>=25)return['PRO','#5be0ff'];
+  if(sc>=12)return['RACER','#7ED957'];
+  return['ROOKIE','#a9bccb'];
+}
+function showPlayerCard(isOpp){
+  playTap();
+  const o=!!isOpp;
+  const nm  = o ? (duel?duel.opName:'—') : myName();
+  const av  = o ? (oppLast.av||'❔') : avatar;
+  const pro = o ? !!oppLast.pr : premium;
+  const lvl = o ? (oppLast.lv||1) : playerLevel();
+  const wins= o ? (oppLast.wn||0) : duelWins;
+  const loss= o ? (oppLast.ls||0) : (typeof duelLosses!=='undefined'?duelLosses:0);
+  const ach = o ? (oppLast.ac||0) : (typeof achUnlocked!=='undefined'?Object.keys(achUnlocked||{}).length:0);
+  const stk = o ? (oppLast.sk||0) : (typeof streak!=='undefined'?streak:0);
+  const trl = o ? (oppLast.tt||0) : (typeof trollUses!=='undefined'?Object.values(trollUses).reduce((a,b)=>a+b,0):0);
+  const duels=wins+loss, wr = duels? Math.round(wins/duels*100) : 0;
+  const [rk,rc]=rankTitle(lvl,wins);
+  const seasonNow = Math.min(SEASONS.length, Math.floor((typeof currentSeason!=='undefined'?currentSeason:0))+1);
+  const esc=x=>String(x==null?'':x).replace(/[<>"'&]/g,c=>({'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','&':'&amp;'}[c]));
+  let ov=document.getElementById('playerCardOv');
+  if(!ov){ ov=document.createElement('div'); ov.id='playerCardOv'; ov.className='pcard-ov';
+    ov.addEventListener('click',e=>{ if(e.target===ov||e.target.classList.contains('pcard-close')) ov.classList.remove('show'); });
+    document.body.appendChild(ov); }
+  ov.innerHTML=`<div class="pcard" style="--rc:${rc}">
+    <div class="pcard-glow"></div>
+    <div class="pcard-rank" style="background:${rc}">${rk}</div>
+    <div class="pcard-av">${pro?'<i class="dt-crown">👑</i>':''}${esc(av)}</div>
+    <div class="pcard-nm">${esc(nm)}</div>
+    <div class="pcard-sub">${t('lvlLbl')} ${lvl} · ${t('seasonLbl')||'Season'} ${seasonNow}</div>
+    <div class="pcard-wr"><div class="pcard-wrbar"><i style="width:${wr}%"></i></div><span>${wr}% ${t('winRate')}</span></div>
+    <div class="pcard-grid">
+      <div class="pcard-st win"><b>${wins}</b><span>${t('winsLbl')}</span></div>
+      <div class="pcard-st loss"><b>${loss}</b><span>${t('lossLbl')}</span></div>
+      <div class="pcard-st"><b>${duels}</b><span>${t('duelsLbl')}</span></div>
+      <div class="pcard-st"><b>${ach}</b><span>🏅 ${t('achTitle')}</span></div>
+      <div class="pcard-st"><b>${stk}</b><span>🔥 ${t('statStreak')}</span></div>
+      <div class="pcard-st"><b>${trl}</b><span>😈 ${t('trollsLbl')}</span></div>
+    </div>
+    <button class="btn btn-ghost pcard-close" style="width:100%;margin-top:13px">${t('close')}</button>
+  </div>`;
+  ov.classList.add('show');
+}
+async function pollTrolls(){
+  if(!duel||duel.bot)return;
+  try{
+    const p=await sGet('duel:'+duel.code+':troll:'+duel.role);   // çelësi IM → efekti tek UNË
+    if(p&&p.ts&&p.ts>lastTrollSeen){ lastTrollSeen=p.ts; playTrollFx(p.kind,p.txt,p.from); }
+  }catch(e){}
+}
+function playTrollFx(kind,txt,from){
+  const ov=document.getElementById('trollFx'); if(!ov)return;
+  const now=Date.now();
+  if(now<trollImmuneUntil) return;             // 🛡️ imunitet i shkurtër — pa goditje zinxhir
+  trollImmuneUntil=now+1500;
+  vibrate([25,40,25]);
+  const bd=document.getElementById('board');
+  const done=(ms)=>setTimeout(()=>{ov.className='troll-fx';ov.innerHTML='';bd.classList.remove('tr-blur','tr-spin','tr-flip','tr-zoom','tr-fog','tr-glitch','tr-tiny');},ms);
+  // 🚫 bllokuesi: kundërshtari s'të godet dot për 7s
+  if(kind==='block'){ trollBlockUntil=now+7000; tickTrollCd(); toast('🚫 '+t('trollBlocked')); return; }
+  if(kind==='shake'){ ov.className='troll-fx show bomb'; done(700); return; }
+  if(kind==='spin'){ bd.classList.add('tr-spin'); done(2200); return; }
+  if(kind==='flip'){ bd.classList.add('tr-flip'); done(2600); return; }
+  if(kind==='zoom'){ bd.classList.add('tr-zoom'); done(2200); return; }
+  if(kind==='fog'){ bd.classList.add('tr-fog'); done(2400); return; }
+  if(kind==='glitch'){ bd.classList.add('tr-glitch'); done(1800); return; }
+  if(kind==='tiny'){ bd.classList.add('tr-tiny'); done(2400); return; }
+  if(kind==='bomb'){ ov.className='troll-fx show bomb'; ov.innerHTML='<div class="tr-boom">💥</div>';
+    try{if(!S('bomb'))sfx(90,0.3,'sawtooth',0.08);}catch(e){} done(900); }
+  else if(kind==='white'){ ov.className='troll-fx show white'; done(1500); }
+  else if(kind==='dark'){ ov.className='troll-fx show dark'; done(2200); }
+  else if(kind==='emoji'){ ov.className='troll-fx show';
+    const ems=['😂','💀','🤡','😜','🙃','👻'];
+    ov.innerHTML=Array.from({length:24},(_,i)=>`<span class="tr-rain" style="left:${Math.random()*96}vw;font-size:${18+Math.random()*22}px;animation-delay:${(Math.random()*.8).toFixed(2)}s">${ems[i%ems.length]}</span>`).join('');
+    done(2400); }
+  else if(kind==='blur'){ document.getElementById('board').classList.add('tr-blur'); ov.className='troll-fx'; done(2200); }
+  else if(kind==='talk'){ ov.className='troll-fx show';
+    // 🔒 anti-XSS: escape + kufi 40 karaktere
+    const safe=String(txt||'').slice(0,40).replace(/[<>"'&]/g,c=>({'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','&':'&amp;'}[c]));
+    const who=String(from||'').slice(0,12).replace(/[<>"'&]/g,c=>({'<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;','&':'&amp;'}[c]));
+    ov.innerHTML=`<div class="tr-talk"><b>${who}</b>${safe}</div>`; done(2600); }
 }
 /* 👑 Emote bar LIVE në duel — free: 👍😢 · PRO: +🔥💀😏👑 */
 const EMOTE_FREE=['👍','😢'];
@@ -4837,7 +5279,7 @@ async function duelSync2v2(){
   duel.lastSumA=sumA;duel.lastSumB=sumB; // për vendimin me kohë-limit
   update2v2Bar(sumA,sumB,st);
   SLOTS2.forEach(s=>{ if(s!==duel.role){const o=st[s]; if(o&&o.left&&!duel['left_'+s]){duel['left_'+s]=1;toast('👋 '+(o.name||'A player')+' left');} if(o&&o.em&&o.em.t>lastOppEmoteT){lastOppEmoteT=o.em.t; o.em.chat?showChat(o.em.e,o.name||'Rival','opp'):showEmote(o.em.e,o.name||'Rival','opp');}} });
-  pollLiveEmotes(); // 👑 emotet live 2v2
+  pollLiveEmotes(); pollTrolls(); // 👑 emotet + 😈 trollat 2v2
   if(duel.done){
     const present=SLOTS2.filter(s=>st[s]);
     const allDone=present.every(s=> s===duel.role ? true : st[s].done);
