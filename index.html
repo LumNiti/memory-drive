@@ -379,12 +379,12 @@ svg{display:block}
 .card-inner{position:absolute;inset:0;transform-style:preserve-3d;transition:transform .26s cubic-bezier(.3,1.25,.4,1)}
 .card.flipped .card-inner{transform:rotateY(180deg)}
 /* 🃏 VETËM hija u thellua — kartë reale mbi tavolinë. Flip-i 3D & pamja mbeten identike. */
-.card-face{position:absolute;inset:0;border-radius:13px;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 10px 18px rgba(0,0,0,.6),0 4px 7px rgba(0,0,0,.5),0 1px 2px rgba(0,0,0,.45)}
-/* hije e kontaktit nën kartë (jashtë 3D-së, s'prek flip-in) */
-.card::after{content:'';position:absolute;left:9%;right:9%;bottom:-5px;height:9px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.68),rgba(0,0,0,0) 72%);filter:blur(2.5px);pointer-events:none;z-index:-1;transition:all .45s cubic-bezier(.3,1.2,.4,1)}
+.card-face{position:absolute;inset:0;border-radius:13px;display:flex;align-items:center;justify-content:center;backface-visibility:hidden;-webkit-backface-visibility:hidden;box-shadow:0 18px 30px rgba(0,0,0,.78),0 9px 15px rgba(0,0,0,.62),0 3px 5px rgba(0,0,0,.55)}
+/* hije e kontaktit nën kartë (jashtë 3D-së, s'prek flip-in) — shumë më e fortë, thellësi reale */
+.card::after{content:'';position:absolute;left:7%;right:7%;bottom:-8px;height:13px;border-radius:50%;background:radial-gradient(ellipse,rgba(0,0,0,.85),rgba(0,0,0,0) 72%);filter:blur(4px);pointer-events:none;z-index:-1;transition:all .45s cubic-bezier(.3,1.2,.4,1)}
 /* ngritje e vogël kur hapet → hija zbutet e zgjerohet */
 .card.flipped .card-inner{transform:rotateY(180deg) translateZ(9px)}
-.card.flipped::after{left:5%;right:5%;bottom:-8px;height:11px;filter:blur(4.5px);background:radial-gradient(ellipse,rgba(0,0,0,.55),rgba(0,0,0,0) 72%)}
+.card.flipped::after{left:3%;right:3%;bottom:-11px;height:16px;filter:blur(6px);background:radial-gradient(ellipse,rgba(0,0,0,.7),rgba(0,0,0,0) 72%)}
 /* 🃏 Navy e errët + kornizë ARI e HOLLË + timoni (si te foto 3) */
 .card-back-face{background:linear-gradient(168deg,#1c2340,#141a30 55%,#0f1425);border:1.5px solid rgba(232,177,74,.72);color:rgba(232,177,74,.85);box-shadow:inset 0 1px 0 rgba(255,214,140,.16)}
 .card-front{background:linear-gradient(180deg,#fff,#e2e2e2);border:2.5px solid var(--season);font-size:32px;transform:rotateY(180deg)}
@@ -883,6 +883,48 @@ svg{display:block}
 .cp-badge.best{background:linear-gradient(90deg,#ffe9a8,#ffd166)}
 .cp-badge.pop{background:linear-gradient(90deg,#e8e0cf,#c9bfa6);color:#2a2418}
 @media (prefers-reduced-motion: reduce){.coin-pack .cp-shine{animation:none}}
+/* ⛽ VARIANT A — POMPA KARBURANTI / GARAZH */
+.fuel-wrap{margin-top:12px;border-radius:17px;padding:14px 12px 13px;background:linear-gradient(180deg,#191922,#101017);border:1px solid rgba(255,255,255,.08);position:relative;overflow:hidden;box-shadow:inset 0 1px 0 rgba(255,255,255,.05)}
+.fuel-wrap::before{content:'';position:absolute;inset:0;background:repeating-linear-gradient(90deg,transparent 0 40px,rgba(255,255,255,.018) 40px 42px),radial-gradient(circle at 80% 8%,rgba(90,180,255,.10),transparent 42%);pointer-events:none}
+.fuelpump-featured{position:relative;display:flex;align-items:center;gap:11px;padding:14px 13px;border-radius:15px;border:1.5px solid #ffd166;background:linear-gradient(115deg,#3a2a08,#5c4113 42%,#33240a);box-shadow:0 6px 22px rgba(255,209,102,.32),inset 0 1px 0 rgba(255,240,190,.25);cursor:pointer;overflow:hidden;transition:transform .14s cubic-bezier(.3,1.35,.5,1)}
+.fuelpump-featured:active{transform:scale(.98)}
+.fp-badge{position:absolute;top:8px;right:9px;font-size:7.5px;font-weight:900;letter-spacing:.8px;color:#3a2600;background:linear-gradient(90deg,#ffe9a8,#ffd166);border-radius:8px;padding:2px 8px}
+.fp-nozzle{font-size:34px;filter:drop-shadow(0 2px 5px rgba(0,0,0,.4));flex-shrink:0}
+.fp-display{flex:1;min-width:0;background:#0a0d08;border:1.5px solid rgba(120,220,120,.3);border-radius:10px;padding:6px 12px;box-shadow:inset 0 0 12px rgba(80,255,120,.12)}
+.fp-liters{font-family:'Courier New',monospace;font-size:25px;font-weight:900;color:#7dff8a;text-shadow:0 0 10px rgba(120,255,140,.6);line-height:1.05}
+.fp-unit{font-size:8.5px;font-weight:800;letter-spacing:2px;text-transform:uppercase;color:rgba(120,255,140,.5)}
+.fp-pricebtn{flex-shrink:0;background:linear-gradient(180deg,var(--amber2),var(--amber));color:#1a1410;font-weight:900;font-size:13px;border-radius:11px;padding:11px 12px;box-shadow:0 3px 10px rgba(232,161,58,.4)}
+.fuel-list{position:relative;display:flex;flex-direction:column;gap:9px;margin-top:11px}
+.fuel-row{position:relative;display:flex;align-items:center;gap:11px;padding:10px 11px;border-radius:13px;background:linear-gradient(180deg,#1d1d28,#14141f);border:1px solid rgba(255,255,255,.09);cursor:pointer;transition:transform .14s cubic-bezier(.3,1.35,.5,1)}
+.fuel-row:active{transform:scale(.98)}
+.fr-nozzle{font-size:23px;width:42px;height:42px;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle at 40% 30%,#2b2b3c,#141420);border-radius:11px;flex-shrink:0;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.fr-mid{flex:1;min-width:0}
+.fr-amt{font-size:16px;font-weight:900;color:#fff}
+.fr-amt span{font-size:9px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(255,255,255,.42)}
+.fr-gauge{margin-top:6px;height:6px;border-radius:4px;background:rgba(255,255,255,.09);overflow:hidden}
+.fr-gauge i{display:block;height:100%;border-radius:4px;background:linear-gradient(90deg,#ff5c5c,#ffd166 58%,#3ef0a0)}
+.fr-price{flex-shrink:0;background:linear-gradient(180deg,var(--amber2),var(--amber));color:#1a1410;font-weight:900;font-size:12.5px;border-radius:11px;padding:10px 12px;box-shadow:0 3px 9px rgba(232,161,58,.35)}
+/* 👑 VARIANT B — ARKA THESARI / ROYAL */
+.royal-wrap{margin-top:12px;position:relative}
+.chest-featured{position:relative;overflow:hidden;text-align:center;padding:18px 16px 15px;border-radius:18px;border:1.5px solid #ffd166;background:radial-gradient(ellipse at 50% 0%,#5c4113,#241806 72%);box-shadow:0 8px 28px rgba(255,209,102,.38),inset 0 1px 0 rgba(255,240,190,.3);cursor:pointer;transition:transform .14s cubic-bezier(.3,1.35,.5,1)}
+.chest-featured:active{transform:scale(.98)}
+.cf-glow{position:absolute;top:-45%;left:50%;transform:translateX(-50%);width:190px;height:190px;background:radial-gradient(circle,rgba(255,215,120,.42),transparent 64%);pointer-events:none;animation:cfGlow 3s ease-in-out infinite}
+@keyframes cfGlow{50%{opacity:.55;transform:translateX(-50%) scale(1.15)}}
+.cf-badge{display:inline-block;font-size:8.5px;font-weight:900;letter-spacing:1.4px;color:#3a2600;background:linear-gradient(90deg,#ffe9a8,#ffd166);border-radius:9px;padding:3px 12px;margin-bottom:5px;position:relative}
+.cf-chest{font-size:58px;line-height:1;filter:drop-shadow(0 6px 14px rgba(0,0,0,.5));animation:chestFloat 2.6s ease-in-out infinite;position:relative}
+@keyframes chestFloat{50%{transform:translateY(-5px)}}
+.cf-amt{font-size:24px;font-weight:900;color:#ffd166;text-shadow:0 2px 10px rgba(232,161,58,.5);margin-top:3px;position:relative}
+.cf-amt span{font-size:10.5px;letter-spacing:1px;text-transform:uppercase;color:rgba(255,224,150,.7)}
+.cf-price{display:inline-block;margin-top:10px;background:linear-gradient(180deg,#fff2cc,#ffd166);color:#3a2600;font-weight:900;font-size:14px;border-radius:12px;padding:10px 28px;box-shadow:0 4px 14px rgba(255,209,102,.5);position:relative}
+.chest-row{display:flex;gap:10px;margin-top:12px;overflow-x:auto;padding:4px 2px 9px;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch}
+.chest-row::-webkit-scrollbar{height:0}
+.chest-card{scroll-snap-align:center;flex:0 0 130px;text-align:center;padding:14px 10px;border-radius:15px;border:1px solid rgba(255,209,102,.28);background:linear-gradient(180deg,#2b2015,#1a1410);box-shadow:0 4px 14px rgba(0,0,0,.42);cursor:pointer;transition:transform .14s cubic-bezier(.3,1.35,.5,1)}
+.chest-card:active{transform:scale(.96)}
+.cc-chest{font-size:40px;line-height:1;filter:drop-shadow(0 3px 7px rgba(0,0,0,.45))}
+.cc-amt{font-size:18px;font-weight:900;color:#fff;margin-top:4px}
+.cc-unit{font-size:8.5px;font-weight:800;letter-spacing:1px;text-transform:uppercase;color:rgba(255,224,150,.55);margin-bottom:9px}
+.cc-price{background:linear-gradient(180deg,var(--amber2),var(--amber));color:#1a1410;font-weight:900;font-size:12px;border-radius:10px;padding:8px 10px}
+@media (prefers-reduced-motion: reduce){.cf-glow,.cf-chest{animation:none}}
 .coin-drop{position:fixed;top:-32px;z-index:80;pointer-events:none;filter:drop-shadow(0 2px 3px rgba(0,0,0,.4));animation:coinFall linear forwards}
 @keyframes coinFall{to{transform:translateY(112vh) rotate(420deg);opacity:.15}}
 /* 🃏🖼️ SHOP CARDS — stil FIFA për CARD STYLE & BACKGROUNDS */
@@ -1153,7 +1195,24 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 .pc-xpbar{height:8px;border-radius:6px;background:rgba(255,255,255,.12);margin:12px 0 5px;overflow:hidden}
 .pc-xpfill{height:100%;border-radius:6px;background:linear-gradient(90deg,var(--amber),var(--amber2));transition:width .5s}
 .pc-xptext{font-size:10.5px;font-weight:700;color:rgba(255,255,255,.6);text-align:center}
-.pc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:12px}
+.pc-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-top:0}
+/* 👤 titull profili premium + badge tematik (timon) + vijë ari */
+.prof-titlebar{display:flex;align-items:center;gap:12px;margin-bottom:15px;padding-bottom:11px;position:relative}
+.prof-titlebar::after{content:'';position:absolute;left:0;bottom:0;width:100%;height:2px;border-radius:2px;background:linear-gradient(90deg,var(--amber2),rgba(232,161,58,.35) 45%,transparent 80%)}
+.prof-badge{width:42px;height:42px;flex-shrink:0;border-radius:13px;background:linear-gradient(158deg,#ffe9a8,#ffd166 46%,#e0951f);display:flex;align-items:center;justify-content:center;box-shadow:0 5px 14px rgba(232,161,58,.5),inset 0 1px 0 rgba(255,255,255,.55);animation:badgeIn .5s cubic-bezier(.2,1.4,.4,1) both}
+.prof-badge svg{width:25px;height:25px}
+@keyframes badgeIn{0%{transform:scale(0) rotate(-40deg);opacity:0}100%{transform:scale(1) rotate(0);opacity:1}}
+.prof-ttl{font-family:'Nunito',sans-serif;font-weight:900;font-size:20px;letter-spacing:2px;text-transform:uppercase;color:#fff;text-shadow:0 2px 10px rgba(232,161,58,.28)}
+/* seksionet e statistikave */
+.pc-sec{display:flex;align-items:center;gap:9px;font-size:10.5px;font-weight:900;letter-spacing:1.5px;text-transform:uppercase;color:rgba(255,209,102,.8);margin:17px 2px 10px}
+.pc-sec::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,rgba(255,209,102,.32),transparent)}
+/* XP total — rresht i plotë, i balancuar (nuk varet vetëm) */
+.pc-xpwide{margin-top:14px;background:linear-gradient(120deg,rgba(232,161,58,.18),rgba(14,12,30,.5));border:1px solid rgba(255,209,102,.42);border-radius:13px;padding:12px 16px;display:flex;align-items:center;justify-content:space-between;box-shadow:inset 0 1px 0 rgba(255,255,255,.08)}
+.pc-xpwide span{font-size:11px;font-weight:800;letter-spacing:1.2px;color:rgba(255,255,255,.62);text-transform:uppercase}
+.pc-xpwide b{font-size:19px;font-weight:900;color:#ffd166;text-shadow:0 2px 8px rgba(232,161,58,.4)}
+/* CLOSE i stiluar (jo i thjeshtë) */
+.prof-close{width:100%;margin-top:16px;padding:13px;border-radius:14px;border:1.5px solid rgba(232,161,58,.55);background:linear-gradient(180deg,rgba(232,161,58,.16),rgba(232,161,58,.05));color:var(--amber2);font-family:'Nunito',sans-serif;font-weight:900;font-size:13.5px;letter-spacing:1.4px;text-transform:uppercase;cursor:pointer;transition:transform .14s,background .18s}
+.prof-close:active{transform:scale(.97);background:linear-gradient(180deg,rgba(232,161,58,.24),rgba(232,161,58,.08))}
 .pc-stat{background:rgba(14,12,30,.5);border:1px solid rgba(255,255,255,.1);border-radius:12px;padding:8px 4px;text-align:center}
 .pc-stat b{display:block;font-size:16px;font-weight:900;color:#fff}
 .pc-stat span{font-size:9.5px;font-weight:700;color:rgba(255,255,255,.55)}
@@ -2307,7 +2366,10 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <!-- 👤 PROFILI (hapet nga pilula e menusë) -->
 <div id="profileOverlay">
   <div class="dialog-box profile-sheet" style="max-width:440px;width:94%;max-height:92vh;overflow-y:auto;text-align:left">
-    <h3 style="margin-bottom:8px">👤 <span data-i18n="secProfile"></span></h3>
+    <div class="prof-titlebar">
+      <div class="prof-badge"><svg viewBox="0 0 24 24" fill="none" stroke="#1a1208" stroke-width="1.9" stroke-linecap="round"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="2.3" fill="#1a1208" stroke="none"/><path d="M12 14.3V21"/><path d="M10 11 4.3 7.7"/><path d="M14 11 19.7 7.7"/></svg></div>
+      <div class="prof-ttl"><span data-i18n="secProfile"></span></div>
+    </div>
     <div id="profileCard" class="profile-card"></div>
     <!-- 🗂️ Tabs si folder — profil i shkurtër dhe i qartë -->
     <div class="prof-tabs">
@@ -2315,7 +2377,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
       <button class="ptab"    id="ptabLook"   onclick="setProfTab('look')"><span class="pt-ic">😎</span><span class="pt-lbl" data-i18n="tabLook"></span></button>
       <button class="ptab"    id="ptabBadges" onclick="setProfTab('badges')"><span class="pt-ic">🏅</span><span class="pt-lbl" data-i18n="tabBadges"></span></button>
     </div>
-    <div class="prof-pane show" id="ppStats"><div class="pc-stats" id="profStats"></div></div>
+    <div class="prof-pane show" id="ppStats"><div id="profStats"></div></div>
     <div class="prof-pane" id="ppLook">
       <div class="pf-lbl"><span>✏️</span><span data-i18n="usernameLbl"></span></div>
       <div style="display:flex;gap:8px">
@@ -2329,7 +2391,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
       <div class="pf-lbl"><span>🏅</span><span data-i18n="achTitle"></span> <span id="achCount" style="opacity:.6;font-weight:800;font-size:12px"></span></div>
       <div class="ach-grid" id="achGrid"></div>
     </div>
-    <button class="btn btn-ghost" style="width:100%;margin-top:12px" onclick="playTap();document.getElementById('profileOverlay').classList.remove('show')"><span data-i18n="close"></span></button>
+    <button class="prof-close" onclick="playTap();document.getElementById('profileOverlay').classList.remove('show')"><span data-i18n="close"></span></button>
   </div>
 </div>
 
@@ -2421,7 +2483,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='FIX-R41';
+const BUILD_TAG='STORE-A-R42';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
@@ -2475,7 +2537,7 @@ const I18N={
     swapWarn:'🌀 Gabove — dy karta ndërruan vendet!',
     shufLbl:'ÇIFTI PËRZIERËS', peekLbl:'ÇIFTI SHIKUES', shufSub:'I NGATËRRON KARTAT', peekSub:'TREGON GJITHÇKA',
     iceLbl:'AKULL', iceSub:'PREKE PËR TA ÇARË', chainLbl:'ME ZINXHIRË', chainSub:'BËJ 2 ÇIFTE PËR TA HAPUR', lightLbl:'VETËTIMË', lightSub:'ÇIFT FALAS', oilSpread:'🛢️ Vaji u përhap!', countDefused:'DEFUSED! 😮‍💨 +2⛽', countBoom:'⏲️💥 BUM! −2⛽', shutMsg:'🪟 Qepeni i mbyllur — prit radhën!', torMsg:'🌪️ Tornado! Luaj rreth saj', mystG1:'MISTER: +2⛽ 🎉', mystG2:'MISTER: +30 🪙', mystG3:'MISTER: Shikim i shpejtë! 👀', mystB1:'MISTER: −1⛽ 😬', mystB2:'MISTER: Përzierje! 🔀', mystB3:'MISTER: Akull! 🧊', safeMsg:'🔐 Edhe {n} goditje…', safeOpen:'💎 Kasaforta u hap! +100 🪙', hOilL:'VAJ', hOilS:'PASTROJE PARA SE TË PËRHAPET', hCntL:'NUMËRIMI', hCntS:'GJEJE PARA 0 — OSE BUM', hShutL:'QEPENAT', hShutS:'HAPEN-MBYLLEN ÇDO LËVIZJE', hTorL:'TORNADO', hTorS:'KËRCEN PAS ÇDO LËVIZJEJE', hMystL:'MISTERI', hMystS:'50/50 — GUXON?', hSafeL:'KASAFORTA', hSafeS:'3 PREKJE → 💎 +100',
-    secProfile:'PROFILI ONLINE', tabStats:'STATS', tabLook:'PAMJA', tabBadges:'ARRITJE', trollSent:'U dërgua!', trollMsg:'Mesazh (max 40)', pairsLbl:'çifte', trollBlocked:'Trollat u bllokuan!', trollNoEnergy:'S\'ka energji — gjej çifte!', noLiveOpp:'S\'u gjet lojtar live — po luan me CPU', pcStrength:'Forca', pcEasy:'Lehtë', pcMed:'Mesatar', pcHard:'I fortë', pcElite:'Elitë', winRate:'fitore', lossLbl:'humbje', duelsLbl:'duele', trollsLbl:'trolla', seasonLbl:'Sezoni', usernameLbl:'Emri i lojtarit', saveBtn:'Ruaj', avatarLbl:'Avatari', rankLbl:'Rangu', winsLbl:'fitore',
+    secProfile:'PROFILI ONLINE', secProg:'PROGRESI', secDuelS:'DUEL & LIGA', secColl:'KOLEKSIONI', xpTotalLbl:'XP GJITHSEJ', tabStats:'STATS', tabLook:'PAMJA', tabBadges:'ARRITJE', trollSent:'U dërgua!', trollMsg:'Mesazh (max 40)', pairsLbl:'çifte', trollBlocked:'Trollat u bllokuan!', trollNoEnergy:'S\'ka energji — gjej çifte!', noLiveOpp:'S\'u gjet lojtar live — po luan me CPU', pcStrength:'Forca', pcEasy:'Lehtë', pcMed:'Mesatar', pcHard:'I fortë', pcElite:'Elitë', winRate:'fitore', lossLbl:'humbje', duelsLbl:'duele', trollsLbl:'trolla', seasonLbl:'Sezoni', usernameLbl:'Emri i lojtarit', saveBtn:'Ruaj', avatarLbl:'Avatari', rankLbl:'Rangu', winsLbl:'fitore',
     premiumLbl:'Memory Drive PRO', proActive:'PRO AKTIV',
     proOnly:'👑 Avatarët PRO hapen me Premium!', proWelcome:'👑 Mirë se erdhe në PRO! +500 🪙',
     regTitle:'Krijo profilin', regSub:'Zgjidh emrin dhe avatarin për duelet online', regGo:'FILLO',
@@ -2577,7 +2639,7 @@ const I18N={
     swapWarn:'🌀 You missed — two cards swapped places!',
     shufLbl:'SHUFFLE PAIR', peekLbl:'PEEK PAIR', shufSub:'MIXES ALL CARDS', peekSub:'REVEALS EVERYTHING',
     iceLbl:'ICE', iceSub:'TAP TO CRACK', chainLbl:'CHAINED', chainSub:'MATCH 2 TO UNLOCK', lightLbl:'LIGHTNING', lightSub:'FREE PAIR', oilSpread:'🛢️ The oil spread!', countDefused:'DEFUSED! 😮‍💨 +2⛽', countBoom:'⏲️💥 BOOM! −2⛽', shutMsg:'🪟 Shutter closed — wait a turn!', torMsg:'🌪️ Tornado! Play around it', mystG1:'MYSTERY: +2⛽ 🎉', mystG2:'MYSTERY: +30 🪙', mystG3:'MYSTERY: Quick peek! 👀', mystB1:'MYSTERY: −1⛽ 😬', mystB2:'MYSTERY: Shuffle! 🔀', mystB3:'MYSTERY: Ice! 🧊', safeMsg:'🔐 {n} more hits…', safeOpen:'💎 Safe cracked! +100 🪙', hOilL:'OIL', hOilS:'WIPE IT BEFORE IT SPREADS', hCntL:'COUNTDOWN', hCntS:'MATCH BEFORE 0 — OR BOOM', hShutL:'SHUTTERS', hShutS:'OPEN & CLOSE EVERY MOVE', hTorL:'TORNADO', hTorS:'JUMPS AFTER EVERY MOVE', hMystL:'MYSTERY', hMystS:'50/50 — DARE?', hSafeL:'THE SAFE', hSafeS:'3 TAPS → 💎 +100',
-    secProfile:'ONLINE PROFILE', tabStats:'STATS', tabLook:'LOOK', tabBadges:'BADGES', trollSent:'Sent!', trollMsg:'Message (max 40)', pairsLbl:'pairs', trollBlocked:'Trolls blocked!', trollNoEnergy:'No energy — find pairs!', noLiveOpp:'No live opponent found — playing vs CPU', pcStrength:'Strength', pcEasy:'Easy', pcMed:'Medium', pcHard:'Strong', pcElite:'Elite', winRate:'win rate', lossLbl:'losses', duelsLbl:'duels', trollsLbl:'trolls', seasonLbl:'Season', usernameLbl:'Username', saveBtn:'Save', avatarLbl:'Avatar', rankLbl:'Rank', winsLbl:'wins',
+    secProfile:'ONLINE PROFILE', secProg:'PROGRESS', secDuelS:'DUEL & LEAGUE', secColl:'COLLECTION', xpTotalLbl:'TOTAL XP', tabStats:'STATS', tabLook:'LOOK', tabBadges:'BADGES', trollSent:'Sent!', trollMsg:'Message (max 40)', pairsLbl:'pairs', trollBlocked:'Trolls blocked!', trollNoEnergy:'No energy — find pairs!', noLiveOpp:'No live opponent found — playing vs CPU', pcStrength:'Strength', pcEasy:'Easy', pcMed:'Medium', pcHard:'Strong', pcElite:'Elite', winRate:'win rate', lossLbl:'losses', duelsLbl:'duels', trollsLbl:'trolls', seasonLbl:'Season', usernameLbl:'Username', saveBtn:'Save', avatarLbl:'Avatar', rankLbl:'Rank', winsLbl:'wins',
     premiumLbl:'Memory Drive PRO', proActive:'PRO ACTIVE',
     proOnly:'👑 PRO avatars unlock with Premium!', proWelcome:'👑 Welcome to PRO! +500 🪙',
     regTitle:'Create your profile', regSub:'Pick a name and avatar for online duels', regGo:'START',
@@ -2679,7 +2741,7 @@ const I18N={
     swapWarn:'🌀 Zgrešil si — dve karti sta zamenjali mesti!',
     shufLbl:'PAR MEŠANJA', peekLbl:'PAR POGLEDA', shufSub:'PREMEŠA KARTE', peekSub:'POKAŽE VSE',
     iceLbl:'LED', iceSub:'TAPNI ZA RAZBITJE', chainLbl:'VERIGE', chainSub:'POVEŽI 2 ZA ODKLEP', lightLbl:'STRELA', lightSub:'BREZPLAČEN PAR', oilSpread:'🛢️ Olje se je razlilo!', countDefused:'RAZOROŽENO! 😮‍💨 +2⛽', countBoom:'⏲️💥 BUM! −2⛽', shutMsg:'🪟 Roleta zaprta — počakaj potezo!', torMsg:'🌪️ Tornado! Igraj okoli njega', mystG1:'SKRIVNOST: +2⛽ 🎉', mystG2:'SKRIVNOST: +30 🪙', mystG3:'SKRIVNOST: Hiter pogled! 👀', mystB1:'SKRIVNOST: −1⛽ 😬', mystB2:'SKRIVNOST: Mešanje! 🔀', mystB3:'SKRIVNOST: Led! 🧊', safeMsg:'🔐 Še {n} udarcev…', safeOpen:'💎 Sef odprt! +100 🪙', hOilL:'OLJE', hOilS:'OBRIŠI, PREDEN SE RAZLIJE', hCntL:'ODŠTEVANJE', hCntS:'NAJDI PRED 0 — ALI BUM', hShutL:'ROLETE', hShutS:'ODPIRAJO-ZAPIRAJO VSAKO POTEZO', hTorL:'TORNADO', hTorS:'SKOČI PO VSAKI POTEZI', hMystL:'SKRIVNOST', hMystS:'50/50 — SI UPAŠ?', hSafeL:'SEF', hSafeS:'3 DOTIKI → 💎 +100',
-    secProfile:'SPLETNI PROFIL', tabStats:'STATI', tabLook:'VIDEZ', tabBadges:'ZNAČKE', trollSent:'Poslano!', trollMsg:'Sporočilo (max 40)', pairsLbl:'parov', trollBlocked:'Troli blokirani!', trollNoEnergy:'Ni energije — najdi pare!', noLiveOpp:'Ni igralca v živo — igraš proti CPU', pcStrength:'Moč', pcEasy:'Lahko', pcMed:'Srednje', pcHard:'Močan', pcElite:'Elita', winRate:'zmage', lossLbl:'porazi', duelsLbl:'dvoboji', trollsLbl:'troli', seasonLbl:'Sezona', usernameLbl:'Uporabniško ime', saveBtn:'Shrani', avatarLbl:'Avatar', rankLbl:'Rang', winsLbl:'zmag',
+    secProfile:'SPLETNI PROFIL', secProg:'NAPREDEK', secDuelS:'DVOBOJ & LIGA', secColl:'ZBIRKA', xpTotalLbl:'SKUPAJ XP', tabStats:'STATI', tabLook:'VIDEZ', tabBadges:'ZNAČKE', trollSent:'Poslano!', trollMsg:'Sporočilo (max 40)', pairsLbl:'parov', trollBlocked:'Troli blokirani!', trollNoEnergy:'Ni energije — najdi pare!', noLiveOpp:'Ni igralca v živo — igraš proti CPU', pcStrength:'Moč', pcEasy:'Lahko', pcMed:'Srednje', pcHard:'Močan', pcElite:'Elita', winRate:'zmage', lossLbl:'porazi', duelsLbl:'dvoboji', trollsLbl:'troli', seasonLbl:'Sezona', usernameLbl:'Uporabniško ime', saveBtn:'Shrani', avatarLbl:'Avatar', rankLbl:'Rang', winsLbl:'zmag',
     premiumLbl:'Memory Drive PRO', proActive:'PRO AKTIVEN',
     proOnly:'👑 PRO avatarji se odklenejo s Premium!', proWelcome:'👑 Dobrodošel v PRO! +500 🪙',
     regTitle:'Ustvari profil', regSub:'Izberi ime in avatarja za spletne dvoboje', regGo:'ZAČNI',
@@ -4153,6 +4215,7 @@ function applyCosmetics(){
 }
 
 let storeTab='coins';
+let STORE_VARIANT='A';   // 'A' = pompa karburanti · 'B' = arka thesari · '' = grid i vjetër
 function setStoreTab(k){ playTap(); storeTab=k; renderStore(); const l=document.getElementById('storeList'); if(l){const tb=l.querySelector('.store-tabs'); l.scrollTop=tb?Math.max(0,tb.offsetTop-4):0;} }
 function coinPacksHTML(){
   const cpIcon=['🪙','💰','💎','👑'], cpTier=['cp1','cp2','cp3','cp4'];
@@ -4162,6 +4225,48 @@ function coinPacksHTML(){
     h+=`<div class="coin-pack ${cpTier[i]}">${badge}<div class="cp-shine"></div><div class="cp-icon">${cpIcon[i]}</div><div class="cp-amt">${cp.coins.toLocaleString()}</div><div class="cp-lbl">${t('coinsAmt')}</div><button class="btn-mini ap cp-buy" onclick="buyCoins(${i})">&#63743; €${cp.price}</button></div>`;
   });
   return h+`</div><div class="store-note">${t('demoNote')}</div>`;
+}
+/* ⛽ VARIANT A — Pompa karburanti / Garazh: listë vertikale, çmimi djathtas */
+function coinPacksFuel(){
+  const feat=COINPACKS[3];
+  const nozIc=['🪙','💰','💎'];
+  let h=`<div class="fuel-wrap">
+    <div class="fuelpump-featured" onclick="playTap();buyCoins(3)">
+      <div class="fp-badge">⛽ ${t('sfLbl')}</div>
+      <div class="fp-nozzle">⛽</div>
+      <div class="fp-display"><div class="fp-liters">${feat.coins.toLocaleString()}</div><div class="fp-unit">${t('coinsAmt')}</div></div>
+      <div class="fp-pricebtn ap">&#63743; €${feat.price}</div>
+    </div>
+    <div class="fuel-list">`;
+  for(let i=0;i<3;i++){ const cp=COINPACKS[i]; const w=Math.max(8,Math.round(cp.coins/8000*100));
+    h+=`<div class="fuel-row" onclick="playTap();buyCoins(${i})">
+      <div class="fr-nozzle">${nozIc[i]}</div>
+      <div class="fr-mid"><div class="fr-amt">${cp.coins.toLocaleString()} <span>${t('coinsAmt')}</span></div><div class="fr-gauge"><i style="width:${w}%"></i></div></div>
+      <div class="fr-price ap">&#63743; €${cp.price}</div>
+    </div>`; }
+  return h+`</div></div><div class="store-note">${t('demoNote')}</div>`;
+}
+/* 👑 VARIANT B — Arka thesari / Royal: featured i madh + karusel horizontal arkash */
+function coinPacksRoyal(){
+  const feat=COINPACKS[3];
+  const chIc=['🪙','💰','💎'];
+  let h=`<div class="royal-wrap">
+    <div class="chest-featured" onclick="playTap();buyCoins(3)">
+      <div class="cf-glow"></div>
+      <div class="cf-badge">👑 ${t('sfLbl')}</div>
+      <div class="cf-chest">👑</div>
+      <div class="cf-amt">${feat.coins.toLocaleString()} <span>${t('coinsAmt')}</span></div>
+      <div class="cf-price ap">&#63743; €${feat.price}</div>
+    </div>
+    <div class="chest-row">`;
+  for(let i=0;i<3;i++){ const cp=COINPACKS[i];
+    h+=`<div class="chest-card" onclick="playTap();buyCoins(${i})">
+      <div class="cc-chest">${chIc[i]}</div>
+      <div class="cc-amt">${cp.coins.toLocaleString()}</div>
+      <div class="cc-unit">${t('coinsAmt')}</div>
+      <div class="cc-price ap">&#63743; €${cp.price}</div>
+    </div>`; }
+  return h+`</div></div><div class="store-note">${t('demoNote')}</div>`;
 }
 function renderStore(){
   document.getElementById('storeCoins').textContent=`🪙 ${coins}`;
@@ -4173,7 +4278,7 @@ function renderStore(){
   h+=`<div class="store-tabs">`+tabs.map(([k,ic,lbl])=>`<button class="stab${storeTab===k?' on':''}" onclick="setStoreTab('${k}')"><span class="stab-ic">${ic}</span><span class="stab-lbl">${lbl}</span></button>`).join('')+`</div>`;
   // 📦 Përmbajtja sipas tabit
   h+=`<div class="store-tabbody">`;
-  if(storeTab==='coins'){ h+=coinPacksHTML(); }
+  if(storeTab==='coins'){ h+=(STORE_VARIANT==='B'?coinPacksRoyal():STORE_VARIANT==='A'?coinPacksFuel():coinPacksHTML()); }
   else if(storeTab==='cards'){ h+=`<div class="store-catdesc">🃏 ${t('skinsDesc')}</div><div class="as-group">`+SKINS.map(it=>itemRow(it,'skin')).join('')+`</div>`; }
   else if(storeTab==='bgs'){ h+=`<div class="store-catdesc">🖼️ ${t('bgsDesc')}</div><div class="as-group">`+BGS.map(it=>itemRow(it,'bg')).join('')+`</div>`; }
   else if(storeTab==='fuel'){ h+=`<div class="store-row"><div class="store-em">⛽</div><div class="store-info"><div class="store-name">${t('fuelBoost')}${fuelPacks>0?` &nbsp;×${fuelPacks}`:''}</div><div class="store-sub">${t('fuelBoostD')}</div></div><button class="btn-mini" onclick="buyFuel()">${t('buy')} 🪙 600</button></div>`; }
@@ -4456,19 +4561,28 @@ function refreshProfileUI(){
   const st=document.getElementById('profStats');
   if(st){
     st.innerHTML=`
-        <div class="pc-stat"><b>${totalStarCount()}</b><span>${t('statTotalStars')} ⭐</span></div>
-        <div class="pc-stat"><b>${done}/${TOTAL}</b><span>${t('statLevelsDone')}</span></div>
-        <div class="pc-stat"><b>${perfect}</b><span>${t('statPerfect')} ✨</span></div>
-        <div class="pc-stat"><b>${coins}</b><span>${t('statCoins')} 🪙</span></div>
-        <div class="pc-stat"><b>${highScore}</b><span>${t('statBest')} 🏆</span></div>
-        <div class="pc-stat"><b>${duelWins}</b><span>${t('winsLbl')} 🆚</span></div>
-        <div class="pc-stat"><b>${streak}</b><span>${t('statStreak')} 🔥</span></div>
-        <div class="pc-stat"><b>${endlessBestWave}</b><span>${t('bestWaveLbl')} 🌊</span></div>
-        <div class="pc-stat"><b>${albumOwnedCount()}/40</b><span>${t('fAlbum')} 🃏</span></div>
-        <div class="pc-stat"><b>${TIER_NAMES[leagueTier]}</b><span>${t('statLeague')} 🏆</span></div>
-        <div class="pc-stat"${premium?' style="border:1px solid rgba(255,209,102,.5)"':''}><b${premium?' style="color:#ffd166"':''}>${premium?goldBest:'🔒'}</b><span>👑 ${t('statRoyal')}</span></div>
-        <div class="pc-stat"${royalCups>0?' style="border:1px solid rgba(70,230,130,.6);box-shadow:0 0 10px rgba(70,230,130,.25)"':''}><b${royalCups>0?' style="color:#7cf0a0"':''}>${royalCups}</b><span>🏆 ${t('cupsHave')}</span></div>
-        <div class="pc-stat"><b>${xp}</b><span>XP</span></div>`;
+        <div class="pc-sec">📈 ${t('secProg')}</div>
+        <div class="pc-stats">
+          <div class="pc-stat"><b>${done}/${TOTAL}</b><span>${t('statLevelsDone')}</span></div>
+          <div class="pc-stat"><b>${totalStarCount()}</b><span>${t('statTotalStars')} ⭐</span></div>
+          <div class="pc-stat"><b>${perfect}</b><span>${t('statPerfect')} ✨</span></div>
+          <div class="pc-stat"><b>${highScore}</b><span>${t('statBest')} 🏆</span></div>
+          <div class="pc-stat"><b>${streak}</b><span>${t('statStreak')} 🔥</span></div>
+          <div class="pc-stat"><b>${endlessBestWave}</b><span>${t('bestWaveLbl')} 🌊</span></div>
+        </div>
+        <div class="pc-sec">🆚 ${t('secDuelS')}</div>
+        <div class="pc-stats">
+          <div class="pc-stat"><b>${duelWins}</b><span>${t('winsLbl')} 🆚</span></div>
+          <div class="pc-stat"><b>${TIER_NAMES[leagueTier]}</b><span>${t('statLeague')} 🏆</span></div>
+          <div class="pc-stat"${royalCups>0?' style="border:1px solid rgba(70,230,130,.6);box-shadow:0 0 10px rgba(70,230,130,.25)"':''}><b${royalCups>0?' style="color:#7cf0a0"':''}>${royalCups}</b><span>🏆 ${t('cupsHave')}</span></div>
+        </div>
+        <div class="pc-sec">🃏 ${t('secColl')}</div>
+        <div class="pc-stats">
+          <div class="pc-stat"><b>${albumOwnedCount()}/40</b><span>${t('fAlbum')} 🃏</span></div>
+          <div class="pc-stat"><b>${coins}</b><span>${t('statCoins')} 🪙</span></div>
+          <div class="pc-stat"${premium?' style="border:1px solid rgba(255,209,102,.5)"':''}><b${premium?' style="color:#ffd166"':''}>${premium?goldBest:'🔒'}</b><span>👑 ${t('statRoyal')}</span></div>
+        </div>
+        <div class="pc-xpwide"><span>⭐ ${t('xpTotalLbl')}</span><b>${xp} XP</b></div>`;
   }
   {const summ=document.getElementById('profSummary'); if(summ)summ.textContent=`${r[1]} ${r[2]} • ${t('lvlLbl')} ${pl}`;}
   renderAvatars();
