@@ -987,6 +987,57 @@ svg{display:block}
 .shop-grid>*:nth-child(8){animation-delay:.27s}
 .shop-grid>*:nth-child(n+9){animation-delay:.3s}
 @media (prefers-reduced-motion: reduce){.shop-grid>*,.coin-packs>*,.store-list>.store-row,.store-featured{animation:none!important}}
+/* ============ 🛍️ STORE REDESIGN — PROMO SPOTLIGHT + SHOWCASE ============ */
+/* 📣 Spotlight rotativ (reklamon skin/background/coins) */
+.promo{position:relative;margin:6px 0 12px;border-radius:18px;overflow:hidden;border:1px solid rgba(255,255,255,.1);box-shadow:0 8px 26px rgba(0,0,0,.45)}
+.promo-track{display:flex;transition:transform .55s cubic-bezier(.4,.9,.3,1)}
+.promo-slide{flex:0 0 100%;position:relative;height:140px;display:flex;align-items:center;gap:14px;padding:16px 18px;cursor:pointer;overflow:hidden}
+.promo-slide::before{content:'';position:absolute;inset:0;background:var(--pg,linear-gradient(120deg,#241a3a,#12101f));z-index:0}
+.promo-slide::after{content:'';position:absolute;top:0;left:-60%;width:45%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.16),transparent);transform:skewX(-18deg);z-index:2;pointer-events:none;animation:promoSheen 3.4s ease-in-out infinite}
+@keyframes promoSheen{0%,60%{left:-60%}100%{left:130%}}
+.promo-emwrap{position:relative;z-index:1;width:86px;height:86px;flex-shrink:0;border-radius:20px;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,.28);border:1.5px solid rgba(255,255,255,.28);box-shadow:inset 0 2px 8px rgba(255,255,255,.15),0 6px 16px rgba(0,0,0,.4)}
+.promo-emwrap .pe{font-size:46px;line-height:1;filter:drop-shadow(0 3px 8px rgba(0,0,0,.5));animation:promoFloat 2.6s ease-in-out infinite}
+@keyframes promoFloat{50%{transform:translateY(-6px) rotate(-4deg)}}
+.promo-halo{position:absolute;inset:-30%;border-radius:50%;background:radial-gradient(circle,rgba(255,255,255,.35),transparent 62%);z-index:-1;animation:promoHalo 2.8s ease-in-out infinite}
+@keyframes promoHalo{50%{opacity:.5;transform:scale(1.18)}}
+.promo-info{position:relative;z-index:1;flex:1;min-width:0;color:#fff}
+.promo-kicker{display:inline-block;font-size:9px;font-weight:900;letter-spacing:1.4px;text-transform:uppercase;padding:3px 9px;border-radius:8px;background:rgba(0,0,0,.35);border:1px solid rgba(255,255,255,.3);margin-bottom:6px}
+.promo-title{font-size:21px;font-weight:900;line-height:1.05;text-shadow:0 2px 8px rgba(0,0,0,.5)}
+.promo-sub{font-size:11px;font-weight:800;color:rgba(255,255,255,.78);margin-top:2px}
+.promo-cta{display:inline-flex;align-items:center;gap:5px;margin-top:9px;background:rgba(255,255,255,.92);color:#1a1208;font-weight:900;font-size:12.5px;border-radius:11px;padding:7px 14px;box-shadow:0 4px 12px rgba(0,0,0,.35)}
+.promo-dots{position:absolute;bottom:8px;left:0;right:0;z-index:3;display:flex;justify-content:center;gap:6px}
+.promo-dots i{width:6px;height:6px;border-radius:50%;background:rgba(255,255,255,.4);transition:all .3s}
+.promo-dots i.on{background:#fff;width:18px;border-radius:3px}
+@media (prefers-reduced-motion: reduce){.promo-slide::after,.promo-emwrap .pe,.promo-halo{animation:none}}
+/* 🎴 SHOWCASE GRID — skins & backgrounds me preview të mëdha */
+.cos-grid{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:4px}
+.cos-tile{position:relative;border-radius:16px;overflow:hidden;border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.04);box-shadow:0 5px 16px rgba(0,0,0,.35);cursor:pointer;animation:storeIn .36s cubic-bezier(.2,.9,.3,1) both;transition:transform .15s cubic-bezier(.3,1.35,.5,1)}
+.cos-tile:active{transform:scale(.96)}
+.cos-tile.inuse{border-color:rgba(126,217,87,.6);box-shadow:0 0 0 1px rgba(126,217,87,.4),0 5px 16px rgba(0,0,0,.35)}
+.cos-grid>*:nth-child(2){animation-delay:.04s}.cos-grid>*:nth-child(3){animation-delay:.08s}.cos-grid>*:nth-child(4){animation-delay:.12s}.cos-grid>*:nth-child(5){animation-delay:.16s}.cos-grid>*:nth-child(6){animation-delay:.2s}.cos-grid>*:nth-child(7){animation-delay:.24s}.cos-grid>*:nth-child(8){animation-delay:.28s}.cos-grid>*:nth-child(n+9){animation-delay:.32s}
+.cos-preview{position:relative;height:96px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+.cos-em{font-size:46px;line-height:1;filter:drop-shadow(0 3px 8px rgba(0,0,0,.45));position:relative;z-index:1;transition:transform .2s cubic-bezier(.3,1.4,.5,1)}
+.cos-tile:active .cos-em{transform:scale(1.15) rotate(-6deg)}
+.cos-preview::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(255,255,255,.12),transparent 45%,rgba(0,0,0,.25));pointer-events:none}
+.cos-tile.prem .cos-preview::before{content:'';position:absolute;top:0;left:-70%;width:55%;height:100%;background:linear-gradient(105deg,transparent,rgba(255,255,255,.28),transparent);transform:skewX(-18deg);z-index:1;animation:goldSheen 3.2s ease-in-out infinite}
+.cos-foot{display:flex;align-items:center;justify-content:space-between;gap:6px;padding:9px 11px 10px}
+.cos-nm{font-size:12.5px;font-weight:900;color:#fff;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.cos-badge{position:absolute;top:8px;left:8px;z-index:3;font-size:8px;font-weight:900;letter-spacing:.5px;color:#1a1410;padding:3px 8px;border-radius:7px;box-shadow:0 2px 6px rgba(0,0,0,.4)}
+.cos-badge.best{background:linear-gradient(90deg,#ffe9a8,#ffd166)}
+.cos-badge.pop{background:linear-gradient(90deg,#c9a8ff,#a06bff);color:#fff}
+.cos-badge.nnew{background:linear-gradient(90deg,#7fffd0,#3ef0a0);color:#0a2a1e}
+@media (prefers-reduced-motion: reduce){.cos-tile{animation:none!important}.cos-tile.prem .cos-preview::before{animation:none}}
+/* ⛽ FUEL — kartë e animuar */
+.fuel-buy{position:relative;display:flex;align-items:center;gap:14px;margin-top:6px;padding:16px 15px;border-radius:17px;overflow:hidden;border:1px solid rgba(90,180,255,.28);background:linear-gradient(120deg,#12233a,#0e1524);box-shadow:0 6px 20px rgba(0,0,0,.4)}
+.fb-canister{position:relative;width:58px;height:58px;flex-shrink:0;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:30px;background:radial-gradient(circle at 40% 30%,#1f3350,#0c1626);border:1.5px solid rgba(90,180,255,.35);box-shadow:inset 0 0 14px rgba(90,180,255,.18)}
+.fb-canister::after{content:'';position:absolute;left:9px;right:9px;bottom:8px;height:34%;border-radius:6px;background:linear-gradient(180deg,#3ef0a0,#1fb877);opacity:.5;animation:fbFill 2.4s ease-in-out infinite}
+@keyframes fbFill{50%{height:60%;opacity:.75}}
+.fb-info{flex:1;min-width:0}
+.fb-name{font-size:15px;font-weight:900;color:#fff}
+.fb-sub{font-size:11px;font-weight:700;color:rgba(255,255,255,.5);margin-top:2px}
+.fb-btn{flex-shrink:0;background:linear-gradient(180deg,var(--amber2),var(--amber));color:#1a1410;font-weight:900;font-size:13px;border:none;border-radius:12px;padding:12px 15px;font-family:'Nunito';cursor:pointer;box-shadow:0 3px 10px rgba(232,161,58,.4);transition:transform .14s}
+.fb-btn:active{transform:scale(.95)}
+@media (prefers-reduced-motion: reduce){.fb-canister::after{animation:none}}
 /* ---- Format e kartave (skins) ---- */
 body[data-skin="sharp"] .card-face,body[data-skin="sharp"] .dc-b,body[data-skin="sharp"] .dc-f{border-radius:3px}
 body[data-skin="pill"] .card-face,body[data-skin="pill"] .dc-b,body[data-skin="pill"] .dc-f{border-radius:28px}
@@ -2483,7 +2534,7 @@ body[data-skin="basket"] .card-back-face{background:linear-gradient(160deg,#3a1c
 <script src="sfx-data.js"></script>
 <script>
 /* ===== 🐞 DEBUG NË EKRAN (që të shohim gabimet REALE në telefon) ===== */
-const BUILD_TAG='STORE-A-R42';
+const BUILD_TAG='STORE2-R43';
 function showDbg(msg,tag){
   try{
     let box=document.getElementById('dbgBox');
@@ -2568,6 +2619,7 @@ const I18N={
     secCoins:'MERR MONEDHA', secFuel:'KARBURANT', secSkins:'STILI I KARTAVE', secBgs:'SFONDET', cpBest:'MË MIRË', cpPopular:'POPULLOR', cpNew:'RE', sfLbl:'VEÇANTË', sfSub:'Vlera më e mirë — më shumë monedha', bgStadium:'Stadiumi', bgArena:'Arena', skBasket:'Basketboll', skinsDesc:'Ndryshon PAMJEN e kartave në lojë', bgsDesc:'Ndryshon SFONDIN pas kartave', skinSub:'Stil karte', bgSub:'Sfond',
     fuelBoost:'Karburant +3', fuelBoostD:'Shtohet automatikisht në nivelin tjetër',
     coinsAmt:'monedha', demoNote:'Demo — pagesa e vërtetë me Apple Pay bëhet në aplikacionin iOS',
+    promoHotSkin:'SKIN I NXEHTË', promoNewBg:'SFOND I RI', promoBestDeal:'OFERTA MË E MIRË', promoGet:'Merre', promoBrowse:'Shiko',
     purchased:'U ble! 🎉', applied:'U aktivizua ✓',
     skClassic:'Klasike', skSharp:'Këndore', skPill:'E rrumbullakët', skGold:'E artë', skNeon:'Neon',
     skWood:'Druri', skIce:'Akulli', skRuby:'Rubin', skCarbon:'Karbon', skEmerald:'Smerald', skHolo:'Holografike',
@@ -2670,6 +2722,7 @@ const I18N={
     secCoins:'GET COINS', secFuel:'FUEL', secSkins:'CARD STYLE', secBgs:'BACKGROUNDS', cpBest:'BEST', cpPopular:'POPULAR', cpNew:'NEW', sfLbl:'FEATURED', sfSub:'Best value — most coins', bgStadium:'Stadium', bgArena:'Arena', skBasket:'Basketball', skinsDesc:'Changes how your CARDS look in-game', bgsDesc:'Changes the BACKGROUND behind cards', skinSub:'Card style', bgSub:'Background',
     fuelBoost:'Fuel +3', fuelBoostD:'Automatically added to your next level',
     coinsAmt:'coins', demoNote:'Demo — real Apple Pay payments work in the iOS app',
+    promoHotSkin:'HOT SKIN', promoNewBg:'NEW BACKGROUND', promoBestDeal:'BEST DEAL', promoGet:'Get it', promoBrowse:'Browse',
     purchased:'Purchased! 🎉', applied:'Applied ✓',
     skClassic:'Classic', skSharp:'Sharp', skPill:'Rounded', skGold:'Golden', skNeon:'Neon',
     skWood:'Wood', skIce:'Ice', skRuby:'Ruby', skCarbon:'Carbon', skEmerald:'Emerald', skHolo:'Holographic',
@@ -2772,6 +2825,7 @@ const I18N={
     secCoins:'KOVANCI', secFuel:'GORIVO', secSkins:'SLOG KART', secBgs:'OZADJA', cpBest:'NAJBOLJŠE', cpPopular:'PRILJUBLJENO', cpNew:'NOVO', sfLbl:'IZBRANO', sfSub:'Najboljša vrednost — največ kovancev', bgStadium:'Stadion', bgArena:'Arena', skBasket:'Košarka', skinsDesc:'Spremeni VIDEZ kart v igri', bgsDesc:'Spremeni OZADJE za kartami', skinSub:'Slog kart', bgSub:'Ozadje',
     fuelBoost:'Gorivo +3', fuelBoostD:'Samodejno dodano na naslednji stopnji',
     coinsAmt:'kovancev', demoNote:'Demo — pravo plačilo z Apple Pay deluje v iOS aplikaciji',
+    promoHotSkin:'VROČ SLOG', promoNewBg:'NOVO OZADJE', promoBestDeal:'NAJBOLJŠA PONUDBA', promoGet:'Vzemi', promoBrowse:'Poglej',
     purchased:'Kupljeno! 🎉', applied:'Aktivirano ✓',
     skClassic:'Klasika', skSharp:'Ostri robovi', skPill:'Zaobljene', skGold:'Zlate', skNeon:'Neon',
     skWood:'Les', skIce:'Led', skRuby:'Rubin', skCarbon:'Karbon', skEmerald:'Smaragd', skHolo:'Holografske',
@@ -4268,22 +4322,80 @@ function coinPacksRoyal(){
     </div>`; }
   return h+`</div></div><div class="store-note">${t('demoNote')}</div>`;
 }
+/* 📣 PROMO SPOTLIGHT — reklamon një skin, një background, ofertën më të mirë (rrotacion) */
+function storePromoData(){
+  const sk =SKINS.find(s=>s.id==='holo')   ||SKINS[2];
+  const bg =BGS.find(b=>b.id==='aurora')   ||BGS[6];
+  const sk2=SKINS.find(s=>s.id==='diamond')||SKINS[12];
+  const best=COINPACKS[3];
+  const skName=v=>v.label||t(v.name);
+  return [
+    {kicker:t('promoHotSkin'),  title:skName(sk),  sub:t('skinSub'), em:sk.em,  bg:`radial-gradient(130% 130% at 22% 12%, ${(SKIN_COL[sk.id]||'#a06bff')}cc, #17122b 70%)`, cta:t('promoBrowse'), act:`setStoreTab('cards')`},
+    {kicker:t('promoNewBg'),    title:skName(bg),  sub:t('bgSub'),   em:bg.em,  bg:(BG_SWATCH[bg.id]||'linear-gradient(120deg,#123,#245)'),                                  cta:t('promoBrowse'), act:`setStoreTab('bgs')`},
+    {kicker:t('promoBestDeal'), title:best.coins.toLocaleString()+' 🪙', sub:'€'+best.price, em:'👑', bg:'linear-gradient(120deg,#5c4113,#a5771f 55%,#5c4113)',                    cta:t('promoGet'),    act:`buyCoins(3)`},
+    {kicker:t('promoHotSkin'),  title:skName(sk2), sub:t('skinSub'), em:sk2.em, bg:`radial-gradient(130% 130% at 22% 12%, ${(SKIN_COL[sk2.id]||'#bfeeff')}cc, #101a24 70%)`, cta:t('promoBrowse'), act:`setStoreTab('cards')`}
+  ];
+}
+function storePromoHTML(){
+  const slides=storePromoData();
+  const s=slides.map(p=>`<div class="promo-slide" style="--pg:${p.bg}" onclick="playTap();${p.act}">
+    <div class="promo-emwrap"><div class="promo-halo"></div><span class="pe">${p.em}</span></div>
+    <div class="promo-info"><span class="promo-kicker">${p.kicker}</span><div class="promo-title">${p.title}</div><div class="promo-sub">${p.sub}</div><span class="promo-cta">${p.cta} ›</span></div>
+  </div>`).join('');
+  const dots=slides.map((_,i)=>`<i class="${i===0?'on':''}"></i>`).join('');
+  return `<div class="promo" id="storePromo"><div class="promo-track" id="promoTrack">${s}</div><div class="promo-dots" id="promoDots">${dots}</div></div>`;
+}
+let storePromoIv=null, storePromoIdx=0;
+function startStorePromo(){
+  if(storePromoIv){clearInterval(storePromoIv);storePromoIv=null;}
+  const track=document.getElementById('promoTrack'); if(!track)return;
+  const n=track.children.length; if(n<2)return;
+  storePromoIdx=0;
+  storePromoIv=setInterval(()=>{
+    const tr=document.getElementById('promoTrack'), sc=document.getElementById('storeScreen');
+    if(!tr||!sc||!sc.classList.contains('active')){clearInterval(storePromoIv);storePromoIv=null;return;}
+    storePromoIdx=(storePromoIdx+1)%n;
+    tr.style.transform=`translateX(${-storePromoIdx*100}%)`;
+    document.querySelectorAll('#promoDots i').forEach((d,k)=>d.classList.toggle('on',k===storePromoIdx));
+  },3800);
+}
+/* 🎴 Tile showcase për skin/background (preview i madh + animacione) */
+function cosTile(it,kind){
+  const isOwned=owned.includes(it.id);
+  const inUse=(kind==='skin'?curSkin:curBg)===it.id;
+  const bc=ITEM_BADGE[it.id];
+  const bLbl=bc==='BEST'?t('cpBest'):bc==='NEW'?t('cpNew'):bc==='POP'?t('cpPopular'):'';
+  const badge=bc?`<div class="cos-badge ${bc==='BEST'?'best':bc==='NEW'?'nnew':'pop'}">${bLbl}</div>`:'';
+  const prem=it.price>=3000?' prem':'';
+  let pv;
+  if(kind==='skin'){ const col=SKIN_COL[it.id]||'#8a8f9a'; pv=`background:radial-gradient(120% 120% at 30% 15%, ${col}66, #16131f 72%)`; }
+  else { pv=`background:${BG_SWATCH[it.id]||'linear-gradient(160deg,#14121e,#232338)'}`; }
+  let pill, cls='', act='';
+  if(inUse){ pill=`<div class="as-pill on">✓ ${t('inUse')}</div>`; cls=' inuse'; }
+  else if(isOwned){ pill=`<div class="as-pill own">${t('useIt')}</div>`; act=`onclick="useItem('${kind}','${it.id}')"`; }
+  else { pill=`<div class="as-pill buy">🪙 ${it.price}</div>`; act=`onclick="buyItem('${kind}','${it.id}',${it.price})"`; }
+  return `<div class="cos-tile${cls}${prem}" ${act}>${badge}<div class="cos-preview" style="${pv}"><span class="cos-em">${it.em}</span></div><div class="cos-foot"><div class="cos-nm">${it.label||t(it.name)}</div>${pill}</div></div>`;
+}
+function fuelCardHTML(){
+  return `<div class="fuel-buy"><div class="fb-canister">⛽</div><div class="fb-info"><div class="fb-name">${t('fuelBoost')}${fuelPacks>0?` ×${fuelPacks}`:''}</div><div class="fb-sub">${t('fuelBoostD')}</div></div><button class="fb-btn" onclick="playTap();buyFuel()">🪙 600</button></div>`;
+}
 function renderStore(){
   document.getElementById('storeCoins').textContent=`🪙 ${coins}`;
   const list=document.getElementById('storeList');
   let h='';
+  h+=storePromoHTML();   // 📣 spotlight rotativ lart (reklamon skin/background/coins)
   // 🗂️ Tabs kategori
-
   const tabs=[['coins','🪙',t('secCoins')],['cards','🃏',t('secSkins')],['bgs','🖼️',t('secBgs')],['fuel','⛽',t('secFuel')]];
   h+=`<div class="store-tabs">`+tabs.map(([k,ic,lbl])=>`<button class="stab${storeTab===k?' on':''}" onclick="setStoreTab('${k}')"><span class="stab-ic">${ic}</span><span class="stab-lbl">${lbl}</span></button>`).join('')+`</div>`;
   // 📦 Përmbajtja sipas tabit
   h+=`<div class="store-tabbody">`;
   if(storeTab==='coins'){ h+=(STORE_VARIANT==='B'?coinPacksRoyal():STORE_VARIANT==='A'?coinPacksFuel():coinPacksHTML()); }
-  else if(storeTab==='cards'){ h+=`<div class="store-catdesc">🃏 ${t('skinsDesc')}</div><div class="as-group">`+SKINS.map(it=>itemRow(it,'skin')).join('')+`</div>`; }
-  else if(storeTab==='bgs'){ h+=`<div class="store-catdesc">🖼️ ${t('bgsDesc')}</div><div class="as-group">`+BGS.map(it=>itemRow(it,'bg')).join('')+`</div>`; }
-  else if(storeTab==='fuel'){ h+=`<div class="store-row"><div class="store-em">⛽</div><div class="store-info"><div class="store-name">${t('fuelBoost')}${fuelPacks>0?` &nbsp;×${fuelPacks}`:''}</div><div class="store-sub">${t('fuelBoostD')}</div></div><button class="btn-mini" onclick="buyFuel()">${t('buy')} 🪙 600</button></div>`; }
+  else if(storeTab==='cards'){ h+=`<div class="store-catdesc">🃏 ${t('skinsDesc')}</div><div class="cos-grid">`+SKINS.map(it=>cosTile(it,'skin')).join('')+`</div>`; }
+  else if(storeTab==='bgs'){ h+=`<div class="store-catdesc">🖼️ ${t('bgsDesc')}</div><div class="cos-grid">`+BGS.map(it=>cosTile(it,'bg')).join('')+`</div>`; }
+  else if(storeTab==='fuel'){ h+=fuelCardHTML(); }
   h+=`</div>`;
   list.innerHTML=h;
+  startStorePromo();
 }
 let storeOpen={skins:false,bgs:false};
 function folderSection(id,title,inner,count,desc){
